@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1-Mavzu: Astronomiya nimani o‘rganadi? | 11-sinf</title>
+  <style>
+    :root {
+      --bg-dark: #060a14;
+      --panel-bg: rgba(14, 22, 40, 0.85);
+      --border: rgba(56, 189, 248, 0.25);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --purple: #a855f7;
+      --green: #34d399;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0%, var(--bg-dark) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 16px 24px;
+      background: rgba(6, 10, 20, 0.9);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .title-box h1 {
+      font-size: 1.15rem;
+      color: var(--accent);
+      letter-spacing: 0.3px;
+    }
+
+    .title-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 960px) {
+      main { grid-template-columns: 1fr; }
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      background: #03060d;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .canvas-overlay-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(6, 10, 20, 0.8);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--gold);
+      pointer-events: none;
+    }
+
+    .sidebar {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .section-card h3 {
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.15);
+    }
+
+    .metric-row:last-child { border-bottom: none; }
+    .metric-val { font-weight: 700; color: var(--gold); }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 8px 10px;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.83rem;
+      transition: 0.2s;
+    }
+
+    .action-btn.selected, .action-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .info-text {
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: #cbd5e1;
+    }
+
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      margin-top: 8px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 8px;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 0.84rem;
+      transition: 0.2s;
+    }
+
+    .quiz-option:hover { border-color: var(--accent); }
+    .quiz-option.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--green); }
+    .quiz-option.wrong { background: rgba(239, 68, 68, 0.25); border-color: #ef4444; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="title-box">
+    <h1>1-MAVZU (1-§). Astronomiya nimani o‘rganadi?</h1>
+    <p>11-sinf Astronomiya | Interaktiv laboratoriya va simulyatsiya</p>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('scale')">1. Koinot Masshtablari</button>
+    <button class="tab-btn" onclick="switchTab('models')">2. Olam Modellari va Tarix</button>
+    <button class="tab-btn" onclick="switchTab('science')">3. Fanlararo Aloqa va Test</button>
+  </div>
+</header>
+
+<main>
+  <div class="canvas-wrapper">
+    <div class="canvas-overlay-badge" id="canvasBadge">Masshtab: Yer sayyorasi (10⁷ m)</div>
+    <canvas id="astroCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- 1-TAB BOSHQARUV PANELI -->
+    <div id="panel-scale" class="tab-panel">
+      <div class="section-card">
+        <h3>Fazoviy masshtabni o‘zgartirish</h3>
+        <div class="control-group">
+          <label for="scaleSlider" style="font-size:0.84rem; color:#94a3b8;">
+            Daraja ko‘rsatkichi: <strong id="expLabel" style="color:#38bdf8;">10⁷ m</strong>
+          </label>
+          <input type="range" id="scaleSlider" min="7" max="26" step="0.1" value="7.5" />
+          <div class="btn-group">
+            <button class="action-btn" onclick="setScale(7.5)">Yer</button>
+            <button class="action-btn" onclick="setScale(9.2)">Oy orbitasi</button>
+            <button class="action-btn" onclick="setScale(12.8)">Quyosh sistemasi</button>
+            <button class="action-btn" onclick="setScale(16.8)">Yulduzlar</button>
+            <button class="action-btn" onclick="setScale(21.0)">Galaktika</button>
+            <button class="action-btn" onclick="setScale(26.0)">Koinot</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card" style="margin-top:14px;">
+        <h3>O‘lchov ko‘rsatkichlari</h3>
+        <div class="metric-row">
+          <span>Joriy obyekt:</span>
+          <span class="metric-val" id="objName">Yer sayyorasi</span>
+        </div>
+        <div class="metric-row">
+          <span>O‘lchami (metr):</span>
+          <span class="metric-val" id="objMeters">1.27 × 10⁷ m</span>
+        </div>
+        <div class="metric-row">
+          <span>Astronomik birlik:</span>
+          <span class="metric-val" id="objAU">0.000085 a.b.</span>
+        </div>
+        <div class="metric-row">
+          <span>Yorug‘lik yurish vaqti:</span>
+          <span class="metric-val" id="lightTime">0.042 soniya</span>
+        </div>
+      </div>
+
+      <div class="section-card" style="margin-top:14px;">
+        <h3>Ilmiy izoh</h3>
+        <p class="info-text" id="scaleDesc">
+          Astronomiya mikroskopik zarralardan tortib milliardlab yorug‘lik yili masofadagi galaktikalar to‘dasigacha bo‘lgan ulkan fazoviy va zamonaviy masshtablarni o‘rganadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2-TAB BOSHQARUV PANELI -->
+    <div id="panel-models" class="tab-panel hidden">
+      <div class="section-card">
+        <h3>Olam tuzilishi modellari</h3>
+        <div class="btn-group">
+          <button class="action-btn selected" id="btnGeo" onclick="setModel('geo')">Geosentrik (Ptolemey)</button>
+          <button class="action-btn" id="btnHelio" onclick="setModel('helio')">Geliosentrik (Kopernik)</button>
+        </div>
+        <div style="margin-top:10px; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="showTrail" checked />
+          <label for="showTrail" style="font-size:0.84rem;">Sayyora harakat izini (epitsiklni) ko‘rsatish</label>
+        </div>
+      </div>
+
+      <div class="section-card" style="margin-top:14px;">
+        <h3>Tarixiy bosqichlar</h3>
+        <div class="btn-group">
+          <button class="action-btn selected" onclick="showEra(0, this)">Qadimgi</button>
+          <button class="action-btn" onclick="showEra(1, this)">Mirzo Ulug‘bek</button>
+          <button class="action-btn" onclick="showEra(2, this)">Kopernik-Galiley</button>
+          <button class="action-btn" onclick="showEra(3, this)">Zamonaviy</button>
+        </div>
+        <p class="info-text" id="eraInfo" style="margin-top:12px;">
+          <strong>Qadimgi astronomiya:</strong> Taqvim tuzish, vaqtni o‘lchash va dengizda mo‘ljal olish ehtiyojidan kelib chiqqan. Ptolemey «Almagest» asarida Yer markazda turuvchi geosentrik sistemani yaratdi.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3-TAB BOSHQARUV PANELI -->
+    <div id="panel-science" class="tab-panel hidden">
+      <div class="section-card">
+        <h3>Fanlararo integratsiya</h3>
+        <p class="info-text" id="scienceDetail">
+          Chapdagi grafikdan ixtiyoriy fanni bosing (Fizika, Matematika, Kimyo, Geografiya, Informatika) va uning astronomiyadagi rolini ko‘ring.
+        </p>
+      </div>
+
+      <div class="section-card" style="margin-top:14px;">
+        <h3>Tezkor sinov (<span id="qCounter">1/5</span>)</h3>
+        <p class="info-text" id="quizQuestion" style="font-weight:600; color:#fff;"></p>
+        <div id="quizOptions"></div>
+        <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.82rem; color:var(--green);" id="quizScore">Ball: 0</span>
+          <button class="action-btn" style="flex:0 0 auto; padding:6px 12px;" onclick="nextQuestion()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('astroCanvas');
+  const ctx = canvas.getContext('2d');
+  let currentTab = 'scale';
+  let time = 0;
+
+  // Yulduzli fon generatsiyasi
+  const bgStars = Array.from({ length: 160 }, () => ({
+    x: Math.random(),
+    y: Math.random(),
+    r: Math.random() * 1.6 + 0.3,
+    alpha: Math.random() * 0.8 + 0.2
+  }));
+
+  function resizeCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-btn').forEach((b, idx) => {
+      b.classList.toggle('active',
+        (tab === 'scale' && idx === 0) ||
+        (tab === 'models' && idx === 1) ||
+        (tab === 'science' && idx === 2)
+      );
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+    document.getElementById('panel-' + tab).classList.remove('hidden');
+
+    if (tab === 'scale') updateScaleUI();
+    if (tab === 'models') {
+      document.getElementById('canvasBadge').textContent =
+        modelType === 'geo' ? 'Model: Ptolemey Geosentrik sistemasi' : 'Model: Kopernik Geliosentrik sistemasi';
+    }
+    if (tab === 'science') {
+      document.getElementById('canvasBadge').textContent = 'Astronomiyaning boshqa fanlar bilan aloqasi';
+    }
+  }
+
+  // ================= 1-TAB: KOINOT MASSHTABLARI =================
+  const scaleSlider = document.getElementById('scaleSlider');
+  const scaleLevels = [
+    { maxExp: 8.3, name: "Yer sayyorasi", desc: "Yerning o‘rtacha diametri 12 742 km (1.27 × 10⁷ m). Amaliy astronomik kuzatuvlarning boshlang‘ich nuqtasi." },
+    { maxExp: 10.5, name: "Yer – Oy sistemasi", desc: "Yerdan Oygacha o‘rtacha masofa 384 400 km. Yorug‘lik nuri bu masofani 1.28 soniyada bosib o‘tadi." },
+    { maxExp: 14.0, name: "Quyosh sistemasi", desc: "Quyosh va uning atrofida aylanuvchi 8 ta sayyora. Neptun orbitasi radiusi ~30 a.b. (4.5 × 10¹² m)." },
+    { maxExp: 18.5, name: "Yaqin yulduzlar muhiti", desc: "Quyoshga eng yaqin yulduz — Proksima Sentavr 4.24 yorug‘lik yili (4 × 10¹⁶ m) uzoqlikda joylashgan." },
+    { maxExp: 22.5, name: "Somon Yo‘li galaktikasi", desc: "200–400 milliard yulduzni o‘z ichiga olgan spiral galaktika. Diametri ~100 000 yorug‘lik yili (10²¹ m)." },
+    { maxExp: 26.5, name: "Kuzatiladigan Koinot (Metagalaktika)", desc: "Milliardsiz galaktikalar to‘dalari va kosmik to‘r. O‘lchami ~93 milliard yorug‘lik yili (8.8 × 10²⁶ m)." }
+  ];
+
+  function setScale(val) {
+    scaleSlider.value = val;
+    updateScaleUI();
+  }
+
+  function formatLightTime(seconds) {
+    if (seconds < 60) return seconds.toFixed(2) + " soniya";
+    if (seconds < 3600) return (seconds / 60).toFixed(1) + " daqiqa";
+    if (seconds < 86400) return (seconds / 3600).toFixed(1) + " soat";
+    if (seconds < 31557600) return (seconds / 86400).toFixed(1) + " sutka";
+    const years = seconds / 31557600;
+    if (years < 1e6) return years.toFixed(1) + " yorug‘lik yili";
+    if (years < 1e9) return (years / 1e6).toFixed(2) + " mln yorug‘lik yili";
+    return (years / 1e9).toFixed(2) + " mlrd yorug‘lik yili";
+  }
+
+  function updateScaleUI() {
+    const exp = parseFloat(scaleSlider.value);
+    const meters = Math.pow(10, exp);
+    const au = meters / 1.496e11;
+    const lightSec = meters / 299792458;
+
+    const info = scaleLevels.find(l => exp <= l.maxExp) || scaleLevels[scaleLevels.length - 1];
+    document.getElementById('expLabel').textContent = `10^${exp.toFixed(1)} m`;
+    document.getElementById('objName').textContent = info.name;
+    document.getElementById('objMeters').textContent = meters.toExponential(2) + " m";
+    document.getElementById('objAU').textContent = au < 0.01 ? au.toExponential(2) + " a.b." : au.toFixed(2) + " a.b.";
+    document.getElementById('lightTime').textContent = formatLightTime(lightSec);
+    document.getElementById('scaleDesc').textContent = info.desc;
+    document.getElementById('canvasBadge').textContent = `Masshtab: ${info.name} (10^${exp.toFixed(1)} m)`;
+  }
+  scaleSlider.addEventListener('input', updateScaleUI);
+
+  function drawScaleScene(w, h) {
+    const cx = w / 2, cy = h / 2;
+    const exp = parseFloat(scaleSlider.value);
+
+    // Logarifmik panjara doiralari
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.14)';
+    ctx.lineWidth = 1;
+    const frac = exp - Math.floor(exp);
+    for (let i = 1; i <= 5; i++) {
+      const r = (i - frac) * Math.min(w, h) * 0.14;
+      if (r > 10) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+
+    if (exp <= 8.5) {
+      // Yer
+      const r = Math.max(35, 160 - (exp - 7) * 80);
+      const grad = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.3, r * 0.1, cx, cy, r);
+      grad.addColorStop(0, '#38bdf8');
+      grad.addColorStop(0.6, '#0284c7');
+      grad.addColorStop(1, '#0f172a');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Atmosfera halqasi
+      ctx.strokeStyle = 'rgba(125, 211, 252, 0.45)';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText('YER (R = 6371 km)', cx - 55, cy + r + 22);
+    } else if (exp <= 10.6) {
+      // Yer va Oy orbitasi
+      const orbitR = Math.max(55, 210 - (exp - 8.5) * 70);
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.arc(cx, cy, orbitR, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Yer
+      ctx.fillStyle = '#0ea5e9';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 16, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Oy
+      const mx = cx + Math.cos(time * 1.2) * orbitR;
+      const my = cy + Math.sin(time * 1.2) * orbitR;
+      ctx.fillStyle = '#e2e8f0';
+      ctx.beginPath();
+      ctx.arc(mx, my, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillText('Oy (384 400 km)', mx + 10, my);
+    } else if (exp <= 14.5) {
+      // Quyosh sistemasi
+      ctx.fillStyle = '#fbbf24';
+      ctx.shadowColor = '#f59e0b';
+      ctx.shadowBlur = 25;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      const planets = [
+        { name: 'Merkuriy', r: 36, s: 2.4, c: '#94a3b8', sz: 3 },
+        { name: 'Venera', r: 54, s: 1.8, c: '#fde047', sz: 4.5 },
+        { name: 'Yer', r: 76, s: 1.3, c: '#38bdf8', sz: 5 },
+        { name: 'Mars', r: 98, s: 1.0, c: '#f87171', sz: 4 },
+        { name: 'Yupiter', r: 138, s: 0.55, c: '#fb923c', sz: 9 },
+        { name: 'Saturn', r: 175, s: 0.4, c: '#fcd34d', sz: 8 }
+      ];
+      const scaleFactor = Math.max(0.35, 1.3 - (exp - 11) * 0.25);
+      planets.forEach(p => {
+        const pr = p.r * scaleFactor;
+        ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+        ctx.beginPath();
+        ctx.arc(cx, cy, pr, 0, Math.PI * 2);
+        ctx.stroke();
+
+        const px = cx + Math.cos(time * p.s) * pr;
+        const py = cy + Math.sin(time * p.s) * pr;
+        ctx.fillStyle = p.c;
+        ctx.beginPath();
+        ctx.arc(px, py, p.sz * Math.max(0.6, scaleFactor), 0, Math.PI * 2);
+        ctx.fill();
+      });
+    } else if (exp <= 19.0) {
+      // Yulduzlararo muhit
+      const stars = [
+        { name: 'Quyosh', x: 0, y: 0, c: '#fbbf24', sz: 7 },
+        { name: 'Proksima Sentavr (4.24 y.y.)', x: 65, y: 40, c: '#f87171', sz: 5 },
+        { name: 'Sirius (8.6 y.y.)', x: -95, y: 70, c: '#7dd3fc', sz: 6.5 },
+        { name: 'Vega (25 y.y.)', x: 110, y: -90, c: '#e0f2fe', sz: 6 },
+        { name: 'Arktur (37 y.y.)', x: -130, y: -85, c: '#fb923c', sz: 6.5 }
+      ];
+      const f = Math.max(0.4, 1.5 - (exp - 15) * 0.25);
+      stars.forEach(st => {
+        const sx = cx + st.x * f;
+        const sy = cy + st.y * f;
+        ctx.fillStyle = st.c;
+        ctx.beginPath();
+        ctx.arc(sx, sy, st.sz, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(st.name, sx + 10, sy + 4);
+      });
+    } else if (exp <= 23.0) {
+      // Somon Yo'li spiral galaktikasi
+      const arms = 4;
+      const gScale = Math.max(0.4, 1.4 - (exp - 19.5) * 0.28);
+      for (let i = 0; i < 450; i++) {
+        const angle = (i % arms) * ((Math.PI * 2) / arms) + (i * 0.045) + time * 0.15;
+        const dist = (i * 0.42) * gScale;
+        const gx = cx + Math.cos(angle) * dist;
+        const gy = cy + Math.sin(angle) * dist * 0.65;
+        ctx.fillStyle = i < 60 ? 'rgba(251, 191, 36, 0.8)' : 'rgba(125, 211, 252, 0.55)';
+        ctx.fillRect(gx, gy, 2, 2);
+      }
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText('SOMON YO‘LI GALAKTIKASI (~100 000 y.y.)', cx - 135, cy + 155 * gScale);
+    } else {
+      // Kuzatiladigan Koinot (Kosmik to'r)
+      ctx.strokeStyle = 'rgba(168, 85, 247, 0.35)';
+      ctx.lineWidth = 1.2;
+      const nodes = [];
+      for (let i = 0; i < 28; i++) {
+        const ang = i * 2.39996 + time * 0.05;
+        const rad = Math.sqrt(i / 28) * Math.min(w, h) * 0.4;
+        nodes.push({ x: cx + Math.cos(ang) * rad, y: cy + Math.sin(ang) * rad });
+      }
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          if (d < 95) {
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+        ctx.fillStyle = '#e879f9';
+        ctx.beginPath();
+        ctx.arc(nodes[i].x, nodes[i].y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText('KUZATILADIGAN KOINOT (~93 mlrd yorug‘lik yili)', cx - 150, h - 25);
+    }
+  }
+
+  // ================= 2-TAB: OLAM MODELLARI VA TARIX =================
+  let modelType = 'geo';
+  let trailPoints = [];
+
+  const eras = [
+    "<strong>Qadimgi astronomiya:</strong> Taqvim tuzish, vaqtni o‘lchash va dengizda mo‘ljal olish ehtiyojidan kelib chiqqan. Ptolemey «Almagest» asarida Yer markazda turuvchi geosentrik sistemani yaratdi.",
+    "<strong>Mirzo Ulug‘bek maktabi (XV asr):</strong> Samarqand rasadxonasida 1018 ta yulduzning aniq koordinatalari («Ziji jadidi Ko‘ragoniy») tuzildi. Yulduz yili uzunligi 365 kun 6 soat 10 daq 8 sek deb o‘lchandi (xatolik atigi 58 soniya).",
+    "<strong>Kopernik va Galiley inqilobi (XVI–XVII asrlar):</strong> N. Kopernik Quyosh markazda turuvchi geliosentrik sistemani asosladi. G. Galiley 1609-yilda ilk bor teleskopni osmonga qaratib, Yupiter yo‘ldoshlari va Venera fazalarini kashf etdi.",
+    "<strong>Zamonaviy astrofizika va kosmik davr:</strong> Radio, rentgen, infraqizil teleskoplar («Xabbl», «Jeyms Uebb») va kosmik apparatlar yordamida Koinotning eng uzoq sarhadlari o‘rganilmoqda."
+  ];
+
+  function setModel(type) {
+    modelType = type;
+    trailPoints = [];
+    document.getElementById('btnGeo').classList.toggle('selected', type === 'geo');
+    document.getElementById('btnHelio').classList.toggle('selected', type === 'helio');
+    document.getElementById('canvasBadge').textContent =
+      type === 'geo' ? 'Model: Ptolemey Geosentrik sistemasi' : 'Model: Kopernik Geliosentrik sistemasi';
+  }
+
+  function showEra(idx, btn) {
+    document.getElementById('eraInfo').innerHTML = eras[idx];
+    btn.parentElement.querySelectorAll('.action-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function drawModelsScene(w, h) {
+    const cx = w / 2, cy = h / 2;
+    const showTrail = document.getElementById('showTrail').checked;
+
+    if (modelType === 'geo') {
+      // Markazda Yer
+      ctx.fillStyle = '#0ea5e9';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('YER', cx - 12, cy + 32);
+
+      // Deferent (asosiy aylana)
+      const R = Math.min(w, h) * 0.28;
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Epitsikl markazi
+      const ex = cx + Math.cos(time * 0.8) * R;
+      const ey = cy + Math.sin(time * 0.8) * R;
+      const rEpi = 42;
+
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+      ctx.beginPath();
+      ctx.arc(ex, ey, rEpi, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Sayyora (Epitsikl bo'ylab harakat)
+      const px = ex + Math.cos(time * 3.4) * rEpi;
+      const py = ey + Math.sin(time * 3.4) * rEpi;
+
+      if (showTrail) {
+        trailPoints.push({ x: px, y: py });
+        if (trailPoints.length > 260) trailPoints.shift();
+        ctx.strokeStyle = 'rgba(248, 113, 113, 0.65)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        trailPoints.forEach((pt, idx) => idx === 0 ? ctx.moveTo(pt.x, pt.y) : ctx.lineTo(pt.x, pt.y));
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = '#f87171';
+      ctx.beginPath();
+      ctx.arc(px, py, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#fca5a5';
+      ctx.fillText('Mars (epitsikl sirtmog‘i)', px + 10, py);
+    } else {
+      // Markazda Quyosh
+      ctx.fillStyle = '#fbbf24';
+      ctx.shadowColor = '#f59e0b';
+      ctx.shadowBlur = 20;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#fde047';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('QUYOSH', cx - 24, cy + 36);
+
+      const rEarth = Math.min(w, h) * 0.21;
+      const rMars = Math.min(w, h) * 0.33;
+
+      [rEarth, rMars].forEach(r => {
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      const ex = cx + Math.cos(time * 1.4) * rEarth;
+      const ey = cy + Math.sin(time * 1.4) * rEarth;
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.arc(ex, ey, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillText('Yer', ex + 10, ey);
+
+      const mx = cx + Math.cos(time * 0.75) * rMars;
+      const my = cy + Math.sin(time * 0.75) * rMars;
+      ctx.fillStyle = '#f87171';
+      ctx.beginPath();
+      ctx.arc(mx, my, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillText('Mars', mx + 10, my);
+
+      // Ko'rinish chizig'i
+      if (showTrail) {
+        ctx.strokeStyle = 'rgba(251, 191, 36, 0.35)';
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(ex, ey);
+        ctx.lineTo(mx, my);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+  }
+
+  // ================= 3-TAB: FANLARARO ALOQA VA TEST =================
+  const scienceNodes = [
+    { label: "Fizika", angle: -Math.PI / 2, color: "#38bdf8", text: "<strong>Fizika va Astronomiya:</strong> Butun olam tortishish qonuni, optika (teleskoplar), spektral tahlil va termoyadro reaksiyalari yulduzlar tabiatini ochib beradi." },
+    { label: "Matematika", angle: -Math.PI / 10, color: "#fbbf24", text: "<strong>Matematika va Astronomiya:</strong> Sferik trigonometriya, differensial hisob va ehtimollar nazariyasi sayyoralar orbitasini aniq hisoblashga xizmat qiladi." },
+    { label: "Kimyo", angle: Math.PI * 0.3, color: "#34d399", text: "<strong>Kimyo va Astronomiya:</strong> Kosmokimyo yulduzlar atmosferasi, tumanliklar va meteoritlarning kimyoviy tarkibini (vodorod, geliy va og‘ir elementlar) aniqlaydi." },
+    { label: "Geografiya", angle: Math.PI * 0.7, color: "#f87171", text: "<strong>Geografiya va Astronomiya:</strong> Joyning geografik kengligi va uzunligini aniqlash, aniq vaqt xizmati va kalendarlar astronomik kuzatuvlarga asoslanadi." },
+    { label: "Informatika", angle: Math.PI * 1.1, color: "#a855f7", text: "<strong>Informatika va Astronomiya:</strong> Zamonaviy radioteleskoplar va kosmik observatoriyalardan keluvchi terabaytlab ma’lumotlarni qayta ishlash va 3D modellashtirish." }
+  ];
+  let activeNodeIdx = -1;
+
+  canvas.addEventListener('click', (e) => {
+    if (currentTab !== 'science') return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const cx = rect.width / 2, cy = rect.height / 2;
+    const rad = Math.min(rect.width, rect.height) * 0.31;
+
+    scienceNodes.forEach((n, idx) => {
+      const nx = cx + Math.cos(n.angle) * rad;
+      const ny = cy + Math.sin(n.angle) * rad;
+      if (Math.hypot(mx - nx, my - ny) < 36) {
+        activeNodeIdx = idx;
+        document.getElementById('scienceDetail').innerHTML = n.text;
+      }
+    });
+  });
+
+  function drawScienceScene(w, h) {
+    const cx = w / 2, cy = h / 2;
+    const rad = Math.min(w, h) * 0.31;
+
+    scienceNodes.forEach((n, idx) => {
+      const nx = cx + Math.cos(n.angle) * rad;
+      const ny = cy + Math.sin(n.angle) * rad;
+
+      ctx.strokeStyle = activeNodeIdx === idx ? n.color : 'rgba(148, 163, 184, 0.3)';
+      ctx.lineWidth = activeNodeIdx === idx ? 3 : 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(nx, ny);
+      ctx.stroke();
+
+      ctx.fillStyle = activeNodeIdx === idx ? n.color : '#1e293b';
+      ctx.strokeStyle = n.color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(nx, ny, 34, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = activeNodeIdx === idx ? '#060a14' : '#f8fafc';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(n.label, nx, ny + 4);
+    });
+
+    // Markaziy tugun
+    ctx.fillStyle = '#0284c7';
+    ctx.strokeStyle = '#7dd3fc';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 46, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('ASTRONOMIYA', cx, cy + 5);
+    ctx.textAlign = 'left';
+  }
+
+  // Test savollari
+  const quizData = [
+    { q: "1. Astronomiya so‘zi yunonchadan qanday tarjima qilinadi?", opts: ["Yulduzlar haqidagi qonun", "Koinot sirlari", "Osmon xaritasi"], ans: 0 },
+    { q: "2. Mirzo Ulug‘bek rasadxonasida tuzilgan yulduzlar jadvali qanday ataladi?", opts: ["Almagest", "Ziji jadidi Ko‘ragoniy", "Qonuni Mas’udiy"], ans: 1 },
+    { q: "3. Teleskopni ilk bor osmon jismlarini kuzatishga qo‘llagan olim kim?", opts: ["Nikolay Kopernik", "Galileo Galiley", "Iogann Kepler"], ans: 1 },
+    { q: "4. Osmon jismlarining fizik tabiati va kimyoviy tarkibini qaysi bo‘lim o‘rganadi?", opts: ["Astrometriya", "Osmon mexanikasi", "Astrofizika"], ans: 2 },
+    { q: "5. 1 astronomik birlik (a.b.) nimaga teng?", opts: ["Yerdan Quyoshgacha o‘rtacha masofa", "Yorug‘likning 1 yilda o‘tgan yo‘li", "Yerdan Oygacha masofa"], ans: 0 }
+  ];
+  let qIndex = 0, score = 0, answered = false;
+
+  function renderQuiz() {
+    answered = false;
+    const item = quizData[qIndex];
+    document.getElementById('qCounter').textContent = `${qIndex + 1}/${quizData.length}`;
+    document.getElementById('quizQuestion').textContent = item.q;
+    const box = document.getElementById('quizOptions');
+    box.innerHTML = '';
+    item.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (answered) return;
+        answered = true;
+        if (i === item.ans) {
+          btn.classList.add('correct');
+          score++;
+          document.getElementById('quizScore').textContent = `Ball: ${score}`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuestion() {
+    qIndex = (qIndex + 1) % quizData.length;
+    if (qIndex === 0) {
+      score = 0;
+      document.getElementById('quizScore').textContent = `Ball: 0`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // Asosiy animatsiya sikli
+  function animate() {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    // Yulduzli fon
+    bgStars.forEach(s => {
+      ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+      ctx.fillRect(s.x * w, s.y * h, s.r, s.r);
+    });
+
+    if (currentTab === 'scale') drawScaleScene(w, h);
+    else if (currentTab === 'models') drawModelsScene(w, h);
+    else if (currentTab === 'science') drawScienceScene(w, h);
+
+    time += 0.016;
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+</body>
+</html>
