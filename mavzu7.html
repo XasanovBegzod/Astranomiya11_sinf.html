@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7-Mavzu (18–21-§): Quyosh sistemasi tuzilishi, Konfiguratsiyalar va Aylanish davrlari | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.94);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.05rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.68);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 395px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.84);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 7px;
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 0.84rem;
+      margin-top: 4px;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.81rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>7-MAVZU (18–21-§). Quyosh sistemasi tuzilishi, Konfiguratsiyalar va Aylanish davrlari</h1>
+    <p>11-sinf Astronomiya | II Bob: Quyosh sistemasining tuzilishi va osmon jismlarining harakati</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">18-§ Sirtmoqsimon harakat</button>
+    <button class="tab-btn" onclick="setTab(1)">19-§ Quyosh sistemasi</button>
+    <button class="tab-btn" onclick="setTab(2)">20-§ Konfiguratsiyalar</button>
+    <button class="tab-btn" onclick="setTab(3)">21-§ Siderik va Sinodik</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (8 savol)</button>
+  </nav>
+</header>
+
+<main>
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">18-§: Kopernik geliotsentrik modeli va Marsning sirtmoqsimon harakati</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Geliotsentrik isbot</div>
+    </div>
+    <canvas id="solarCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 0: 18-§ GEOTSENTRIK VS GELIOTSENTRIK (SIRTMOQSIMON HARAKAT) -->
+    <div id="panel-0" class="tab-content">
+      <div class="card">
+        <h3>Sirtmoqsimon harakat simulyatori</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Kuzatuv vaqti (kunlar):</span>
+            <strong id="retroDayVal">0-kun</strong>
+          </div>
+          <input type="range" id="retroDay" min="0" max="320" step="1" value="60" oninput="pauseRetro()" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn active" id="retroPlayBtn" onclick="toggleRetroPlay()">▶ Animatsiya: Yoqilgan</button>
+          <button class="btn" onclick="resetRetro()">↺ Qaytadan boshlash</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Harakat tahlili</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Yer orbital tezligi (v⊕):</span><span class="t-val">29.8 km/s</span></div>
+          <div class="t-row"><span>Mars orbital tezligi (v_M):</span><span class="t-val">24.1 km/s</span></div>
+          <div class="t-row"><span>Ko‘rinma harakat yo‘nalishi:</span><span class="t-val" id="retroDirOut">To‘g‘ri (G‘arb → Sharq)</span></div>
+        </div>
+        <p class="desc" style="margin-top:10px;">
+          <strong>Kopernik izohi:</strong> Yer Quyoshga yaqinroq orbitada tezroq harakatlanadi. Yer tashqi planeta (Mars) yonidan «quvib o‘tayotgan» davrda (ro‘para turish atrofida) Yerdan Marsga yo‘nalgan ko‘rish nuri yulduzlar fonida orqaga buriladi va osmonda <strong>sirtmoq</strong> hosil qiladi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 1: 19-§ QUYOSH SISTEMASI MASSHTABI VA A'ZOLARI -->
+    <div id="panel-1" class="tab-content hidden">
+      <div class="card">
+        <h3>Masshtab va planeta tanlash</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="scVisualBtn" onclick="setScaleMode(false)">Ko‘rgazmali masshtab</button>
+          <button class="btn" id="scTrueBtn" onclick="setScaleMode(true)">Haqiqiy masofa (a.b.)</button>
+        </div>
+        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-top:10px;">Planetani tanlang:</label>
+        <select id="planetSelect" onchange="updatePlanetCard()">
+          <option value="0">1. Merkuriy (0.39 a.b.)</option>
+          <option value="1">2. Venera (0.72 a.b.)</option>
+          <option value="2" selected>3. Yer (1.00 a.b.)</option>
+          <option value="3">4. Mars (1.52 a.b.)</option>
+          <option value="4">5. Yupiter (5.20 a.b.)</option>
+          <option value="5">6. Saturn (9.58 a.b.)</option>
+          <option value="6">7. Uran (19.22 a.b.)</option>
+          <option value="7">8. Neptun (30.05 a.b.)</option>
+        </select>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 id="plCardTitle">Yer — Yer guruhi planetasi</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Fizik guruhi:</span><span class="t-val" id="plGroup">Yer guruhi</span></div>
+          <div class="t-row"><span>Quyoshdan masofa (a):</span><span class="t-val" id="plDist">1.00 a.b. (149.6 mln km)</span></div>
+          <div class="t-row"><span>Siderik davri (T):</span><span class="t-val" id="plPeriod">1.00 yil (365.26 sutka)</span></div>
+          <div class="t-row"><span>O‘rtacha orbital tezlik:</span><span class="t-val" id="plSpeed">29.78 km/s</span></div>
+          <div class="t-row"><span>O‘rtacha zichligi:</span><span class="t-val" id="plDens">5.51 g/sm³</span></div>
+        </div>
+        <p class="desc" id="plNote" style="margin-top:8px;">
+          1 astronomik birlik (a.b.) — Yerdan Quyoshgacha bo‘lgan o‘rtacha masofaga teng. Quyosh massasi sistemaning 99.86% ini tashkil etadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 20-§ PLANETALARNING KONFIGURATSIYALARI -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Planeta turi va orbital vaziyati</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="cfgInnerBtn" onclick="setCfgType('inner')">Ichki planeta (Venera)</button>
+          <button class="btn" id="cfgOuterBtn" onclick="setCfgType('outer')">Tashqi planeta (Mars)</button>
+        </div>
+
+        <div class="slider-box" style="margin-top:10px;">
+          <div class="slider-label">
+            <span>Nisbiy orbital burchak:</span>
+            <strong id="cfgRelAngVal">48°</strong>
+          </div>
+          <input type="range" id="cfgRelAng" min="0" max="360" step="1" value="110" />
+        </div>
+
+        <div class="btn-grid" id="cfgPresetBtns"></div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Konfiguratsiya va ko‘rinish sharti</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Konfiguratsiya nomi:</span><span class="t-val" id="cfgNameOut">Sharqiy elongatsiya</span></div>
+          <div class="t-row"><span>Elongatsiya burchagi (ψ):</span><span class="t-val" id="cfgElongOut">46.2° (Sharqda)</span></div>
+          <div class="t-row"><span>Kuzatish vaqti va tomoni:</span><span class="t-val" id="cfgVisOut">Kechqurun, G‘arbda</span></div>
+        </div>
+        <p class="desc" id="cfgDescOut" style="margin-top:8px;">
+          Ichki planeta Quyoshdan sharqda joylashgan bo‘lib, Quyosh botgandan keyin kechqurun g‘arbiy ufqda porlab ko‘rinadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: 21-§ SIDERIK VA SINODIK DAVRLAR -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Siderik (T) va Sinodik (S) davrlar</h3>
+        <label style="font-size:0.8rem; color:var(--muted);">Planetani tanlang (orbital poyga va hisob):</label>
+        <select id="synPlanetSel" onchange="updateSynCalc()">
+          <option value="merkuriy">Merkuriy (Ichki: T = 0.241 yil)</option>
+          <option value="venera">Venera (Ichki: T = 0.615 yil)</option>
+          <option value="mars" selected>Mars (Tashqi: T = 1.881 yil)</option>
+          <option value="yupiter">Yupiter (Tashqi: T = 11.86 yil)</option>
+          <option value="saturn">Saturn (Tashqi: T = 29.46 yil)</option>
+          <option value="neptun">Neptun (Tashqi: T = 164.8 yil)</option>
+        </select>
+
+        <div class="btn-grid" style="margin-top:8px;">
+          <button class="btn active" id="synAnimBtn" onclick="toggleSynAnim()">▶ Poyga: Yoqilgan</button>
+          <button class="btn" onclick="resetSynAnim()">↺ 0-kundan boshlash</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Sinodik harakat formulasi va natija</h3>
+        <div class="formula-box" id="synFormulaBox">
+          1/S = 1/T⊕ − 1/T &nbsp;⇒&nbsp; S = (T · T⊕) / (T − T⊕)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Siderik davr (T):</span><span class="t-val" id="synTOut">1.881 yil (687.0 sutka)</span></div>
+          <div class="t-row"><span>Sinodik davr (S):</span><span class="t-val" id="synSOut">2.135 yil (779.9 sutka)</span></div>
+          <div class="t-row"><span>Joriy poyga vaqti:</span><span class="t-val" id="synTimerOut">0.00 yil</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          <strong>Kuzating:</strong> Yer va planeta bir chiziqdan (boshlang‘ich konfiguratsiyadan) start oladi. Tezroq harakatlanuvchi ichki jism tashqi jismni 1 marta to‘liq quvib yetib, yana bir chiziqqa kelguncha o‘tgan vaqt <strong>Sinodik davr (S)</strong> ga teng!
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (8 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Amaliy masalalar va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 8</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 8</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('solarCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', i !== idx));
+
+    const leftLabels = [
+      "18-§: Kopernik geliotsentrik modeli va tashqi planetaning sirtmoqsimon harakati",
+      "19-§: Quyosh sistemasi masshtabi (1 a.b. ≈ 149.6 mln km) va planetalar guruhlari",
+      "20-§: Ichki va tashqi planetalarning konfiguratsiyalari va ko‘rinish shartlari",
+      "21-§: Planetalarning Quyosh atrofida aylanish davrlari — Siderik (T) va Sinodik (S)",
+      "Bilimlarni tekshirish: 7-Mavzu (18–21-§) bo‘yicha 8 ta masala"
+    ];
+    const rightLabels = [
+      "Geliotsentrik sistema",
+      "Yer guruhi | Gigantlar",
+      "Elongatsiya (ψ) va Fazalar",
+      "1/S = |1/T − 1/T⊕|",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 0: 18-§ SIRTMOQSIMON HARAKAT ====================
+  let retroPlay = true;
+  function toggleRetroPlay() {
+    retroPlay = !retroPlay;
+    const b = document.getElementById('retroPlayBtn');
+    b.textContent = retroPlay ? "▶ Animatsiya: Yoqilgan" : "⏸ Animatsiya: Pauza";
+    b.classList.toggle('active', retroPlay);
+  }
+  function pauseRetro() {
+    if (retroPlay) toggleRetroPlay();
+  }
+  function resetRetro() {
+    document.getElementById('retroDay').value = 0;
+  }
+
+  function getRetroPositions(day) {
+    // 160-kunda ro'para turish (ikkala planeta o'ng tomonda 0 rad burchakda bir chiziqda)
+    const dt = day - 160;
+    const wE = (2 * Math.PI) / 365.25;
+    const wM = (2 * Math.PI) / 687.0;
+    const angE = dt * wE;
+    const angM = dt * wM;
+    return { angE, angM };
+  }
+
+  function drawRetroTab(w, h) {
+    const slider = document.getElementById('retroDay');
+    if (retroPlay) {
+      let nv = parseFloat(slider.value) + 0.55;
+      if (nv > 320) nv = 0;
+      slider.value = nv;
+    }
+    const day = parseFloat(slider.value);
+    document.getElementById('retroDayVal').textContent = `${Math.round(day)}-kun`;
+
+    // Chap yarmida orbital sistema
+    const cx = w * 0.31, cy = h * 0.54;
+    const rE = Math.min(w * 0.14, h * 0.21);
+    const rM = rE * 1.52;
+
+    // Quyosh
+    const sg = ctx.createRadialGradient(cx, cy, 4, cx, cy, 28);
+    sg.addColorStop(0, '#fef08a');
+    sg.addColorStop(0.5, '#f59e0b');
+    sg.addColorStop(1, 'rgba(245, 158, 11, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 28, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Orbitalar
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, rE, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(251, 113, 133, 0.35)';
+    ctx.beginPath(); ctx.arc(cx, cy, rM, 0, Math.PI * 2); ctx.stroke();
+
+    const { angE, angM } = getRetroPositions(day);
+    const ex = cx + Math.cos(angE) * rE;
+    const ey = cy - Math.sin(angE) * rE;
+    const mx = cx + Math.cos(angM) * rM;
+    const my = cy - Math.sin(angM) * rM;
+
+    // Ko'rish nuri Yerdan Mars orqali osmon foniga
+    const dx = mx - ex, dy = my - ey;
+    const len = Math.hypot(dx, dy);
+    const skyX = ex + (dx / len) * (rM + 85);
+    const skyY = ey + (dy / len) * (rM + 85);
+
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.75)';
+    ctx.setLineDash([5, 4]);
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(ex, ey);
+    ctx.lineTo(skyX, skyY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Yer va Mars
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(ex, ey, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('Yer', ex - 10, ey + 19);
+
+    ctx.fillStyle = '#fb7185';
+    ctx.beginPath(); ctx.arc(mx, my, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fda4af';
+    ctx.fillText('Mars', mx - 12, my - 12);
+
+    // O'ng tomonda: Yulduzlar fonidagi ko'rinma sirtmoq oynasi
+    const bx = w * 0.61, by = 58, bw = w * 0.36, bh = h - 85;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(bx, by, bw, bh, 12);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('YULDUZLAR FONIDAGI SIRTMOQSIMON IZ', bx + 14, by + 22);
+
+    // Fon yulduzchalari
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+    [[0.15, 0.25], [0.82, 0.2], [0.45, 0.35], [0.22, 0.75], [0.75, 0.78], [0.55, 0.62]].forEach(s => {
+      ctx.beginPath();
+      ctx.arc(bx + s[0] * bw, by + s[1] * bh, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Geotsentrik ekliptik uzunlik va kenglik proyeksiyasi
+    const calcSkyPt = (d) => {
+      const p = getRetroPositions(d);
+      const x1 = Math.cos(p.angE) * 1.0, y1 = Math.sin(p.angE) * 1.0;
+      const x2 = Math.cos(p.angM) * 1.52, y2 = Math.sin(p.angM) * 1.52;
+      const geoLon = Math.atan2(y2 - y1, x2 - x1); // radian
+      const latLoop = Math.sin(p.angM * 2) * 0.08;
+      const px = bx + bw * 0.5 + (geoLon / 1.45) * (bw * 0.42);
+      const py = by + bh * 0.52 - latLoop * (bh * 1.6);
+      return { px, py, geoLon };
+    };
+
+    // To'liq trayektoriya punktr chizig'i
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let d = 0; d <= 320; d += 2) {
+      const pt = calcSkyPt(d);
+      d === 0 ? ctx.moveTo(pt.px, pt.py) : ctx.lineTo(pt.px, pt.py);
+    }
+    ctx.stroke();
+
+    // Bosib o'tilgan qism (yorqin oltin-qizil)
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.6;
+    ctx.beginPath();
+    for (let d = 0; d <= day; d += 2) {
+      const pt = calcSkyPt(d);
+      d === 0 ? ctx.moveTo(pt.px, pt.py) : ctx.lineTo(pt.px, pt.py);
+    }
+    ctx.stroke();
+
+    const curPt = calcSkyPt(day);
+    const prevPt = calcSkyPt(Math.max(0, day - 2));
+    const isRetro = curPt.geoLon < prevPt.geoLon && day > 5;
+
+    const dirEl = document.getElementById('retroDirOut');
+    if (isRetro) {
+      dirEl.textContent = "TESKARI (Sharq → G‘arb, Sirtmoq!)";
+      dirEl.style.color = "#fb7185";
+    } else {
+      dirEl.textContent = "To‘g‘ri (G‘arb → Sharq)";
+      dirEl.style.color = "#34d399";
+    }
+
+    ctx.fillStyle = isRetro ? '#fb7185' : '#34d399';
+    ctx.beginPath();
+    ctx.arc(curPt.px, curPt.py, 6.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('Mars (osmonda)', curPt.px - 35, curPt.py - 12);
+  }
+
+  // ==================== TAB 1: 19-§ QUYOSH SISTEMASI MASSHTABI ====================
+  const planetsData = [
+    { name: "Merkuriy", group: "Yer guruhi", au: 0.39, km: "57.9 mln km", T: "0.241 yil (88 sutka)", v: "47.36 km/s", dens: "5.43 g/sm³", rVis: 5, col: "#94a3b8", note: "Quyoshga eng yaqin va eng kichik planeta; atmosferasi deyarli yo‘q, yo‘ldoshlari mavjud emas." },
+    { name: "Venera", group: "Yer guruhi", au: 0.72, km: "108.2 mln km", T: "0.615 yil (224.7 sutka)", v: "35.02 km/s", dens: "5.24 g/sm³", rVis: 7, col: "#fde047", note: "Zich karbonat angidrid atmosferasi va issiqxona effekti tufayli eng issiq planeta (+465 °C); o‘z o‘qi atrofida teskari aylanadi." },
+    { name: "Yer", group: "Yer guruhi", au: 1.00, km: "149.6 mln km", T: "1.000 yil (365.26 sutka)", v: "29.78 km/s", dens: "5.51 g/sm³", rVis: 7.5, col: "#38bdf8", note: "1 astronomik birlik (a.b.) — Yerdan Quyoshgacha bo‘lgan o‘rtacha masofaga teng. Quyosh massasi sistemaning 99.86% ini tashkil etadi." },
+    { name: "Mars", group: "Yer guruhi", au: 1.52, km: "227.9 mln km", T: "1.881 yil (687.0 sutka)", v: "24.07 km/s", dens: "3.93 g/sm³", rVis: 6, col: "#fb7185", note: "Sirtida temir oksidlari ko‘pligi sababli «Qizil planeta» deb ataladi; Fobos va Deymos nomli ikkita yo‘ldoshi bor." },
+    { name: "Yupiter", group: "Gigant planeta", au: 5.20, km: "778.5 mln km", T: "11.86 yil", v: "13.07 km/s", dens: "1.33 g/sm³", rVis: 14, col: "#fbbf24", note: "Quyosh sistemasidagi eng katta planeta (massasi barcha qolgan planetalar yig‘indisidan 2.5 marta og‘ir)." },
+    { name: "Saturn", group: "Gigant planeta", au: 9.58, km: "1.434 mlrd km", T: "29.46 yil", v: "9.68 km/s", dens: "0.69 g/sm³", rVis: 12, col: "#fde68a", note: "Muz va tosh zarralaridan iborat ulkan yorqin halqalari bilan mashhur; o‘rtacha zichligi suvnikidan ham kichik." },
+    { name: "Uran", group: "Gigant planeta", au: 19.22, km: "2.871 mlrd km", T: "84.01 yil", v: "6.80 km/s", dens: "1.27 g/sm³", rVis: 9.5, col: "#67e8f9", note: "Aylanish o‘qi orbita tekisligiga 98° og‘gani sababli go‘yo «yonboshlab» aylanuvchi muz giganti." },
+    { name: "Neptun", group: "Gigant planeta", au: 30.05, km: "4.495 mlrd km", T: "164.8 yil", v: "5.43 km/s", dens: "1.64 g/sm³", rVis: 9, col: "#60a5fa", note: "Quyoshdan eng uzoq joylashgan planeta; uning o‘rni 1846-yilda matematik hisob-kitoblar asosida oldindan bashorat qilingan." }
+  ];
+
+  let trueScaleMode = false;
+  let scaleAnim = 0;
+
+  function setScaleMode(isTrue) {
+    trueScaleMode = isTrue;
+    document.getElementById('scVisualBtn').classList.toggle('active', !isTrue);
+    document.getElementById('scTrueBtn').classList.toggle('active', isTrue);
+  }
+
+  function updatePlanetCard() {
+    const idx = parseInt(document.getElementById('planetSelect').value);
+    const p = planetsData[idx];
+    document.getElementById('plCardTitle').textContent = `${p.name} — ${p.group}`;
+    document.getElementById('plGroup').textContent = p.group;
+    document.getElementById('plDist').textContent = `${p.au.toFixed(2)} a.b. (${p.km})`;
+    document.getElementById('plPeriod').textContent = p.T;
+    document.getElementById('plSpeed').textContent = p.v;
+    document.getElementById('plDens').textContent = p.dens;
+    document.getElementById('plNote').textContent = p.note;
+  }
+  updatePlanetCard();
+
+  function drawScaleTab(w, h) {
+    scaleAnim += 0.012;
+    const selIdx = parseInt(document.getElementById('planetSelect').value);
+    const cx = w * 0.48, cy = h * 0.54;
+    const maxR = Math.min(w, h) * 0.42;
+
+    // Quyosh
+    const sg = ctx.createRadialGradient(cx, cy, 3, cx, cy, 24);
+    sg.addColorStop(0, '#fef08a');
+    sg.addColorStop(0.6, '#f59e0b');
+    sg.addColorStop(1, 'rgba(245, 158, 11, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2); ctx.fill();
+
+    planetsData.forEach((p, i) => {
+      const rOrb = trueScaleMode
+        ? 18 + (p.au / 30.05) * (maxR - 18)
+        : 28 + i * ((maxR - 28) / 7);
+
+      // Asteroidlar belbog'i (Mars va Yupiter orasida)
+      if (i === 4) {
+        const prevR = trueScaleMode
+          ? 18 + (1.52 / 30.05) * (maxR - 18)
+          : 28 + 3 * ((maxR - 28) / 7);
+        const beltR = (prevR + rOrb) / 2;
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+        ctx.setLineDash([2, 6]);
+        ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.arc(cx, cy, beltR, 0, Math.PI * 2); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      const isSel = i === selIdx;
+      ctx.strokeStyle = isSel ? 'rgba(251, 191, 36, 0.7)' : 'rgba(56, 189, 248, 0.2)';
+      ctx.lineWidth = isSel ? 2 : 1;
+      ctx.beginPath(); ctx.arc(cx, cy, rOrb, 0, Math.PI * 2); ctx.stroke();
+
+      const ang = scaleAnim / Math.sqrt(p.au) + i * 0.9;
+      const px = cx + Math.cos(ang) * rOrb;
+      const py = cy - Math.sin(ang) * rOrb;
+
+      ctx.fillStyle = p.col;
+      ctx.beginPath(); ctx.arc(px, py, isSel ? p.rVis + 2 : p.rVis, 0, Math.PI * 2); ctx.fill();
+
+      // Saturn halqasi
+      if (i === 5) {
+        ctx.strokeStyle = 'rgba(253, 230, 138, 0.75)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.ellipse(px, py, p.rVis * 2.1, p.rVis * 0.7, -0.35, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      if (isSel || !trueScaleMode || i >= 4) {
+        ctx.fillStyle = isSel ? '#fbbf24' : '#cbd5e1';
+        ctx.font = isSel ? 'bold 12px sans-serif' : '10px sans-serif';
+        ctx.fillText(p.name, px + p.rVis + 5, py + 4);
+      }
+    });
+  }
+
+  // ==================== TAB 2: 20-§ KONFIGURATSIYALAR ====================
+  let cfgType = 'inner'; // 'inner' or 'outer'
+
+  function setCfgType(t) {
+    cfgType = t;
+    document.getElementById('cfgInnerBtn').classList.toggle('active', t === 'inner');
+    document.getElementById('cfgOuterBtn').classList.toggle('active', t === 'outer');
+
+    const box = document.getElementById('cfgPresetBtns');
+    if (t === 'inner') {
+      box.innerHTML = `
+        <button class="btn" onclick="setCfgAngle(180)">Quyi birlashish (0°)</button>
+        <button class="btn" onclick="setCfgAngle(0)">Yuqori birlashish (0°)</button>
+        <button class="btn" onclick="setCfgAngle(134)">Sharqiy elongatsiya</button>
+        <button class="btn" onclick="setCfgAngle(226)">G‘arbiy elongatsiya</button>
+      `;
+      setCfgAngle(134);
+    } else {
+      box.innerHTML = `
+        <button class="btn" onclick="setCfgAngle(180)">Ro‘para turish (180°)</button>
+        <button class="btn" onclick="setCfgAngle(0)">Birlashish (0°)</button>
+        <button class="btn" onclick="setCfgAngle(131)">Sharqiy kvadratura (90°)</button>
+        <button class="btn" onclick="setCfgAngle(229)">G‘arbiy kvadratura (90°)</button>
+      `;
+      setCfgAngle(180);
+    }
+  }
+
+  function setCfgAngle(deg) {
+    document.getElementById('cfgRelAng').value = deg;
+  }
+
+  function drawConfigTab(w, h) {
+    // Yer pastda (0, +rE), Quyosh markazda (0, 0)
+    // relAng = 0 -> planeta Quyosh ortida (yuqorida); relAng = 180 -> planeta Yer tomonida (pastda)
+    const relDeg = parseFloat(document.getElementById('cfgRelAng').value);
+    document.getElementById('cfgRelAngVal').textContent = `${relDeg.toFixed(0)}°`;
+
+    const cx = w * 0.44, cy = h * 0.48;
+    const rE = Math.min(w, h) * 0.24;
+    const rP = cfgType === 'inner' ? rE * 0.72 : rE * 1.52;
+
+    // Quyosh
+    const sg = ctx.createRadialGradient(cx, cy, 4, cx, cy, 26);
+    sg.addColorStop(0, '#fef08a');
+    sg.addColorStop(0.5, '#f59e0b');
+    sg.addColorStop(1, 'rgba(245, 158, 11, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(cx, cy, 26, 0, Math.PI * 2); ctx.fill();
+
+    // Orbitalar
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.arc(cx, cy, rE, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.35)';
+    ctx.beginPath(); ctx.arc(cx, cy, rP, 0, Math.PI * 2); ctx.stroke();
+
+    // Yer pastda joylashgan (canvas koordinatasida: cx, cy + rE)
+    const ex = cx, ey = cy + rE;
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(ex, ey, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('YER (Kuzatuvchi)', ex - 42, ey + 22);
+
+    // Planeta koordinatasi (relDeg=0 -> yuqorida (cx, cy-rP), relDeg=180 -> pastda (cx, cy+rP))
+    // soat miliga teskari: sin(relRad) o'ngga (Sharqqa), -cos(relRad) yuqoriga
+    const relRad = (relDeg * Math.PI) / 180;
+    const px = cx + Math.sin(relRad) * rP;
+    const py = cy - Math.cos(relRad) * rP;
+
+    // Uchburchak chiziqlari: Quyosh-Yer, Yer-Planeta, Quyosh-Planeta
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy); ctx.lineTo(ex, ey);
+    ctx.moveTo(cx, cy); ctx.lineTo(px, py);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(ex, ey); ctx.lineTo(px, py);
+    ctx.stroke();
+
+    // Elongatsiya burchagi psi (Yerda: Quyosh yo'nalishi (0, -1) va Planeta yo'nalishi (px-ex, py-ey) orasida)
+    const vSunX = 0, vSunY = -1;
+    const dEP = Math.hypot(px - ex, py - ey);
+    const vPlX = (px - ex) / dEP, vPlY = (py - ey) / dEP;
+    const dot = Math.max(-1, Math.min(1, vSunX * vPlX + vSunY * vPlY));
+    const elongDeg = (Math.acos(dot) * 180) / Math.PI;
+    const isEast = px >= ex; // o'ng tomon = Sharq (Kechqurun), chap tomon = G'arb (Ertalab)
+
+    // Planeta diski
+    ctx.fillStyle = cfgType === 'inner' ? '#fde047' : '#fb7185';
+    ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.fillText(cfgType === 'inner' ? 'Venera' : 'Mars', px + 11, py + 4);
+
+    // Matnli natijalarni yangilash
+    const nameEl = document.getElementById('cfgNameOut');
+    const elongEl = document.getElementById('cfgElongOut');
+    const visEl = document.getElementById('cfgVisOut');
+    const descEl = document.getElementById('cfgDescOut');
+
+    elongEl.textContent = `${elongDeg.toFixed(1)}° (${isEast ? 'Sharqda' : 'G‘arbda'})`;
+
+    if (cfgType === 'inner') {
+      if (elongDeg < 3 && relDeg > 90) {
+        nameEl.textContent = "Quyi birlashish (0°)";
+        visEl.textContent = "Ko‘rinmaydi (Yerga eng yaqin)";
+        descEl.textContent = "Ichki planeta Yer va Quyosh orasida turadi; qorong‘i tomoni Yerga qaraganligi sababli ko‘rinmaydi.";
+      } else if (elongDeg < 3 && relDeg <= 90) {
+        nameEl.textContent = "Yuqori birlashish (0°)";
+        visEl.textContent = "Ko‘rinmaydi (Quyosh ortida)";
+        descEl.textContent = "Planeta Quyoshning orqa tomonida, Yerdan eng uzoq masofada joylashgan.";
+      } else if (elongDeg >= 44) {
+        nameEl.textContent = isEast ? "Eng katta sharqiy elongatsiya" : "Eng katta g‘arbiy elongatsiya";
+        visEl.textContent = isEast ? "Kechqurun, G‘arbda (max)" : "Tong sahar, Sharqda (max)";
+        descEl.textContent = "Planeta Quyoshdan maksimal burchak masofada (Venera uchun ~46–48°) uzoqlashgan va eng uzoq vaqt ko‘rinadi.";
+      } else {
+        nameEl.textContent = isEast ? "Sharqiy elongatsiya" : "G‘arbiy elongatsiya";
+        visEl.textContent = isEast ? "Kechqurun, G‘arbiy ufqda" : "Tong saharda, Sharqiy ufqda";
+        descEl.textContent = isEast
+          ? "Quyosh botgandan so‘ng g‘arbiy osmonda «Kechki yulduz» sifatida ko‘rinadi."
+          : "Quyosh chiqishidan oldin sharqiy osmonda «Tonggi yulduz» sifatida ko‘rinadi.";
+      }
+
+      // O'ng yuqori burchakda: Venera fazasi va ko'rinma o'lchami oynasi
+      const bx = w - 175, by = 52, bw = 158, bh = 165;
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+      ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 10); ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('VENERA FAZASI VA O‘LCHAMI', bx + bw / 2, by + 18);
+
+      // Faza burchagi (Quyosh-Planeta-Yer burchagi)
+      const vPSX = cx - px, vPSY = cy - py;
+      const vPEX = ex - px, vPEY = ey - py;
+      const cosPhi = (vPSX * vPEX + vPSY * vPEY) / (Math.hypot(vPSX, vPSY) * Math.hypot(vPEX, vPEY));
+      const appR = 14 + ((dEP - (rE - rP)) / (2 * rP)) * 0; // inverse distance scaling:
+      const normDist = (dEP - (rE - rP)) / (2 * rP); // 0 (quyi birl.) .. 1 (yuqori birl.)
+      const discR = 36 - normDist * 22;
+
+      const vcx = bx + bw / 2, vcy = by + 90;
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath(); ctx.arc(vcx, vcy, discR, 0, Math.PI * 2); ctx.fill();
+
+      // Yoritilgan qism
+      ctx.fillStyle = '#fef08a';
+      ctx.beginPath();
+      if (isEast) ctx.arc(vcx, vcy, discR, Math.PI / 2, (3 * Math.PI) / 2); // Quyosh o'ngda -> chap tomoni yoritilgan
+      else ctx.arc(vcx, vcy, discR, -Math.PI / 2, Math.PI / 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.ellipse(vcx, vcy, Math.abs(cosPhi) * discR, discR, 0, 0, Math.PI * 2);
+      ctx.fillStyle = cosPhi < 0 ? '#0f172a' : '#fef08a';
+      ctx.fill();
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.fillText(`Yoritilganlik: ${Math.round(((1 + cosPhi) / 2) * 100)}%`, bx + bw / 2, by + 150);
+      ctx.textAlign = 'left';
+    } else {
+      if (elongDeg > 175) {
+        nameEl.textContent = "Ro‘para turish (ψ = 180°)";
+        visEl.textContent = "Butun tun (Yarim tunda janubda)";
+        descEl.textContent = "Yer Quyosh va planeta orasida turadi. Planeta Yerga eng yaqin masofada va eng yorqin ko‘rinadi.";
+      } else if (elongDeg < 5) {
+        nameEl.textContent = "Birlashish (ψ = 0°)";
+        visEl.textContent = "Ko‘rinmaydi (Quyosh ortida)";
+        descEl.textContent = "Tashqi planeta Quyoshning orqasida joylashgani uchun Quyosh nurlarida ko‘rinmaydi.";
+      } else if (Math.abs(elongDeg - 90) < 4) {
+        nameEl.textContent = isEast ? "Sharqiy kvadratura (90°)" : "G‘arbiy kvadratura (90°)";
+        visEl.textContent = isEast ? "Kechqurun va tunning 1-yarmi" : "Tunning 2-yarmi va tong sahar";
+        descEl.textContent = "Quyosh, Yer va planeta to‘g‘ri burchakli uchburchak (∠Y = 90°) hosil qiladi.";
+      } else {
+        nameEl.textContent = isEast ? "Sharqiy elongatsiya" : "G‘arbiy elongatsiya";
+        visEl.textContent = isEast ? "Kechqurun ko‘rinadi" : "Ertalab ko‘rinadi";
+        descEl.textContent = "Tashqi planeta 0° dan 180° gacha istalgan elongatsiya burchagida bo‘lishi mumkin.";
+      }
+    }
+  }
+  setCfgType('inner');
+
+  // ==================== TAB 3: 21-§ SIDERIK VA SINODIK DAVRLAR ====================
+  const synData = {
+    merkuriy: { name: "Merkuriy", inner: true, T: 0.2408, rRel: 0.42, col: "#94a3b8" },
+    venera:   { name: "Venera",   inner: true, T: 0.6152, rRel: 0.72, col: "#fde047" },
+    mars:     { name: "Mars",     inner: false, T: 1.8809, rRel: 1.48, col: "#fb7185" },
+    yupiter:  { name: "Yupiter",  inner: false, T: 11.862, rRel: 1.75, col: "#fbbf24" },
+    saturn:   { name: "Saturn",   inner: false, T: 29.457, rRel: 1.95, col: "#fde68a" },
+    neptun:   { name: "Neptun",   inner: false, T: 164.80, rRel: 2.12, col: "#60a5fa" }
+  };
+
+  let synAnim = true;
+  let synTimeYears = 0;
+
+  function toggleSynAnim() {
+    synAnim = !synAnim;
+    const b = document.getElementById('synAnimBtn');
+    b.textContent = synAnim ? "▶ Poyga: Yoqilgan" : "⏸ Poyga: Pauza";
+    b.classList.toggle('active', synAnim);
+  }
+
+  function resetSynAnim() {
+    synTimeYears = 0;
+  }
+
+  function updateSynCalc() {
+    synTimeYears = 0;
+    const key = document.getElementById('synPlanetSel').value;
+    const p = synData[key];
+    const S = p.inner ? (p.T * 1) / (1 - p.T) : (p.T * 1) / (p.T - 1);
+
+    document.getElementById('synFormulaBox').innerHTML = p.inner
+      ? `1/S = 1/T − 1/T⊕ &nbsp;⇒&nbsp; S = (T · T⊕) / (T⊕ − T)`
+      : `1/S = 1/T⊕ − 1/T &nbsp;⇒&nbsp; S = (T · T⊕) / (T − T⊕)`;
+
+    document.getElementById('synTOut').textContent = `${p.T.toFixed(3)} yil (${(p.T * 365.256).toFixed(1)} sutka)`;
+    document.getElementById('synSOut').textContent = `${S.toFixed(3)} yil (${(S * 365.256).toFixed(1)} sutka)`;
+  }
+  updateSynCalc();
+
+  function drawSynodicTab(w, h) {
+    const key = document.getElementById('synPlanetSel').value;
+    const p = synData[key];
+    const S = p.inner ? (p.T * 1) / (1 - p.T) : (p.T * 1) / (p.T - 1);
+
+    if (synAnim) {
+      synTimeYears += 0.0045 * Math.min(S, 2.2);
+      if (synTimeYears >= S) synTimeYears = S;
+    }
+
+    document.getElementById('synTimerOut').textContent =
+      synTimeYears >= S - 0.001
+        ? `${S.toFixed(3)} yil (1 Sinodik davr tugadi!)`
+        : `${synTimeYears.toFixed(2)} yil`;
+
+    const cx = w * 0.5, cy = h * 0.54;
+    const baseR = Math.min(w, h) * 0.18;
+    const rE = baseR;
+    const rP = baseR * p.rRel;
+
+    // Quyosh
+    const sg = ctx.createRadialGradient(cx, cy, 4, cx, cy, 24);
+    sg.addColorStop(0, '#fef08a');
+    sg.addColorStop(0.5, '#f59e0b');
+    sg.addColorStop(1, 'rgba(245, 158, 11, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2); ctx.fill();
+
+    // Start chizig'i (o'ng tomonda 0 rad)
+    ctx.strokeStyle = 'rgba(52, 211, 153, 0.35)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.max(rE, rP) + 25, cy);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#34d399';
+    ctx.font = '10px sans-serif';
+    ctx.fillText('Start (t = 0)', cx + Math.max(rE, rP) - 25, cy + 14);
+
+    // Orbitalar
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, rE, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.35)';
+    ctx.beginPath(); ctx.arc(cx, cy, rP, 0, Math.PI * 2); ctx.stroke();
+
+    // Burchaklar
+    const angE = 2 * Math.PI * synTimeYears;
+    const angP = (2 * Math.PI * synTimeYears) / p.T;
+
+    const ex = cx + Math.cos(angE) * rE;
+    const ey = cy - Math.sin(angE) * rE;
+    const px = cx + Math.cos(angP) * rP;
+    const py = cy - Math.sin(angP) * rP;
+
+    // Quyosh - Yer - Planeta tutashtiruvchi nur
+    ctx.strokeStyle = synTimeYears >= S - 0.002 ? '#34d399' : 'rgba(251, 191, 36, 0.6)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(ex, ey);
+    ctx.lineTo(px, py);
+    ctx.stroke();
+
+    // Yer va Planeta
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(ex, ey, 7.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`Yer (${synTimeYears.toFixed(2)} aylanish)`, ex + 10, ey - 8);
+
+    ctx.fillStyle = p.col;
+    ctx.beginPath(); ctx.arc(px, py, 8.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.fillText(`${p.name} (${(synTimeYears / p.T).toFixed(2)} aylanish)`, px + 11, py + 12);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (8 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Tashqi planetalarning yulduzlar fonidagi sirtmoqsimon harakati qaysi astronomik hodisa tufayli yuzaga keladi?",
+      opts: ["Yer orbitada tashqi planetani quvib o‘tgani uchun", "Planeta haqiqatan ham orqaga aylangani uchun", "Oyning tortish kuchi tufayli"],
+      ans: 0,
+      exp: "Yer Quyoshga yaqinroq orbitada tezroq harakatlanib tashqi planetani quvib o‘tganda, ko‘rish nuri yulduzlar fonida orqaga buriladi."
+    },
+    {
+      q: "2. 1 astronomik birlik (1 a.b.) nimaga teng?",
+      opts: ["Yerdan Oygacha bo‘lgan o‘rtacha masofa (384 400 km)", "Yerdan Quyoshgacha bo‘lgan o‘rtacha masofa (149.6 mln km)", "Yorug‘likning 1 yilda bosib o‘tadigan masofasi"],
+      ans: 1,
+      exp: "1 a.b. = 149 597 870.7 km ≈ 149.6 mln km — Yerdan Quyoshgacha bo‘lgan o‘rtacha masofa."
+    },
+    {
+      q: "3. Quyidagilardan qaysi biri Yer guruhi planetalariga KIRMAYDI?",
+      opts: ["Merkuriy", "Mars", "Uran"],
+      ans: 2,
+      exp: "Yer guruhi planetalari: Merkuriy, Venera, Yer va Mars. Uran esa gigant planetalar qatoriga kiradi."
+    },
+    {
+      q: "4. Venera planetasi yarim tunda kuzatilishi mumkinmi?",
+      opts: ["Ha, ro‘para turish paytida", "Yo‘q, chunki u Quyoshdan 48° dan uzoqlasha olmaydi", "Faqat qish faslida"],
+      ans: 1,
+      exp: "Venera ichki planeta bo‘lib, maksimal elongatsiyasi 48° ga teng; shu bois u faqat kechqurun yoki tong saharda ko‘rinadi."
+    },
+    {
+      q: "5. Tashqi planetalarni Yerdan kuzatish uchun eng qulay konfiguratsiya qaysi?",
+      opts: ["Birlashish (ψ = 0°)", "Ro‘para turish (ψ = 180°)", "Sharqiy kvadratura (ψ = 90°)"],
+      ans: 1,
+      exp: "Ro‘para turishda planeta Yerga eng yaqin masofada, to‘liq yoritilgan holda va yarim tunda janubda eng baland nuqtada ko‘rinadi."
+    },
+    {
+      q: "6. Siderik aylanish davri T = 0.5 yil bo‘lgan gipotetik ichki planetaning sinodik davri (S) nechaga teng?",
+      opts: ["0.5 yil", "1.0 yil", "2.0 yil"],
+      ans: 1,
+      exp: "Ichki planeta uchun 1/S = 1/T − 1/T⊕ = 1/0.5 − 1/1 = 2 − 1 = 1 ⇒ S = 1.0 yil."
+    },
+    {
+      q: "7. Tashqi planetaning sinodik davri S = 2 yil bo‘lsa, uning Quyosh atrofida aylanish siderik davri (T) nechaga teng?",
+      opts: ["1 yil", "2 yil", "3 yil"],
+      ans: 1,
+      exp: "Tashqi planeta uchun 1/T = 1/T⊕ − 1/S = 1/1 − 1/2 = 1/2 ⇒ T = 2 yil."
+    },
+    {
+      q: "8. Tashqi planeta Quyoshdan qanchalik uzoq joylashgan bo‘lsa, uning sinodik davri (S) qaysi qiymatga yaqinlashadi?",
+      opts: ["0 yilga", "Yerning siderik davriga (1 yilga)", "Cheksizlikka"],
+      ans: 1,
+      exp: "T → ∞ bo‘lganda 1/T → 0 bo‘ladi va 1/S = 1/T⊕ − 1/T formuladan S → T⊕ = 1 yil kelib chiqadi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 8`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 8`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    if (activeTab === 0) drawRetroTab(w, h);
+    else if (activeTab === 1) drawScaleTab(w, h);
+    else if (activeTab === 2) drawConfigTab(w, h);
+    else if (activeTab === 3) drawSynodicTab(w, h);
+    else drawScaleTab(w, h);
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
