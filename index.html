@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mavzular ro'yxati</title>
+  <style>
+    :root {
+      --bg-color: #f4f7fb;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 10px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .search-box {
+      max-width: 500px;
+      margin: 0 auto 30px auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--card-bg);
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+      border-color: var(--primary);
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    .card-footer {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card:hover .card-footer {
+      color: var(--primary-hover);
+    }
+
+    .empty-msg {
+      text-align: center;
+      grid-column: 1 / -1;
+      color: var(--text-muted);
+      padding: 40px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>O'quv mavzulari to'plami</h1>
+      <p>Kerakli mavzuni tanlang yoki qidiruv orqali toping</p>
+    </header>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Mavzu nomi yoki raqamini yozing...">
+    </div>
+
+    <div class="grid" id="topicsGrid"></div>
+    <div class="empty-msg" id="emptyMsg">Hech qanday mavzu topilmadi.</div>
+  </div>
+
+  <script>
+    // 40 ta mavzu ro'yxati: nomi va GitHub'dagi fayl manzilini shu yerdan o'zgartirasiz
+    const mavzular = [
+      { id: 1, nomi: "1-mavzu nomi", fayl: "mavzu1.html" },
+      { id: 2, nomi: "2-mavzu nomi", fayl: "mavzu2.html" },
+      { id: 3, nomi: "3-mavzu nomi", fayl: "mavzu3.html" },
+      { id: 4, nomi: "4-mavzu nomi", fayl: "mavzu4.html" },
+      { id: 5, nomi: "5-mavzu nomi", fayl: "mavzu5.html" },
+      { id: 6, nomi: "6-mavzu nomi", fayl: "mavzu6.html" },
+      { id: 7, nomi: "7-mavzu nomi", fayl: "mavzu7.html" },
+      { id: 8, nomi: "8-mavzu nomi", fayl: "mavzu8.html" },
+      { id: 9, nomi: "9-mavzu nomi", fayl: "mavzu9.html" },
+      { id: 10, nomi: "10-mavzu nomi", fayl: "mavzu10.html" },
+      { id: 11, nomi: "11-mavzu nomi", fayl: "mavzu11.html" },
+      { id: 12, nomi: "12-mavzu nomi", fayl: "mavzu12.html" },
+      { id: 13, nomi: "13-mavzu nomi", fayl: "mavzu13.html" },
+      { id: 14, nomi: "14-mavzu nomi", fayl: "mavzu14.html" },
+      { id: 15, nomi: "15-mavzu nomi", fayl: "mavzu15.html" },
+      { id: 16, nomi: "16-mavzu nomi", fayl: "mavzu16.html" },
+      { id: 17, nomi: "17-mavzu nomi", fayl: "mavzu17.html" },
+      { id: 18, nomi: "18-mavzu nomi", fayl: "mavzu18.html" },
+      { id: 19, nomi: "19-mavzu nomi", fayl: "mavzu19.html" },
+      { id: 20, nomi: "20-mavzu nomi", fayl: "mavzu20.html" },
+      { id: 21, nomi: "21-mavzu nomi", fayl: "mavzu21.html" },
+      { id: 22, nomi: "22-mavzu nomi", fayl: "mavzu22.html" },
+      { id: 23, nomi: "23-mavzu nomi", fayl: "mavzu23.html" },
+      { id: 24, nomi: "24-mavzu nomi", fayl: "mavzu24.html" },
+      { id: 25, nomi: "25-mavzu nomi", fayl: "mavzu25.html" },
+      { id: 26, nomi: "26-mavzu nomi", fayl: "mavzu26.html" },
+      { id: 27, nomi: "27-mavzu nomi", fayl: "mavzu27.html" },
+      { id: 28, nomi: "28-mavzu nomi", fayl: "mavzu28.html" },
+      { id: 29, nomi: "29-mavzu nomi", fayl: "mavzu29.html" },
+      { id: 30, nomi: "30-mavzu nomi", fayl: "mavzu30.html" },
+      { id: 31, nomi: "31-mavzu nomi", fayl: "mavzu31.html" },
+      { id: 32, nomi: "32-mavzu nomi", fayl: "mavzu32.html" },
+      { id: 33, nomi: "33-mavzu nomi", fayl: "mavzu33.html" },
+      { id: 34, nomi: "34-mavzu nomi", fayl: "mavzu34.html" },
+      { id: 35, nomi: "35-mavzu nomi", fayl: "mavzu35.html" },
+      { id: 36, nomi: "36-mavzu nomi", fayl: "mavzu36.html" },
+      { id: 37, nomi: "37-mavzu nomi", fayl: "mavzu37.html" },
+      { id: 38, nomi: "38-mavzu nomi", fayl: "mavzu38.html" },
+      { id: 39, nomi: "39-mavzu nomi", fayl: "mavzu39.html" },
+      { id: 40, nomi: "40-mavzu nomi", fayl: "mavzu40.html" }
+    ];
+
+    const grid = document.getElementById("topicsGrid");
+    const searchInput = document.getElementById("searchInput");
+    const emptyMsg = document.getElementById("emptyMsg");
+
+    function renderTopics(list) {
+      grid.innerHTML = "";
+      if (list.length === 0) {
+        emptyMsg.style.display = "block";
+        return;
+      }
+      emptyMsg.style.display = "none";
+
+      list.forEach(item => {
+        const card = document.createElement("a");
+        card.href = item.fayl;
+        card.className = "card";
+        card.innerHTML = `
+          <div>
+            <span class="badge">${item.id}-mavzu</span>
+            <h3>${item.nomi}</h3>
+          </div>
+          <div class="card-footer">Ochish &rarr;</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const filtered = mavzular.filter(item =>
+        item.nomi.toLowerCase().includes(query) ||
+        String(item.id).includes(query)
+      );
+      renderTopics(filtered);
+    });
+
+    renderTopics(mavzular);
+  </script>
+
+</body>
+</html>
