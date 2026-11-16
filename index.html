@@ -6,13 +6,16 @@
   <title>11-sinf Astronomiya — Interaktiv darslik</title>
   <style>
     :root {
-      --bg-color: #f4f7fb;
-      --card-bg: #ffffff;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --border-color: #e2e8f0;
+      --bg-deep: #040711;
+      --card-bg: rgba(15, 23, 46, 0.76);
+      --card-hover: rgba(24, 38, 74, 0.92);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.28);
+      --gold: #fbbf24;
+      --rose: #fb7185;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(148, 163, 184, 0.2);
     }
 
     * {
@@ -23,54 +26,152 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% -10%, #1d356e 0%, rgba(15, 23, 42, 0.4) 45%, transparent 70%),
+        linear-gradient(180deg, #070c1d 0%, #040711 100%);
+      background-attachment: fixed;
       color: var(--text-main);
       line-height: 1.6;
-      padding: 20px;
+      padding: 22px 16px 50px 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Yulduzli osmon qatlami */
+    .stars, .stars-twinkle {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .stars {
+      background-image:
+        radial-gradient(1.5px 1.5px at 25px 35px, #ffffff, transparent),
+        radial-gradient(1px 1px at 95px 145px, #bae6fd, transparent),
+        radial-gradient(2px 2px at 175px 65px, #fef08a, transparent),
+        radial-gradient(1.2px 1.2px at 255px 195px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 315px 95px, #e0f2fe, transparent);
+      background-size: 340px 240px;
+      opacity: 0.7;
+    }
+
+    .stars-twinkle {
+      background-image:
+        radial-gradient(2px 2px at 60px 80px, #7dd3fc, transparent),
+        radial-gradient(1.8px 1.8px at 210px 130px, #ffffff, transparent),
+        radial-gradient(2px 2px at 290px 210px, #fde047, transparent);
+      background-size: 360px 260px;
+      animation: twinkle 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.25; }
+      100% { opacity: 0.85; }
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     header {
       text-align: center;
-      margin-bottom: 26px;
-      padding: 16px 10px;
+      margin-bottom: 24px;
+      padding: 14px 10px 6px 10px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 10px;
     }
 
     header h1 {
-      font-size: 1.85rem;
-      color: var(--text-main);
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ffffff 0%, #bae6fd 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 6px;
     }
 
     header p {
       color: var(--text-muted);
-      font-size: 0.98rem;
+      font-size: 0.95rem;
     }
 
-    .search-box {
-      max-width: 520px;
-      margin: 0 auto 28px auto;
+    /* Qidiruv va bo'lim tugmalari */
+    .controls {
+      max-width: 640px;
+      margin: 0 auto 26px auto;
     }
 
     .search-box input {
       width: 100%;
-      padding: 12px 18px;
+      padding: 13px 18px;
       font-size: 1rem;
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
+      color: var(--text-main);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
       outline: none;
-      transition: border-color 0.2s;
-      background: var(--card-bg);
+      background: rgba(12, 19, 38, 0.88);
+      backdrop-filter: blur(12px);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
     }
 
     .search-box input:focus {
-      border-color: var(--primary);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-glow);
     }
 
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #041024;
+      border-color: var(--accent);
+    }
+
+    /* Kartochkalar tarmog'i */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -79,57 +180,86 @@
 
     .card {
       background: var(--card-bg);
+      backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 20px;
       text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
     }
 
     .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-      border-color: var(--primary);
+      transform: translateY(-4px);
+      background: var(--card-hover);
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 12px 28px rgba(2, 132, 199, 0.25);
+    }
+
+    .card.card-bsb {
+      border-color: rgba(251, 191, 36, 0.38);
+      background: rgba(42, 30, 12, 0.74);
+    }
+
+    .card.card-chsb {
+      border-color: rgba(251, 113, 133, 0.38);
+      background: rgba(46, 16, 28, 0.74);
     }
 
     .badge {
       display: inline-block;
-      background: #eff6ff;
-      color: var(--primary);
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.32);
       font-weight: 700;
-      font-size: 0.8rem;
-      padding: 4px 10px;
-      border-radius: 6px;
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 8px;
       margin-bottom: 10px;
       width: fit-content;
     }
 
+    .badge.bsb {
+      background: rgba(251, 191, 36, 0.16);
+      color: var(--gold);
+      border-color: rgba(251, 191, 36, 0.42);
+    }
+
+    .badge.chsb {
+      background: rgba(251, 113, 133, 0.16);
+      color: var(--rose);
+      border-color: rgba(251, 113, 133, 0.42);
+    }
+
     .card h3 {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       margin-bottom: 8px;
       color: var(--text-main);
       line-height: 1.45;
     }
 
     .card-sub {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
       margin-bottom: 14px;
     }
 
     .card-footer {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
-      color: var(--primary);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
     }
 
-    .card:hover .card-footer {
-      color: var(--primary-hover);
-    }
+    .card.card-bsb .card-footer { color: var(--gold); }
+    .card.card-chsb .card-footer { color: var(--rose); }
 
     .empty-msg {
       text-align: center;
@@ -138,18 +268,34 @@
       padding: 40px;
       display: none;
     }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.65rem; }
+    }
   </style>
 </head>
 <body>
 
+  <div class="stars"></div>
+  <div class="stars-twinkle"></div>
+
   <div class="container">
     <header>
+      <span class="eyebrow">✦ Interaktiv elektron darslik</span>
       <h1>11-sinf Astronomiya</h1>
-      <p>Kerakli mavzuni tanlang yoki qidiruv orqali toping</p>
+      <p>40 ta mavzu, bob va choraklik nazorat ishlari to‘plami</p>
     </header>
 
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Mavzu nomi, paragraf yoki raqamini yozing...">
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Mavzu nomi, paragraf yoki raqamini yozing...">
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">Barchasi (49)</button>
+        <button class="filter-btn" data-filter="mavzu">Mavzular (40)</button>
+        <button class="filter-btn" data-filter="bsb">BSB (5)</button>
+        <button class="filter-btn" data-filter="chsb">CHSB (4)</button>
+      </div>
     </div>
 
     <div class="grid" id="topicsGrid"></div>
@@ -158,110 +304,128 @@
 
   <script>
     const mavzular = [
-      { id: 1, nomi: "1-§. Astronomiya nimani o‘rganadi? Uning rivojlanish tarixi va boshqa fanlar bilan aloqasi", paragraf: "Kirish", fayl: "mavzu1.html" },
-      { id: 2, nomi: "2-§. Yoritgichlarning sutkalik ko‘rinma harakatlari. Yulduz turkumlari", paragraf: "3-§. Fuko mayatnigi • 4-§. Osmon sferasi • 5-§. Ekliptika", fayl: "mavzu2.html" },
-      { id: 3, nomi: "6-§. Osmon koordinatalari", paragraf: "7-§. Yulduzlarning xaritalari • 8-§. Ko‘rinma yulduz kattaliklari", fayl: "mavzu3.html" },
-      { id: 4, nomi: "9-§. Olam qutbining balandligi va joyning geografik kenglamasi orasidagi bog‘lanish", paragraf: "10-§. Sutkalik aylanishlar • 11-§. Kulminatsiya • 12-§. Geografik kenglamani aniqlash", fayl: "mavzu4.html" },
-      { id: 5, nomi: "13-§. Vaqtni o‘lchashning asoslari", paragraf: "14-§. Kalendarlar", fayl: "mavzu5.html" },
-      { id: 6, nomi: "15-§. Oyning harakati, fazalari va davrlari", paragraf: "16-§. Oy va Quyosh hijriy kalendarlari • 17-§. Quyosh va Oy tutilishlari", fayl: "mavzu6.html" },
+      { id: 1, nomi: "1-§. Astronomiya nimani o‘rganadi? Uning rivojlanish tarixi va boshqa fanlar bilan aloqasi", paragraf: "Kirish", fayl: "mavzu1.html", tur: "mavzu" },
+      { id: 2, nomi: "2-§. Yoritgichlarning sutkalik ko‘rinma harakatlari. Yulduz turkumlari", paragraf: "3-§. Fuko mayatnigi • 4-§. Osmon sferasi • 5-§. Ekliptika", fayl: "mavzu2.html", tur: "mavzu" },
+      { id: 3, nomi: "6-§. Osmon koordinatalari", paragraf: "7-§. Yulduzlarning xaritalari • 8-§. Ko‘rinma yulduz kattaliklari", fayl: "mavzu3.html", tur: "mavzu" },
+      { id: 4, nomi: "9-§. Olam qutbining balandligi va joyning geografik kenglamasi orasidagi bog‘lanish", paragraf: "10-§. Sutkalik aylanishlar • 11-§. Kulminatsiya • 12-§. Geografik kenglamani aniqlash", fayl: "mavzu4.html", tur: "mavzu" },
+      { id: 5, nomi: "13-§. Vaqtni o‘lchashning asoslari", paragraf: "14-§. Kalendarlar", fayl: "mavzu5.html", tur: "mavzu" },
+      { id: 6, nomi: "15-§. Oyning harakati, fazalari va davrlari", paragraf: "16-§. Oy va Quyosh hijriy kalendarlari • 17-§. Quyosh va Oy tutilishlari", fayl: "mavzu6.html", tur: "mavzu" },
       { id: "1-BSB", nomi: "Bob yuzasidan summativ baholash (1-BSB)", paragraf: "I bob. Amaliy astronomiya asoslari", fayl: "bsb1.html", tur: "bsb" },
-      { id: 7, nomi: "18-§. Quyosh sistemasining tuzilishi", paragraf: "19-§. Masshtab va a’zolar • 20-§. Konfiguratsiyalar • 21-§. Aylanish davrlari", fayl: "mavzu7.html" },
-      { id: 8, nomi: "22-§. Sutkalik va sutkalik-gorizontal parallaks. Quyosh sistemasi jismlarigacha masofalar", paragraf: "23-§. Quyosh sistemasi jismlarining radiuslarini aniqlash", fayl: "mavzu8.html" },
-      { id: 9, nomi: "24-§. Astronomiyada uzunlik o‘lchov birliklari. Kepler qonunlari", paragraf: "25-§. Kepler qonunlari • 26-§. Osmon jismlarining massalarini hisoblash", fayl: "mavzu9.html" },
+      { id: 7, nomi: "18-§. Quyosh sistemasining tuzilishi", paragraf: "19-§. Masshtab va a’zolar • 20-§. Konfiguratsiyalar • 21-§. Aylanish davrlari", fayl: "mavzu7.html", tur: "mavzu" },
+      { id: 8, nomi: "22-§. Sutkalik va sutkalik-gorizontal parallaks. Quyosh sistemasi jismlarigacha masofalar", paragraf: "23-§. Quyosh sistemasi jismlarining radiuslarini aniqlash", fayl: "mavzu8.html", tur: "mavzu" },
+      { id: 9, nomi: "24-§. Astronomiyada uzunlik o‘lchov birliklari. Kepler qonunlari", paragraf: "25-§. Kepler qonunlari • 26-§. Osmon jismlarining massalarini hisoblash", fayl: "mavzu9.html", tur: "mavzu" },
       { id: "1-CHSB", nomi: "1-choraklik summativ baholash (1-CHSB)", paragraf: "1-chorak yakuniy nazorat ishi", fayl: "chsb1.html", tur: "chsb" },
-      { id: 10, nomi: "27-§. Ikki jism masalasi. Kosmik tezliklar", paragraf: "II bob yakuni", fayl: "mavzu10.html" },
-      { id: 11, nomi: "28-§. Osmonni elektromagnit to‘lqinli nurlarda o‘rganish – keng to‘lqinli astronomiya", paragraf: "29–31-§. Optik va radioteleskoplar • 32-§. Ulug‘bek rasadxonasi", fayl: "mavzu11.html" },
-      { id: 12, nomi: "33-§. Nurlanish qonunlari va osmon jismlarining fizik tabiatlarini spektral o‘rganish", paragraf: "III bob. Astrofizika", fayl: "mavzu12.html" },
+      { id: 10, nomi: "27-§. Ikki jism masalasi. Kosmik tezliklar", paragraf: "II bob yakuni", fayl: "mavzu10.html", tur: "mavzu" },
+      { id: 11, nomi: "28-§. Osmonni elektromagnit to‘lqinli nurlarda o‘rganish – keng to‘lqinli astronomiya", paragraf: "29–31-§. Optik va radioteleskoplar • 32-§. Ulug‘bek rasadxonasi", fayl: "mavzu11.html", tur: "mavzu" },
+      { id: 12, nomi: "33-§. Nurlanish qonunlari va osmon jismlarining fizik tabiatlarini spektral o‘rganish", paragraf: "III bob. Astrofizika", fayl: "mavzu12.html", tur: "mavzu" },
       { id: "2-BSB", nomi: "Bob yuzasidan summativ baholash (2-BSB)", paragraf: "II–III boblar yuzasidan nazorat ishi", fayl: "bsb2.html", tur: "bsb" },
-      { id: 13, nomi: "34-§. Quyosh eng yaqin yulduz. Quyosh haqida umumiy ma’lumot", paragraf: "35-§. Quyosh fotosferasi va dog‘lari", fayl: "mavzu13.html" },
-      { id: 14, nomi: "36-§. Quyosh xromosferasi va toji", paragraf: "37-§. Quyosh energiyasining manbai • 38-§. Quyosh faolligi", fayl: "mavzu14.html" },
-      { id: 15, nomi: "39-§. Yer rusumidagi planetalar. Merkuriy va Venera", paragraf: "40-§. Yer va uning tabiiy yo‘ldoshi Oy. Mars", fayl: "mavzu15.html" },
+      { id: 13, nomi: "34-§. Quyosh eng yaqin yulduz. Quyosh haqida umumiy ma’lumot", paragraf: "35-§. Quyosh fotosferasi va dog‘lari", fayl: "mavzu13.html", tur: "mavzu" },
+      { id: 14, nomi: "36-§. Quyosh xromosferasi va toji", paragraf: "37-§. Quyosh energiyasining manbai • 38-§. Quyosh faolligi", fayl: "mavzu14.html", tur: "mavzu" },
+      { id: 15, nomi: "39-§. Yer rusumidagi planetalar. Merkuriy va Venera", paragraf: "40-§. Yer va uning tabiiy yo‘ldoshi Oy. Mars", fayl: "mavzu15.html", tur: "mavzu" },
       { id: "2-CHSB", nomi: "2-choraklik summativ baholash (2-CHSB)", paragraf: "2-chorak yakuniy nazorat ishi", fayl: "chsb2.html", tur: "chsb" },
-      { id: 16, nomi: "41-§. Gigant planetalar, ularning yo‘ldoshlari va halqalari", paragraf: "IV bob. Quyosh sistemasi", fayl: "mavzu16.html" },
-      { id: 17, nomi: "42-§. Asteroidlar va mitti planetalar", paragraf: "IV bob. Quyosh sistemasi", fayl: "mavzu17.html" },
-      { id: 18, nomi: "43-§. Kometalar («dumli yulduzlar»)", paragraf: "44-§. Meteorlar («uchar yulduzlar») va meteoritlar", fayl: "mavzu18.html" },
-      { id: 19, nomi: "45-§. Quyosh sistemasining kelib chiqishi haqida hozirgi zamon qarashlari", paragraf: "IV bob yakuni", fayl: "mavzu19.html" },
+      { id: 16, nomi: "41-§. Gigant planetalar, ularning yo‘ldoshlari va halqalari", paragraf: "IV bob. Quyosh sistemasi", fayl: "mavzu16.html", tur: "mavzu" },
+      { id: 17, nomi: "42-§. Asteroidlar va mitti planetalar", paragraf: "IV bob. Quyosh sistemasi", fayl: "mavzu17.html", tur: "mavzu" },
+      { id: 18, nomi: "43-§. Kometalar («dumli yulduzlar»)", paragraf: "44-§. Meteorlar («uchar yulduzlar») va meteoritlar", fayl: "mavzu18.html", tur: "mavzu" },
+      { id: 19, nomi: "45-§. Quyosh sistemasining kelib chiqishi haqida hozirgi zamon qarashlari", paragraf: "IV bob yakuni", fayl: "mavzu19.html", tur: "mavzu" },
       { id: "3-BSB", nomi: "Bob yuzasidan summativ baholash (3-BSB)", paragraf: "IV bob. Quyosh sistemasi jismlarining fizik tabiati", fayl: "bsb3.html", tur: "bsb" },
-      { id: 20, nomi: "46-§. Yillik parallaks, yulduzlarning masofalarini aniqlash", paragraf: "47-§. Yulduz o‘lchamlari • 48-§. Yulduzlarning rangi va temperaturasi", fayl: "mavzu20.html" },
-      { id: 21, nomi: "49-§. Yulduzning absolyut kattaligi va uning yorqinligi bilan bog‘liqligi", paragraf: "50-§. Spektral sinflar • 51-§. Spektr-yorqinlik diagrammasi", fayl: "mavzu21.html" },
-      { id: 22, nomi: "52-§. Fizik qo‘shaloq yulduzlar va ularning turlari", paragraf: "53-§. Yulduzlarning massalarini hisoblash", fayl: "mavzu22.html" },
-      { id: 23, nomi: "54-§. Fizik o‘zgaruvchi yulduzlar: sefeidlar, yangi va o‘ta yangilar", paragraf: "V bob. Yulduzlar", fayl: "mavzu23.html" },
-      { id: 24, nomi: "55-§. Yulduzlar evolyutsiyasi. Neytron yulduzlar va «qora o‘ralar»", paragraf: "V bob yakuni", fayl: "mavzu24.html" },
+      { id: 20, nomi: "46-§. Yillik parallaks, yulduzlarning masofalarini aniqlash", paragraf: "47-§. Yulduz o‘lchamlari • 48-§. Yulduzlarning rangi va temperaturasi", fayl: "mavzu20.html", tur: "mavzu" },
+      { id: 21, nomi: "49-§. Yulduzning absolyut kattaligi va uning yorqinligi bilan bog‘liqligi", paragraf: "50-§. Spektral sinflar • 51-§. Spektr-yorqinlik diagrammasi", fayl: "mavzu21.html", tur: "mavzu" },
+      { id: 22, nomi: "52-§. Fizik qo‘shaloq yulduzlar va ularning turlari", paragraf: "53-§. Yulduzlarning massalarini hisoblash", fayl: "mavzu22.html", tur: "mavzu" },
+      { id: 23, nomi: "54-§. Fizik o‘zgaruvchi yulduzlar: sefeidlar, yangi va o‘ta yangilar", paragraf: "V bob. Yulduzlar", fayl: "mavzu23.html", tur: "mavzu" },
+      { id: 24, nomi: "55-§. Yulduzlar evolyutsiyasi. Neytron yulduzlar va «qora o‘ralar»", paragraf: "V bob yakuni", fayl: "mavzu24.html", tur: "mavzu" },
       { id: "4-BSB", nomi: "Bob yuzasidan summativ baholash (4-BSB)", paragraf: "V bob. Yulduzlar", fayl: "bsb4.html", tur: "bsb" },
-      { id: 25, nomi: "56-§. Galaktikamizning tuzilishi, tarkibi va aylanishi", paragraf: "57-§. Yulduzlarning sharsimon va sochma to‘dalari", fayl: "mavzu25.html" },
-      { id: 26, nomi: "58-§. Diffuz va chang tumanliklar", paragraf: "VI bob. Koinot tuzilishi", fayl: "mavzu26.html" },
+      { id: 25, nomi: "56-§. Galaktikamizning tuzilishi, tarkibi va aylanishi", paragraf: "57-§. Yulduzlarning sharsimon va sochma to‘dalari", fayl: "mavzu25.html", tur: "mavzu" },
+      { id: 26, nomi: "58-§. Diffuz va chang tumanliklar", paragraf: "VI bob. Koinot tuzilishi", fayl: "mavzu26.html", tur: "mavzu" },
       { id: "3-CHSB", nomi: "3-choraklik summativ baholash (3-CHSB)", paragraf: "3-chorak yakuniy nazorat ishi", fayl: "chsb3.html", tur: "chsb" },
-      { id: 27, nomi: "59-§. Tashqi galaktikalar. Galaktikalarning sinflari va spektrlari", paragraf: "60-§. Radiogalaktikalar va kvazarlar", fayl: "mavzu27.html" },
-      { id: 28, nomi: "61-§. Koinotning kengayishi. Habbl qonuni", paragraf: "VI bob. Koinot evolyutsiyasi", fayl: "mavzu28.html" },
-      { id: 29, nomi: "62-§. Galaktikalarning Koinotda taqsimlanishi", paragraf: "I qism yakuni", fayl: "mavzu29.html" },
+      { id: 27, nomi: "59-§. Tashqi galaktikalar. Galaktikalarning sinflari va spektrlari", paragraf: "60-§. Radiogalaktikalar va kvazarlar", fayl: "mavzu27.html", tur: "mavzu" },
+      { id: 28, nomi: "61-§. Koinotning kengayishi. Habbl qonuni", paragraf: "VI bob. Koinot evolyutsiyasi", fayl: "mavzu28.html", tur: "mavzu" },
+      { id: 29, nomi: "62-§. Galaktikalarning Koinotda taqsimlanishi", paragraf: "I qism yakuni", fayl: "mavzu29.html", tur: "mavzu" },
       { id: "5-BSB", nomi: "Bob yuzasidan summativ baholash (5-BSB)", paragraf: "VI bob. Koinotning tuzilishi va evolutsiyasi", fayl: "bsb5.html", tur: "bsb" },
-      { id: 30, nomi: "63-§. Kosmonavtika predmeti va uning boshqa fanlar bilan aloqasi", paragraf: "II qism. Kosmonavtika elementlari", fayl: "mavzu30.html" },
-      { id: 31, nomi: "64-§. Raketa harakati qonunlari. Raketaning tortish kuchi", paragraf: "Kosmonavtika asoslari", fayl: "mavzu31.html" },
-      { id: 32, nomi: "65-§. Raketaning strukturasi va konstruktiv xarakteristikasi", paragraf: "66-§. Uchish paytida kosmik apparat (KA)ga ta’sir etuvchi kuchlar", fayl: "mavzu32.html" },
-      { id: 33, nomi: "67-§. Tortishishning markaziy maydonida harakatlanayotgan jismning orbitalari", paragraf: "Orbital mexanika", fayl: "mavzu33.html" },
-      { id: 34, nomi: "68-§. Ta’sir sferasi va KA trayektoriyalarini taxminiy hisoblash", paragraf: "Kosmonavtika elementlari", fayl: "mavzu34.html" },
-      { id: 35, nomi: "69-§. Yer sun’iy yo‘ldoshlarining orbita elementlari", paragraf: "70-§. Yer atmosferasida yo‘ldosh orbitasining evolyutsiyasi", fayl: "mavzu35.html" },
-      { id: 36, nomi: "71-§. Orbital manyovrlar. SY orbita tekisligini burish", paragraf: "72-§. SY ni orbitadan tushirish", fayl: "mavzu36.html" },
-      { id: 37, nomi: "73-§. KAlarni Oyga uchirish", paragraf: "Oy parvozlari", fayl: "mavzu37.html" },
-      { id: 38, nomi: "74-§. Planetalarga uchish trayektoriyalari. Yerning ta’sir sferasi ichidagi harakat", paragraf: "Sayyoralararo parvozlar", fayl: "mavzu38.html" },
-      { id: 39, nomi: "75-§. Gomon orbitalari bo‘ylab uchishlar", paragraf: "Sayyoralararo parvozlar", fayl: "mavzu39.html" },
-      { id: 40, nomi: "76-§. KAning mo‘ljallangan planeta ta’sir sferasidagi harakati", paragraf: "II qism yakuni", fayl: "mavzu40.html" },
+      { id: 30, nomi: "63-§. Kosmonavtika predmeti va uning boshqa fanlar bilan aloqasi", paragraf: "II qism. Kosmonavtika elementlari", fayl: "mavzu30.html", tur: "mavzu" },
+      { id: 31, nomi: "64-§. Raketa harakati qonunlari. Raketaning tortish kuchi", paragraf: "Kosmonavtika asoslari", fayl: "mavzu31.html", tur: "mavzu" },
+      { id: 32, nomi: "65-§. Raketaning strukturasi va konstruktiv xarakteristikasi", paragraf: "66-§. Uchish paytida kosmik apparat (KA)ga ta’sir etuvchi kuchlar", fayl: "mavzu32.html", tur: "mavzu" },
+      { id: 33, nomi: "67-§. Tortishishning markaziy maydonida harakatlanayotgan jismning orbitalari", paragraf: "Orbital mexanika", fayl: "mavzu33.html", tur: "mavzu" },
+      { id: 34, nomi: "68-§. Ta’sir sferasi va KA trayektoriyalarini taxminiy hisoblash", paragraf: "Kosmonavtika elementlari", fayl: "mavzu34.html", tur: "mavzu" },
+      { id: 35, nomi: "69-§. Yer sun’iy yo‘ldoshlarining orbita elementlari", paragraf: "70-§. Yer atmosferasida yo‘ldosh orbitasining evolyutsiyasi", fayl: "mavzu35.html", tur: "mavzu" },
+      { id: 36, nomi: "71-§. Orbital manyovrlar. SY orbita tekisligini burish", paragraf: "72-§. SY ni orbitadan tushirish", fayl: "mavzu36.html", tur: "mavzu" },
+      { id: 37, nomi: "73-§. KAlarni Oyga uchirish", paragraf: "Oy parvozlari", fayl: "mavzu37.html", tur: "mavzu" },
+      { id: 38, nomi: "74-§. Planetalarga uchish trayektoriyalari. Yerning ta’sir sferasi ichidagi harakat", paragraf: "Sayyoralararo parvozlar", fayl: "mavzu38.html", tur: "mavzu" },
+      { id: 39, nomi: "75-§. Gomon orbitalari bo‘ylab uchishlar", paragraf: "Sayyoralararo parvozlar", fayl: "mavzu39.html", tur: "mavzu" },
+      { id: 40, nomi: "76-§. KAning mo‘ljallangan planeta ta’sir sferasidagi harakati", paragraf: "II qism yakuni", fayl: "mavzu40.html", tur: "mavzu" },
       { id: "4-CHSB", nomi: "4-choraklik summativ baholash (4-CHSB)", paragraf: "4-chorak va yillik yakuniy nazorat ishi", fayl: "chsb4.html", tur: "chsb" }
     ];
 
     const grid = document.getElementById("topicsGrid");
     const searchInput = document.getElementById("searchInput");
     const emptyMsg = document.getElementById("emptyMsg");
+    const filterBtns = document.querySelectorAll(".filter-btn");
 
-    function renderTopics(list) {
+    let activeFilter = "all";
+
+    function renderTopics() {
+      const query = searchInput.value.toLowerCase().trim();
+      const filtered = mavzular.filter(item => {
+        const matchesFilter = activeFilter === "all" || item.tur === activeFilter;
+        const matchesQuery =
+          item.nomi.toLowerCase().includes(query) ||
+          item.paragraf.toLowerCase().includes(query) ||
+          String(item.id).toLowerCase().includes(query);
+        return matchesFilter && matchesQuery;
+      });
+
       grid.innerHTML = "";
-      if (list.length === 0) {
+      if (filtered.length === 0) {
         emptyMsg.style.display = "block";
         return;
       }
       emptyMsg.style.display = "none";
 
-      list.forEach(item => {
+      filtered.forEach(item => {
         const card = document.createElement("a");
         card.href = item.fayl;
         card.className = "card";
 
         let yorliq = `${item.id}-mavzu`;
-        let badgeStyle = "";
+        let badgeClass = "badge";
 
         if (item.tur === "bsb") {
           yorliq = item.id;
-          badgeStyle = 'style="background: #fef3c7; color: #b45309;"';
+          badgeClass = "badge bsb";
+          card.classList.add("card-bsb");
         } else if (item.tur === "chsb") {
           yorliq = item.id;
-          badgeStyle = 'style="background: #fee2e2; color: #b91c1c;"';
+          badgeClass = "badge chsb";
+          card.classList.add("card-chsb");
         }
 
         card.innerHTML = `
           <div>
-            <span class="badge" ${badgeStyle}>${yorliq}</span>
+            <span class="${badgeClass}">${yorliq}</span>
             <h3>${item.nomi}</h3>
             <p class="card-sub">${item.paragraf}</p>
           </div>
-          <div class="card-footer">Ochish &rarr;</div>
+          <div class="card-footer">
+            <span>Ochish</span>
+            <span>&rarr;</span>
+          </div>
         `;
         grid.appendChild(card);
       });
     }
 
-    searchInput.addEventListener("input", (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      const filtered = mavzular.filter(item =>
-        item.nomi.toLowerCase().includes(query) ||
-        item.paragraf.toLowerCase().includes(query) ||
-        String(item.id).toLowerCase().includes(query)
-      );
-      renderTopics(filtered);
+    searchInput.addEventListener("input", renderTopics);
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.dataset.filter;
+        renderTopics();
+      });
     });
 
-    renderTopics(mavzular);
+    renderTopics();
   </script>
 
 </body>
 </html>
-
