@@ -1,4 +1,162 @@
-<script>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11-sinf Astronomiya — Interaktiv darslik</title>
+  <style>
+    :root {
+      --bg-color: #f4f7fb;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 26px;
+      padding: 16px 10px;
+    }
+
+    header h1 {
+      font-size: 1.85rem;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    .search-box {
+      max-width: 520px;
+      margin: 0 auto 28px auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--card-bg);
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+      border-color: var(--primary);
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .card-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .card-footer {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .card:hover .card-footer {
+      color: var(--primary-hover);
+    }
+
+    .empty-msg {
+      text-align: center;
+      grid-column: 1 / -1;
+      color: var(--text-muted);
+      padding: 40px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>11-sinf Astronomiya</h1>
+      <p>Kerakli mavzuni tanlang yoki qidiruv orqali toping</p>
+    </header>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Mavzu nomi, paragraf yoki raqamini yozing...">
+    </div>
+
+    <div class="grid" id="topicsGrid"></div>
+    <div class="empty-msg" id="emptyMsg">Hech qanday mavzu topilmadi.</div>
+  </div>
+
+  <script>
     const mavzular = [
       { id: 1, nomi: "1-§. Astronomiya nimani o‘rganadi? Uning rivojlanish tarixi va boshqa fanlar bilan aloqasi", paragraf: "Kirish", fayl: "mavzu1.html" },
       { id: 2, nomi: "2-§. Yoritgichlarning sutkalik ko‘rinma harakatlari. Yulduz turkumlari", paragraf: "3-§. Fuko mayatnigi • 4-§. Osmon sferasi • 5-§. Ekliptika", fayl: "mavzu2.html" },
@@ -83,7 +241,7 @@
           <div>
             <span class="badge" ${badgeStyle}>${yorliq}</span>
             <h3>${item.nomi}</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">${item.paragraf}</p>
+            <p class="card-sub">${item.paragraf}</p>
           </div>
           <div class="card-footer">Ochish &rarr;</div>
         `;
@@ -102,4 +260,8 @@
     });
 
     renderTopics(mavzular);
-      </script>
+  </script>
+
+</body>
+</html>
+
