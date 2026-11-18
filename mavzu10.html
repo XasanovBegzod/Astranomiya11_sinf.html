@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10-Mavzu (27-§): Ikki jism masalasi. Kosmik tezliklar | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.04rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.91rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.84rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 11px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>10-MAVZU (27-§). Ikki jism masalasi. Kosmik tezliklar</h1>
+    <p>11-sinf Astronomiya | II Bob: Quyosh sistemasining tuzilishi va osmon jismlarining harakati</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">27-§ Konus kesimlari (v₁, v₂, v₃)</button>
+    <button class="tab-btn" onclick="setTab(2)">Balandlik (h) va Tezlik grafigi</button>
+    <button class="tab-btn" onclick="setTab(3)">Sayyoralarda v₁ va v₂</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>27-§. Ikki jism masalasi. Kosmik tezliklar</h2>
+    <p><strong>Ikki jism masalasi</strong> o‘zaro Nyutonning butun olam tortishish kuchi ($F = G\frac{Mm}{r^2}$) bilan ta’sirlashuvchi ikki jismning umumiy massa markazi atrofida harakat trayektoriyalarini aniqlaydi. Markaziy jism tortishish maydonida jismning to‘liq mexanik energiyasi <strong>E = mv²/2 − GMm/r</strong> saqlanadi va trayektoriya shakli (konus kesimi) boshlang‘ich tezlik <strong>v₀</strong> ga bog‘liq bo‘ladi:</p>
+    <ul>
+      <li><strong>Birinchi kosmik tezlik (v₁):</strong> Jism doiraviy orbita bo‘ylab sun’iy yo‘ldoshga aylanish tezligi: <code>v₁ = √(GM / r) = √(gR⊕) ≈ 7.91 km/s</code> (Yer sirtidan).</li>
+      <li><strong>Ikkinchi kosmik tezlik (v₂):</strong> Jism Yerning tortishish maydonini yengib, parabola bo‘ylab Quyoshning sun’iy yo‘ldoshiga aylanish tezligi (<em>E = 0</em>): <code>v₂ = √2 · v₁ ≈ 11.19 km/s</code>.</li>
+      <li><strong>Uchinchi kosmik tezlik (v₃):</strong> Jism Quyosh sistemasini ham butunlay tark etish tezligi (Yer harakati yo‘nalishida uchirilganda): <code>v₃ = √(v₂² + (√2 − 1)²v⊕²) ≈ 16.67 km/s</code>.</li>
+    </ul>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Osmon jismi</th>
+          <th>Massasi (M, kg)</th>
+          <th>Radiusi (R, km)</th>
+          <th>1-kosmik tezlik (v₁)</th>
+          <th>2-kosmik tezlik (v₂)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Oy</strong></td><td>7.35 × 10²² kg</td><td>1 738 km</td><td><strong>1.68 km/s</strong></td><td><strong>2.38 km/s</strong></td></tr>
+        <tr><td><strong>Mars</strong></td><td>6.42 × 10²³ kg</td><td>3 396 km</td><td><strong>3.55 km/s</strong></td><td><strong>5.03 km/s</strong></td></tr>
+        <tr><td><strong>Yer</strong></td><td>5.97 × 10²⁴ kg</td><td>6 378 km</td><td><strong>7.91 km/s</strong></td><td><strong>11.19 km/s</strong></td></tr>
+        <tr><td><strong>Yupiter</strong></td><td>1.90 × 10²⁷ kg</td><td>71 492 km</td><td><strong>42.08 km/s</strong></td><td><strong>59.51 km/s</strong></td></tr>
+        <tr><td><strong>Quyosh</strong></td><td>1.99 × 10³⁰ kg</td><td>696 000 km</td><td><strong>436.8 km/s</strong></td><td><strong>617.7 km/s</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="problem-box">
+      <strong>1-Masala:</strong> Yer sirtidan <em>h = 3622 km</em> balandlikdagi doiraviy orbitada harakatlanayotgan sun’iy yo‘ldoshning birinchi kosmik tezligini (v₁), ikkinchi kosmik tezligini (v₂) va aylanish davrini (T) hisoblang (<em>R⊕ = 6378 km, GM⊕ = 4.0 × 10¹⁴ m³/s²</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) Orbita radiusi: <strong>r = 6378 + 3622 = 10 000 km = 1.0 × 10⁷ m</strong>.<br>
+        2) Birinchi kosmik tezlik: <strong>v₁ = √(4.0 × 10¹⁴ / 1.0 × 10⁷) ≈ 6325 m/s ≈ 6.33 km/s</strong>.<br>
+        3) Ikkinchi kosmik tezlik: <strong>v₂ = √2 · v₁ ≈ 8.94 km/s</strong>.<br>
+        4) Aylanish davri: <strong>T = 2πr / v₁ ≈ 9934 s ≈ 2 soat 45.6 daqiqa</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala:</strong> Kosmik apparatga Yer sirtida <em>v₀ = 15.0 km/s</em> boshlang‘ich tezlik berildi. Apparat Yer tortishish maydonidan chiqib ketganidan so‘ng (Yerga nisbatan cheksizlikda) qanday qoldiq tezlik (v∞) bilan harakatlanishini aniqlang (<em>v₂ = 11.19 km/s</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        Energiya saqlanish qonunidan: <strong>v∞ = √(v₀² − v₂²) = √(15.0² − 11.19²) = √(225.0 − 125.22) = √99.78 ≈ 10.0 km/s</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala:</strong> Mars massasi Yer massasining <em>0.107</em> qismiga, radiusi esa Yer radiusining <em>0.532</em> qismiga teng. Mars sirti uchun birinchi (v₁) va ikkinchi (v₂) kosmik tezliklarni hisoblang (<em>v₁⊕ = 7.91 km/s</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        1) <strong>v₁_Mars = 7.91 · √(0.107 / 0.532) = 7.91 · √0.2011 ≈ 3.55 km/s</strong>.<br>
+        2) <strong>v₂_Mars = √2 · 3.55 ≈ 5.02 km/s</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">27-§: Ikki jism masalasi — Konus kesimlari va Kosmik tezliklar (v₁, v₂, v₃)</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">E = mv²/2 − GMm/r | v₂ = √2 · v₁</div>
+    </div>
+    <canvas id="cosmoCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: KONUS KESIMLARI VA KOSMIK TEZLIKLAR -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Yer sirtidan boshlang‘ich tezlik (v₀)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Boshlang‘ich gorizontal tezlik (v₀):</span>
+            <strong id="c1VVal">7.91 km/s</strong>
+          </div>
+          <input type="range" id="c1V0" min="5.50" max="17.50" step="0.05" value="7.91" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setC1V(6.50)">Suborbital (6.5 km/s)</button>
+          <button class="btn active" onclick="setC1V(7.91)">v₁ = 7.91 km/s (Aylana)</button>
+          <button class="btn" onclick="setC1V(9.80)">Ellips (9.8 km/s)</button>
+          <button class="btn" onclick="setC1V(11.19)">v₂ = 11.19 km/s (Parabola)</button>
+          <button class="btn" onclick="setC1V(15.00)">2-Masala: Giperbola (15.0 km/s)</button>
+          <button class="btn" onclick="setC1V(16.67)">v₃ = 16.67 km/s (Yulduzlararo)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Konus kesimi va Energiya tahlili</h3>
+        <div class="formula-box">
+          E / m = v₀² / 2 − GM⊕ / R⊕ &nbsp;|&nbsp; v∞ = √(v₀² − v₂²)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Trayektoriya (Konus kesimi):</span><span class="t-val" id="c1ConicOut">Aylana (e = 0.00)</span></div>
+          <div class="t-row"><span>Solishtirma energiya (E / m):</span><span class="t-val" id="c1EnergyOut">−31.3 MJ/kg (E &lt; 0)</span></div>
+          <div class="t-row"><span>Cheksizlikdagi tezlik (v∞):</span><span class="t-val" id="c1VinfOut">0 km/s (Bog‘langan orbita)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: BALANDLIK (h) VA TEZLIK GRAFIGI -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Orbita balandligi (h) va Real sun’iy yo‘ldoshlar</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yer sirtidan balandlik (h):</span>
+            <strong id="hAltVal">3 622 km</strong>
+          </div>
+          <input type="range" id="hAltSl" min="200" max="36000" step="50" value="3622" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setAltPreset(408)">XKS / ISS (408 km)</button>
+          <button class="btn active" onclick="setAltPreset(3622)">1-Masala (3 622 km)</button>
+          <button class="btn" onclick="setAltPreset(20200)">GPS yo‘ldoshi (20 200 km)</button>
+          <button class="btn" onclick="setAltPreset(35786)">Geostatsionar (35 786 km)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Berilgan balandlikdagi orbital parametrlar</h3>
+        <div class="formula-box">
+          v₁(h) = √[GM⊕ / (R⊕ + h)] &nbsp;|&nbsp; T = 2π(R⊕ + h) / v₁
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Orbita radiusi (r = R⊕ + h):</span><span class="t-val" id="hRadOut">10 000 km</span></div>
+          <div class="t-row"><span>1-kosmik tezlik v₁(h):</span><span class="t-val" id="hV1Out">6.31 km/s</span></div>
+          <div class="t-row"><span>2-kosmik tezlik v₂(h):</span><span class="t-val" id="hV2Out">8.93 km/s</span></div>
+          <div class="t-row"><span>Aylanish davri (T):</span><span class="t-val" id="hPerOut">2 soat 46 daq</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SAYYORALARDA v1 VA v2 -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Osmon jismini tanlang</h3>
+        <div class="btn-grid">
+          <button class="btn" id="plBtn0" onclick="setPlIdx(0)">Oy (v₁=1.68 km/s)</button>
+          <button class="btn active" id="plBtn1" onclick="setPlIdx(1)">Mars (v₁=3.55 km/s)</button>
+          <button class="btn" id="plBtn2" onclick="setPlIdx(2)">Yer (v₁=7.91 km/s)</button>
+          <button class="btn" id="plBtn3" onclick="setPlIdx(3)">Yupiter (v₁=42.08 km/s)</button>
+          <button class="btn" style="grid-column: span 2;" id="plBtn4" onclick="setPlIdx(4)">Quyosh (v₁=436.8 km/s)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 id="plNameOut">Mars sayyorasi</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Massasi (M):</span><span class="t-val" id="plMassOut">6.42 × 10²³ kg (0.107 M⊕)</span></div>
+          <div class="t-row"><span>Radiusi (R):</span><span class="t-val" id="plRadOut">3 396 km (0.532 R⊕)</span></div>
+          <div class="t-row"><span>1-kosmik tezlik (v₁):</span><span class="t-val" id="plV1Out">3.55 km/s</span></div>
+          <div class="t-row"><span>2-kosmik tezlik (v₂):</span><span class="t-val" id="plV2Out">5.03 km/s</span></div>
+        </div>
+        <p class="desc" id="plNoteOut" style="margin-top:8px;">
+          Marsning tortishish maydoni Yernikidan ancha kuchsiz bo‘lgani sababli uning sirtidan uchib chiqish uchun atigi 5.03 km/s tezlik kifoya qiladi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('cosmoCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "27-§: Konus kesimlari (Ellips, Parabola, Giperbola) va Kosmik tezliklar",
+      "27-§: Balandlik (h) ortishi bilan v₁(h), v₂(h) va Davr T(h) o‘zgarishi",
+      "27-§: Sayyoralar va Oy sirtidagi birinchi va ikkinchi kosmik tezliklar",
+      "Bilimlarni tekshirish: 10-Mavzu (27-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "E = mv²/2 − GMm/r | v₂ = √2 · v₁",
+      "v₁(h) = √[GM⊕ / (R⊕ + h)]",
+      "v₁ = √(GM / R) | v₂ = √2 · v₁",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: KONUS KESIMLARI VA TEZLIKLAR ====================
+  let craftT = 0;
+
+  function setC1V(v) {
+    document.getElementById('c1V0').value = v;
+    craftT = 0;
+  }
+
+  function drawConicTab(w, h) {
+    const v0 = parseFloat(document.getElementById('c1V0').value);
+    const v1 = 7.91, v2 = 11.19, v3 = 16.67;
+
+    document.getElementById('c1VVal').textContent = `${v0.toFixed(2)} km/s`;
+
+    // Solishtirma energiya E/m = v0^2 / 2 - v1^2 (MJ/kg da)
+    const specE = 0.5 * v0 * v0 - v1 * v1;
+    let conicTxt, vInfTxt;
+
+    if (v0 < v1 - 0.05) {
+      const e = (1 - Math.pow(v0 / v1, 2)).toFixed(2);
+      conicTxt = `Suborbital ellips yoyi (e = ${e})`;
+      vInfTxt = "Yer sirtiga qaytib tushadi";
+    } else if (Math.abs(v0 - v1) <= 0.07) {
+      conicTxt = "Aylana (e = 0.00, 1-kosmik tezlik)";
+      vInfTxt = "0 km/s (Doiraviy sun’iy yo‘ldosh)";
+    } else if (v0 < v2 - 0.05) {
+      const e = (Math.pow(v0 / v1, 2) - 1).toFixed(2);
+      conicTxt = `Yopiq ellips (e = ${e}, E < 0)`;
+      vInfTxt = "0 km/s (Elliptik sun’iy yo‘ldosh)";
+    } else if (Math.abs(v0 - v2) <= 0.07) {
+      conicTxt = "Parabola (e = 1.00, E = 0)";
+      vInfTxt = "0.00 km/s (Cheksizlikka nol tezlikda)";
+    } else {
+      const e = (Math.pow(v0 / v1, 2) - 1).toFixed(2);
+      const vInf = Math.sqrt(v0 * v0 - v2 * v2);
+      conicTxt = v0 >= v3
+        ? `Giperbola (e = ${e}) + Quyosh sistemasidan chiqish!`
+        : `Giperbola (e = ${e}, E > 0)`;
+      vInfTxt = `${vInf.toFixed(2)} km/s (Yerga nisbatan)`;
+    }
+
+    document.getElementById('c1ConicOut').textContent = conicTxt;
+    document.getElementById('c1EnergyOut').textContent = `${specE >= 0 ? '+' : ''}${specE.toFixed(1)} MJ/kg`;
+    document.getElementById('c1VinfOut').textContent = vInfTxt;
+
+    craftT += 0.025;
+    const cx = w * 0.42, cy = h * 0.54;
+    const earthR = 45;
+    const startR = 72;
+
+    // Yer
+    ctx.fillStyle = '#1d4ed8';
+    ctx.beginPath(); ctx.arc(cx, cy, earthR, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Tayanch doiraviy orbita (v1)
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, startR, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.5;
+    let sx, sy;
+
+    if (v0 < v1 - 0.05) {
+      const maxA = Math.PI * 0.32 + ((v0 - 5.5) / 2.4) * Math.PI * 0.68;
+      ctx.beginPath();
+      for (let a = 0; a <= maxA; a += 0.05) {
+        const r = startR - (a / maxA) * (startR - earthR);
+        const x = cx + Math.sin(a) * r;
+        const y = cy - Math.cos(a) * r;
+        a === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      const curA = ((craftT % 2.0) / 2.0) * maxA;
+      const curR = startR - (curA / maxA) * (startR - earthR);
+      sx = cx + Math.sin(curA) * curR;
+      sy = cy - Math.cos(curA) * curR;
+    } else if (v0 < v2 - 0.05) {
+      const e = Math.min(0.74, Math.max(0, Math.pow(v0 / v1, 2) - 1));
+      const aSemi = startR / (1 - e);
+      const bSemi = aSemi * Math.sqrt(1 - e * e);
+      const cOff = aSemi * e;
+
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + cOff, bSemi, aSemi, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      sx = cx + Math.sin(craftT) * bSemi;
+      sy = cy + cOff - Math.cos(craftT) * aSemi;
+    } else {
+      const bend = v0 >= v3 ? 0.22 : (v0 > v2 + 0.1 ? 0.36 : 0.56);
+      ctx.beginPath();
+      for (let t = 0; t <= 270; t += 5) {
+        const x = cx + t * 1.45;
+        const y = (cy - startR) + Math.pow(t / 22, 2) * bend;
+        t === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      const prog = (craftT * 58) % 270;
+      sx = cx + prog * 1.45;
+      sy = (cy - startR) + Math.pow(prog / 22, 2) * bend;
+    }
+
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(sx, sy, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`🛰 v₀ = ${v0.toFixed(2)} km/s`, sx + 9, sy - 6);
+  }
+
+  // ==================== TAB 2: BALANDLIK (h) VA TEZLIK GRAFIGI ====================
+  function setAltPreset(hKm) {
+    document.getElementById('hAltSl').value = hKm;
+  }
+
+  function drawAltitudeTab(w, h) {
+    const altKm = parseFloat(document.getElementById('hAltSl').value);
+    const Re = 6378.0;
+    const GM = 3.986e5; // km^3 / s^2
+    const rKm = Re + altKm;
+
+    const v1 = Math.sqrt(GM / rKm);
+    const v2 = Math.sqrt(2) * v1;
+    const perSec = (2 * Math.PI * rKm) / v1;
+    const hrs = Math.floor(perSec / 3600);
+    const mins = Math.round((perSec % 3600) / 60);
+
+    document.getElementById('hAltVal').textContent = `${Math.round(altKm).toLocaleString()} km`;
+    document.getElementById('hRadOut').textContent = `${Math.round(rKm).toLocaleString()} km`;
+    document.getElementById('hV1Out').textContent = `${v1.toFixed(2)} km/s`;
+    document.getElementById('hV2Out').textContent = `${v2.toFixed(2)} km/s`;
+    document.getElementById('hPerOut').textContent = `${hrs} soat ${mins} daq`;
+
+    // Grafik: X o'qi h (0..36000 km), Y o'qi tezlik (0..12 km/s)
+    const padL = 62, padR = 30, padT = 65, padB = 48;
+    const gw = w - padL - padR;
+    const gh = h - padT - padB;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.78)';
+    ctx.fillRect(padL, padT, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(padL, padT, gw, gh);
+
+    const xFromH = (hk) => padL + (hk / 36000) * gw;
+    const yFromV = (vk) => padT + gh - (vk / 12.0) * gh;
+
+    // v2(h) egri chizig'i
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let hk = 0; hk <= 36000; hk += 500) {
+      const vv2 = Math.sqrt((2 * GM) / (Re + hk));
+      const x = xFromH(hk), y = yFromV(vv2);
+      hk === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // v1(h) egri chizig'i
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    for (let hk = 0; hk <= 36000; hk += 500) {
+      const vv1 = Math.sqrt(GM / (Re + hk));
+      const x = xFromH(hk), y = yFromV(vv1);
+      hk === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Tanlangan balandlik vertikal chizig'i va nuqtalar
+    const cx = xFromH(altKm);
+    ctx.strokeStyle = 'rgba(52, 211, 153, 0.5)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(cx, padT); ctx.lineTo(cx, padT + gh); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(cx, yFromV(v1), 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx, yFromV(v2), 6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`v₁(h) = ${v1.toFixed(2)} km/s`, Math.min(w - 135, cx + 8), yFromV(v1) - 8);
+    ctx.fillText(`v₂(h) = ${v2.toFixed(2)} km/s`, Math.min(w - 135, cx + 8), yFromV(v2) - 8);
+    ctx.fillText('Balandlik h (0 → 36 000 km)', padL + gw * 0.35, padT + gh + 24);
+  }
+
+  // ==================== TAB 3: SAYYORALARDA v1 VA v2 ====================
+  const planetsData = [
+    { name: "Oy (Yerning tabiiy yo‘ldoshi)", mass: "7.35 × 10²² kg (0.0123 M⊕)", rad: "1 738 km (0.273 R⊕)", v1: 1.68, v2: 2.38, note: "Oyning massasi va radiusi kichik bo‘lgani uchun ikkinchi kosmik tezlik atigi 2.38 km/s; shu sababli Oy atmosferani ushlab tura olmaydi." },
+    { name: "Mars sayyorasi", mass: "6.42 × 10²³ kg (0.107 M⊕)", rad: "3 396 km (0.532 R⊕)", v1: 3.55, v2: 5.03, note: "Mars sirtidan uchib chiqish uchun 5.03 km/s tezlik kifoya qiladi (Yernikidan 2.2 marta kichik)." },
+    { name: "Yer sayyorasi", mass: "5.97 × 10²⁴ kg (1.00 M⊕)", rad: "6 378 km (1.00 R⊕)", v1: 7.91, v2: 11.19, note: "Yer sun’iy yo‘ldoshlari 7.91 km/s tezlikda orbitaga chiqadi, sayyoralararo stansiyalar esa kamida 11.19 km/s tezlik oladi." },
+    { name: "Yupiter (Eng yirik gigant)", mass: "1.90 × 10²⁷ kg (318 M⊕)", rad: "71 492 km (11.2 R⊕)", v1: 42.08, v2: 59.51, note: "Yupiterning ulkan tortishish maydoni tufayli uning sirtidan qochish tezligi deyarli 60 km/s ga yetadi." },
+    { name: "Quyosh (Markaziy yulduz)", mass: "1.99 × 10³⁰ kg (332 950 M⊕)", rad: "696 000 km (109.1 R⊕)", v1: 436.8, v2: 617.7, note: "Quyosh sirtidan tortishish maydonini yengib chiqish uchun 617.7 km/s ulkan tezlik talab etiladi." }
+  ];
+
+  let curPlIdx = 1;
+
+  function setPlIdx(idx) {
+    curPlIdx = idx;
+    for (let i = 0; i < 5; i++) {
+      document.getElementById('plBtn' + i).classList.toggle('active', i === idx);
+    }
+    const p = planetsData[idx];
+    document.getElementById('plNameOut').textContent = p.name;
+    document.getElementById('plMassOut').textContent = p.mass;
+    document.getElementById('plRadOut').textContent = p.rad;
+    document.getElementById('plV1Out').textContent = `${p.v1} km/s`;
+    document.getElementById('plV2Out').textContent = `${p.v2} km/s`;
+    document.getElementById('plNoteOut').textContent = p.note;
+  }
+
+  function drawPlanetsCompareTab(w, h) {
+    const padL = 70, padR = 40, padT = 72, padB = 55;
+    const gw = w - padL - padR;
+    const gh = h - padT - padB;
+
+    const maxLog = Math.log10(700); // Quyosh v2 = 617.7 km/s sig'ishi uchun logarifmik ustunlar
+    const barGroupW = gw / planetsData.length;
+
+    planetsData.forEach((p, idx) => {
+      const gx = padL + idx * barGroupW + barGroupW * 0.18;
+      const bw = barGroupW * 0.28;
+      const isSel = idx === curPlIdx;
+
+      const h1 = (Math.log10(p.v1 + 1) / maxLog) * gh;
+      const h2 = (Math.log10(p.v2 + 1) / maxLog) * gh;
+
+      // v1 ustuni
+      ctx.fillStyle = isSel ? '#38bdf8' : 'rgba(56, 189, 248, 0.45)';
+      ctx.fillRect(gx, padT + gh - h1, bw, h1);
+
+      // v2 ustuni
+      ctx.fillStyle = isSel ? '#fbbf24' : 'rgba(251, 191, 36, 0.45)';
+      ctx.fillRect(gx + bw + 5, padT + gh - h2, bw, h2);
+
+      // Qiymatlar
+      ctx.fillStyle = isSel ? '#fff' : '#cbd5e1';
+      ctx.font = isSel ? 'bold 11px sans-serif' : '10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${p.v1}`, gx + bw * 0.5, padT + gh - h1 - 6);
+      ctx.fillText(`${p.v2}`, gx + bw * 1.5 + 5, padT + gh - h2 - 6);
+      ctx.fillText(p.name.split(' ')[0], gx + bw + 2, padT + gh + 20);
+    });
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(padL, padT - 26, 12, 12);
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('1-kosmik tezlik v₁ (km/s)', padL + 18, padT - 16);
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillRect(padL + 180, padT - 26, 12, 12);
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillText('2-kosmik tezlik v₂ (km/s)', padL + 198, padT - 16);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Markaziy jism tortishish maydonida harakatlanayotgan jismning to‘liq mexanik energiyasi E = mv²/2 − GMm/r nolga teng (E = 0) bo‘lsa, u qanday trayektoriya bo‘ylab harakatlanadi?",
+      opts: ["Aylana bo‘ylab", "Parabola bo‘ylab (2-kosmik tezlikda)", "Yopiq ellips bo‘ylab"],
+      ans: 1,
+      exp: "E = 0 shartda jism ikkinchi kosmik tezlikka (v₂) ega bo‘lib, parabola bo‘ylab cheksizlikka uzoqlashadi."
+    },
+    {
+      q: "2. Yer sirtidan uchirilgan jism Yer atrofida doiraviy orbita bo‘ylab sun’iy yo‘ldoshga aylanishi uchun zarur bo‘lgan birinchi kosmik tezlik (v₁) nechaga teng?",
+      opts: ["7.91 km/s", "11.19 km/s", "16.67 km/s"],
+      ans: 0,
+      exp: "Yer sirtida v₁ = √(GM⊕ / R⊕) = √(gR⊕) ≈ 7.91 km/s."
+    },
+    {
+      q: "3. Ikkinchi kosmik tezlik (v₂) birinchi kosmik tezlikdan (v₁) necha marta katta?",
+      opts: ["2 marta", "√2 marta (≈ 1.414 marta)", "π marta"],
+      ans: 1,
+      exp: "v₂ = √(2GM / r) = √2 · √(GM / r) = √2 · v₁."
+    },
+    {
+      q: "4. Yerning tortishish maydonini yengib, Quyosh sistemasini ham butunlay tark etish uchun Yer sirtidan Yer harakati yo‘nalishida beriladigan uchinchi kosmik tezlik (v₃) nechaga teng?",
+      opts: ["11.19 km/s", "16.67 km/s", "29.8 km/s"],
+      ans: 1,
+      exp: "Uchinchi kosmik tezlik v₃ ≈ 16.67 km/s ga teng."
+    },
+    {
+      q: "5. Yer sirtidan h = 3 R⊕ balandlikda (ya’ni orbita radiusi r = 4 R⊕ bo‘lganda) sun’iy yo‘ldoshning birinchi kosmik tezligi Yer sirtidagidan necha marta kichik bo‘ladi?",
+      opts: ["4 marta", "2 marta (≈ 3.95 km/s)", "16 marta"],
+      ans: 1,
+      exp: "v₁(r) = √(GM⊕ / r) bo‘lgani uchun r = 4 R⊕ da tezlik √4 = 2 marta kamayadi."
+    },
+    {
+      q: "6. Kosmik apparatga Yer sirtida v₀ = 15 km/s tezlik berildi. Yer tortishish maydonidan chiqqandan so‘ng apparatning Yerga nisbatan qoldiq tezligi (v∞) qaysi formula bilan topiladi?",
+      opts: ["v∞ = v₀ − v₂", "v∞ = √(v₀² − v₂²)", "v∞ = v₀ + v₂"],
+      ans: 1,
+      exp: "Energiya saqlanish qonunidan: mv₀²/2 − mv₂²/2 = mv∞²/2 ⇒ v∞ = √(v₀² − v₂²)."
+    },
+    {
+      q: "7. Sayyoraning massasi Yer massasiga teng (M = M⊕), lekin radiusi Yer radiusidan 4 marta katta (R = 4 R⊕) bo‘lsa, uning sirtidagi birinchi kosmik tezlik nechaga teng?",
+      opts: ["3.95 km/s (2 marta kichik)", "15.82 km/s (2 marta katta)", "1.98 km/s (4 marta kichik)"],
+      ans: 0,
+      exp: "v₁ = √(GM / R) bo‘lgani uchun R 4 marta ortsa, v₁ 2 marta kamayadi: 7.91 / 2 ≈ 3.95 km/s."
+    },
+    {
+      q: "8. Oy sirtidan uchib chiqib, Yer tomon yo‘l olish uchun kosmik kemaga kamida qanday (Oy uchun ikkinchi kosmik) tezlik berish kerak?",
+      opts: ["1.68 km/s", "2.38 km/s", "11.19 km/s"],
+      ans: 1,
+      exp: "Oy sirti uchun v₁ = 1.68 km/s, ikkinchi kosmik tezlik esa v₂ = √2 × 1.68 ≈ 2.38 km/s."
+    },
+    {
+      q: "9. Yer sirtidan uchirilgan jismning boshlang‘ich tezligi 7.91 km/s < v₀ < 11.19 km/s oraliqda bo‘lsa, u qanday trayektoriya bo‘ylab harakatlanadi?",
+      opts: ["Yopiq ellips bo‘ylab Yer sun’iy yo‘ldoshiga aylanadi", "Parabola bo‘ylab Quyosh sistemasidan chiqib ketadi", "Darhol Yer sirtiga qulaydi"],
+      ans: 0,
+      exp: "v₁ va v₂ oralig‘idagi tezliklarda to‘liq energiya manfiy (E < 0) bo‘lib, jism elliptik orbitaga chiqadi."
+    },
+    {
+      q: "10. Ikki jism masalasida Quyosh va Yer tizimining umumiy massa markazi (baritsentr) qayerda joylashgan?",
+      opts: ["Yer va Quyosh orasidagi masofaning qoq o‘rtasida", "Quyosh markaziga juda yaqin (Quyosh ichida) joylashgan", "Oy orbitasida"],
+      ans: 1,
+      exp: "Quyosh massasi Yer massasidan 333 000 marta katta bo‘lgani uchun baritsentr Quyosh markazidan atigi ~450 km masofada yotadi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawConicTab(w, h);
+      else if (activeTab === 2) drawAltitudeTab(w, h);
+      else if (activeTab === 3) drawPlanetsCompareTab(w, h);
+      else drawConicTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
+
