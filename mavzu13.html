@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13-Mavzu (34–35-§): Quyosh haqida umumiy ma’lumotlar, Fotosfera va Quyosh dog‘lari | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.02rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.84rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 11px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>13-MAVZU (34–35-§). Quyosh haqida umumiy ma’lumotlar, Fotosfera va Quyosh dog‘lari</h1>
+    <p>11-sinf Astronomiya | IV Bob: Quyosh sistemasi jismlarining fizik tabiati</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">34-§ Quyosh tuzilishi va Doimiysi</button>
+    <button class="tab-btn" onclick="setTab(2)">35-§ Fotosfera va Dog‘lar</button>
+    <button class="tab-btn" onclick="setTab(3)">35-§ 11-yillik sikl va Volf soni</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>34-§. Quyosh — bizga eng yaqin yulduz. Quyosh haqida umumiy ma’lumotlar</h2>
+    <p><strong>Quyosh</strong> — G2V spektral sinfga mansub sariq mitti yulduz. Massasi <strong>M☉ = 1.989 × 10³⁰ kg</strong> (<em>332 950 M⊕</em>), radiusi <strong>R☉ = 696 000 km</strong> (<em>109 R⊕</em>), o‘rtacha zichligi <strong>ρ☉ = 1410 kg/m³</strong>, sirtidagi erkin tushish tezlanishi <strong>g☉ = 274 m/s²</strong> (<em>28 g⊕</em>). Kimyoviy tarkibi massasi bo‘yicha <strong>73% vodorod (H)</strong>, <strong>25% geliy (He)</strong> va <strong>2% og‘ir elementlardan</strong> iborat. O‘z o‘qi atrofida differensial aylanadi (ekvatorda siderik davr 25 sutka, qutblarda ~34 sutka).</p>
+    <div class="math-banner">
+      Quyosh doimiysi (1 a.b. da): q = 1361 W/m² &nbsp;|&nbsp; To‘la yorqinligi: L☉ = 4πa⊕²·q = 3.83 × 10²⁶ W &nbsp;|&nbsp; Effektiv harorati: T_eff = 5778 K
+    </div>
+
+    <div class="problem-box">
+      <strong>1-Masala:</strong> Quyosh doimiysi <em>q = 1361 W/m²</em> va Yer orbitasi radiusi <em>a⊕ = 1.496 × 10¹¹ m</em> ekanligidan foydalanib, Quyoshning to‘la yorqinligini (L☉) va nurlanish hisobiga har sekundda massasining kamayishini (Δm / Δt) hisoblang (<em>c = 3 × 10⁸ m/s</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) To‘la yorqinlik: <strong>L☉ = 4π · (1.496 × 10¹¹)² · 1361 ≈ 3.83 × 10²⁶ W</strong>.<br>
+        2) Massa sarfi: <strong>Δm / Δt = L☉ / c² = (3.83 × 10²⁶) / (9 × 10¹⁶) ≈ 4.26 × 10⁹ kg/s (4.26 mln tonna/s)</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>35-§. Quyosh fotosferasi va uning tuzilishi. Quyosh dog‘lari</h2>
+    <ul>
+      <li><strong>Fotosfera:</strong> Qalinligi <em>200–300 km</em> bo‘lgan eng quyi atmosfera qatlami; ko‘rinadigan yorug‘lik shu yerdan chiqadi. Disk cheti markaziga nisbatan sovuqroq (4500 K vs 6600 K) qatlamlar ko‘ringani sababli <strong>limb qorayishi</strong> kuzatiladi.</li>
+      <li><strong>Granulyatsiya va mash’alalar:</strong> Konvektiv zonadan ko‘tarilayotgan issiq plazma oqimlari 700–1000 km o‘lchamli yorug‘ <strong>granulalar</strong>ni hosil qiladi. Dog‘lar atrofida esa harorati 200–300 K yuqori bo‘lgan yorug‘ <strong>mash’alalar</strong> joylashadi.</li>
+      <li><strong>Quyosh dog‘lari va 11.1 yillik sikl:</strong> Kuchli magnit maydon (<em>0.1–0.4 Tl</em>) konveksiyani susaytirgan joylarda harorati ~4200 K bo‘lgan markaziy <strong>soya (umbra)</strong> va ~5200 K bo‘lgan <strong>yarim soya (penumbra)</strong> dan iborat dog‘lar hosil bo‘ladi. Dog‘lar soni <strong>11.1 yillik davr</strong> bilan o‘zgaradi va <strong>Volf soni</strong> <code>W = k(10g + f)</code> bilan baholanadi.</li>
+    </ul>
+
+    <div class="problem-box">
+      <strong>2-Masala:</strong> Quyosh dog‘i soyasining harorati <em>T_soya = 4200 K</em>, fotosfera harorati esa <em>T_fot = 5800 K</em>. Stefan–Bolsman qonunidan foydalanib, fotosfera birlik yuzasidan chiqayotgan energiya oqimi dog‘ soyasinikidan necha marta katta ekanini toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>ε_fot / ε_soya = (T_fot / T_soya)⁴ = (5800 / 4200)⁴ = (1.381)⁴ ≈ 3.64 marta</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala:</strong> Quyosh diskida <em>g = 6</em> ta dog‘lar guruhi va barcha guruhlarda jami <em>f = 48</em> ta alohida dog‘ kuzatildi. <em>k = 1</em> bo‘lganda Volf sonini (W) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>W = k(10g + f) = 1 · (10 × 6 + 48) = 108</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">34-§: Quyoshning ichki tuzilishi va Quyosh doimiysi q(r) = L☉ / (4πr²)</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">M☉ = 1.989 × 10³⁰ kg | R☉ = 696 000 km | L☉ = 3.83 × 10²⁶ W</div>
+    </div>
+    <canvas id="sunCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 34-§ QUYOSH TUZILISHI VA DOIMIYSI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Quyosh qatlamlari va Sayyoragacha masofa</h3>
+        <div class="btn-grid" style="margin-bottom:10px;">
+          <button class="btn active" id="layBtn0" onclick="setLayerIdx(0)">1. Markaziy yadro</button>
+          <button class="btn" id="layBtn1" onclick="setLayerIdx(1)">2. Nurlanish zonasi</button>
+          <button class="btn" id="layBtn2" onclick="setLayerIdx(2)">3. Konvektiv zona</button>
+          <button class="btn" id="layBtn3" onclick="setLayerIdx(3)">4. Fotosfera (sirt)</button>
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Quyoshdan masofa (r, a.b.):</span>
+            <strong id="sunRVal">1.00 a.b. (Yer)</strong>
+          </div>
+          <input type="range" id="sunRSl" min="0.39" max="10.0" step="0.05" value="1.0" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setSunDist(0.39)">Merkuriy (0.39 a.b.)</button>
+          <button class="btn" onclick="setSunDist(0.72)">Venera (0.72 a.b.)</button>
+          <button class="btn active" onclick="setSunDist(1.0)">Yer (1.00 a.b.)</button>
+          <button class="btn" onclick="setSunDist(5.2)">Yupiter (5.20 a.b.)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 id="layTitleOut">Markaziy yadro (0 – 0.25 R☉)</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Qatlam harorati:</span><span class="t-val" id="layTempOut">~15 000 000 K</span></div>
+          <div class="t-row"><span>Plazma zichligi:</span><span class="t-val" id="layDensOut">~150 000 kg/m³</span></div>
+          <div class="t-row"><span>Nurlanish oqimi q(r):</span><span class="t-val" id="sunFluxOut">1 361 W/m²</span></div>
+          <div class="t-row"><span>Yorug‘lik yetib borish vaqti:</span><span class="t-val" id="sunTimeOut">8 daq 19 s</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 35-§ FOTOSFERA VA DOG'LAR -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Fotosfera va Quyosh dog‘i parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Dog‘ soyasi (Umbra) harorati:</span>
+            <strong id="spTempVal">4 200 K</strong>
+          </div>
+          <input type="range" id="spTempSl" min="3500" max="5200" step="50" value="4200" />
+        </div>
+        <label class="check-row">
+          <input type="checkbox" id="limbChk" checked />
+          <span>Limb qorayishini (disk cheti xiralashishini) ko‘rsatish</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="granChk" checked />
+          <span>Fotosfera granulyatsiyasi va mash’alalarni ko‘rsatish</span>
+        </label>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Stefan–Bolsman qonuni bo‘yicha kontrast</h3>
+        <div class="formula-box">
+          ε_fot / ε_soya = (T_fot / T_soya)⁴ &nbsp;(T_fot = 5800 K)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Fotosfera nurlanish oqimi:</span><span class="t-val">6.42 × 10⁷ W/m²</span></div>
+          <div class="t-row"><span>Dog‘ soyasi nurlanish oqimi:</span><span class="t-val" id="spFluxOut">1.76 × 10⁷ W/m²</span></div>
+          <div class="t-row"><span>Yorqinlik nisbati (ε_fot / ε_soya):</span><span class="t-val" id="spRatioOut">3.64 marta</span></div>
+          <div class="t-row"><span>Magnit maydon induksiyasi:</span><span class="t-val">0.1 – 0.4 Tl (1000–4000 Gs)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 35-§ 11-YILLIK SIKL VA VOLF SONI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Volf soni kalkulyatori: W = k(10g + f)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Dog‘lar guruhlari soni (g):</span>
+            <strong id="wGVal">6 ta guruh</strong>
+          </div>
+          <input type="range" id="wGSl" min="0" max="15" step="1" value="6" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Alohida dog‘lar umumiy soni (f):</span>
+            <strong id="wFVal">48 ta dog‘</strong>
+          </div>
+          <input type="range" id="wFSl" min="0" max="140" step="2" value="48" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setWolfPreset(0, 0)">Sikl minimumi (W = 0)</button>
+          <button class="btn" onclick="setWolfPreset(3, 18)">O‘rtacha aktivlik (W = 48)</button>
+          <button class="btn active" onclick="setWolfPreset(6, 48)">3-Masala (W = 108)</button>
+          <button class="btn" onclick="setWolfPreset(12, 95)">Sikl maksimumi (W = 215)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Quyosh aktivligi va aylanish ko‘rsatkichlari</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Hisoblangan Volf soni (k = 1):</span><span class="t-val" id="wOut">W = 108</span></div>
+          <div class="t-row"><span>Aktivlik bosqichi:</span><span class="t-val" id="wStageOut">Yuqori aktivlik fazasi</span></div>
+          <div class="t-row"><span>Aktivlik sikli davri:</span><span class="t-val">11.1 yil (Shvabe–Volf)</span></div>
+          <div class="t-row"><span>Ekvatorial aylanish (sinodik):</span><span class="t-val">27.3 sutka</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('sunCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "34-§: Quyoshning ichki tuzilishi va Quyosh doimiysi q(r) = L☉ / (4πr²)",
+      "35-§: Fotosfera tuzilishi — Limb qorayishi, Granulyatsiya va Quyosh dog‘lari",
+      "35-§: Quyoshning aylanishi, 11.1 yillik aktivlik sikli va Volf soni",
+      "Bilimlarni tekshirish: 13-Mavzu (34–35-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "q(1 a.b.) = 1361 W/m² | L☉ = 3.83 × 10²⁶ W",
+      "T_fot ≈ 5800 K | T_soya ≈ 4200 K",
+      "W = k(10g + f) | Sikl davri: 11.1 yil",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 34-§ QUYOSH TUZILISHI VA DOIMIYSI ====================
+  let curLayerIdx = 0;
+  const sunLayers = [
+    { name: "1. Markaziy yadro (0 – 0.25 R☉)", temp: "~15 000 000 K", dens: "~150 000 kg/m³" },
+    { name: "2. Nurlanish zonasi (0.25 – 0.70 R☉)", temp: "7 000 000 → 2 000 000 K", dens: "20 000 → 200 kg/m³" },
+    { name: "3. Konvektiv zona (0.70 – 1.00 R☉)", temp: "2 000 000 → 6 000 K", dens: "200 → 10⁻⁴ kg/m³" },
+    { name: "4. Fotosfera (qalinligi 200–300 km)", temp: "5 778 K (4500–6600 K)", dens: "~10⁻⁴ kg/m³" }
+  ];
+
+  function setLayerIdx(idx) {
+    curLayerIdx = idx;
+    for (let i = 0; i < 4; i++) document.getElementById('layBtn' + i).classList.toggle('active', i === idx);
+    const l = sunLayers[idx];
+    document.getElementById('layTitleOut').textContent = l.name;
+    document.getElementById('layTempOut').textContent = l.temp;
+    document.getElementById('layDensOut').textContent = l.dens;
+  }
+
+  function setSunDist(au) {
+    document.getElementById('sunRSl').value = au;
+  }
+
+  function drawSunStructTab(w, h) {
+    const rAu = parseFloat(document.getElementById('sunRSl').value);
+    const qFlux = 1361.0 / (rAu * rAu);
+    const lightSec = rAu * 499.0;
+    const mins = Math.floor(lightSec / 60);
+    const secs = Math.round(lightSec % 60);
+
+    document.getElementById('sunRVal').textContent = `${rAu.toFixed(2)} a.b.`;
+    document.getElementById('sunFluxOut').textContent = `${qFlux.toFixed(1)} W/m²`;
+    document.getElementById('sunTimeOut').textContent = `${mins} daq ${secs} s`;
+
+    // Chapda: Quyoshning 4 qatlamli kesmasi
+    const sx = w * 0.28, sy = h * 0.54;
+    const maxR = Math.min(w * 0.22, h * 0.36);
+
+    const radii = [maxR, maxR * 0.88, maxR * 0.65, maxR * 0.28];
+    const colors = ['#f59e0b', '#fb923c', '#facc15', '#ffffff'];
+    const mapOrder = [3, 2, 1, 0]; // tashqidan ichkariga chizish
+
+    mapOrder.forEach((layerId, i) => {
+      const r = radii[i];
+      ctx.fillStyle = colors[i];
+      ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI * 2); ctx.fill();
+      if (layerId === curLayerIdx) {
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+      }
+    });
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(sunLayers[curLayerIdx].name, sx, sy + maxR + 24);
+
+    // O'ngda: r masofadagi 1 m² maydonchaga tushayotgan nurlanish oqimi q(r)
+    const detX = sx + maxR + 65 + ((rAu - 0.39) / 9.61) * (w - sx - maxR - 140);
+    const rayCount = Math.max(2, Math.min(14, Math.round(14 / Math.sqrt(rAu))));
+
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.55)';
+    ctx.lineWidth = 1.8;
+    for (let i = 0; i < rayCount; i++) {
+      const ang = -0.35 + (i / Math.max(1, rayCount - 1)) * 0.7;
+      const x1 = sx + Math.cos(ang) * maxR;
+      const y1 = sy + Math.sin(ang) * maxR;
+      const x2 = detX;
+      const y2 = sy + Math.tan(ang) * (detX - sx);
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    }
+
+    // 1 m² qabul qilgich plastinka
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(detX, sy - 38); ctx.lineTo(detX, sy + 38); ctx.stroke();
+
+    ctx.fillStyle = '#34d399';
+    ctx.fillText(`r = ${rAu.toFixed(2)} a.b.`, detX, sy - 50);
+    ctx.fillText(`q = ${qFlux.toFixed(0)} W/m²`, detX, sy + 56);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 2: 35-§ FOTOSFERA VA DOG'LAR ====================
+  function drawPhotosphereTab(w, h) {
+    const tUmbra = parseFloat(document.getElementById('spTempSl').value);
+    const showLimb = document.getElementById('limbChk').checked;
+    const showGran = document.getElementById('granChk').checked;
+
+    const tPhot = 5800.0;
+    const sigma = 5.67e-8;
+    const fluxUmbra = sigma * Math.pow(tUmbra, 4);
+    const ratio = Math.pow(tPhot / tUmbra, 4);
+
+    document.getElementById('spTempVal').textContent = `${tUmbra.toLocaleString()} K`;
+    document.getElementById('spFluxOut').textContent = `${fluxUmbra.toExponential(2)} W/m²`;
+    document.getElementById('spRatioOut').textContent = `${ratio.toFixed(2)} marta`;
+
+    // Chapda: Quyosh diski (Limb qorayishi + Granulyatsiya + Dog'lar)
+    const cx = w * 0.34, cy = h * 0.54;
+    const R = Math.min(w * 0.25, h * 0.37);
+
+    const diskGrad = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R);
+    if (showLimb) {
+      diskGrad.addColorStop(0.0, '#fef9c3');
+      diskGrad.addColorStop(0.65, '#facc15');
+      diskGrad.addColorStop(0.92, '#ea580c');
+      diskGrad.addColorStop(1.0, '#9a3412');
+    } else {
+      diskGrad.addColorStop(0.0, '#fde047');
+      diskGrad.addColorStop(1.0, '#fde047');
+    }
+    ctx.fillStyle = diskGrad;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+
+    // Granulyatsiya katakchalari
+    if (showGran) {
+      ctx.save();
+      ctx.beginPath(); ctx.arc(cx, cy, R - 2, 0, Math.PI * 2); ctx.clip();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.16)';
+      for (let gx = cx - R; gx <= cx + R; gx += 12) {
+        for (let gy = cy - R; gy <= cy + R; gy += 12) {
+          if (((gx + gy) % 24) === 0) {
+            ctx.beginPath(); ctx.arc(gx, gy, 3.5, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+      }
+      // Mash'alalar (limb yaqinida yorug' dog'lar)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+      ctx.beginPath(); ctx.arc(cx + R * 0.72, cy - R * 0.22, 11, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx - R * 0.75, cy + R * 0.25, 10, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+
+    // Diskdagi Quyosh dog'lari guruhi
+    const spotX = cx + R * 0.22, spotY = cy - R * 0.14;
+    ctx.fillStyle = 'rgba(120, 53, 15, 0.75)';
+    ctx.beginPath(); ctx.arc(spotX, spotY, 15, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#1c1917';
+    ctx.beginPath(); ctx.arc(spotX, spotY, 7, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(showLimb ? 'Limb qorayishi: Markaz (6600 K) → Chet (4500 K)' : 'Bir jinsli yorqinlik rejimi', cx, cy + R + 24);
+
+    // O'ngda: Yiriklashtirilgan Quyosh dog'i tuzilishi (Soya va Yarim soya)
+    const zx = w * 0.76, zy = cy;
+    const penR = 78, umbR = 36;
+
+    // Yarim soya (Penumbra)
+    ctx.fillStyle = '#92400e';
+    ctx.beginPath(); ctx.arc(zx, zy, penR, 0, Math.PI * 2); ctx.fill();
+
+    // Radial tolalar
+    ctx.strokeStyle = 'rgba(253, 224, 71, 0.35)';
+    ctx.lineWidth = 1.5;
+    for (let a = 0; a < Math.PI * 2; a += Math.PI / 18) {
+      ctx.beginPath();
+      ctx.moveTo(zx + Math.cos(a) * umbR, zy + Math.sin(a) * umbR);
+      ctx.lineTo(zx + Math.cos(a) * penR, zy + Math.sin(a) * penR);
+      ctx.stroke();
+    }
+
+    // Soya (Umbra) — haroratga qarab yorqinligi o'zgaradi
+    const shade = Math.round(((tUmbra - 3500) / 1700) * 65);
+    ctx.fillStyle = `rgb(${shade + 15}, ${Math.round(shade * 0.5)}, 10)`;
+    ctx.beginPath(); ctx.arc(zx, zy, umbR, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#fef08a';
+    ctx.fillText(`Soya (Umbra): ${tUmbra} K`, zx, zy - penR - 14);
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillText('Yarim soya (Penumbra): ~5200 K', zx, zy + penR + 22);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 3: 35-§ 11-YILLIK SIKL VA VOLF SONI ====================
+  let sunRotPhase = 0;
+
+  function setWolfPreset(g, f) {
+    document.getElementById('wGSl').value = g;
+    document.getElementById('wFSl').value = f;
+  }
+
+  function drawSunspotCycleTab(w, h) {
+    const g = parseInt(document.getElementById('wGSl').value, 10);
+    const f = parseInt(document.getElementById('wFSl').value, 10);
+    const W = 10 * g + f;
+
+    document.getElementById('wGVal').textContent = `${g} ta guruh`;
+    document.getElementById('wFVal').textContent = `${f} ta dog‘`;
+    document.getElementById('wOut').textContent = `W = ${W}`;
+
+    let stage = "Sikl minimumi (Tinch Quyosh)";
+    if (W >= 160) stage = "Sikl maksimumi (Kuchli magnit bo‘ronlar)";
+    else if (W >= 80) stage = "Yuqori aktivlik fazasi";
+    else if (W >= 20) stage = "O‘rtacha aktivlik fazasi";
+    document.getElementById('wStageOut').textContent = stage;
+
+    sunRotPhase = (sunRotPhase + 0.008) % (Math.PI * 2);
+
+    // Yuqori qism: O'z o'qi atrofida aylanayotgan Quyosh diski va dog'lar guruhi
+    const cx = w * 0.5, cy = h * 0.38;
+    const R = Math.min(w * 0.18, h * 0.24);
+
+    const sg = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R);
+    sg.addColorStop(0, '#fef9c3');
+    sg.addColorStop(0.75, '#facc15');
+    sg.addColorStop(1, '#ea580c');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+
+    // Ekvator chizig'i
+    ctx.strokeStyle = 'rgba(15, 23, 42, 0.35)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // g ta guruhni diskda aylanuvchi koordinatalarda chizish
+    for (let i = 0; i < g; i++) {
+      const lon = sunRotPhase + i * 0.95;
+      const latSign = (i % 2 === 0) ? -1 : 1;
+      const latY = cy + latSign * R * (0.22 + (i % 3) * 0.12);
+      const halfChord = Math.sqrt(Math.max(0, R * R - Math.pow(latY - cy, 2)));
+      const sinL = Math.sin(lon);
+      if (Math.cos(lon) > -0.15) {
+        const sx = cx + sinL * halfChord * 0.88;
+        ctx.fillStyle = '#1c1917';
+        ctx.beginPath(); ctx.arc(sx, latY, 4.5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(sx + 7, latY + 2, 3, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    // Pastki qism: 11.1 yillik aktivlik sikli egri chizig'i
+    const padL = 58, padR = 32, padT = h * 0.67, gh = h * 0.23;
+    const gw = w - padL - padR;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+    ctx.fillRect(padL, padT, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(padL, padT, gw, gh);
+
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    for (let yr = 0; yr <= 22.2; yr += 0.2) {
+      const cycVal = 220 * Math.pow(Math.sin((Math.PI * yr) / 11.1), 2);
+      const px = padL + (yr / 22.2) * gw;
+      const py = padT + gh - (cycVal / 290) * (gh - 12);
+      yr === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // Joriy W darajasi gorizontal chizig'i
+    const curWy = padT + gh - (Math.min(290, W) / 290) * (gh - 12);
+    ctx.strokeStyle = '#34d399';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(padL, curWy); ctx.lineTo(padL + gw, curWy); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#34d399';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`Joriy Volf soni: W = ${W}`, padL + 10, curWy - 6);
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillText('0 yil', padL, padT + gh + 16);
+    ctx.fillText('11.1 yil (1-sikl)', padL + gw * 0.45, padT + gh + 16);
+    ctx.fillText('22.2 yil (2-sikl)', padL + gw - 75, padT + gh + 16);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Quyosh massasi va radiusi Yer massasi hamda radiusidan taxminan necha marta katta?",
+      opts: ["Massasi ~333 000 marta, radiusi ~109 marta katta", "Massasi ~109 marta, radiusi ~333 000 marta katta", "Massasi ~1 000 marta, radiusi ~10 marta katta"],
+      ans: 0,
+      exp: "M☉ = 1.989 × 10³⁰ kg ≈ 332 950 M⊕ va R☉ = 696 000 km ≈ 109 R⊕."
+    },
+    {
+      q: "2. Quyoshning o‘rtacha zichligi taxminan nechaga teng?",
+      opts: ["5 515 kg/m³ (Yer zichligiga teng)", "1 410 kg/m³ (Yer zichligining ~1/4 qismi)", "150 000 kg/m³"],
+      ans: 1,
+      exp: "Quyosh gaz-plazma sharidan iborat bo‘lgani uchun o‘rtacha zichligi ρ☉ ≈ 1410 kg/m³ (1.41 g/cm³)."
+    },
+    {
+      q: "3. Quyosh kimyoviy tarkibining asosiy qismini (massasi bo‘yicha) qaysi elementlar tashkil etadi?",
+      opts: ["Temir (73%) va kislorod (25%)", "Vodorod (~73%) va geliy (~25%)", "Azot (78%) va kislorod (21%)"],
+      ans: 1,
+      exp: "Quyosh massasining ~73% ini vodorod, ~25% ini geliy va ~2% ini og‘irroq elementlar tashkil qiladi."
+    },
+    {
+      q: "4. Quyosh doimiysi (q ≈ 1361 W/m²) nimani bildiradi?",
+      opts: ["Quyosh yadrosining haroratini", "Yer orbitasi masofasida (1 a.b.) nurlarga tik 1 m² yuzaga 1 s da tushadigan nurlanish energiyasini", "Quyoshning o‘z o‘qi atrofida aylanish tezligini"],
+      ans: 1,
+      exp: "Quyosh doimiysi q ≈ 1361 W/m² — 1 a.b. masofadagi birlik yuzaga tushuvchi nurlanish oqimi quvvati."
+    },
+    {
+      q: "5. Quyoshning o‘z o‘qi atrofida aylanishi qanday xususiyatga ega?",
+      opts: ["Qattiq jism kabi barcha kengliklarda bir xil 25 sutkada aylanadi", "Differensial aylanadi: ekvatorda ~25 sutkada, qutblarda ~34 sutkada aylanadi", "O‘z o‘qi atrofida umuman aylanmaydi"],
+      ans: 1,
+      exp: "Plazmali tuzilish tufayli Quyoshning ekvatorial zonalari qutb zonalariga nisbatan tezroq aylanadi."
+    },
+    {
+      q: "6. Quyoshning asosiy ko‘rinadigan yorug‘ligi chiqadigan, qalinligi 200–300 km bo‘lgan eng quyi atmosfera qatlami nima deb ataladi?",
+      opts: ["Quyosh toji", "Fotosfera", "Xromosfera"],
+      ans: 1,
+      exp: "Fotosfera («yorug‘lik sferasi») — Quyoshning ko‘rinadigan sirti va asosiy nurlanish manbai."
+    },
+    {
+      q: "7. Nima uchun Quyosh diskining chetlari (limbi) markaziga qaraganda xiraroq va qizg‘ishroq ko‘rinadi?",
+      opts: ["Teleskop linzalari chetda yorug‘likni yutgani uchun", "Disk chetiga qaraganimizda ko‘rish nuri fotosferaning yuqoriroq va sovuqroq (~4500 K) qatlamlaridan kelgani uchun", "Quyosh chetida doimo tutilish bo‘lgani uchun"],
+      ans: 1,
+      exp: "Limb qorayishi fotosfera haroratining chuqurlik oshishi bilan 4500 K dan 6600 K gacha ortib borishini isbotlaydi."
+    },
+    {
+      q: "8. Fotosferada kuzatiladigan granulyatsiya (700–1000 km li yorug‘ donachalar) qanday fizik jarayon natijasida yuzaga keladi?",
+      opts: ["Konvektiv zonadan yuqoriga ko‘tarilayotgan qaynoq plazma oqimlari tufayli", "Asteroidlarning Quyoshga urilishi tufayli", "Oy soyasi tushishi tufayli"],
+      ans: 0,
+      exp: "Granulalar — konvektiv oqimlarning yuqoriga ko‘tarilib issiqlik chiqaruvchi qaynoq ustunlaridir."
+    },
+    {
+      q: "9. Nima sababdan Quyosh dog‘lari atrofdagi fotosferaga nisbatan qoramtir bo‘lib ko‘rinadi?",
+      opts: ["Ular Quyosh sirtidagi chuqur bo‘shliq teshiklar bo‘lgani uchun", "Kuchli magnit maydon konveksiyani susaytirgani uchun dog‘ harorati (~4200 K) fotosferadan (~5800 K) ~1600 K past bo‘ladi", "Ular sovuq tosh jinslardan iborat bo‘lgani uchun"],
+      ans: 1,
+      exp: "Dog‘lar mutlaq qora emas, balki ~4200 K haroratli plazma; atrofdagi 5800 K fotosferadan ~3.6 marta xiraroq bo‘lgani uchun qora ko‘rinadi."
+    },
+    {
+      q: "10. Quyosh dog‘lari sonining davriy o‘zgarish sikli o‘rtacha necha yilga teng va Volf soni qaysi formula bilan hisoblanadi?",
+      opts: ["11.1 yil; W = k(10g + f)", "100 yil; W = g + f", "1 yil; W = 10g − f"],
+      ans: 0,
+      exp: "Shvabe–Volf sikli o‘rtacha 11.1 yilga teng, Quyosh aktivligi indeksi esa W = k(10g + f) formulasi bilan aniqlanadi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawSunStructTab(w, h);
+      else if (activeTab === 2) drawPhotosphereTab(w, h);
+      else if (activeTab === 3) drawSunspotCycleTab(w, h);
+      else drawSunStructTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
