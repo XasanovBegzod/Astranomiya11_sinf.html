@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-Mavzu (28–32-§): Keng to‘lqinli astronomiya, Optik va Radioteleskoplar, Ulug‘bek sekstanti | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.02rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.84rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 11px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>11-MAVZU (28–32-§). Keng to‘lqinli astronomiya, Optik va Radioteleskoplar, Ulug‘bek sekstanti</h1>
+    <p>11-sinf Astronomiya | III Bob: Astrofizika va uning tadqiqot metodlari</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">28-§ Elektromagnit spektr</button>
+    <button class="tab-btn" onclick="setTab(2)">29–30-§ Optik teleskoplar</button>
+    <button class="tab-btn" onclick="setTab(3)">31–32-§ Ulug‘bek sekstanti va Radio</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>28-§. Osmonni elektromagnit to‘lqinli nurlarda o‘rganish — keng to‘lqinli astronomiyaning asosi</h2>
+    <p>Koinot obyektlari gamma-nurlardan tortib uzun radioto‘lqinlargacha bo‘lgan barcha elektromagnit diapazonlarda nurlanadi (<em>c = λ · ν</em>, foton energiyasi <em>E = hν = hc / λ</em>). Yer atmosferasi faqat <strong>ikkita shaffoflik darchasi</strong> — <strong>optik darcha</strong> (<em>300 nm – 1 μm</em>) va <strong>radio darcha</strong> (<em>1 mm – 30 m</em>) orqali nurlanishni o‘tkazadi. Gamma, rentgen, uzoq UB va IQ diapazonlar kosmik observatoriyalar yordamida o‘rganiladi.</p>
+  </div>
+
+  <div class="theory-card">
+    <h2>29-§ va 30-§. Optik teleskoplar va ularning asosiy xarakteristik kattaliklari*</h2>
+    <p>Optik teleskoplar obyektiv tuzilishiga ko‘ra <strong>refraktorlar</strong> (linzali), <strong>reflektorlar</strong> (ko‘zguli — Nyuton, Kassegren, Richi–Kreten sxemalari) va <strong>ko‘zguli-linzali</strong> (Maksutov, Shmidt) turlarga bo‘linadi. Ularning 4 ta asosiy xarakteristikasi:</p>
+    <div class="math-banner">
+      Burchak kattalashtirish: Γ = F / f &nbsp;|&nbsp; Yorug‘lik yig‘ish kuchi: K = (D / d₀)² (d₀ ≈ 6 mm)<br>
+      Kirish kuchi: m_lim = 2.5 + 5 lg D_mm &nbsp;|&nbsp; Ajrata olish burchagi: ψ'' ≈ 140'' / D_mm
+    </div>
+
+    <div class="problem-box">
+      <strong>1-Masala (Optik teleskop):</strong> Obyektiv diametri <em>D = 200 mm</em>, fokus masofasi <em>F = 2000 mm</em> bo‘lgan teleskopga <em>f = 20 mm</em> li okulyar o‘rnatildi. Teleskopning kattalashtirishi (Γ), ko‘z qorachig‘iga (<em>d₀ = 6 mm</em>) nisbatan yorug‘lik yig‘ish kuchi (K), kirish kuchi (m_lim) va ajrata olish burchagini (ψ'') hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) Kattalashtirish: <strong>Γ = 2000 / 20 = 100 marta</strong>.<br>
+        2) Yorug‘lik yig‘ish kuchi: <strong>K = (200 / 6)² ≈ 1111 marta</strong>.<br>
+        3) Kirish kuchi: <strong>m_lim = 2.5 + 5 · lg(200) ≈ 14.0ᵐ</strong>.<br>
+        4) Ajrata olish burchagi: <strong>ψ'' = 140'' / 200 = 0.70''</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>31-§ va 32-§. Radioteleskoplar va Ulug‘bek rasadxonasining «bosh teleskopi»</h2>
+    <ul>
+      <li><strong>Radioteleskoplar (31-§):</strong> Parabolik antenna (diametri <em>D</em>) va qabul qilgichdan iborat. Ajrata olish burchagi <strong>ψ'' ≈ 252 000'' · (λ / D)</strong>. Bir necha radioteleskopni <em>B</em> masofada birlashtiruvchi <strong>radiointerferometrlar (VLBI)</strong> ajrata olish burchagini <em>ψ ≈ λ / B</em> gacha yaxshilaydi.</li>
+      <li><strong>Ulug‘bekning Faxriy sekstanti (32-§):</strong> Samarqand rasadxonasida meridian tekisligida qurilgan, radiusi <strong>R = 40.21 m</strong> bo‘lgan gigant marmar yoy. Yoyda <strong>1° = 701.8 mm (70.2 cm)</strong>, <strong>1' = 11.7 mm</strong> ga teng bo‘lib, 1018 ta yulduz katalogi («Ziji jadidi Ko‘ragoniy») tuzilishiga xizmat qilgan.</li>
+    </ul>
+
+    <div class="problem-box">
+      <strong>2-Masala (Radioteleskop):</strong> Diametri <em>D = 70 m</em> bo‘lgan radioteleskop <em>λ = 21 cm</em> (0.21 m) to‘lqin uzunligida kuzatuv olib bormoqda. Uning ajrata olish burchagini (ψ'') hisoblang va <em>B = 5000 km</em> bazali radiointerferometr bilan taqqoslang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        1) Yakka radioteleskop: <strong>ψ₁'' = 252 000'' · (0.21 / 70) = 756'' = 12.6'</strong>.<br>
+        2) Interferometr (B = 5 × 10⁶ m): <strong>ψ₂'' = 252 000'' · (0.21 / 5 × 10⁶) ≈ 0.0106''</strong> (71 429 marta aniqroq).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Ulug‘bek sekstanti):</strong> Faxriy sekstant yoyining radiusi <em>R = 40.21 m</em>. Yozgi va qishki quyosh turishi kunlari Quyosh balandliklari farqi <em>Δh = 47°</em> bo‘lsa, Quyosh nuri sekstant yoyida necha metrga siljiydi?
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        1° yoy uzunligi: <strong>l₁ = 2πR / 360° ≈ 0.7018 m</strong>.<br>
+        47° uchun siljish: <strong>s = 47 × 0.7018 m ≈ 32.98 m (≈ 33.0 m)</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">28-§: Elektromagnit to‘lqinlar va Yer atmosferasining shaffoflik darchalari</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Optik darcha: 300 nm – 1 μm | Radio darcha: 1 mm – 30 m</div>
+    </div>
+    <canvas id="astroCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 28-§ ELEKTROMAGNIT SPEKTR -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>To‘lqin uzunligi (λ) va Diapazon tanlash</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Logarifmik to‘lqin uzunligi (lg λ, m):</span>
+            <strong id="emLogVal">-6.26 (550 nm)</strong>
+          </div>
+          <input type="range" id="emLogSl" min="-13.0" max="2.0" step="0.05" value="-6.26" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setEmLog(-12.0)">Gamma (10⁻¹² m)</button>
+          <button class="btn" onclick="setEmLog(-9.0)">Rentgen (1 nm)</button>
+          <button class="btn" onclick="setEmLog(-7.0)">Ultrabinafsha (100 nm)</button>
+          <button class="btn active" onclick="setEmLog(-6.26)">Ko‘rinadigan (550 nm)</button>
+          <button class="btn" onclick="setEmLog(-4.5)">Infraqizil (30 μm)</button>
+          <button class="btn" onclick="setEmLog(-0.68)">Radioto‘lqin (21 cm)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Nurlanish va Atmosfera o‘tkazuvchanligi</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Diapazon nomi:</span><span class="t-val" id="emBandOut">Ko‘rinadigan yorug‘lik</span></div>
+          <div class="t-row"><span>To‘lqin uzunligi (λ):</span><span class="t-val" id="emLamOut">550 nm (5.5 × 10⁻⁷ m)</span></div>
+          <div class="t-row"><span>Chastota (ν = c / λ):</span><span class="t-val" id="emFreqOut">5.45 × 10¹⁴ Hz</span></div>
+          <div class="t-row"><span>Atmosfera holati:</span><span class="t-val" id="emAtmOut">O‘tadi (Optik darcha)</span></div>
+          <div class="t-row"><span>Kuzatuv asbobi:</span><span class="t-val" id="emTelOut">Yer sirtidagi optik teleskoplar</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 29-30-§ OPTIK TELESKOPLAR -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Optik teleskop parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Obyektiv diametri (D):</span>
+            <strong id="telDVal">200 mm</strong>
+          </div>
+          <input type="range" id="telD" min="60" max="1500" step="10" value="200" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Obyektiv fokus masofasi (F):</span>
+            <strong id="telFVal">2 000 mm</strong>
+          </div>
+          <input type="range" id="telF" min="500" max="12000" step="100" value="2000" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Okulyar fokus masofasi (f):</span>
+            <strong id="telfVal">20 mm</strong>
+          </div>
+          <input type="range" id="telf" min="5" max="40" step="1" value="20" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setTelPreset(80, 800, 20)">Maktab refraktori (80 mm)</button>
+          <button class="btn active" onclick="setTelPreset(200, 2000, 20)">1-Masala (200 mm)</button>
+          <button class="btn" onclick="setTelPreset(600, 7500, 25)">Observatoriya (600 mm)</button>
+          <button class="btn" onclick="setTelPreset(1500, 12000, 30)">Maydanak AZT-22 (1.5 m)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Hisoblangan xarakteristik kattaliklar</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Kattalashtirish (Γ = F / f):</span><span class="t-val" id="telMagOut">100 marta</span></div>
+          <div class="t-row"><span>Yorug‘lik yig‘ish kuchi (K):</span><span class="t-val" id="telLightOut">1 111 marta</span></div>
+          <div class="t-row"><span>Kirish kuchi (m_lim):</span><span class="t-val" id="telLimOut">14.0ᵐ</span></div>
+          <div class="t-row"><span>Ajrata olish burchagi (ψ''):</span><span class="t-val" id="telResOut">0.70''</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 31-32-§ ULUG'BEK SEKSTANTI VA RADIOTELESKOP -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Laboratoriya rejimini tanlang</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="modeUluBtn" onclick="setLab3Mode(0)">32-§ Ulug‘bek sekstanti</button>
+          <button class="btn" id="modeRadBtn" onclick="setLab3Mode(1)">31-§ Radioteleskop / VLBI</button>
+        </div>
+      </div>
+
+      <div id="uluControls" class="card" style="margin-top:12px;">
+        <h3>Faxriy sekstanti (R = 40.21 m)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yoritgichning meridian balandligi (h):</span>
+            <strong id="uluHVal">45.0°</strong>
+          </div>
+          <input type="range" id="uluHSl" min="15" max="80" step="0.5" value="45" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="document.getElementById('uluHSl').value=26.8">Qishki Quyosh (26.8°)</button>
+          <button class="btn" onclick="document.getElementById('uluHSl').value=50.3">Bahorgi tengkunlik (50.3°)</button>
+          <button class="btn" style="grid-column: span 2;" onclick="document.getElementById('uluHSl').value=73.8">Yozgi Quyosh turishi (73.8°)</button>
+        </div>
+        <div class="telemetry" style="margin-top:10px;">
+          <div class="t-row"><span>Zenit masofasi (z = 90° − h):</span><span class="t-val" id="uluZOut">45.0°</span></div>
+          <div class="t-row"><span>Yoydagi chiziqli masofa (s):</span><span class="t-val" id="uluSOut">31.58 m</span></div>
+          <div class="t-row"><span>1° / 1' shkala qiymati:</span><span class="t-val">701.8 mm / 11.7 mm</span></div>
+        </div>
+      </div>
+
+      <div id="radControls" class="card hidden" style="margin-top:12px;">
+        <h3>Radioteleskop / Interferometr (VLBI)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>To‘lqin uzunligi (λ, cm):</span>
+            <strong id="rtLamVal">21.0 cm</strong>
+          </div>
+          <input type="range" id="rtLamSl" min="0.3" max="100" step="0.5" value="21" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Logarifmik baza/diametr (lg D, m):</span>
+            <strong id="rtDVal">70 m (Suffa RT-70)</strong>
+          </div>
+          <input type="range" id="rtDSl" min="1.0" max="6.7" step="0.1" value="1.85" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setRtPreset(21, 1.85)">Suffa RT-70 (D=70 m)</button>
+          <button class="btn" onclick="setRtPreset(21, 2.70)">FAST Xitoy (D=500 m)</button>
+          <button class="btn" style="grid-column: span 2;" onclick="setRtPreset(21, 6.70)">VLBI Interferometr (B=5000 km)</button>
+        </div>
+        <div class="telemetry" style="margin-top:10px;">
+          <div class="t-row"><span>Antenna / Baza o‘lchami:</span><span class="t-val" id="rtSizeOut">70.8 m</span></div>
+          <div class="t-row"><span>Ajrata olish burchagi (ψ''):</span><span class="t-val" id="rtResOut">747'' (12.5')</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('astroCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "28-§: Elektromagnit to‘lqinlar shkalasi va Yer atmosferasining shaffoflik darchalari",
+      "29–30-§: Optik teleskop nurlar yo‘li va asosiy xarakteristik kattaliklari",
+      "31–32-§: Ulug‘bek rasadxonasi Faxriy sekstanti va Radioteleskoplar",
+      "Bilimlarni tekshirish: 11-Mavzu (28–32-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "Optik darcha: 300 nm – 1 μm | Radio darcha: 1 mm – 30 m",
+      "Γ = F/f | K = (D/d₀)² | ψ'' = 140''/D_mm",
+      "R = 40.21 m (1° = 701.8 mm) | ψ'' ≈ 252 000'' · λ/D",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 28-§ ELEKTROMAGNIT SPEKTR ====================
+  function setEmLog(val) {
+    document.getElementById('emLogSl').value = val;
+  }
+
+  function drawEmSpectrumTab(w, h) {
+    const lg = parseFloat(document.getElementById('emLogSl').value);
+    const lam = Math.pow(10, lg);
+    const freq = 3e8 / lam;
+
+    let band, pass, inst;
+    if (lg < -11) {
+      band = "Gamma-nurlar (γ)"; pass = "Yutiladi (Atmosfera to‘sadi)"; inst = "Kosmik gamma-teleskoplar (Fermi)";
+    } else if (lg < -8) {
+      band = "Rentgen nurlari"; pass = "Yutiladi (Atmosfera to‘sadi)"; inst = "Kosmik rentgen observatoriyalar (Chandra)";
+    } else if (lg < -6.42) {
+      band = "Ultrabinafsha (UB) nurlar"; pass = "Ozon qatlami (O₃) yutadi"; inst = "Kosmik UB teleskoplar (Hubble)";
+    } else if (lg <= -6.12) {
+      band = "Ko‘rinadigan yorug‘lik"; pass = "O‘TADI (Optik darcha)"; inst = "Yer sirtidagi optik teleskoplar";
+    } else if (lg < -3.0) {
+      band = "Infraqizil (IQ) nurlar"; pass = "H₂O va CO₂ yutadi (uzoq IQ)"; inst = "Kosmik IQ teleskoplar (James Webb)";
+    } else if (lg <= 1.48) {
+      band = "Radioto‘lqinlar"; pass = "O‘TADI (Radio darcha)"; inst = "Yer sirtidagi radioteleskoplar va VLBI";
+    } else {
+      band = "Uzun radioto‘lqinlar"; pass = "Ionosferadan qaytadi"; inst = "Kosmik past chastotali radioteleskoplar";
+    }
+
+    document.getElementById('emLogVal').textContent = `${lg.toFixed(2)}`;
+    document.getElementById('emBandOut').textContent = band;
+    document.getElementById('emLamOut').textContent = `${lam.toExponential(2)} m`;
+    document.getElementById('emFreqOut').textContent = `${freq.toExponential(2)} Hz`;
+    document.getElementById('emAtmOut').textContent = pass;
+    document.getElementById('emTelOut').textContent = inst;
+
+    // Vizualizatsiya: Yuqori qism - Koinot, O'rta - Atmosfera qatlami, Past - Yer sirti
+    const padL = 55, padR = 35;
+    const gw = w - padL - padR;
+    const spaceY = h * 0.20;
+    const atmTop = h * 0.34;
+    const groundY = h * 0.78;
+
+    // Atmosfera qatlami
+    const atmGrad = ctx.createLinearGradient(0, atmTop, 0, groundY);
+    atmGrad.addColorStop(0, 'rgba(56, 189, 248, 0.08)');
+    atmGrad.addColorStop(1, 'rgba(56, 189, 248, 0.28)');
+    ctx.fillStyle = atmGrad;
+    ctx.fillRect(padL, atmTop, gw, groundY - atmTop);
+
+    // Shaffoflik darchalari (Optik va Radio)
+    const xFromLg = (l) => padL + ((l - (-13.0)) / 15.0) * gw;
+
+    const optX1 = xFromLg(-6.52), optX2 = xFromLg(-6.0);
+    ctx.fillStyle = 'rgba(52, 211, 153, 0.28)';
+    ctx.fillRect(optX1, atmTop, Math.max(12, optX2 - optX1), groundY - atmTop);
+
+    const radX1 = xFromLg(-3.0), radX2 = xFromLg(1.48);
+    ctx.fillStyle = 'rgba(52, 211, 153, 0.22)';
+    ctx.fillRect(radX1, atmTop, radX2 - radX1, groundY - atmTop);
+
+    // Yer sirti
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(padL, groundY, gw, 28);
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(padL, groundY); ctx.lineTo(padL + gw, groundY); ctx.stroke();
+
+    // Tanlangan to'lqin nuri
+    const curX = xFromLg(lg);
+    const reachesGround = (lg >= -6.52 && lg <= -6.0) || (lg >= -3.0 && lg <= 1.48);
+    const endY = reachesGround ? groundY : (atmTop + (groundY - atmTop) * 0.45);
+
+    ctx.strokeStyle = reachesGround ? '#34d399' : '#fb7185';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let y = spaceY; y <= endY; y += 4) {
+      const wx = curX + Math.sin(y * 0.22) * 8;
+      y === spaceY ? ctx.moveTo(wx, y) : ctx.lineTo(wx, y);
+    }
+    ctx.stroke();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Optik darcha', optX1, atmTop - 8);
+    ctx.fillText('Radio darcha (1 mm – 30 m)', (radX1 + radX2) * 0.5, atmTop - 8);
+    ctx.fillStyle = reachesGround ? '#34d399' : '#fb7185';
+    ctx.fillText(reachesGround ? '▼ Yer observatoriyasiga yetib keldi' : '✕ Atmosferada yutildi (Kosmik teleskop zarur)', curX, endY + 18);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 2: 29-30-§ OPTIK TELESKOPLAR ====================
+  function setTelPreset(d, F, f) {
+    document.getElementById('telD').value = d;
+    document.getElementById('telF').value = F;
+    document.getElementById('telf').value = f;
+  }
+
+  function drawOpticalTelTab(w, h) {
+    const D = parseFloat(document.getElementById('telD').value);
+    const F = parseFloat(document.getElementById('telF').value);
+    const f = parseFloat(document.getElementById('telf').value);
+
+    const mag = F / f;
+    const lightGain = Math.pow(D / 6.0, 2);
+    const mLim = 2.5 + 5 * Math.log10(D);
+    const resArcsec = 140.0 / D;
+
+    document.getElementById('telDVal').textContent = `${D} mm`;
+    document.getElementById('telFVal').textContent = `${F.toLocaleString()} mm`;
+    document.getElementById('telfVal').textContent = `${f} mm`;
+
+    document.getElementById('telMagOut').textContent = `${mag.toFixed(1)} marta`;
+    document.getElementById('telLightOut').textContent = `${Math.round(lightGain).toLocaleString()} marta`;
+    document.getElementById('telLimOut').textContent = `${mLim.toFixed(2)}ᵐ`;
+    document.getElementById('telResOut').textContent = `${resArcsec.toFixed(3)}''`;
+
+    // Chapda optik sxema (obyektiv + fokus + okulyar)
+    const objX = w * 0.14;
+    const focX = objX + Math.min(w * 0.42, 140 + (F / 12000) * 180);
+    const eyeX = focX + 45;
+    const cy = h * 0.54;
+    const lensH = 30 + (D / 1500) * 85;
+
+    // Parallel nurlar kirishi
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.75)';
+    ctx.lineWidth = 2;
+    [-lensH * 0.75, 0, lensH * 0.75].forEach(dy => {
+      ctx.beginPath(); ctx.moveTo(25, cy + dy); ctx.lineTo(objX, cy + dy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(objX, cy + dy); ctx.lineTo(focX, cy); ctx.stroke();
+    });
+
+    // Obyektiv linza
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.ellipse(objX, cy, 8, lensH, 0, 0, Math.PI * 2); ctx.stroke();
+
+    // Okulyar linza
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(eyeX, cy, 5, 22, 0, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`Obyektiv (D = ${D} mm)`, objX - 35, cy + lensH + 22);
+    ctx.fillText('Fokus', focX - 14, cy - 12);
+    ctx.fillText(`Okulyar (f = ${f} mm)`, eyeX - 20, cy + 40);
+
+    // O'ngda: Qo'shaloq yulduz (burchak masofa 1.0'') Eyri disklari difraksiyasi
+    const starBoxX = w * 0.78, starBoxY = cy;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+    ctx.strokeRect(starBoxX - 85, starBoxY - 85, 170, 170);
+
+    const airyR = Math.min(36, Math.max(4, resArcsec * 22));
+    const sep = 22; // 1.0'' ga mos piksellar
+
+    [starBoxX - sep * 0.5, starBoxX + sep * 0.5].forEach(sx => {
+      const g = ctx.createRadialGradient(sx, starBoxY, 1, sx, starBoxY, airyR);
+      g.addColorStop(0, '#ffffff');
+      g.addColorStop(0.4, 'rgba(56, 189, 248, 0.8)');
+      g.addColorStop(1, 'rgba(56, 189, 248, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(sx, starBoxY, airyR, 0, Math.PI * 2); ctx.fill();
+    });
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Ajrata olish: ψ = ${resArcsec.toFixed(2)}''`, starBoxX, starBoxY + 105);
+    ctx.fillStyle = resArcsec <= 1.0 ? '#34d399' : '#fb7185';
+    ctx.fillText(resArcsec <= 1.0 ? '1.0'' qo‘shaloq yulduz ajraldi!' : 'Disklar qo‘shilib ketgan', starBoxX, starBoxY + 122);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 3: 31-32-§ ULUG'BEK SEKSTANTI VA RADIOTELESKOP ====================
+  let lab3Mode = 0;
+
+  function setLab3Mode(m) {
+    lab3Mode = m;
+    document.getElementById('modeUluBtn').classList.toggle('active', m === 0);
+    document.getElementById('modeRadBtn').classList.toggle('active', m === 1);
+    document.getElementById('uluControls').classList.toggle('hidden', m !== 0);
+    document.getElementById('radControls').classList.toggle('hidden', m !== 1);
+  }
+
+  function setRtPreset(lamCm, lgD) {
+    document.getElementById('rtLamSl').value = lamCm;
+    document.getElementById('rtDSl').value = lgD;
+  }
+
+  function drawLab3Tab(w, h) {
+    if (lab3Mode === 0) {
+      // 32-§ Ulug'bek Faxriy sekstanti (R = 40.21 m)
+      const hDeg = parseFloat(document.getElementById('uluHSl').value);
+      const zDeg = 90.0 - hDeg;
+      const R = 40.21;
+      const sMeters = (hDeg * Math.PI / 180.0) * R;
+
+      document.getElementById('uluHVal').textContent = `${hDeg.toFixed(1)}°`;
+      document.getElementById('uluZOut').textContent = `${zDeg.toFixed(1)}°`;
+      document.getElementById('uluSOut').textContent = `${sMeters.toFixed(2)} m (${Math.round(sMeters * 1000).toLocaleString()} mm)`;
+
+      // Chizma: Sekstant markazi (yuqoridagi tirqish) va 90° marmar yoy
+      const cx = w * 0.65, cy = h * 0.24;
+      const arcR = Math.min(w * 0.48, h * 0.62);
+
+      // Marmar yoy (gorizontdan zenitgacha: burchaklar PI/2 dan PI gacha)
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 7;
+      ctx.beginPath(); ctx.arc(cx, cy, arcR, Math.PI * 0.5, Math.PI); ctx.stroke();
+
+      // Daraja bo'linmalari
+      ctx.strokeStyle = '#050914';
+      ctx.lineWidth = 1.5;
+      for (let deg = 0; deg <= 90; deg += 10) {
+        const ang = Math.PI - (deg * Math.PI / 180);
+        const x1 = cx + Math.cos(ang) * (arcR - 4);
+        const y1 = cy + Math.sin(ang) * (arcR - 4);
+        const x2 = cx + Math.cos(ang) * (arcR + 4);
+        const y2 = cy + Math.sin(ang) * (arcR + 4);
+        ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+      }
+
+      // Yoritgich nuri: tirqishdan (cx, cy) o'tib yoyga tushadi
+      const hitAng = Math.PI - (hDeg * Math.PI / 180);
+      const hitX = cx + Math.cos(hitAng) * arcR;
+      const hitY = cy + Math.sin(hitAng) * arcR;
+      const srcX = cx - Math.cos(hitAng) * 140;
+      const srcY = cy - Math.sin(hitAng) * 140;
+
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(srcX, srcY); ctx.lineTo(hitX, hitY); ctx.stroke();
+
+      // Tirqish va tushish nuqtasi
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#34d399';
+      ctx.beginPath(); ctx.arc(hitX, hitY, 7, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('Tirqish (Yoy markazi)', cx + 10, cy + 4);
+      ctx.fillText('Zenit (90°)', cx - 28, cy + arcR + 20);
+      ctx.fillText('Gorizont (0°)', cx - arcR - 75, cy + 5);
+      ctx.fillStyle = '#34d399';
+      ctx.fillText(`h = ${hDeg.toFixed(1)}° → s = ${sMeters.toFixed(2)} m`, hitX - 150, hitY + 18);
+    } else {
+      // 31-§ Radioteleskop / Interferometr
+      const lamCm = parseFloat(document.getElementById('rtLamSl').value);
+      const lgD = parseFloat(document.getElementById('rtDSl').value);
+      const lamM = lamCm / 100.0;
+      const diamM = Math.pow(10, lgD);
+      const resArcsec = 252000.0 * (lamM / diamM);
+
+      document.getElementById('rtLamVal').textContent = `${lamCm.toFixed(1)} cm`;
+      document.getElementById('rtDVal').textContent = `lg D = ${lgD.toFixed(2)}`;
+      document.getElementById('rtSizeOut').textContent = diamM >= 1000 ? `${(diamM / 1000).toFixed(1)} km` : `${diamM.toFixed(1)} m`;
+      document.getElementById('rtResOut').textContent = resArcsec >= 60 ? `${resArcsec.toFixed(1)}'' (${(resArcsec / 60).toFixed(1)}')` : `${resArcsec.toFixed(4)}''`;
+
+      const cx = w * 0.5, cy = h * 0.62;
+      const dishR = 45 + (lgD / 6.7) * 95;
+
+      // Parabolik antenna yoyi
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.arc(cx, cy - dishR * 0.4, dishR, Math.PI * 0.2, Math.PI * 0.8); ctx.stroke();
+
+      // Fokus qabul qilgich
+      const focY = cy - dishR * 0.1;
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(cx, focY, 7, 0, Math.PI * 2); ctx.fill();
+
+      // Tushayotgan va fokusga yig'ilayotgan radioto'lqinlar
+      ctx.strokeStyle = 'rgba(52, 211, 153, 0.6)';
+      ctx.lineWidth = 2;
+      [-dishR * 0.55, 0, dishR * 0.55].forEach(dx => {
+        const hitY = (cy - dishR * 0.4) + Math.sqrt(Math.max(0, dishR * dishR - dx * dx));
+        ctx.beginPath(); ctx.moveTo(cx + dx, h * 0.18); ctx.lineTo(cx + dx, hitY); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + dx, hitY); ctx.lineTo(cx, focY); ctx.stroke();
+      });
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`Baza / Diametr: ${diamM >= 1000 ? (diamM / 1000).toFixed(1) + ' km' : diamM.toFixed(1) + ' m'} | λ = ${lamCm.toFixed(1)} cm`, cx, cy + dishR * 0.72);
+      ctx.fillStyle = '#34d399';
+      ctx.fillText(`Ajrata olish burchagi: ψ = ${resArcsec >= 1 ? resArcsec.toFixed(2) + "''" : resArcsec.toFixed(4) + "''"}`, cx, cy + dishR * 0.72 + 22);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Yer atmosferasi koinotdan kelayotgan elektromagnit nurlanishning qaysi ikkita shaffoflik darchasini Yer sirtigacha o‘tkazadi?",
+      opts: ["Gamma va Rentgen darchalari", "Optik darcha (300 nm – 1 μm) va Radio darcha (1 mm – 30 m)", "Ultrabinafsha va uzoq infraqizil darchalar"],
+      ans: 1,
+      exp: "Yer atmosferasining ikkita asosiy shaffoflik darchasi — optik va radio darchalardir."
+    },
+    {
+      q: "2. Nima uchun rentgen va gamma diapazonlardagi astronomik kuzatishlar faqat kosmik observatoriyalar (sun’iy yo‘ldoshlar) orqali olib boriladi?",
+      opts: ["Bu nurlar koinotda juda kam uchragani uchun", "Yer atmosferasi qisqa to‘lqinli gamma va rentgen nurlarini to‘liq yutib qolgani uchun", "Optik linzalar ularni sindira olmagani uchun"],
+      ans: 1,
+      exp: "Atmosfera kislorodi, azoti va ozon qatlami gamma, rentgen va uzoq UB nurlarni Yer sirtiga o‘tkazmaydi."
+    },
+    {
+      q: "3. Obyektivi botiq parabolik ko‘zgudan iborat bo‘lgan teleskop qanday ataladi?",
+      opts: ["Refraktor", "Reflektor", "Sekstant"],
+      ans: 1,
+      exp: "Ko‘zguli teleskoplar reflektorlar (Nyuton, Kassegren, Richi–Kreten sistemalari) deb ataladi."
+    },
+    {
+      q: "4. Obyektivining fokus masofasi F = 1800 mm, okulyarining fokus masofasi esa f = 15 mm bo‘lgan teleskopning burchak kattalashtirishi (Γ) nechaga teng?",
+      opts: ["120 marta", "270 marta", "12 marta"],
+      ans: 0,
+      exp: "Γ = F / f = 1800 mm / 15 mm = 120 marta."
+    },
+    {
+      q: "5. Diametri D = 300 mm bo‘lgan teleskop obyektivi diametri d₀ = 6 mm bo‘lgan ko‘z qorachig‘iga nisbatan necha marta ko‘p yorug‘lik yig‘adi?",
+      opts: ["50 marta", "2 500 marta", "300 marta"],
+      ans: 1,
+      exp: "K = (D / d₀)² = (300 / 6)² = 50² = 2500 marta."
+    },
+    {
+      q: "6. Obyektivining diametri D = 140 mm bo‘lgan optik teleskopning nazariy ajrata olish burchagi (ψ'') nechaga teng?",
+      opts: ["1.0''", "14.0''", "0.1''"],
+      ans: 0,
+      exp: "ψ'' ≈ 140'' / D_mm = 140'' / 140 = 1.0''."
+    },
+    {
+      q: "7. Diametri D = 100 mm bo‘lgan teleskop orqali kuzatish mumkin bo‘lgan eng xira yulduz kattaligi (m_lim = 2.5 + 5 lg D_mm) nechaga teng?",
+      opts: ["7.5ᵐ", "12.5ᵐ", "15.0ᵐ"],
+      ans: 1,
+      exp: "m_lim = 2.5 + 5 · lg(100) = 2.5 + 5 × 2 = 12.5ᵐ."
+    },
+    {
+      q: "8. Yakka radioteleskopning ajrata olish burchagini keskin yaxshilash uchun bir-biridan katta B masofada joylashgan bir nechta radioteleskopni birlashtirish usuli nima deyiladi?",
+      opts: ["Spektrografiya", "Radiointerferometriya (VLBI)", "Astrografiya"],
+      ans: 1,
+      exp: "Radiointerferometrlar yordamida ajrata olish burchagi ψ ≈ λ / B gacha (milliyoy soniyagacha) yaxshilanadi."
+    },
+    {
+      q: "9. Samarqanddagi Ulug‘bek rasadxonasining «bosh teleskopi» — Faxriy sekstanti yoyining radiusi taxminan nechaga teng?",
+      opts: ["10.5 m", "40.21 m", "100.0 m"],
+      ans: 1,
+      exp: "Ulug‘bek rasadxonasidagi ulkan meridian sekstanti yoyining radiusi R ≈ 40.21 m (yoy uzunligi ~63 m) bo‘lgan."
+    },
+    {
+      q: "10. Ulug‘bek sekstantining marmar yoyida 1° yoy burchakka mos keladigan chiziqli uzunlik taxminan nechaga teng?",
+      opts: ["7.02 mm", "70.2 cm (701.8 mm)", "7.02 m"],
+      ans: 1,
+      exp: "l₁ = 2πR / 360° = 2 × 3.1416 × 40.21 m / 360 ≈ 0.7018 m = 70.18 cm (1' ≈ 11.7 mm)."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawEmSpectrumTab(w, h);
+      else if (activeTab === 2) drawOpticalTelTab(w, h);
+      else if (activeTab === 3) drawLab3Tab(w, h);
+      else drawEmSpectrumTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
