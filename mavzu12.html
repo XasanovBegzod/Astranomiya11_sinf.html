@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12-Mavzu (33-§): Nurlanish qonunlari va spektral metodlar | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.03rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.84rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 11px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>12-MAVZU (33-§). Nurlanish qonunlari va osmon jismlarini spektral metodlar yordamida o‘rganish</h1>
+    <p>11-sinf Astronomiya | III Bob: Astrofizika va uning tadqiqot metodlari</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">33-§ Vin va Stefan–Bolsman</button>
+    <button class="tab-btn" onclick="setTab(2)">Spektral analiz va Kirxgof</button>
+    <button class="tab-btn" onclick="setTab(3)">Dopler effekti (v_r)</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>33-§. Nurlanish qonunlari: Vinning siljish qonuni va Stefan–Bolsman qonuni</h2>
+    <p>Yulduzlarning fotosferasi issiqlik nurlanishi jihatidan <strong>absolyut qora jism</strong>ga yaqin bo‘lib, uning spektridagi energiya taqsimoti Plank egri chizig‘iga bo‘ysunadi va ikkita asosiy qonun orqali yulduzning harorati hamda yorqinligi aniqlanadi:</p>
+    <div class="math-banner">
+      Vinning siljish qonuni: λ_max · T = b &nbsp;(b = 2.898 × 10⁻³ m·K = 2.898 × 10⁶ nm·K)<br>
+      Stefan–Bolsman qonuni: ε = σ · T⁴ &nbsp;(σ = 5.67 × 10⁻⁸ W/(m²·K⁴)) &nbsp;|&nbsp; Yorqinlik: L = 4πR²σT⁴
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Spektral sinf</th>
+          <th>Yulduz rangi</th>
+          <th>Harorat (T, K)</th>
+          <th>λ_max</th>
+          <th>Asosiy spektral chiziqlar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>O</strong></td><td>Ko‘kish-binafsha</td><td>30 000 – 50 000 K</td><td>58 – 97 nm</td><td>Ionlashgan geliy (He II), kislorod</td></tr>
+        <tr><td><strong>B</strong></td><td>Ko‘kish-oq</td><td>10 000 – 30 000 K</td><td>97 – 290 nm</td><td>Neytral geliy (He I) va vodorod</td></tr>
+        <tr><td><strong>A</strong></td><td>Oq (Sirius, Vega)</td><td>7 500 – 10 000 K</td><td>290 – 386 nm</td><td>Kuchli vodorod (Balmer seriyasi)</td></tr>
+        <tr><td><strong>F</strong></td><td>Sarg‘ish-oq</td><td>6 000 – 7 500 K</td><td>386 – 483 nm</td><td>Vodorod va ionlashgan kalsiy (Ca II)</td></tr>
+        <tr><td><strong>G</strong></td><td>Sariq (Quyosh)</td><td>5 000 – 6 000 K</td><td>483 – 580 nm</td><td>Ca II (H va K), temir (Fe I) chiziqlari</td></tr>
+        <tr><td><strong>K</strong></td><td>Zarg‘aldoq</td><td>3 500 – 5 000 K</td><td>580 – 828 nm</td><td>Neytral metallar (Fe I, Na I)</td></tr>
+        <tr><td><strong>M</strong></td><td>Qizil (Betelgeyze)</td><td>2 400 – 3 500 K</td><td>828 – 1200 nm</td><td>Titan oksidi (TiO) molekulyar polosalari</td></tr>
+      </tbody>
+    </table>
+
+    <div class="problem-box">
+      <strong>1-Masala (Vin va Stefan–Bolsman):</strong> Yulduz spektrida nurlanish energiyasining maksimumi <em>λ_max = 290 nm</em> to‘lqin uzunligiga to‘g‘ri keladi. Yulduz sirt haroratini (T) va 1 m² yuzasidan 1 s da chiqariladigan energiya oqimini (ε) hisoblang (<em>b = 2.90 × 10⁻³ m·K, σ = 5.67 × 10⁻⁸ W/(m²·K⁴)</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) Vin qonunidan: <strong>T = b / λ_max = (2.90 × 10⁻³) / (290 × 10⁻⁹) = 10 000 K</strong>.<br>
+        2) Stefan–Bolsman qonunidan: <strong>ε = σT⁴ = 5.67 × 10⁻⁸ × (10⁴)⁴ = 5.67 × 10⁸ W/m²</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Yorqinlik):</strong> Qizil gigant yulduzning harorati Quyosh haroratidan 2 marta past (<em>T = 0.5 T☉</em>), radiusi esa Quyosh radiusidan 100 marta katta (<em>R = 100 R☉</em>). Uning to‘la yorqinligi (L) Quyosh yorqinligidan (L☉) necha marta katta?
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>L / L☉ = (R / R☉)² · (T / T☉)⁴ = 100² · (0.5)⁴ = 10 000 · (1 / 16) = 625 marta</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>Spektrlarning turlari, Kirxgof qonunlari va Dopler effekti</h2>
+    <ul>
+      <li><strong>Uzluksiz spektr:</strong> Yuqori bosimli qattiq, suyuq yoki zich gaz jismlar tomonidan chiqariladi.</li>
+      <li><strong>Chiziqli nurlanish (emissiya) spektri:</strong> Qizdirilgan siyrak atomar gazlar chiqaradigan alohida yorug‘ rangli chiziqlar to‘plami.</li>
+      <li><strong>Yutilish (absorbsiya) spektri (Kirxgof qonuni):</strong> Qaynoq uzluksiz manba nuri sovuqroq siyrak gaz qatlami (yulduz atmosferasi) orqali o‘tganda tutash kamalak fonida <strong>qora yutilish chiziqlari</strong> (Fraungofer chiziqlari) hosil bo‘ladi.</li>
+      <li><strong>Dopler effekti:</strong> Yulduz yoki galaktika ko‘rish nuri bo‘ylab <em>v_r</em> nuriy tezlik bilan harakatlansa, spektral chiziq <strong>Δλ = λ − λ₀</strong> ga siljiydi: <code>v_r = c · (Δλ / λ₀)</code>. <em>Δλ &gt; 0</em> — <strong>qizilga siljish</strong> (uzoqlashish); <em>Δλ &lt; 0</em> — <strong>binafshaga siljish</strong> (yaqinlashish).</li>
+    </ul>
+
+    <div class="problem-box">
+      <strong>3-Masala (Dopler effekti):</strong> Vodorodning laboratoriya H_α chizig‘i <em>λ₀ = 656.3 nm</em>. Galaktika spektrida shu chiziq <em>λ = 662.863 nm</em> da kuzatildi. Galaktikaning nuriy tezligini (v_r) va harakat yo‘nalishini toping (<em>c = 3 × 10⁵ km/s</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        1) Siljish: <strong>Δλ = 662.863 − 656.300 = +6.563 nm &gt; 0</strong> (qizilga siljish).<br>
+        2) Tezlik: <strong>v_r = 3 × 10⁵ · (6.563 / 656.3) = +3000 km/s</strong> (galaktika bizdan uzoqlashmoqda).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">33-§: Absolyut qora jism nurlanishi — Vin va Stefan–Bolsman qonunlari</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">λ_max · T = 2.898 × 10⁶ nm·K | L = 4πR²σT⁴</div>
+    </div>
+    <canvas id="specCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: VIN VA STEFAN-BOLSMAN QONUNLARI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Yulduz harorati (T) va Radiusi (R)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Fotosfera harorati (T):</span>
+            <strong id="bbTVal">5 778 K</strong>
+          </div>
+          <input type="range" id="bbTSl" min="2500" max="32000" step="100" value="5778" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yulduz radiusi (R / R☉):</span>
+            <strong id="bbRVal">1.00 R☉</strong>
+          </div>
+          <input type="range" id="bbRSl" min="0.2" max="20.0" step="0.2" value="1.0" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setStarPreset(3400, 15.0)">Betelgeyze (M, 3400 K)</button>
+          <button class="btn active" onclick="setStarPreset(5778, 1.0)">Quyosh (G2, 5778 K)</button>
+          <button class="btn" onclick="setStarPreset(9940, 1.7)">Sirius (A1, 9940 K)</button>
+          <button class="btn" onclick="setStarPreset(12100, 8.0)">Rigel (B8, 12 100 K)</button>
+          <button class="btn" style="grid-column: span 2;" onclick="setStarPreset(28000, 6.5)">Issiq ko‘k yulduz (O-sinf, 28 000 K)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Nurlanish qonunlari ko‘rsatkichlari</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Spektral sinf va rangi:</span><span class="t-val" id="bbClassOut">G sinf (Sariq)</span></div>
+          <div class="t-row"><span>Maksimum to‘lqin (λ_max):</span><span class="t-val" id="bbLamOut">501.6 nm</span></div>
+          <div class="t-row"><span>Energetik oqim (ε = σT⁴):</span><span class="t-val" id="bbFluxOut">6.32 × 10⁷ W/m²</span></div>
+          <div class="t-row"><span>To‘la yorqinlik (L / L☉):</span><span class="t-val" id="bbLumOut">1.00 L☉</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: SPEKTRAL ANALIZ VA KIRXGOF QONUNLARI -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Spektr turini tanlang (Kirxgof qonunlari)</h3>
+        <div class="btn-grid">
+          <button class="btn" id="spType0" onclick="setSpecType(0)">1. Uzluksiz (tutash)</button>
+          <button class="btn" id="spType1" onclick="setSpecType(1)">2. Nurlanish (emissiya)</button>
+          <button class="btn active" style="grid-column: span 2;" id="spType2" onclick="setSpecType(2)">3. Yutilish spektri (Fraungofer chiziqlari)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Kimyoviy element spektral chiziqlari</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="elBtn0" onclick="setElemIdx(0)">Vodorod (H — Balmer)</button>
+          <button class="btn" id="elBtn1" onclick="setElemIdx(1)">Geliy (He I)</button>
+          <button class="btn" id="elBtn2" onclick="setElemIdx(2)">Natriy (Na I dubleti)</button>
+          <button class="btn" id="elBtn3" onclick="setElemIdx(3)">Kalsiy (Ca II — H, K)</button>
+        </div>
+        <div class="telemetry" style="margin-top:10px;">
+          <div class="t-row"><span>Tanlangan element:</span><span class="t-val" id="elNameOut">Vodorod (H)</span></div>
+          <div class="t-row"><span>Xarakterli chiziqlar (nm):</span><span class="t-val" id="elLinesOut">410.2, 434.0, 486.1, 656.3 nm</span></div>
+        </div>
+        <p class="desc" id="elDescOut" style="margin-top:8px;">
+          Yulduz atmosferasidagi sovuqroq vodorod atomlari fotosferaning uzluksiz nurlanishidan aynan Balmer seriyasi to‘lqinlarini (H_α = 656.3 nm, H_β = 486.1 nm) yutib, qora chiziqlar hosil qiladi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: DOPLER EFFEKTI (NURIY TEZLIK) -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Obyektning nuriy tezligi (v_r)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Nuriy tezlik (v_r, km/s):</span>
+            <strong id="dopVVal">+3 000 km/s</strong>
+          </div>
+          <input type="range" id="dopVSl" min="-3000" max="3000" step="50" value="3000" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setDopV(-2500)">Yaqinlashish (−2500 km/s)</button>
+          <button class="btn" onclick="setDopV(0)">Qo‘zg‘almas (v_r = 0)</button>
+          <button class="btn" onclick="setDopV(1500)">Uzoqlashish (+1500 km/s)</button>
+          <button class="btn active" onclick="setDopV(3000)">3-Masala (+3000 km/s)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Vodorod H_α (λ₀ = 656.3 nm) chizig‘i siljishi</h3>
+        <div class="formula-box">
+          Δλ = λ − λ₀ = λ₀ · (v_r / c)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Laboratoriya qiymati (λ₀):</span><span class="t-val">656.30 nm</span></div>
+          <div class="t-row"><span>Kuzatilgan to‘lqin (λ):</span><span class="t-val" id="dopLamOut">662.86 nm</span></div>
+          <div class="t-row"><span>Siljish miqdori (Δλ):</span><span class="t-val" id="dopShiftOut">+6.56 nm</span></div>
+          <div class="t-row"><span>Effekt va harakat:</span><span class="t-val" id="dopStateOut">Qizilga siljish (Uzoqlashmoqda)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('specCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "33-§: Absolyut qora jism nurlanish egri chizig‘i — Vin va Stefan–Bolsman qonunlari",
+      "33-§: Spektral analiz — Uzluksiz, Emissiya va Yutilish (Fraungofer) spektrlari",
+      "33-§: Dopler effekti — Spektral chiziqlarning qizilga va binafshaga siljishi",
+      "Bilimlarni tekshirish: 12-Mavzu (33-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "λ_max · T = 2.898 × 10⁶ nm·K | ε = σT⁴",
+      "Kirxgof qonunlari va kimyoviy elementlar spektri",
+      "v_r = c · (Δλ / λ₀)",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== YORDAMCHI: TO'LQIN UZUNLIGIDAN RANGGA ====================
+  function wavelengthToColor(nm) {
+    if (nm < 380) return '#7c3aed';
+    if (nm < 440) return '#6366f1';
+    if (nm < 490) return '#0ea5e9';
+    if (nm < 510) return '#10b981';
+    if (nm < 580) return '#eab308';
+    if (nm < 645) return '#f97316';
+    if (nm <= 760) return '#ef4444';
+    return '#991b1b';
+  }
+
+  function starColorFromTemp(T) {
+    if (T >= 25000) return '#93c5fd';
+    if (T >= 10000) return '#bae6fd';
+    if (T >= 7500) return '#f8fafc';
+    if (T >= 6000) return '#fef9c3';
+    if (T >= 5000) return '#fde047';
+    if (T >= 3700) return '#fb923c';
+    return '#f87171';
+  }
+
+  function starClassFromTemp(T) {
+    if (T >= 30000) return 'O sinf (Ko‘kish-binafsha)';
+    if (T >= 10000) return 'B sinf (Ko‘kish-oq)';
+    if (T >= 7500) return 'A sinf (Oq)';
+    if (T >= 6000) return 'F sinf (Sarg‘ish-oq)';
+    if (T >= 5000) return 'G sinf (Sariq)';
+    if (T >= 3500) return 'K sinf (Zarg‘aldoq)';
+    return 'M sinf (Qizil)';
+  }
+
+  // ==================== TAB 1: VIN VA STEFAN-BOLSMAN QONUNLARI ====================
+  function setStarPreset(T, R) {
+    document.getElementById('bbTSl').value = T;
+    document.getElementById('bbRSl').value = R;
+  }
+
+  function drawBlackbodyTab(w, h) {
+    const T = parseFloat(document.getElementById('bbTSl').value);
+    const R = parseFloat(document.getElementById('bbRSl').value);
+
+    const lamMaxNm = 2.898e6 / T;
+    const sigma = 5.67e-8;
+    const flux = sigma * Math.pow(T, 4);
+    const lumRel = Math.pow(R, 2) * Math.pow(T / 5778.0, 4);
+
+    document.getElementById('bbTVal').textContent = `${T.toLocaleString()} K`;
+    document.getElementById('bbRVal').textContent = `${R.toFixed(1)} R☉`;
+    document.getElementById('bbClassOut').textContent = starClassFromTemp(T);
+    document.getElementById('bbLamOut').textContent = `${lamMaxNm.toFixed(1)} nm`;
+    document.getElementById('bbFluxOut').textContent = `${flux.toExponential(2)} W/m²`;
+    document.getElementById('bbLumOut').textContent = lumRel >= 1000 ? `${lumRel.toExponential(2)} L☉` : `${lumRel.toFixed(2)} L☉`;
+
+    // Plank egri chizig'i grafigi (X o'qi: 100 nm dan 1600 nm gacha)
+    const padL = 62, padR = 32, padT = 65, padB = 48;
+    const gw = w - padL - padR;
+    const gh = h - padT - padB;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.78)';
+    ctx.fillRect(padL, padT, gw, gh);
+
+    const xFromNm = (nm) => padL + ((nm - 100) / 1500) * gw;
+
+    // Ko'rinadigan yorug'lik kamalagi zonasi (380 - 760 nm)
+    const visX1 = xFromNm(380), visX2 = xFromNm(760);
+    const rGrad = ctx.createLinearGradient(visX1, 0, visX2, 0);
+    rGrad.addColorStop(0, 'rgba(124, 58, 237, 0.35)');
+    rGrad.addColorStop(0.2, 'rgba(14, 165, 233, 0.35)');
+    rGrad.addColorStop(0.45, 'rgba(16, 185, 129, 0.35)');
+    rGrad.addColorStop(0.65, 'rgba(234, 179, 8, 0.35)');
+    rGrad.addColorStop(0.82, 'rgba(249, 115, 22, 0.35)');
+    rGrad.addColorStop(1, 'rgba(239, 68, 68, 0.35)');
+    ctx.fillStyle = rGrad;
+    ctx.fillRect(visX1, padT, visX2 - visX1, gh);
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(padL, padT, gw, gh);
+
+    // Normallashtirilgan Plank funksiyasi B(λ, T) / B(λ_max, T)
+    const hc_k = 1.4388e7; // nm * K
+    const peakVal = 1.0 / (Math.pow(lamMaxNm, 5) * (Math.exp(hc_k / (lamMaxNm * T)) - 1));
+
+    ctx.strokeStyle = starColorFromTemp(T);
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let nm = 100; nm <= 1600; nm += 10) {
+      const val = 1.0 / (Math.pow(nm, 5) * (Math.exp(hc_k / (nm * T)) - 1));
+      const normY = Math.min(1.0, val / peakVal);
+      const px = xFromNm(nm);
+      const py = padT + gh - normY * (gh * 0.85);
+      nm === 100 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // λ_max vertikal chizig'i
+    const clampedMax = Math.min(1600, Math.max(100, lamMaxNm));
+    const maxPx = xFromNm(clampedMax);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(maxPx, padT + 15); ctx.lineTo(maxPx, padT + gh); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`λ_max = ${lamMaxNm.toFixed(0)} nm`, Math.min(w - 130, maxPx + 6), padT + 28);
+
+    // O'ng yuqori burchakda yulduz vizual ko'rinishi
+    const starX = padL + gw - 75, starY = padT + 70;
+    const sRad = Math.min(44, Math.max(14, 14 + Math.log10(R + 0.5) * 20));
+    const sCol = starColorFromTemp(T);
+    const sg = ctx.createRadialGradient(starX, starY, 2, starX, starY, sRad * 1.6);
+    sg.addColorStop(0, '#ffffff');
+    sg.addColorStop(0.45, sCol);
+    sg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(starX, starY, sRad * 1.6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('100 nm (UB)', padL, padT + gh + 20);
+    ctx.fillText('380–760 nm (Ko‘rinadigan)', visX1, padT + gh + 20);
+    ctx.fillText('1600 nm (IQ)', padL + gw - 65, padT + gh + 20);
+  }
+
+  // ==================== TAB 2: SPEKTRAL ANALIZ VA KIRXGOF ====================
+  let curSpecType = 2; // 0: tutash, 1: emissiya, 2: absorbsiya
+  let curElemIdx = 0;
+
+  const elementsData = [
+    {
+      name: "Vodorod (H — Balmer seriyasi)",
+      lines: [410.2, 434.0, 486.1, 656.3],
+      linesStr: "410.2, 434.0, 486.1 (H_β), 656.3 nm (H_α)",
+      desc: "Koinotdagi eng keng tarqalgan element. Yulduz atmosferasidagi vodorod atomlari fotosfera nuridan aynan 410.2, 434.0, 486.1 va 656.3 nm to‘lqinlarni yutib, qora chiziqlar hosil qiladi."
+    },
+    {
+      name: "Geliy (He I)",
+      lines: [402.6, 447.1, 501.6, 587.6, 667.8],
+      linesStr: "402.6, 447.1, 501.6, 587.6, 667.8 nm",
+      desc: "Geliy ilk bor 1868-yilda Quyosh xromosferasi spektrida yorug‘ sariq chiziq (587.6 nm) orqali kashf etilgan va shundan keyin Yerda topilgan."
+    },
+    {
+      name: "Natriy (Na I dubleti)",
+      lines: [589.0, 589.6],
+      linesStr: "589.0 nm (D₂) va 589.6 nm (D₁)",
+      desc: "Quyosh va sovuqroq G, K, M sinf yulduzlari spektrida sariq rang sohasida o‘ta xarakterli qo‘shaloq yutilish chizig‘i (Fraungofer D dubleti) sifatida ko‘rinadi."
+    },
+    {
+      name: "Ionlashgan kalsiy (Ca II — H va K)",
+      lines: [393.4, 396.8],
+      linesStr: "393.4 nm (K chiziq) va 396.8 nm (H chiziq)",
+      desc: "Quyosh tipidagi yulduzlar spektrining binafsha chegarasida eng kuchli yutilish chiziqlarini hosil qiladi."
+    }
+  ];
+
+  function setSpecType(t) {
+    curSpecType = t;
+    for (let i = 0; i < 3; i++) document.getElementById('spType' + i).classList.toggle('active', i === t);
+  }
+
+  function setElemIdx(idx) {
+    curElemIdx = idx;
+    for (let i = 0; i < 4; i++) document.getElementById('elBtn' + i).classList.toggle('active', i === idx);
+    const el = elementsData[idx];
+    document.getElementById('elNameOut').textContent = el.name;
+    document.getElementById('elLinesOut').textContent = el.linesStr;
+    document.getElementById('elDescOut').textContent = el.desc;
+  }
+
+  function drawRainbowBar(x, y, w, h) {
+    const grad = ctx.createLinearGradient(x, 0, x + w, 0);
+    grad.addColorStop(0.00, '#4c1d95'); // 380 nm
+    grad.addColorStop(0.16, '#2563eb'); // 440 nm
+    grad.addColorStop(0.32, '#06b6d4'); // 500 nm
+    grad.addColorStop(0.52, '#22c55e'); // 575 nm
+    grad.addColorStop(0.68, '#eab308'); // 635 nm
+    grad.addColorStop(0.84, '#f97316'); // 695 nm
+    grad.addColorStop(1.00, '#dc2626'); // 760 nm
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, y, w, h);
+  }
+
+  function drawKirchhoffTab(w, h) {
+    const padL = 55, padR = 35;
+    const barW = w - padL - padR;
+    const barH = 74;
+    const el = elementsData[curElemIdx];
+    const xFromNm = (nm) => padL + ((nm - 380) / (760 - 380)) * barW;
+
+    // Yuqori polosa: Tanlangan spektr turi
+    const y1 = h * 0.28;
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 12px sans-serif';
+    const titles = [
+      "1. Uzluksiz (tutash) spektr — Qaynoq zich jism (fotosfera) nurlanishi",
+      `2. Nurlanish (emissiya) spektri — Qizdirilgan siyrak ${el.name} gazi`,
+      `3. Yutilish (absorbsiya) spektri — Yulduz atmosferasidan o‘tgan nur (${el.name})`
+    ];
+    ctx.fillText(titles[curSpecType], padL, y1 - 12);
+
+    if (curSpecType === 0) {
+      drawRainbowBar(padL, y1, barW, barH);
+    } else if (curSpecType === 1) {
+      ctx.fillStyle = '#030712';
+      ctx.fillRect(padL, y1, barW, barH);
+      el.lines.forEach(nm => {
+        const lx = xFromNm(nm);
+        ctx.strokeStyle = wavelengthToColor(nm);
+        ctx.lineWidth = 3.5;
+        ctx.beginPath(); ctx.moveTo(lx, y1); ctx.lineTo(lx, y1 + barH); ctx.stroke();
+      });
+    } else {
+      drawRainbowBar(padL, y1, barW, barH);
+      el.lines.forEach(nm => {
+        const lx = xFromNm(nm);
+        ctx.strokeStyle = '#020617';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath(); ctx.moveTo(lx, y1); ctx.lineTo(lx, y1 + barH); ctx.stroke();
+      });
+    }
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.strokeRect(padL, y1, barW, barH);
+
+    // Pastki polosa: Laboratoriya etalon chiziqlari (taqqoslash uchun)
+    const y2 = h * 0.62;
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillText(`Laboratoriya etalon spektri: ${el.name}`, padL, y2 - 12);
+    ctx.fillStyle = '#030712';
+    ctx.fillRect(padL, y2, barW, barH);
+
+    el.lines.forEach(nm => {
+      const lx = xFromNm(nm);
+      ctx.strokeStyle = wavelengthToColor(nm);
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(lx, y2); ctx.lineTo(lx, y2 + barH); ctx.stroke();
+
+      // Punkti bog'lovchi chiziq
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(lx, y1 + barH); ctx.lineTo(lx, y2); ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#fde68a';
+      ctx.font = '10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${nm}`, lx, y2 + barH + 16);
+    });
+    ctx.textAlign = 'left';
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.strokeRect(padL, y2, barW, barH);
+  }
+
+  // ==================== TAB 3: DOPLER EFFEKTI ====================
+  function setDopV(v) {
+    document.getElementById('dopVSl').value = v;
+  }
+
+  function drawDopplerTab(w, h) {
+    const vr = parseFloat(document.getElementById('dopVSl').value); // km/s
+    const c = 300000.0; // km/s
+    const lam0 = 656.30; // H_alpha (nm)
+    const dLam = lam0 * (vr / c);
+    const lamObs = lam0 + dLam;
+
+    document.getElementById('dopVVal').textContent = `${vr >= 0 ? '+' : ''}${vr.toLocaleString()} km/s`;
+    document.getElementById('dopLamOut').textContent = `${lamObs.toFixed(2)} nm`;
+    document.getElementById('dopShiftOut').textContent = `${dLam >= 0 ? '+' : ''}${dLam.toFixed(2)} nm`;
+
+    let stateStr = "Siljish yo‘q (Nuriy tezlik v_r = 0)";
+    if (vr > 20) stateStr = "Qizilga siljish (Obyekt uzoqlashmoqda)";
+    else if (vr < -20) stateStr = "Binafshaga siljish (Obyekt yaqinlashmoqda)";
+    document.getElementById('dopStateOut').textContent = stateStr;
+
+    const padL = 55, padR = 35;
+    const barW = w - padL - padR;
+    const barH = 68;
+    const xFromNm = (nm) => padL + ((nm - 380) / (760 - 380)) * barW;
+
+    const refLines = [434.0, 486.1, 656.3];
+
+    // Yuqori polosa: Laboratoriya spektri (v_r = 0)
+    const y1 = h * 0.28;
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('1. Laboratoriya spektri (Qo‘zg‘almas manba, v_r = 0)', padL, y1 - 12);
+    drawRainbowBar(padL, y1, barW, barH);
+    refLines.forEach(nm => {
+      const lx = xFromNm(nm);
+      ctx.strokeStyle = '#020617';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(lx, y1); ctx.lineTo(lx, y1 + barH); ctx.stroke();
+    });
+
+    // Pastki polosa: Kuzatilayotgan yulduz / galaktika spektri
+    const y2 = h * 0.60;
+    ctx.fillStyle = vr > 0 ? '#fb7185' : (vr < 0 ? '#38bdf8' : '#34d399');
+    ctx.fillText(`2. Kuzatilgan spektr (v_r = ${vr >= 0 ? '+' : ''}${vr} km/s)`, padL, y2 - 12);
+    drawRainbowBar(padL, y2, barW, barH);
+
+    // Vizual yaqqollik uchun siljishni ekranda 12x masshtabda ko'rsatamiz
+    const visualFactor = 12.0;
+    refLines.forEach(nm => {
+      const shiftVis = nm * (vr / c) * visualFactor;
+      const lx0 = xFromNm(nm);
+      const lx1 = Math.min(padL + barW - 4, Math.max(padL + 4, xFromNm(nm + shiftVis)));
+
+      ctx.strokeStyle = '#020617';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath(); ctx.moveTo(lx1, y2); ctx.lineTo(lx1, y2 + barH); ctx.stroke();
+
+      // Siljish strelkasi
+      ctx.strokeStyle = '#fbbf24';
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(lx0, y1 + barH); ctx.lineTo(lx1, y2); ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('← Binafshaga siljish (Yaqinlashish, v_r < 0)', padL, y2 + barH + 24);
+    ctx.textAlign = 'right';
+    ctx.fillText('Qizilga siljish (Uzoqlashish, v_r > 0) →', padL + barW, y2 + barH + 24);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Vinning siljish qonuniga (λ_max · T = b) ko‘ra, yulduz fotosferasining harorati 2 marta ortsa, uning spektridagi maksimal nurlanish to‘lqin uzunligi (λ_max) qanday o‘zgaradi?",
+      opts: ["2 marta ortadi", "2 marta kamayadi (ko‘k-ultrabinafsha tomon siljiydi)", "4 marta ortadi"],
+      ans: 1,
+      exp: "λ_max = b / T bo‘lgani uchun harorat 2 marta ortsa, maksimal nurlanish to‘lqin uzunligi 2 marta qisqaradi."
+    },
+    {
+      q: "2. Yulduz spektrida nurlanish energiyasining maksimumi λ_max = 580 nm to‘lqin uzunligiga to‘g‘ri keladi. Yulduz sirt harorati taxminan nechaga teng (b ≈ 2.90 × 10⁶ nm·K)?",
+      opts: ["5 000 K", "10 000 K", "2 900 K"],
+      ans: 0,
+      exp: "T = b / λ_max = (2.90 × 10⁶ nm·K) / 580 nm = 5000 K."
+    },
+    {
+      q: "3. Stefan–Bolsman qonuniga (ε = σT⁴) ko‘ra, absolyut qora jismning harorati 3 marta ortsa, uning birlik yuzasidan 1 sekundda chiqariladigan to‘la nurlanish energiyasi necha marta ortadi?",
+      opts: ["9 marta", "27 marta", "81 marta"],
+      ans: 2,
+      exp: "ε ∝ T⁴ bo‘lgani uchun harorat 3 marta ortsa, nurlanish oqimi 3⁴ = 81 marta ortadi."
+    },
+    {
+      q: "4. Yulduzning sirt harorati Quyosh haroratiga teng (T = T☉), lekin radiusi Quyosh radiusidan 10 marta katta (R = 10 R☉). Bu yulduzning yorqinligi Quyosh yorqinligidan necha marta katta?",
+      opts: ["10 marta", "100 marta", "1 000 marta"],
+      ans: 1,
+      exp: "L = 4πR²σT⁴ bo‘lgani uchun harorat o‘zgarmaganda R 10 marta ortsa, yorqinlik 10² = 100 marta ortadi."
+    },
+    {
+      q: "5. Qizdirilgan siyrak atomar gazlar qanday turdagi spektr chiqaradi?",
+      opts: ["Uzluksiz (tutash) spektr", "Alohida yorug‘ rangli chiziqlardan iborat nurlanish (emissiya) spektri", "Qora chiziqli yutilish spektri"],
+      ans: 1,
+      exp: "Siyrak atomar gazlar faqat o‘z atomlarining energetik o‘tishlariga mos aniq to‘lqin uzunliklarida nurlanadi."
+    },
+    {
+      q: "6. Quyosh va yulduzlarning spektrlarida kuzatiladigan qora yutilish chiziqlari (Fraungofer chiziqlari) qanday hosil bo‘ladi?",
+      opts: ["Yulduzning qaynoq fotosferasidan chiqayotgan uzluksiz nur nisbatan sovuqroq siyrak yulduz atmosferasidan o‘tayotganda yutilishi natijasida", "Teleskop linzalarida yorug‘lik singani uchun", "Faqat Oy tutilishi paytida"],
+      ans: 0,
+      exp: "Kirxgof qonuniga ko‘ra, sovuqroq gaz o‘zi qizdirilganda nurlantiradigan to‘lqin uzunliklarini uzluksiz spektrdan yutib qoladi."
+    },
+    {
+      q: "7. Quyosh qaysi spektral sinfga mansub va uning sirt harorati taxminan nechaga teng?",
+      opts: ["A sinf, 10 000 K", "G sinf (G2), ~5 780 K", "M sinf, 3 000 K"],
+      ans: 1,
+      exp: "Quyosh sirt harorati ~5780 K bo‘lgan sariq G2 spektral sinf yulduzidir."
+    },
+    {
+      q: "8. Spektral sinflar (O, B, A, F, G, K, M) qaysi fizik kattalikning kamayib borish tartibida tuzilgan?",
+      opts: ["Yulduz massasining", "Yulduz fotosferasi sirt haroratining (50 000 K dan 2 500 K gacha)", "Yulduzgacha bo‘lgan masofaning"],
+      ans: 1,
+      exp: "O-B-A-F-G-K-M ketma-ketligi yulduz sirt haroratining issiq ko‘k yulduzlardan sovuq qizil yulduzlarga tomon kamayish tartibidir."
+    },
+    {
+      q: "9. Galaktika spektridagi chiziqlarning uzun to‘lqinlar tomon siljishi («qizilga siljish», Δλ > 0) nimani bildiradi?",
+      opts: ["Galaktika bizga yaqinlashmoqda", "Galaktika kuzatuvchidan uzoqlashmoqda", "Galaktika harakatsiz turibdi"],
+      ans: 1,
+      exp: "Dopler effektiga ko‘ra, manba uzoqlashganda to‘lqin uzunligi ortadi (qizilga siljish)."
+    },
+    {
+      q: "10. Yulduz spektrida λ₀ = 500 nm chiziq Δλ = −0.5 nm ga (binafshaga) siljigan bo‘lsa, yulduzning nuriy tezligi (v_r) nimaga teng (c = 3 × 10⁵ km/s)?",
+      opts: ["−300 km/s (bizga 300 km/s tezlik bilan yaqinlashmoqda)", "+300 km/s (bizdan uzoqlashmoqda)", "−3 000 km/s"],
+      ans: 0,
+      exp: "v_r = c · (Δλ / λ₀) = 3 × 10⁵ · (−0.5 / 500) = −300 km/s (manfiy ishora yaqinlashishni bildiradi)."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawBlackbodyTab(w, h);
+      else if (activeTab === 2) drawKirchhoffTab(w, h);
+      else if (activeTab === 3) drawDopplerTab(w, h);
+      else drawBlackbodyTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
