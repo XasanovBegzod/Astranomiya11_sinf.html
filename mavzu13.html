@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13-Mavzu (37–39-§): Ekzosayyoralar, Kosmonavtika va O‘zbekiston astronomiyasi | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.04rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.91rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.84rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 11px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>13-MAVZU (37–39-§). Ekzosayyoralar, Kosmonavtika yutuqlari va O‘zbekiston astronomiyasi</h1>
+    <p>11-sinf Astronomiya | V Bob: Koinotda hayot va Kosmonavtika asoslari</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">37-§ Ekzosayyoralar</button>
+    <button class="tab-btn" onclick="setTab(2)">38-§ Kosmik tezliklar</button>
+    <button class="tab-btn" onclick="setTab(3)">39-§ O‘zbekiston astronomiyasi</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>37-§. Koinotda hayot va aql. Ekzosayyoralarni izlash usullari</h2>
+    <p><strong>Ekzosayyoralar</strong> — Quyosh sistemasidan tashqarida boshqa yulduzlar atrofida aylanuvchi sayyoralar. Oddiy yulduz (51 Pegasi) atrofidagi ilk ekzosayyora 1995-yilda M. Mayor va D. Kelo tomonidan kashf etilgan. Asosiy izlash usullari — <strong>Tranzit fotometriya</strong> (yorqinlikning davriy pasayishi) va <strong>Nuriy tezliklar (Doppler) usuli</strong>.</p>
+    <div class="math-banner">
+      Tranzit chuqurligi: ΔF / F = (R_p / R_*)² &nbsp;|&nbsp; Hayot zonasi: r_HZ ≈ (0.95 – 1.37) · √(L / L☉) a.b.
+      <br>Dreyk tenglamasi: N = R_* · f_p · n_e · f_l · f_i · f_c · L
+    </div>
+
+    <div class="problem-box">
+      <strong>1-Masala:</strong> Radiusi <em>R_* = R☉ = 700 000 km</em> va yorqinligi <em>L = 4 L☉</em> bo‘lgan yulduz atrofida radiusi <em>R_p = 70 000 km</em> bo‘lgan ekzosayyora aylanmoqda. Tranzit paytida yulduz yorqinligi necha foizga kamayishini va hayot zonasining o‘rta masofasini hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) Yorqinlik pasayishi: <strong>ΔF / F = (70 000 / 700 000)² = (0.1)² = 0.01 = 1%</strong>.<br>
+        2) Hayot zonasining o‘rta masofasi: <strong>r_HZ = 1.0 · √4 = 2.0 a.b.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>38-§. Kosmonavtika yutuqlari va koinotni o‘zlashtirish istiqbollari</h2>
+    <p>Kosmik apparatlarning harakati reaktiv harakat qonunlari va uchta kosmik tezlik bilan belgilanadi. Kosmik era <strong>1957-yil 4-oktabrda</strong> ilk sun’iy yo‘ldosh («Sputnik-1») uchirilishi bilan boshlangan; <strong>1961-yil 12-aprelda</strong> Yuriy Gagarin koinotga ilk parvozni amalga oshirgan, <strong>1969-yil 20-iyulda</strong> Nil Armstrong va Bazz Oldrin Oyga qadam qo‘ygan.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Kosmik tezlik</th>
+          <th>Formula</th>
+          <th>Yer sirtidan qiymati</th>
+          <th>Fizik mohiyati va trayektoriya</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Birinchi kosmik tezlik (v₁)</strong></td>
+          <td>√(GM⊕ / R⊕)</td>
+          <td><strong>7.91 km/s</strong></td>
+          <td>Yer atrofida doiraviy orbita bo‘ylab sun’iy yo‘ldoshga aylanish tezligi.</td>
+        </tr>
+        <tr>
+          <td><strong>Ikkinchi kosmik tezlik (v₂)</strong></td>
+          <td>√2 · v₁</td>
+          <td><strong>11.19 km/s</strong></td>
+          <td>Yerning tortishish maydonini yengib parabola bo‘ylab uzoqlashish tezligi.</td>
+        </tr>
+        <tr>
+          <td><strong>Uchinchi kosmik tezlik (v₃)</strong></td>
+          <td>√(v₂² + (√2−1)²v⊕²)</td>
+          <td><strong>16.67 km/s</strong></td>
+          <td>Quyosh sistemasini butunlay tark etish tezligi (Yer harakati yo‘nalishida).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="problem-box">
+      <strong>2-Masala:</strong> Yer sirtidan <em>h = 300 km</em> balandlikdagi doiraviy orbitada harakatlanayotgan kosmik stansiyaning birinchi kosmik tezligini hisoblang (<em>R⊕ = 6370 km, GM⊕ = 3.986 × 10¹⁴ m³/s²</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        Orbita radiusi: <strong>r = 6370 + 300 = 6670 km = 6.67 × 10⁶ m</strong>.<br>
+        Tezlik: <strong>v₁ = √(3.986 × 10¹⁴ / 6.67 × 10⁶) ≈ 7730 m/s = 7.73 km/s</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>39-§. O‘zbekiston olimlarining astronomiya va kosmonavtika rivojiga qo‘shgan hissasi</h2>
+    <ul>
+      <li><strong>Ahmad al-Farg‘oniy (IX asr):</strong> «Samoviy harakatlar va umumiy ilmi nujum kitobi» muallifi, ekliptika og‘maligini (23°33') aniq o‘lchagan va Qohirada «Miqyosi Nil»ni yaratgan.</li>
+      <li><strong>Abu Rayhon Beruniy (973–1048):</strong> «Qonuni Mas’udiy» muallifi; Nandna qal’asi yaqinida o‘zining trigonometrik usuli bilan Yer radiusini <em>R ≈ 6339.6 km</em> aniqlikda o‘lchagan.</li>
+      <li><strong>Mirzo Ulug‘bek (1394–1449) va Samarqand rasadxonasi (1428-y.):</strong> Radiusi <em>40.2 m</em> bo‘lgan ulkan Fakhriy sekstanti yordamida Qozizoda Rumiy, G‘iyosiddin Koshiy va Ali Qushchi bilan birga <strong>1018 ta yulduz katalogi</strong> — <strong>«Ziji Jadidi Ko‘ragoniy»</strong>ni tuzgan; yulduz yilini atigi 58 soniya xatolik bilan hisoblagan.</li>
+      <li><strong>Zamonaviy observatoriyalar va kosmonavtlar:</strong> <em>O‘zR FA Astronomiya instituti</em> (1873-y.), <em>Kitob Xalqaro Kenglik Stansiyasi</em> (1930-y.), dengiz sathidan 2600 m balandlikdagi <em>Maydanak observatoriyasi</em> (1.5 m AZT-22 teleskopi, 2009-yilda kashf etilgan <strong>«210271 Samarkand»</strong> kichik sayyorasi), kosmonavtlar <strong>Vladimir Jonibekov</strong> va <strong>Solisjon Sharipov</strong> hamda <strong>«O‘zbekkosmos» agentligi</strong>.</li>
+    </ul>
+
+    <div class="problem-box">
+      <strong>3-Masala:</strong> Mirzo Ulug‘bek rasadxonasidagi ulkan Fakhriy sekstantining radiusi <em>R = 40.2 m</em> ga teng. Sekstantning marmar shkalasida <em>1°</em> va <em>1'</em> (1 yoy daqiqasi) burchakka mos keluvchi yoy uzunliklarini (Δl) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        1) 1° uchun: <strong>Δl_1° = 40.2 × (3.1416 / 180) ≈ 0.7016 m = 70.16 sm</strong>.<br>
+        2) 1' uchun: <strong>Δl_1' = 70.16 sm / 60 ≈ 1.17 sm = 11.7 mm</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">37-§: Ekzosayyora tranzit fotometriyasi va Hayot zonasi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">ΔF / F = (R_p / R_*)² | r_HZ ∝ √(L / L☉)</div>
+    </div>
+    <canvas id="spaceCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 37-§ EKZOSAYYORALAR -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Ekzosayyora tizimi parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yulduz yorqinligi (L / L☉):</span>
+            <strong id="exoLVal">1.00 L☉ (Quyosh tipi)</strong>
+          </div>
+          <input type="range" id="exoStarL" min="0.2" max="4.0" step="0.1" value="1.0" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Sayyora orbita radiusi (a):</span>
+            <strong id="exoAVal">1.00 a.b.</strong>
+          </div>
+          <input type="range" id="exoPlanA" min="0.3" max="2.5" step="0.05" value="1.0" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Sayyora radiusi (R_p / R⊕):</span>
+            <strong id="exoRVal">11.0 R⊕ (Yupiter tipi)</strong>
+          </div>
+          <input type="range" id="exoPlanR" min="1.0" max="14.0" step="0.5" value="11.0" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Tranzit fotometriya va Hayot zonasi tahlili</h3>
+        <div class="formula-box">
+          ΔF / F = (R_p / R_*)² &nbsp;|&nbsp; r_HZ = [0.95 .. 1.37] · √(L / L☉)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Yorqinlik pasayishi (ΔF / F):</span><span class="t-val" id="exoDipOut">1.01%</span></div>
+          <div class="t-row"><span>Hayot zonasi chegaralari:</span><span class="t-val" id="exoHzOut">0.95 – 1.37 a.b.</span></div>
+          <div class="t-row"><span>Sayyora iqlim holati:</span><span class="t-val" id="exoStatusOut">Hayot zonasida (Suyuq suv)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 38-§ KOSMIK TEZLIKLAR -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Kosmik apparat boshlang‘ich tezligi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Boshlang‘ich tezlik (v₀):</span>
+            <strong id="cosmoVVal">7.91 km/s (1-kosmik tezlik)</strong>
+          </div>
+          <input type="range" id="cosmoV0" min="6.0" max="17.5" step="0.05" value="7.91" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setCosmoV(6.50)">Suborbital (6.5 km/s)</button>
+          <button class="btn active" onclick="setCosmoV(7.91)">v₁ = 7.91 km/s (Doiraviy)</button>
+          <button class="btn" onclick="setCosmoV(9.60)">Elliptik orbita (9.6 km/s)</button>
+          <button class="btn" onclick="setCosmoV(11.19)">v₂ = 11.19 km/s (Parabolik)</button>
+          <button class="btn" style="grid-column: span 2;" onclick="setCosmoV(16.67)">v₃ = 16.67 km/s (Quyosh sistemasidan chiqish)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Orbital mexanika telemetriyasi</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Trayektoriya turi:</span><span class="t-val" id="orbTypeOut">Doiraviy orbita (Yer sun’iy yo‘ldoshi)</span></div>
+          <div class="t-row"><span>Orbita ekssentrisiteti (e):</span><span class="t-val" id="orbEccOut">0.00</span></div>
+          <div class="t-row"><span>Kosmik maqom:</span><span class="t-val" id="orbDestOut">Barqaror Yer orbitasi</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          Tezlik $v_1 = 7.91\text{ km/s}$ dan kichik bo‘lsa, apparat Yer sirtiga qulaydi. $7.91\text{–}11.19\text{ km/s}$ oralig‘ida elliptik orbitaga chiqadi, $v_2 = 11.19\text{ km/s}$ da esa Yer tortishishini butunlay yengadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: 39-§ O'ZBEKISTON ASTRONOMIYASI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>O‘zbekiston astronomik markazlari va kosmonavtika</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="uzBtn0" onclick="setUzSite(0)">1. Mirzo Ulug‘bek (1428)</button>
+          <button class="btn" id="uzBtn1" onclick="setUzSite(1)">2. Astronomiya inst. (1873)</button>
+          <button class="btn" id="uzBtn2" onclick="setUzSite(2)">3. Kitob stansiyasi (1930)</button>
+          <button class="btn" id="uzBtn3" onclick="setUzSite(3)">4. Maydanak (2600 m)</button>
+          <button class="btn" style="grid-column: span 2;" id="uzBtn4" onclick="setUzSite(4)">5. Kosmonavtlar: V. Jonibekov va S. Sharipov</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 id="uzTitle">Mirzo Ulug‘bek rasadxonasi (Samarqand)</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Joylashuvi / Koordinata:</span><span class="t-val" id="uzCoord">Samarqand (39°40' N, 67°00' E)</span></div>
+          <div class="t-row"><span>Asosiy asbob / Yutuq:</span><span class="t-val" id="uzInst">Fakhriy sekstanti (R = 40.2 m)</span></div>
+          <div class="t-row"><span>Tarixiy / Ilmiy natija:</span><span class="t-val" id="uzRes">1018 yulduz katalogi («Ziji Ko‘ragoniy»)</span></div>
+        </div>
+        <p class="desc" id="uzDesc" style="margin-top:8px;">
+          1428–1429-yillarda Mirzo Ulug‘bek rahbarligida qurilgan rasadxonada Qozizoda Rumiy, G‘iyosiddin Koshiy va Ali Qushchi 1018 ta yulduzning aniq katalogini yaratdilar hamda yulduz yili davomiyligini atigi 58 soniya xatolik bilan o‘lchadilar.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('spaceCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "37-§: Ekzosayyora tranzit fotometriyasi (ΔF/F) va Hayot zonasi (Habitable Zone)",
+      "38-§: Uchta kosmik tezlik (v₁ = 7.91 km/s, v₂ = 11.19 km/s, v₃ = 16.67 km/s)",
+      "39-§: O‘zbekiston astronomiya maktabi, Observatoriyalar va Kosmonavtika yutuqlari",
+      "Bilimlarni tekshirish: 13-Mavzu (37–39-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "ΔF / F = (R_p / R_*)²",
+      "v₁ = 7.91 | v₂ = 11.19 | v₃ = 16.67 km/s",
+      "Samarqand • Toshkent • Kitob • Maydanak",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== 37-§: EKZOSAYYORALAR ====================
+  let exoAng = 0;
+
+  function drawExoplanetTab(w, h) {
+    const L = parseFloat(document.getElementById('exoStarL').value);
+    const a = parseFloat(document.getElementById('exoPlanA').value);
+    const RpEarth = parseFloat(document.getElementById('exoPlanR').value);
+
+    // 1 R_sun = 109 R_earth
+    const RstarEarth = 109 * Math.pow(L, 0.25);
+    const dipPct = Math.pow(RpEarth / RstarEarth, 2) * 100;
+    const hzIn = 0.95 * Math.sqrt(L);
+    const hzOut = 1.37 * Math.sqrt(L);
+
+    document.getElementById('exoLVal').textContent = `${L.toFixed(1)} L☉`;
+    document.getElementById('exoAVal').textContent = `${a.toFixed(2)} a.b.`;
+    document.getElementById('exoRVal').textContent = `${RpEarth.toFixed(1)} R⊕`;
+    document.getElementById('exoDipOut').textContent = `${dipPct.toFixed(3)}%`;
+    document.getElementById('exoHzOut').textContent = `${hzIn.toFixed(2)} – ${hzOut.toFixed(2)} a.b.`;
+
+    const statusEl = document.getElementById('exoStatusOut');
+    if (a < hzIn) {
+      statusEl.textContent = "Juda issiq (Issiq zona — suv bug‘lanadi)";
+      statusEl.style.color = "#fb7185";
+    } else if (a <= hzOut) {
+      statusEl.textContent = "✅ Hayot zonasida (Suyuq suv mavjud)";
+      statusEl.style.color = "#34d399";
+    } else {
+      statusEl.textContent = "Juda sovuq (Muz zonasi)";
+      statusEl.style.color = "#38bdf8";
+    }
+
+    exoAng += 0.022 / Math.sqrt(a);
+    const phase = (exoAng % (Math.PI * 2)); // 0 .. 2pi; pi/2 at front transit
+
+    // Yuqori qismda: Yulduz, Hayot zonasi va Sayyora orbitasi (yon tomondan qiya proyeksiya)
+    const cx = w * 0.5, cy = h * 0.34;
+    const scaleAu = Math.min(w, h) * 0.14;
+
+    // Hayot zonasi halqasi (yashil)
+    ctx.strokeStyle = 'rgba(52, 211, 153, 0.25)';
+    ctx.lineWidth = Math.max(8, (hzOut - hzIn) * scaleAu);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, ((hzIn + hzOut) / 2) * scaleAu, ((hzIn + hzOut) / 2) * scaleAu * 0.28, 0, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Sayyora orbitasi
+    const orbRx = a * scaleAu;
+    const orbRy = orbRx * 0.28;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.ellipse(cx, cy, orbRx, orbRy, 0, 0, Math.PI * 2); ctx.stroke();
+
+    const px = cx + Math.cos(phase) * orbRx;
+    const py = cy + Math.sin(phase) * orbRy;
+    const starR = 20 + L * 4;
+    const planR = 3 + RpEarth * 0.55;
+
+    // Agar sayyora yulduz orqasida bo'lsa (sin(phase) < 0), avval sayyorani chizamiz
+    if (Math.sin(phase) < 0) {
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath(); ctx.arc(px, py, planR, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Yulduz
+    const sg = ctx.createRadialGradient(cx, cy, 4, cx, cy, starR * 1.6);
+    sg.addColorStop(0, '#ffffff');
+    sg.addColorStop(0.5, L > 1.8 ? '#fef08a' : '#fbbf24');
+    sg.addColorStop(1, 'rgba(251, 191, 36, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(cx, cy, starR * 1.6, 0, Math.PI * 2); ctx.fill();
+
+    // Agar sayyora oldinda bo'lsa (tranzit!), yulduz ustidan qora soya bo'lib o'tadi
+    if (Math.sin(phase) >= 0) {
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath(); ctx.arc(px, py, planR, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+
+    // Pastki qismda: Tranzit Fotometriya Yorqinlik Egri Chizig'i (Light Curve)
+    const gx = 60, gyTop = h * 0.65, gyBot = h * 0.90;
+    const gw = w - 100, gh = gyBot - gyTop;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.86)';
+    ctx.fillRect(gx, gyTop, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gyTop, gw, gh);
+
+    const baseLineY = gyTop + 24;
+    const dipPix = Math.min(gh - 36, dipPct * 35); // Vizual masshtablangan chuqurlik
+
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    for (let i = 0; i <= 100; i++) {
+      const x = gx + (i / 100) * gw;
+      const distMid = Math.abs(i - 50);
+      let y = baseLineY;
+      if (distMid < 12) {
+        const smooth = Math.min(1, (12 - distMid) / 3);
+        y = baseLineY + smooth * dipPix;
+      }
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Joriy tranzit fazasi nuqtasi
+    const normPhase = ((phase - Math.PI / 2 + Math.PI) % (Math.PI * 2)) / (Math.PI * 2); // 0.5 markazda
+    const curX = gx + normPhase * gw;
+    const dMid = Math.abs(normPhase * 100 - 50);
+    const curY = dMid < 12 ? baseLineY + Math.min(1, (12 - dMid) / 3) * dipPix : baseLineY;
+
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`Tranzit fotometriya grafigi (Yulduz yorqinligi pasayishi: −${dipPct.toFixed(3)}%)`, gx, gyTop - 8);
+  }
+
+  // ==================== 38-§: KOSMIK TEZLIKLAR ====================
+  let satT = 0;
+
+  function setCosmoV(v) {
+    document.getElementById('cosmoV0').value = v;
+    satT = 0;
+  }
+
+  function drawCosmicVelocitiesTab(w, h) {
+    const v0 = parseFloat(document.getElementById('cosmoV0').value);
+    const v1 = 7.91, v2 = 11.19, v3 = 16.67;
+
+    document.getElementById('cosmoVVal').textContent = `${v0.toFixed(2)} km/s`;
+
+    let orbType, ecc, dest;
+    if (v0 < v1 - 0.05) {
+      orbType = "Suborbital ballistik trayektoriya";
+      ecc = (1 - Math.pow(v0 / v1, 2)).toFixed(2);
+      dest = "⚠️ Yer sirtiga qaytib tushadi";
+    } else if (Math.abs(v0 - v1) <= 0.08) {
+      orbType = "Doiraviy orbita (1-kosmik tezlik)";
+      ecc = "0.00";
+      dest = "✅ Yerning sun’iy yo‘ldoshi";
+    } else if (v0 < v2 - 0.05) {
+      orbType = "Elliptik orbita";
+      ecc = (Math.pow(v0 / v1, 2) - 1).toFixed(2);
+      dest = "✅ Cho‘ziq elliptik Yer orbitasi";
+    } else if (v0 < v3 - 0.05) {
+      orbType = "Parabolik / Giperbolik (2-kosmik tezlik)";
+      ecc = (Math.pow(v0 / v1, 2) - 1).toFixed(2);
+      dest = "🚀 Yer tortishishini yengadi (Sayyoralararo)";
+    } else {
+      orbType = "Yulduzlararo parvoz (3-kosmik tezlik)";
+      ecc = "> 3.4";
+      dest = "🌌 Quyosh sistemasini tark etadi!";
+    }
+
+    document.getElementById('orbTypeOut').textContent = orbType;
+    document.getElementById('orbEccOut').textContent = ecc;
+    document.getElementById('orbDestOut').textContent = dest;
+
+    satT += 0.025;
+    const cx = w * 0.42, cy = h * 0.54;
+    const earthR = 44;
+    const orbitR = 72; // Start balandligi
+
+    // Yer atmosferasi va sayyora
+    const atm = ctx.createRadialGradient(cx, cy, earthR, cx, cy, earthR + 18);
+    atm.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+    atm.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = atm;
+    ctx.beginPath(); ctx.arc(cx, cy, earthR + 18, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#1d4ed8';
+    ctx.beginPath(); ctx.arc(cx, cy, earthR, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(cx - 12, cy - 8, 16, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + 14, cy + 10, 12, 0, Math.PI * 2); ctx.fill();
+
+    // Tayanch doiraviy orbita (v1 = 7.91 km/s)
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, orbitR, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Trayektoriyani chizish va kosmik apparat harakati
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.4;
+
+    let sx, sy;
+    if (v0 < v1 - 0.05) {
+      // Suborbital yerga qulash yoyi
+      const maxAng = Math.PI * 0.35 + ((v0 - 6.0) / 1.9) * Math.PI * 0.65;
+      ctx.beginPath();
+      for (let a = 0; a <= maxAng; a += 0.05) {
+        const r = orbitR - (a / maxAng) * (orbitR - earthR);
+        const x = cx + Math.sin(a) * r;
+        const y = cy - Math.cos(a) * r;
+        a === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      const curA = (satT % 2.0) / 2.0 * maxAng;
+      const curR = orbitR - (curA / maxAng) * (orbitR - earthR);
+      sx = cx + Math.sin(curA) * curR;
+      sy = cy - Math.cos(curA) * curR;
+    } else if (v0 < v2 - 0.05) {
+      // Yopiq doiraviy yoki elliptik orbita (perigey yuqorida: r_p = orbitR)
+      const e = Math.min(0.72, Math.max(0, Math.pow(v0 / v1, 2) - 1));
+      const aSemi = orbitR / (1 - e);
+      const bSemi = aSemi * Math.sqrt(1 - e * e);
+      const centerOffset = aSemi * e;
+
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + centerOffset, bSemi, aSemi, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      sx = cx + Math.sin(satT) * bSemi;
+      sy = cy + centerOffset - Math.cos(satT) * aSemi;
+    } else {
+      // Parabolik / Giperbolik uzoqlashish (v >= 11.19 km/s)
+      const bend = v0 >= v3 ? 0.25 : 0.55;
+      ctx.beginPath();
+      for (let t = 0; t <= 260; t += 5) {
+        const x = cx + t * 1.45;
+        const y = (cy - orbitR) + Math.pow(t / 22, 2) * bend;
+        t === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      const prog = (satT * 55) % 260;
+      sx = cx + prog * 1.45;
+      sy = (cy - orbitR) + Math.pow(prog / 22, 2) * bend;
+    }
+
+    // Kosmik apparat nuqtasi
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(sx, sy, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`🛰 v₀ = ${v0.toFixed(2)} km/s`, sx + 9, sy - 6);
+  }
+
+  // ==================== 39-§: O'ZBEKISTON ASTRONOMIYASI ====================
+  const uzSites = [
+    {
+      title: "Mirzo Ulug‘bek rasadxonasi (Samarqand, 1428-y.)",
+      coord: "Samarqand (39°40' N, 67°00' E)",
+      inst: "Fakhriy sekstanti (R = 40.2 m)",
+      res: "1018 yulduz katalogi («Ziji Jadidi Ko‘ragoniy»)",
+      desc: "1428–1429-yillarda Mirzo Ulug‘bek rahbarligida qurilgan rasadxonada Qozizoda Rumiy, G‘iyosiddin Koshiy va Ali Qushchi 1018 ta yulduzning aniq koordinatalarini yaratdilar hamda yulduz yili davomiyligini atigi 58 soniya xatolik bilan o‘lchadilar.",
+      nx: 0.56, ny: 0.62
+    },
+    {
+      title: "O‘zR FA Ulug‘bek nomidagi Astronomiya instituti (1873-y.)",
+      coord: "Toshkent (41°19' N, 69°17' E)",
+      inst: "Normal astrograf va quyosh teleskoplari",
+      res: "Geliofizika, galaktikalar va o‘zgaruvchan yulduzlar",
+      desc: "1873-yilda tashkil etilgan Markaziy Osiyodagi eng qadimiy astronomik ilmiy muassasa bo‘lib, Quyosh faolligi, yulduzlar evolyutsiyasi va astrometriya yo‘nalishlarida jahon miqyosida tadqiqotlar olib boradi.",
+      nx: 0.68, ny: 0.43
+    },
+    {
+      title: "Kitob Xalqaro Kenglik Stansiyasi (1930-y.)",
+      coord: "Kitob, Qashqadaryo (39°08' N, 66°53' E)",
+      inst: "Zenit-teleskop va lazerli sun’iy yo‘ldosh kuzatuvlari",
+      res: "Yer qutblari harakati va geodinamika",
+      desc: "Yerning aylanish o‘qi tebranishlarini o‘rganish uchun dunyoning 39°08' shimoliy kengligida tashkil etilgan 5 ta xalqaro stansiyadan biri. Hozirda zamonaviy sun’iy yo‘ldosh navigatsiya va geodinamika majmuasi faoliyat yuritadi.",
+      nx: 0.55, ny: 0.70
+    },
+    {
+      title: "Maydanak balandtog‘ observatoriyasi (1970-y.)",
+      coord: "Qashqadaryo, 2600 m (38°40' N, 66°54' E)",
+      inst: "1.5 metrli AZT-22 teleskopi",
+      res: "«210271 Samarkand» kichik sayyorasi kashfiyoti",
+      desc: "Dengiz sathidan 2600 m balandlikda joylashgan, atmosfera shaffofligi va tasvir tiniqligi (0.5'') bo‘yicha dunyodagi yetakchi observatoriyalardan biri. 2009-yilda bu yerda kashf etilgan asteroidga «210271 Samarkand» nomi berilgan.",
+      nx: 0.54, ny: 0.76
+    },
+    {
+      title: "O‘zbekiston kosmonavtikasi va «O‘zbekkosmos»",
+      coord: "Yer atrofi orbitasi / Xalqaro Kosmik Stansiya",
+      inst: "«Soyuz», «Endeavour» va XKS (ISS) ekspeditsiyalari",
+      res: "V. Jonibekov (5 parvoz) va S. Sharipov (202 sutka)",
+      desc: "Toshkent viloyatida tug‘ilgan Vladimir Jonibekov 5 marta koinotga parvoz qilgan; hamyurtimiz Solisjon Sharipov 1998-yilda «Endeavour» kemasida va 2004–2005-yillarda XKSda 202 sutka ishlab, O‘zbekiston bayrog‘ini koinotga olib chiqqan.",
+      nx: 0.76, ny: 0.25
+    }
+  ];
+
+  let curUzIdx = 0;
+
+  function setUzSite(idx) {
+    curUzIdx = idx;
+    for (let i = 0; i < 5; i++) {
+      document.getElementById('uzBtn' + i).classList.toggle('active', i === idx);
+    }
+    const s = uzSites[idx];
+    document.getElementById('uzTitle').textContent = s.title;
+    document.getElementById('uzCoord').textContent = s.coord;
+    document.getElementById('uzInst').textContent = s.inst;
+    document.getElementById('uzRes').textContent = s.res;
+    document.getElementById('uzDesc').textContent = s.desc;
+  }
+
+  function drawUzbekistanTab(w, h) {
+    // Astrometrik koordinata to'ri (37°N..45°N, 56°E..73°E)
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.14)';
+    ctx.lineWidth = 1;
+    for (let x = 60; x < w - 40; x += 65) {
+      ctx.beginPath(); ctx.moveTo(x, 55); ctx.lineTo(x, h - 45); ctx.stroke();
+    }
+    for (let y = 65; y < h - 45; y += 55) {
+      ctx.beginPath(); ctx.moveTo(50, y); ctx.lineTo(w - 40, y); ctx.stroke();
+    }
+
+    // O'zbekiston hududining stilizatsiyalangan konturi
+    ctx.fillStyle = 'rgba(2, 132, 199, 0.16)';
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.65)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.14, h * 0.34);
+    ctx.lineTo(w * 0.30, h * 0.32);
+    ctx.lineTo(w * 0.44, h * 0.46);
+    ctx.lineTo(w * 0.62, h * 0.38);
+    ctx.lineTo(w * 0.80, h * 0.44);
+    ctx.lineTo(w * 0.72, h * 0.56);
+    ctx.lineTo(w * 0.56, h * 0.80);
+    ctx.lineTo(w * 0.44, h * 0.72);
+    ctx.lineTo(w * 0.28, h * 0.55);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Barcha 5 ta markazni chizish
+    uzSites.forEach((s, idx) => {
+      const px = w * s.nx;
+      const py = h * s.ny;
+      const isSel = idx === curUzIdx;
+
+      if (isSel) {
+        const pulse = ctx.createRadialGradient(px, py, 3, px, py, 28);
+        pulse.addColorStop(0, 'rgba(251, 191, 36, 0.85)');
+        pulse.addColorStop(1, 'rgba(251, 191, 36, 0)');
+        ctx.fillStyle = pulse;
+        ctx.beginPath(); ctx.arc(px, py, 28, 0, Math.PI * 2); ctx.fill();
+      }
+
+      ctx.fillStyle = isSel ? '#fbbf24' : '#38bdf8';
+      ctx.beginPath(); ctx.arc(px, py, isSel ? 7 : 4.5, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = isSel ? '#fef08a' : '#cbd5e1';
+      ctx.font = isSel ? 'bold 12px sans-serif' : '11px sans-serif';
+      ctx.fillText(s.title.split('(')[0].trim(), px + 10, py + 4);
+    });
+  }
+
+  // ==================== 4-TAB: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Quyosh sistemasidan tashqaridagi boshqa yulduzlar atrofida aylanuvchi sayyoralar nima deb ataladi?",
+      opts: ["Asteroidlar", "Ekzosayyoralar", "Kometalar"],
+      ans: 1,
+      exp: "Boshqa yulduzlar atrofida aylanuvchi sayyoralar ekzosayyoralar deyiladi (ilki 1995-yilda kashf etilgan)."
+    },
+    {
+      q: "2. Ekzosayyora o‘z yulduzi diski oldidan o‘tayotganda yulduz yorqinligining davriy pasayishini o‘lchashga asoslangan usul qaysi?",
+      opts: ["Tranzit fotometriya usuli", "Parallaks usuli", "Radiolokatsiya usuli"],
+      ans: 0,
+      exp: "Tranzit paytida yulduz yorqinligi ΔF / F = (R_p / R_*)² nisbatda kamayadi."
+    },
+    {
+      q: "3. Yulduz atrofida sayyora sirtida suyuq suv mavjud bo‘la oladigan harorat hududi qanday ataladi?",
+      opts: ["Konvektiv zona", "Hayot zonasi (Habitable Zone)", "Oort buluti"],
+      ans: 1,
+      exp: "Hayot zonasi yulduz yorqinligiga bog‘liq bo‘lib, r_HZ ≈ (0.95 – 1.37) · √(L / L☉) masofada joylashadi."
+    },
+    {
+      q: "4. Jism Yer sirtidan doiraviy orbita bo‘ylab Yerning sun’iy yo‘ldoshiga aylanishi uchun zarur bo‘lgan birinchi kosmik tezlik (v₁) nechaga teng?",
+      opts: ["7.91 km/s", "11.19 km/s", "16.67 km/s"],
+      ans: 0,
+      exp: "Birinchi kosmik tezlik v₁ = √(GM⊕ / R⊕) ≈ 7.91 km/s ga teng."
+    },
+    {
+      q: "5. Jism Yerning tortishish maydonini butunlay yengib, parabola bo‘ylab Quyoshning sun’iy yo‘ldoshiga aylanishi uchun zarur bo‘lgan ikkinchi kosmik tezlik (v₂) nechaga teng?",
+      opts: ["7.91 km/s", "11.19 km/s", "29.8 km/s"],
+      ans: 1,
+      exp: "v₂ = √2 · v₁ ≈ 1.414 × 7.91 ≈ 11.19 km/s."
+    },
+    {
+      q: "6. Quyosh sistemasini butunlay tark etish uchun zarur bo‘lgan uchinchi kosmik tezlik (v₃) Yer harakati yo‘nalishida uchirilganda nechaga teng?",
+      opts: ["11.19 km/s", "16.67 km/s", "300 000 km/s"],
+      ans: 1,
+      exp: "Uchinchi kosmik tezlik v₃ ≈ 16.67 km/s ga teng."
+    },
+    {
+      q: "7. Insoniyat tarixida koinotga ilk parvoz (Yuriy Gagarin, «Vostok-1») qachon amalga oshirilgan?",
+      opts: ["1957-yil 4-oktabr", "1961-yil 12-aprel", "1969-yil 20-iyul"],
+      ans: 1,
+      exp: "1961-yil 12-aprelda Yuriy Gagarin «Vostok-1» kemasida koinotga parvoz qilgan ilk inson bo‘ldi."
+    },
+    {
+      q: "8. Mirzo Ulug‘bek rasadxonasida (Samarqand, 1428-y.) yaratilgan va 1018 ta yulduzning aniq koordinatalarini o‘z ichiga olgan mashhur katalog qanday nomlanadi?",
+      opts: ["«Qonuni Mas’udiy»", "«Ziji Jadidi Ko‘ragoniy»", "«Almagest»"],
+      ans: 1,
+      exp: "Mirzo Ulug‘bek va uning shogirdlari yaratgan 1018 ta yulduz jadvali «Ziji Jadidi Ko‘ragoniy» deb ataladi."
+    },
+    {
+      q: "9. Qashqadaryo viloyatida dengiz sathidan 2600 m balandlikda joylashgan va «210271 Samarkand» kichik sayyorasi kashf etilgan zamonaviy observatoriya qaysi?",
+      opts: ["Kitob stansiyasi", "Maydanak balandtog‘ observatoriyasi", "Pulkovo observatoriyasi"],
+      ans: 1,
+      exp: "Maydanak observatoriyasi atmosfera tiniqligi bo‘yicha dunyodagi yetakchi observatoriyalardan biridir."
+    },
+    {
+      q: "10. 1998-yilda «Endeavour» kemasida va 2004–2005-yillarda Xalqaro Kosmik Stansiyada 202 sutka faoliyat yuritgan hamyurtimiz — kosmonavt kim?",
+      opts: ["Solisjon Sharipov", "Ali Qushchi", "G‘iyosiddin Koshiy"],
+      ans: 0,
+      exp: "Kosmonavt Solisjon Sharipov ikki marta koinotga parvoz qilib, O‘zbekiston bayrog‘ini XKSga olib chiqqan."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawExoplanetTab(w, h);
+      else if (activeTab === 2) drawCosmicVelocitiesTab(w, h);
+      else if (activeTab === 3) drawUzbekistanTab(w, h);
+      else drawExoplanetTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
