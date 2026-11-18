@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12-Mavzu (34–36-§): Somon Yo‘li, Boshqa galaktikalar va Katta Portlash nazariyasi | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.04rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card h3 {
+      color: var(--gold);
+      font-size: 0.98rem;
+      margin: 14px 0 6px;
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.91rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.84rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 11px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>12-MAVZU (34–36-§). Somon Yo‘li, Boshqa galaktikalar va Katta Portlash nazariyasi</h1>
+    <p>11-sinf Astronomiya | IV Bob: Galaktikalar va Kosmologiya asoslari</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">34-§ Somon Yo‘li</button>
+    <button class="tab-btn" onclick="setTab(2)">35-§ Xabbl qonuni</button>
+    <button class="tab-btn" onclick="setTab(3)">36-§ Katta Portlash</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>34-§. Bizning Galaktika — Somon Yo‘li. Yulduz to‘dalari va tumanliklar</h2>
+    <p><strong>Somon Yo‘li</strong> — tarkibida <em>200–400 milliard</em> yulduz, gaz va chang mavjud bo‘lgan ulkan to‘siqli spiral galaktika (<code>SBbc</code>). Uning diametri <em>D ≈ 30 kpk ≈ 100 000 yorug‘lik yili</em>, markaziy balj qalinligi ~4 kpk. Galaktika markazi Qavs (<em>Sagittarius A*</em>) yo‘nalishida joylashgan bo‘lib, u yerda massasi <em>4.3 × 10⁶ M☉</em> bo‘lgan o‘ta massiv qora tuynuk bor.</p>
+    <div class="math-banner">
+      Quyosh masofasi: R₀ ≈ 8.2 kpk (26 700 y.y.) &nbsp;|&nbsp; Orbital tezligi: v_orb ≈ 220–230 km/s &nbsp;|&nbsp; Galaktik yil: T_gal = 2π·R₀ / v_orb ≈ 225 mln yil
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Obyekt turi</th>
+          <th>Tuzilishi va tarkibi</th>
+          <th>Yoshi</th>
+          <th>Galaktikada joylashuvi</th>
+          <th>Misollar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tarqoq yulduz to‘dalari</strong></td>
+          <td>O‘nlab/yuzlab yulduzlar</td>
+          <td>Yosh (10⁷–10⁸ yil)</td>
+          <td>Galaktika diski va spiral yenglarda</td>
+          <td>Pleyada (M45), Giada</td>
+        </tr>
+        <tr>
+          <td><strong>Sharsimon yulduz to‘dalari</strong></td>
+          <td>Zich sharsimon (10⁵–10⁶ yulduz)</td>
+          <td>Eng qari (10–13 mlrd yil)</td>
+          <td>Galaktika galosida (sferik qismda)</td>
+          <td>ω Sentavra, M13 (Gerkules)</td>
+        </tr>
+        <tr>
+          <td><strong>Gaz-chang tumanliklari</strong></td>
+          <td>Siyrak plazma va kosmik chang</td>
+          <td>Yulduz tug‘ilish hududlari</td>
+          <td>Spiral yenglarda</td>
+          <td>Orion (M42), Ot boshi</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="problem-box">
+      <strong>1-Masala:</strong> Quyosh Galaktika markazidan <em>R₀ = 8.0 kpk</em> (<em>2.469 × 10²⁰ m</em>) masofada <em>v = 220 km/s</em> tezlik bilan aylanadi. Galaktik yil davomiyligini va Quyosh orbitasi ichidagi Galaktika massasini (<em>M = v²·R₀ / G</em>) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) Galaktik yil: <strong>T_gal = 2π·R₀ / v = (2 × 3.1416 × 2.469 × 10²⁰) / (2.2 × 10⁵) ≈ 7.05 × 10¹⁵ s ≈ 223 million yil</strong>.<br>
+        2) Ichki massa: <strong>M = (2.2 × 10⁵)² × 2.469 × 10²⁰ / (6.674 × 10⁻¹¹) ≈ 1.79 × 10⁴¹ kg ≈ 90 milliard M☉</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>35-§. Boshqa galaktikalar va ularning turlari. Xabbl qonuni</h2>
+    <p>1924-yilda <strong>Edvin Xabbl</strong> Andromeda tumanligida (M31, masofasi ~2.5 mln y.y.) sefeidalarni kashf etib, Koinotda millionlab mustaqil galaktikalar mavjudligini isbotladi. Morfologiyasiga ko‘ra galaktikalar 4 asosiy turga bo‘linadi: <strong>Elliptik (E0–E7)</strong>, <strong>Spiral (Sa–Sc va SB)</strong>, <strong>Linzasimon (S0)</strong> va <strong>Noto‘g‘ri (Irr — Magellan Bulutlari)</strong>.</p>
+    <div class="math-banner">
+      Xabbl qonuni (1929): v = H₀ · r &nbsp;|&nbsp; Qizilga siljish (z ≪ 1): z = Δλ / λ₀ = v / c &nbsp;|&nbsp; Xabbl doimiysi: H₀ ≈ 70 km/(s·Mpk)
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala:</strong> Uzoq galaktika spektridagi chiziqning qizilga siljishi <em>z = Δλ / λ₀ = 0.035</em> ga teng. Xabbl doimiysi <em>H₀ = 70 km/(s·Mpk)</em> bo‘lsa, galaktikaning uzoqlashish tezligini va ungacha bo‘lgan masofani (Mpk va yorug‘lik yilida) aniqlang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        1) Uzoqlashish tezligi: <strong>v = c · z = 300 000 km/s × 0.035 = 10 500 km/s</strong>.<br>
+        2) Masofa: <strong>r = v / H₀ = 10 500 / 70 = 150 Mpk ≈ 489 million yorug‘lik yili</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>36-§. Koinotning tuzilishi va evolyutsiyasi. Katta Portlash nazariyasi</h2>
+    <ul>
+      <li><strong>Koinotning tarkibi:</strong> Qorong‘u energiya (<strong>≈ 68%</strong>), Qorong‘u materiya (<strong>≈ 27%</strong>), Oddiy barion modda — yulduzlar va gaz (<strong>≈ 5%</strong>).</li>
+      <li><strong>Katta Portlash (Big Bang) va Relikt nurlanish:</strong> Koinot bundan <strong>~13.8 milliard yil</strong> avval o‘ta zich va issiq holatdan kengayishni boshlagan. Katta Portlashdan 380 000 yil o‘tgach (T ≈ 3000 K da) ajralib chiqqan nurlanish bugungi kunda Koinot kengayishi tufayli <strong>T = 2.725 K</strong> temperaturaga mos keluvchi mikroto‘lqinli <strong>Relikt nurlanish (CMB)</strong> sifatida kuzatiladi (1965-yilda Penzias va Uilson kashf etgan).</li>
+    </ul>
+
+    <div class="problem-box">
+      <strong>3-Masala:</strong> Xabbl doimiysi <em>H₀ = 70 km/(s·Mpk)</em> qiymatidan foydalanib, Koinotning Xabbl yoshini (<em>t_H = 1 / H₀</em>) milliard yillarda baholang (<em>1 Mpk = 3.086 × 10¹⁹ km, 1 yil = 3.156 × 10⁷ s</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>t_H = (3.086 × 10¹⁹ km) / (70 km/s) ≈ 4.41 × 10¹⁷ s ≈ 13.97 milliard yil</strong> (zamonaviy aniq modellarda <strong>13.8 milliard yil</strong>).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">34-§: Somon Yo‘li tuzilishi, Galaktik yil va Qorong‘u materiya galosi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">D ≈ 30 kpk | R₀ = 8.2 kpk | v_orb ≈ 220 km/s</div>
+    </div>
+    <canvas id="cosmoCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 34-§ SOMON YO'LI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Galaktika zondlash va Qorong‘u materiya</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Markazdan masofa (R):</span>
+            <strong id="galRVal">8.2 kpk (Quyosh orbitasi)</strong>
+          </div>
+          <input type="range" id="galR" min="1.5" max="20.0" step="0.1" value="8.2" />
+        </div>
+        <label class="check-row">
+          <input type="checkbox" id="darkMatterCheck" checked />
+          <span>Qorong‘u materiya (yashirin massa) galosini yoqish</span>
+        </label>
+        <div class="btn-grid" style="margin-top:10px;">
+          <button class="btn" onclick="setGalR(2.5)">Markaziy balj (2.5 kpk)</button>
+          <button class="btn active" onclick="setGalR(8.2)">Quyosh (8.2 kpk)</button>
+          <button class="btn" onclick="setGalR(14.0)">Persey yengi (14 kpk)</button>
+          <button class="btn" onclick="setGalR(19.0)">Tashqi chegara (19 kpk)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Orbital tezlik va Aylanish davri</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Masofa (kpk / yorug‘lik yili):</span><span class="t-val" id="galDistOut">8.2 kpk / 26 745 y.y.</span></div>
+          <div class="t-row"><span>Orbital tezlik (v_orb):</span><span class="t-val" id="galVelOut">224 km/s</span></div>
+          <div class="t-row"><span>Aylanish davri (Galaktik yil):</span><span class="t-val" id="galPerOut">225 million yil</span></div>
+        </div>
+        <p class="desc" id="galNoteOut" style="margin-top:8px;">
+          Qorong‘u materiya galosi yoqilgan: disk chetidagi yulduzlar ham v ≈ 220–230 km/s o‘zgarmas tezlik bilan aylanadi (haqiqiy kuzatuv natijasi).
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 35-§ GALAKTIKALAR VA XABBL QONUNI -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Galaktika turi va Xabbl qonuni (v = H₀·r)</h3>
+        <div class="btn-grid">
+          <button class="btn" id="gTypeE" onclick="setGalType('E')">Elliptik (E0)</button>
+          <button class="btn active" id="gTypeS" onclick="setGalType('S')">Spiral (Sb)</button>
+          <button class="btn" id="gTypeSB" onclick="setGalType('SB')">To‘siqli (SBb)</button>
+          <button class="btn" id="gTypeIrr" onclick="setGalType('Irr')">Noto‘g‘ri (Irr)</button>
+        </div>
+
+        <div class="slider-box" style="margin-top:10px;">
+          <div class="slider-label">
+            <span>Galaktikagacha masofa (r):</span>
+            <strong id="hubDistVal">150 Mpk</strong>
+          </div>
+          <input type="range" id="hubDist" min="15" max="600" step="5" value="150" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setHubDist(16.5)">Sunbula to‘dasi (16.5 Mpk)</button>
+          <button class="btn" onclick="setHubDist(100)">Veronika sochi (100 Mpk)</button>
+          <button class="btn active" onclick="setHubDist(150)">O‘rta galaktika (150 Mpk)</button>
+          <button class="btn" onclick="setHubDist(500)">Uzoq galaktika (500 Mpk)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Qizilga siljish va Kengayish tezligi</h3>
+        <div class="formula-box">
+          v = H₀ · r &nbsp;|&nbsp; z = Δλ / λ₀ = v / c &nbsp;(H₀ = 70 km/s/Mpk)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Uzoqlashish tezligi (v):</span><span class="t-val" id="hubVelOut">10 500 km/s</span></div>
+          <div class="t-row"><span>Qizilga siljish (z = Δλ / λ₀):</span><span class="t-val" id="hubZOut">0.0350</span></div>
+          <div class="t-row"><span>Hα (656.3 nm) kuzatilgan qiymati:</span><span class="t-val" id="hubHaOut">679.3 nm (Qizilga siljigan)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 36-§ KATTA PORTLASH VA KOINOT EVOLYUTSIYASI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Koinot evolyutsiyasi va Kengayish shkalasi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Koinot yoshi (t):</span>
+            <strong id="bbTimeVal">13.80 mlrd yil (Hozirgi davr)</strong>
+          </div>
+          <input type="range" id="bbTime" min="0.01" max="13.8" step="0.05" value="13.8" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setBbTime(0.01)">Rekombinatsiya (CMB)</button>
+          <button class="btn" onclick="setBbTime(0.5)">Ilk galaktikalar (0.5 mlrd)</button>
+          <button class="btn" onclick="setBbTime(9.2)">Quyosh tug‘ilishi (9.2 mlrd)</button>
+          <button class="btn active" onclick="setBbTime(13.8)">Bugungi Koinot (13.8 mlrd)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Kosmologik parametrlar va Tarkib</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Relikt nurlanish temperaturasi:</span><span class="t-val" id="bbTempOut">2.725 K (Mikroto‘lqin)</span></div>
+          <div class="t-row"><span>Masshtab faktori (a / a₀):</span><span class="t-val" id="bbScaleOut">1.00 (100%)</span></div>
+          <div class="t-row"><span>Koinotning energiya tarkibi:</span><span class="t-val">68% Q. energiya | 27% Q. materiya | 5% Modda</span></div>
+        </div>
+        <p class="desc" id="bbDescOut" style="margin-top:8px;">
+          Hozirgi davrda (13.8 mlrd yil) Koinot qorong‘u energiya (68%) ta’sirida tezlanish bilan kengaymoqda, relikt nurlanish temperaturasi esa 2.725 K ga teng.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('cosmoCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "34-§: Somon Yo‘li tuzilishi, Galaktik yil va Qorong‘u materiya aylanish egri chizig‘i",
+      "35-§: Galaktikalarning morfologik turlari va Xabbl qonuni (v = H₀·r)",
+      "36-§: Katta Portlash nazariyasi, Koinotning kengayishi va Relikt nurlanish (2.725 K)",
+      "Bilimlarni tekshirish: 12-Mavzu (34–36-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "R₀ = 8.2 kpk | T_gal ≈ 225 mln yil",
+      "v = H₀ · r | H₀ = 70 km/(s·Mpk)",
+      "t₀ ≈ 13.8 mlrd yil | T_CMB = 2.725 K",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== 34-§: SOMON YO'LI ====================
+  let galRot = 0;
+
+  function setGalR(r) {
+    document.getElementById('galR').value = r;
+  }
+
+  function drawMilkyWayTab(w, h) {
+    const R = parseFloat(document.getElementById('galR').value);
+    const hasDM = document.getElementById('darkMatterCheck').checked;
+
+    // Tezlik modeli: DM bilan v ~ 225 km/s tekis, DMsiz R > 6 da Kepler tushishi
+    const vKep = 235 * Math.sqrt(6.0 / Math.max(2.0, R));
+    const vFlat = 225 * (1 - Math.exp(-R / 1.8));
+    const vOrb = hasDM ? vFlat : Math.min(vFlat, vKep);
+
+    // T_gal (mln yil) = 2 * pi * R (kpk) * 978 / v (km/s)
+    const periodMyr = (2 * Math.PI * R * 978) / vOrb;
+
+    document.getElementById('galRVal').textContent =
+      Math.abs(R - 8.2) < 0.15 ? `${R.toFixed(1)} kpk (Quyosh)` : `${R.toFixed(1)} kpk`;
+    document.getElementById('galDistOut').textContent = `${R.toFixed(1)} kpk / ${Math.round(R * 3261.6).toLocaleString('ru-RU')} y.y.`;
+    document.getElementById('galVelOut').textContent = `${Math.round(vOrb)} km/s`;
+    document.getElementById('galPerOut').textContent = `${Math.round(periodMyr)} million yil`;
+
+    const noteEl = document.getElementById('galNoteOut');
+    if (hasDM) {
+      noteEl.textContent = "✅ Qorong‘u materiya galosi yoqilgan: disk chetidagi yulduzlar ham v ≈ 220–230 km/s o‘zgarmas tezlik bilan aylanadi (haqiqiy kuzatuv natijasi).";
+      noteEl.style.color = "#34d399";
+    } else {
+      noteEl.textContent = "⚠️ Qorong‘u materiyasiz (faqat ko‘rinadigan yulduzlar): markazdan uzoqlashgan sari tezlik Kepler qonuniga ko‘ra (v ∝ 1/√R) pasayib ketar edi.";
+      noteEl.style.color = "#fb7185";
+    }
+
+    galRot += 0.008 * (vOrb / 220);
+
+    // Chapda: Somon Yo'li spiral galaktikasi ko'rinishi
+    const cx = w * 0.34, cy = h * 0.54;
+    const maxPixR = Math.min(w * 0.28, h * 0.36);
+
+    // Qorong'u materiya galosi (agar yoqilgan bo'lsa)
+    if (hasDM) {
+      const dmGrad = ctx.createRadialGradient(cx, cy, 10, cx, cy, maxPixR * 1.18);
+      dmGrad.addColorStop(0, 'rgba(167, 139, 250, 0.22)');
+      dmGrad.addColorStop(1, 'rgba(167, 139, 250, 0)');
+      ctx.fillStyle = dmGrad;
+      ctx.beginPath(); ctx.arc(cx, cy, maxPixR * 1.18, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // 4 ta spiral yeng
+    for (let arm = 0; arm < 4; arm++) {
+      const baseAng = galRot + (arm * Math.PI) / 2;
+      ctx.strokeStyle = arm % 2 === 0 ? 'rgba(56, 189, 248, 0.42)' : 'rgba(125, 211, 252, 0.28)';
+      ctx.lineWidth = 14;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      for (let t = 0.12; t <= 1.0; t += 0.04) {
+        const ang = baseAng + t * 2.8;
+        const rad = t * maxPixR;
+        const px = cx + Math.cos(ang) * rad;
+        const py = cy + Math.sin(ang) * rad;
+        t === 0.12 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+
+    // Markaziy balj va Sgr A* yadrosi
+    const bulge = ctx.createRadialGradient(cx, cy, 2, cx, cy, maxPixR * 0.24);
+    bulge.addColorStop(0, '#ffffff');
+    bulge.addColorStop(0.4, '#fde047');
+    bulge.addColorStop(1, 'rgba(245, 158, 11, 0)');
+    ctx.fillStyle = bulge;
+    ctx.beginPath(); ctx.arc(cx, cy, maxPixR * 0.24, 0, Math.PI * 2); ctx.fill();
+
+    // Zond orbitasi va Quyosh (8.2 kpk)
+    const sunPixR = (8.2 / 20.0) * maxPixR;
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.arc(cx, cy, sunPixR, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    const sx = cx + Math.cos(galRot * 1.4) * sunPixR;
+    const sy = cy + Math.sin(galRot * 1.4) * sunPixR;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(sx, sy, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('☀ Quyosh (8.2 kpk)', sx + 7, sy + 3);
+
+    // Tanlangan R zond halqasi
+    const probePixR = (R / 20.0) * maxPixR;
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.arc(cx, cy, probePixR, 0, Math.PI * 2); ctx.stroke();
+
+    // O'ng tomonda: Galaktikaning aylanish egri chizig'i v(R)
+    const gx = w * 0.65, gyTop = 85, gyBot = h * 0.78;
+    const gw = w * 0.30, gh = gyBot - gyTop;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.fillRect(gx, gyTop, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
+    ctx.strokeRect(gx, gyTop, gw, gh);
+
+    // Kepler egri chizig'i (punktr)
+    ctx.strokeStyle = '#fb7185';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    for (let r = 1.5; r <= 20; r += 0.5) {
+      const vk = Math.min(225 * (1 - Math.exp(-r / 1.8)), 235 * Math.sqrt(6.0 / Math.max(2.0, r)));
+      const px = gx + ((r - 1.5) / 18.5) * gw;
+      const py = gyBot - (vk / 280) * gh;
+      r === 1.5 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Haqiqiy kuzatuv egri chizig'i (Qorong'u materiya bilan)
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    for (let r = 1.5; r <= 20; r += 0.5) {
+      const vf = 225 * (1 - Math.exp(-r / 1.8));
+      const px = gx + ((r - 1.5) / 18.5) * gw;
+      const py = gyBot - (vf / 280) * gh;
+      r === 1.5 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // Joriy nuqta
+    const curX = gx + ((R - 1.5) / 18.5) * gw;
+    const curY = gyBot - (vOrb / 280) * gh;
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('Aylanish egri chizig‘i v(R)', gx, gyTop - 10);
+    ctx.font = '10px sans-serif';
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillText('— Kuzatuv (Qorong‘u materiya)', gx + 8, gyTop + 18);
+    ctx.fillStyle = '#fb7185';
+    ctx.fillText('--- Kepler nazariyasi (DMsiz)', gx + 8, gyTop + 34);
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('R (1.5 → 20 kpk)', gx + gw * 0.35, gyBot + 16);
+  }
+
+  // ==================== 35-§: XABBL QONUNI ====================
+  let galType = 'S';
+
+  function setGalType(t) {
+    galType = t;
+    ['E', 'S', 'SB', 'Irr'].forEach(k => {
+      document.getElementById('gType' + k).classList.toggle('active', k === t);
+    });
+  }
+
+  function setHubDist(d) {
+    document.getElementById('hubDist').value = d;
+  }
+
+  function drawHubbleTab(w, h) {
+    const rMpk = parseFloat(document.getElementById('hubDist').value);
+    const H0 = 70;
+    const v = H0 * rMpk;
+    const z = v / 300000;
+    const haObs = 656.3 * (1 + z);
+
+    document.getElementById('hubDistVal').textContent = `${rMpk} Mpk`;
+    document.getElementById('hubVelOut').textContent = `${v.toLocaleString('ru-RU')} km/s`;
+    document.getElementById('hubZOut').textContent = z.toFixed(4);
+    document.getElementById('hubHaOut').textContent = `${haObs.toFixed(1)} nm (Δλ = +${(haObs - 656.3).toFixed(1)} nm)`;
+
+    // Chap yuqorida: Tanlangan galaktika morfologiyasi
+    const gx0 = w * 0.24, gy0 = h * 0.34;
+    if (galType === 'E') {
+      const eg = ctx.createRadialGradient(gx0, gy0, 5, gx0, gy0, 68);
+      eg.addColorStop(0, '#fef08a');
+      eg.addColorStop(0.5, 'rgba(251, 146, 60, 0.55)');
+      eg.addColorStop(1, 'rgba(5, 9, 20, 0)');
+      ctx.fillStyle = eg;
+      ctx.beginPath(); ctx.ellipse(gx0, gy0, 72, 54, -0.3, 0, Math.PI * 2); ctx.fill();
+    } else if (galType === 'S' || galType === 'SB') {
+      if (galType === 'SB') {
+        ctx.strokeStyle = '#fde047';
+        ctx.lineWidth = 10;
+        ctx.beginPath(); ctx.moveTo(gx0 - 34, gy0); ctx.lineTo(gx0 + 34, gy0); ctx.stroke();
+      }
+      for (let a = 0; a < 2; a++) {
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.65)';
+        ctx.lineWidth = 9;
+        ctx.beginPath();
+        for (let t = 0.2; t <= 1; t += 0.05) {
+          const ang = a * Math.PI + t * 3.1;
+          const rad = t * 68;
+          const px = gx0 + Math.cos(ang) * rad;
+          const py = gy0 + Math.sin(ang) * rad * 0.65;
+          t === 0.2 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#fef08a';
+      ctx.beginPath(); ctx.arc(gx0, gy0, 14, 0, Math.PI * 2); ctx.fill();
+    } else {
+      // Noto'g'ri galaktika (Irr)
+      const blobs = [[-25, -15, 28], [18, 12, 32], [-10, 22, 22], [28, -20, 20]];
+      blobs.forEach(b => {
+        ctx.fillStyle = 'rgba(125, 211, 252, 0.35)';
+        ctx.beginPath(); ctx.arc(gx0 + b[0], gy0 + b[1], b[2], 0, Math.PI * 2); ctx.fill();
+      });
+    }
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Galaktika turi: ${galType}`, gx0, gy0 + 82);
+    ctx.textAlign = 'left';
+
+    // O'ng tomonda: Xabbl qonuni grafigi (v = H0 * r)
+    const px0 = w * 0.52, pyTop = 75, pyBot = h * 0.56;
+    const pw = w * 0.42, ph = pyBot - pyTop;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.fillRect(px0, pyTop, pw, ph);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
+    ctx.strokeRect(px0, pyTop, pw, ph);
+
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.moveTo(px0, pyBot);
+    ctx.lineTo(px0 + pw, pyTop + 15);
+    ctx.stroke();
+
+    const dotX = px0 + (rMpk / 600) * pw;
+    const dotY = pyBot - (rMpk / 600) * (ph - 15);
+    ctx.fillStyle = '#fb7185';
+    ctx.beginPath(); ctx.arc(dotX, dotY, 7, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#fde047';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('Xabbl diagrammasi: v = H₀ · r', px0, pyTop - 10);
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '10px sans-serif';
+    ctx.fillText('Masofa r (0 → 600 Mpk)', px0 + pw * 0.3, pyBot + 16);
+
+    // Pastki qismda: Qizilga siljish spektri (Laboratoriya vs Galaktika)
+    const sx = 55, sy = h * 0.72, sw = w - 95, sh = 46;
+    const grad = ctx.createLinearGradient(sx, 0, sx + sw, 0);
+    grad.addColorStop(0, '#4c1d95');
+    grad.addColorStop(0.25, '#1d4ed8');
+    grad.addColorStop(0.5, '#047857');
+    grad.addColorStop(0.75, '#ca8a04');
+    grad.addColorStop(1, '#b91c1c');
+    ctx.fillStyle = grad;
+    ctx.fillRect(sx, sy, sw, sh);
+
+    // Laboratoriya H_alpha (656.3 nm -> ~74% pozitsiya) va siljigan H_alpha
+    const xLab = sx + ((656.3 - 380) / 380) * sw;
+    const xObs = Math.min(sx + sw - 4, sx + ((haObs - 380) / 380) * sw);
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(xLab, sy - 8); ctx.lineTo(xLab, sy + sh + 8); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.strokeStyle = '#020617';
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(xObs, sy); ctx.lineTo(xObs, sy + sh); ctx.stroke();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`Spektrda Qizilga Siljish: Hα (656.3 nm → ${haObs.toFixed(1)} nm)`, sx, sy - 12);
+  }
+
+  // ==================== 36-§: KATTA PORTLASH VA KOINOT EVOLYUTSIYASI ====================
+  const galDots = [];
+  for (let i = 0; i < 36; i++) {
+    const ang = (i / 36) * Math.PI * 2 + (i % 5) * 0.3;
+    const dist = 0.18 + ((i * 7) % 10) * 0.082;
+    galDots.push({ ang, dist });
+  }
+
+  function setBbTime(t) {
+    document.getElementById('bbTime').value = t;
+  }
+
+  function drawBigBangTab(w, h) {
+    const t = parseFloat(document.getElementById('bbTime').value); // 0.01 .. 13.8 mlrd yil
+    const scale = Math.pow(t / 13.8, 0.66); // a(t) / a_0
+    const tempK = 2.725 / Math.max(0.0009, scale);
+
+    document.getElementById('bbTimeVal').textContent =
+      t >= 13.75 ? "13.80 mlrd yil (Hozirgi davr)" : `${t.toFixed(2)} mlrd yil`;
+    document.getElementById('bbTempOut').textContent =
+      tempK > 100 ? `${Math.round(tempK).toLocaleString('ru-RU')} K` : `${tempK.toFixed(3)} K`;
+    document.getElementById('bbScaleOut').textContent = `${scale.toFixed(3)} (${(scale * 100).toFixed(1)}%)`;
+
+    const descEl = document.getElementById('bbDescOut');
+    if (t < 0.1) {
+      descEl.textContent = "Rekombinatsiya davri (~380 000 yil, T ≈ 3000 K): Koinot ilk bor yorug‘lik uchun shaffof bo‘ldi va Relikt nurlanish (CMB) ajralib chiqdi.";
+    } else if (t < 2.0) {
+      descEl.textContent = "Ilk yulduzlar va yosh galaktikalar davri: Qorong‘u materiya tortishish markazlarida vodorod-geliy bulutlaridan birinchi avlod galaktikalari shakllandi.";
+    } else if (t < 10.0) {
+      descEl.textContent = "Galaktikalar evolyutsiyasi va Quyosh sistemasining tug‘ilishi (~9.2 mlrd yil): Somon Yo‘lining spiral yenglarida Quyosh va Yer shakllandi.";
+    } else {
+      descEl.textContent = "Hozirgi davr (13.8 mlrd yil): Koinot qorong‘u energiya (68%) ta’sirida tezlanish bilan kengaymoqda, relikt nurlanish esa 2.725 K ga sovigan.";
+    }
+
+    // Chapda: Kengayayotgan Koinot fazoviy to'ri
+    const cx = w * 0.35, cy = h * 0.54;
+    const maxR = Math.min(w * 0.29, h * 0.38);
+    const curR = Math.max(24, scale * maxR);
+
+    // Issiq fon nurlanishi (ilk davrda yorqin to'q sariq, hozir sovuq qora)
+    const heatAlpha = Math.max(0.04, 0.65 * (1 - scale));
+    const bgGlow = ctx.createRadialGradient(cx, cy, 5, cx, cy, curR * 1.15);
+    bgGlow.addColorStop(0, `rgba(251, 146, 60, ${heatAlpha})`);
+    bgGlow.addColorStop(1, 'rgba(5, 9, 20, 0)');
+    ctx.fillStyle = bgGlow;
+    ctx.beginPath(); ctx.arc(cx, cy, curR * 1.15, 0, Math.PI * 2); ctx.fill();
+
+    // Kengayuvchi koordinata halqalari
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+    ctx.lineWidth = 1.2;
+    [0.35, 0.7, 1.0].forEach(f => {
+      ctx.beginPath(); ctx.arc(cx, cy, curR * f, 0, Math.PI * 2); ctx.stroke();
+    });
+
+    // Galaktikalar orasidagi masofaning birga kengayishi
+    galDots.forEach(d => {
+      const gx = cx + Math.cos(d.ang) * d.dist * curR;
+      const gy = cy + Math.sin(d.ang) * d.dist * curR;
+      ctx.fillStyle = t < 0.2 ? '#fde047' : '#38bdf8';
+      ctx.beginPath(); ctx.arc(gx, gy, t < 0.2 ? 2.2 : 3.5, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // O'ng tomonda: Koinot tarkibi ustunli/doiraviy diagrammasi (68% / 27% / 5%)
+    const bx = w * 0.72, by = h * 0.52;
+    const items = [
+      { label: "Qorong‘u energiya (68%)", pct: 0.68, col: "#a78bfa" },
+      { label: "Qorong‘u materiya (27%)", pct: 0.27, col: "#38bdf8" },
+      { label: "Oddiy barion modda (5%)", pct: 0.05, col: "#34d399" }
+    ];
+
+    let startAng = -Math.PI / 2;
+    items.forEach((it, idx) => {
+      const slice = it.pct * Math.PI * 2;
+      ctx.fillStyle = it.col;
+      ctx.beginPath();
+      ctx.moveTo(bx, by - 35);
+      ctx.arc(bx, by - 35, 68, startAng, startAng + slice);
+      ctx.closePath();
+      ctx.fill();
+      startAng += slice;
+
+      // Legenda
+      const ly = by + 58 + idx * 24;
+      ctx.fillRect(bx - 85, ly - 10, 12, 12);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText(it.label, bx - 66, ly);
+    });
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('KOINOT TARKIBI', bx, by - 115);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== 4-TAB: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Bizning Galaktika — Somon Yo‘lining diametri taxminan nechaga teng?",
+      opts: ["3 kpk (10 000 y.y.)", "30 kpk (100 000 y.y.)", "300 kpk (1 mln y.y.)"],
+      ans: 1,
+      exp: "Somon Yo‘li diski diametri D ≈ 30 kpk (≈ 100 000 yorug‘lik yili) ga teng."
+    },
+    {
+      q: "2. Quyosh Galaktika markazidan taxminan qanday masofada joylashgan?",
+      opts: ["1.5 kpk", "8.2 kpk (~26 700 y.y.)", "25 kpk"],
+      ans: 1,
+      exp: "Quyosh Galaktika markazidan R₀ ≈ 8.2 kpk masofada, Orion spiral yengida joylashgan."
+    },
+    {
+      q: "3. Quyoshning Galaktika markazi atrofida bir marta to‘la aylanish davri (galaktik yil) taxminan necha yilga teng?",
+      opts: ["225 million yil", "11 million yil", "4.6 milliard yil"],
+      ans: 0,
+      exp: "v ≈ 220–230 km/s tezlikda Quyosh R₀ ≈ 8.2 kpk orbitani ~225–230 million yilda bir marta aylanib chiqadi."
+    },
+    {
+      q: "4. Yuz minglab eng qari yulduzlardan tashkil topgan sharsimon yulduz to‘dalari Galaktikaning qaysi qismida joylashgan?",
+      opts: ["Faqat spiral yenglarda", "Galaktika galosida (sferik tashkil etuvchida)", "Quyosh sistemasining ichida"],
+      ans: 1,
+      exp: "Sharsimon to‘dalar Galaktikaning sferik galosida, tarqoq yosh to‘dalar esa disk va spiral yenglarda joylashgan."
+    },
+    {
+      q: "5. Galaktikaning tashqi qismidagi yulduzlar tezligi markazdan uzoqlashganda kamaymasdan ~220 km/s saqlanib qolishi nimaning mavjudligini isbotlaydi?",
+      opts: ["Qorong‘u materiya (yashirin massa) galosi", "Quyosh shamoli", "Relikt nurlanish"],
+      ans: 0,
+      exp: "Ko‘rinmaydigan, lekin gravitatsion ta’sir ko‘rsatuvchi qorong‘u materiya galosi tashqi yulduzlarni katta tezlikda ushlab turadi."
+    },
+    {
+      q: "6. Xabbl qonuni (v = H₀ · r) nimani ifodalaydi?",
+      opts: ["Yulduzlar temperaturasini", "Uzoq galaktikalarning bizdan uzoqlashish tezligi ungacha bo‘lgan masofaga to‘g‘ri proporsional ekanligini", "Planetalarning Quyosh atrofida aylanish davrini"],
+      ans: 1,
+      exp: "Koinotning kengayishi tufayli galaktika qanchalik uzoq bo‘lsa (r), uning uzoqlashish tezligi (v) shunchalik katta."
+    },
+    {
+      q: "7. Uzoq galaktikaning uzoqlashish tezligi v = 14 000 km/s, Xabbl doimiysi H₀ = 70 km/(s·Mpk) bo‘lsa, galaktikagacha masofa nechaga teng?",
+      opts: ["20 Mpk", "200 Mpk", "980 Mpk"],
+      ans: 1,
+      exp: "r = v / H₀ = 14 000 / 70 = 200 Mpk."
+    },
+    {
+      q: "8. Zamonaviy kosmologiya ma’lumotlariga ko‘ra Koinot umumiy energiya-massa zichligining ~68% ini nima tashkil etadi?",
+      opts: ["Oddiy barion modda", "Qorong‘u materiya", "Qorong‘u energiya"],
+      ans: 2,
+      exp: "Koinotning tezlanuvchan kengayishini ta’minlovchi qorong‘u energiya ≈ 68%, qorong‘u materiya ≈ 27%, oddiy modda ≈ 5%."
+    },
+    {
+      q: "9. Katta Portlashdan ~380 000 yil o‘tgach ajralib chiqqan va bugungi kunda T = 2.725 K temperaturaga mos keluvchi nurlanish qanday ataladi?",
+      opts: ["Rentgen nurlanishi", "Relikt nurlanish (Kosmik mikroto‘lqinli fon)", "Quyosh shamoli"],
+      ans: 1,
+      exp: "1965-yilda Penzias va Uilson kashf etgan relikt nurlanish Katta Portlash nazariyasining asosiy isbotidir."
+    },
+    {
+      q: "10. Zamonaviy astrofizik kuzatuvlarga ko‘ra Koinotning yoshi taxminan necha milliard yilga teng?",
+      opts: ["4.6 milliard yil", "13.8 milliard yil", "100 milliard yil"],
+      ans: 1,
+      exp: "Koinot bundan ~13.8 milliard yil avval Katta Portlash natijasida kengayishni boshlagan (Quyosh va Yer yoshi 4.6 mlrd yil)."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawMilkyWayTab(w, h);
+      else if (activeTab === 2) drawHubbleTab(w, h);
+      else if (activeTab === 3) drawBigBangTab(w, h);
+      else drawMilkyWayTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
