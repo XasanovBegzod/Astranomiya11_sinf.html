@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>14-Mavzu (36–38-§): Xromosfera va toj, Termoyadro energiyasi, Quyosh aktivligi | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.02rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.84rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 11px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>14-MAVZU (36–38-§). Quyosh xromosferasi va toji, Energriya manbai va Quyosh aktivligi</h1>
+    <p>11-sinf Astronomiya | IV Bob: Quyosh sistemasi jismlarining fizik tabiati</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">36-§ Xromosfera va Quyosh toji</button>
+    <button class="tab-btn" onclick="setTab(2)">37-§ Termoyadro reaksiyalari</button>
+    <button class="tab-btn" onclick="setTab(3)">38-§ Quyosh shamoli va Magnitosfera</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>36-§. Quyosh xromosferasi va toji</h2>
+    <p>Fotosfera ustida Quyosh atmosferasining yuqori qatlamlari — <strong>xromosfera</strong> va <strong>Quyosh toji</strong> joylashgan. Ular to‘liq Quyosh tutilishi paytida yoki maxsus spektral asboblar (<strong>koronograf</strong> va <em>H_α = 656.3 nm</em> filtrlar) yordamida kuzatiladi:</p>
+    <ul>
+      <li><strong>Xromosfera:</strong> Qalinligi <em>10 000–15 000 km</em> bo‘lgan pushti-qizg‘ish gaz qatlami. Harorati balandlik ortishi bilan 4500 K dan 20 000–50 000 K gacha ko‘tariladi. Unda olovli plazma ustunlari — <strong>spikulalar</strong> hamda magnit maydon ushlab turuvchi gigant plazma arkalari — <strong>protuberanslar</strong> kuzatiladi.</li>
+      <li><strong>Quyosh toji:</strong> Eng tashqi va eng siyrak qatlam. Harorati <strong>1–2 mln K</strong> ga yetgani sababli kuchli <strong>yumshoq rentgen</strong> nurlari tarqatadi.</li>
+    </ul>
+
+    <div class="problem-box">
+      <strong>1-Masala (Quyosh toji nurlanishi):</strong> Quyosh tojining harorati <em>T_toj = 1.5 × 10⁶ K</em>. Vinning siljish qonunidan (<em>λ_max · T = 2.90 × 10⁻³ m·K</em>) foydalanib, Quyosh toji issiqlik nurlanishining maksimumi qaysi to‘lqin uzunligiga va qaysi diapazonga to‘g‘ri kelishini aniqlang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        <strong>λ_max = (2.90 × 10⁻³ m·K) / (1.5 × 10⁶ K) ≈ 1.93 × 10⁻⁹ m = 1.93 nm</strong> (yumshoq rentgen diapazoni).
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>37-§. Quyosh energiyasining manbai</h2>
+    <p>Quyosh yadrosida (<em>T ≈ 1.5 × 10⁷ K</em>) <strong>proton-proton termoyadro sintezi</strong> reaksiyasi kechadi: 4 ta proton birikib 1 ta geliy yadrosini hosil qiladi (<code>4 ¹H → ⁴He + 2e⁺ + 2ν_e + γ</code>). Reaksiyaga kirishgan vodorod massasining <strong>0.7%</strong> qismi (massa defekti) <em>ΔE = Δm · c²</em> qonuniga binoan nurlanish energiyasiga aylanadi.</p>
+
+    <div class="problem-box">
+      <strong>2-Masala (Vodorod sarfi va Quyosh umri):</strong> Quyosh yorqinligi <em>L☉ = 3.83 × 10²⁶ W</em>, massa defekti <em>0.7%</em> (0.007). Har sekundda necha kilogramm vodorod geliyga aylanishini va Quyosh massasining 10% qismi (<em>0.10 M☉ = 1.99 × 10²⁹ kg</em>) yadroda sarflanishini hisobga olib, Quyoshning faol yashash muddatini (yil) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        1) Energiyaga aylanuvchi massa: <strong>Δm / Δt = L☉ / c² = (3.83 × 10²⁶) / (9 × 10¹⁶) ≈ 4.26 × 10⁹ kg/s</strong>.<br>
+        2) Geliyga aylanuvchi vodorod: <strong>Δm_H / Δt = 4.26 × 10⁹ / 0.007 ≈ 6.08 × 10¹¹ kg/s (608 mln tonna/s)</strong>.<br>
+        3) Faol umri: <strong>t = 1.99 × 10²⁹ / (6.08 × 10¹¹) ≈ 3.27 × 10¹⁷ s ≈ 10.4 mlrd yil</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>38-§. Quyosh aktivligi va uning Yerga ta’siri</h2>
+    <p><strong>Xromosfera chaqnashlari</strong> va toj massasi otilishi (CME) paytida Quyoshdan <strong>400–1500 km/s</strong> tezlikdagi zaryadlangan zarralar oqimi — <strong>Quyosh shamoli</strong> kuchayadi. Plazma oqimi Yer <strong>magnitosferasi</strong>ga urilganda <strong>geomagnit bo‘ronlar</strong> sodir bo‘ladi, qutb kengliklarida esa atmosferaning yuqori qatlamlarida <strong>qutb yog‘dulari</strong> (Aurora) hosil bo‘ladi.</p>
+
+    <div class="problem-box">
+      <strong>3-Masala (Quyosh shamoli):</strong> Kuchli chaqnashdan so‘ng CME plazma buluti Yerga tomon <em>v = 1000 km/s</em> tezlik bilan harakatlandi. Geomagnit bo‘ron necha soatdan keyin Yerga yetib keladi (<em>a⊕ = 1.50 × 10⁸ km</em>)?
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>t = a⊕ / v = (1.50 × 10⁸ km) / (1000 km/s) = 150 000 s ≈ 41.67 soat (41 soat 40 daqiqa ≈ 1.74 sutka)</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">36-§: Quyosh xromosferasi, protuberanslar va Quyosh toji</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Xromosfera: 10–15 ming km (H_α = 656.3 nm) | Toj: 1–2 mln K</div>
+    </div>
+    <canvas id="actCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 36-§ XROMOSFERA VA QUYOSH TOJI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Kuzatuv usulini tanlang</h3>
+        <div class="btn-grid">
+          <button class="btn" id="obsBtn0" onclick="setObsMode(0)">1. Oddiy optik (Fotosfera)</button>
+          <button class="btn active" id="obsBtn1" onclick="setObsMode(1)">2. To‘liq tutilish (Toj & Xrom.)</button>
+          <button class="btn" style="grid-column: span 2;" id="obsBtn2" onclick="setObsMode(2)">3. H_α (656.3 nm) filtri: Protuberanslar</button>
+        </div>
+        <div class="slider-box" style="margin-top:12px;">
+          <div class="slider-label">
+            <span>Quyosh toji harorati (T_toj):</span>
+            <strong id="corTVal">1.50 mln K</strong>
+          </div>
+          <input type="range" id="corTSl" min="1.0" max="4.0" step="0.1" value="1.5" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Xromosfera va Toj ko‘rsatkichlari</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Xromosfera harorati:</span><span class="t-val">4 500 → 50 000 K</span></div>
+          <div class="t-row"><span>Quyosh toji harorati:</span><span class="t-val" id="corTOut">1.50 × 10⁶ K</span></div>
+          <div class="t-row"><span>Toj nurlanish maksimumi:</span><span class="t-val" id="corLamOut">1.93 nm (Rentgen)</span></div>
+          <div class="t-row"><span>Protuberans balandligi:</span><span class="t-val">~150 000 km (12 D⊕)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 37-§ TERMOYADRO REAKSIYALARI -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Quyosh yadrosi harorati (p–p sikli)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yadro harorati (T_yadro):</span>
+            <strong id="fusTVal">15.0 mln K</strong>
+          </div>
+          <input type="range" id="fusTSl" min="10.0" max="20.0" step="0.5" value="15.0" />
+        </div>
+        <div class="formula-box">
+          4 ¹H → ⁴He + 2e⁺ + 2ν_e + γ (Δm / m = 0.7%)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Vodorod sarfi (Δm_H / Δt):</span><span class="t-val" id="fusHOut">608 mln tonna/s</span></div>
+          <div class="t-row"><span>Energiyaga aylanuvchi massa:</span><span class="t-val" id="fusMOut">4.26 mln tonna/s</span></div>
+          <div class="t-row"><span>Nurlanish quvvati (L):</span><span class="t-val" id="fusLOut">3.83 × 10²⁶ W</span></div>
+          <div class="t-row"><span>Faol yashash muddati (t):</span><span class="t-val" id="fusLifeOut">~10.4 mlrd yil</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 38-§ QUYOSH SHAMOLI VA MAGNITOSFERA -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Quyosh shamoli / CME tezligi (v)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Plazma oqimi tezligi (v):</span>
+            <strong id="swVVal">1 000 km/s</strong>
+          </div>
+          <input type="range" id="swVSl" min="350" max="1500" step="50" value="1000" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setSwV(400)">Tinch shamol (400 km/s)</button>
+          <button class="btn" onclick="setSwV(700)">O‘rtacha oqim (700 km/s)</button>
+          <button class="btn active" onclick="setSwV(1000)">3-Masala CME (1000 km/s)</button>
+          <button class="btn" onclick="setSwV(1500)">Kuchli chaqnash (1500 km/s)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Yer magnitosferasi va Kosmik ob-havo</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Yergacha yetib kelish vaqti:</span><span class="t-val" id="swTimeOut">41.7 soat (1.74 sutka)</span></div>
+          <div class="t-row"><span>Magnit bo‘ron darajasi:</span><span class="t-val" id="swStormOut">Kuchli bo‘ron (G3 / Kp=7)</span></div>
+          <div class="t-row"><span>Qutb yog‘dulari zonasi:</span><span class="t-val" id="swAurOut">55°–75° kengliklargacha</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('actCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "36-§: Quyosh xromosferasi, spikulalar, protuberanslar va Quyosh toji",
+      "37-§: Quyosh yadrosidagi proton-proton termoyadro sintezi (4 ¹H → ⁴He)",
+      "38-§: Quyosh shamoli (CME) va Yer magnitosferasining himoya qalqoni",
+      "Bilimlarni tekshirish: 14-Mavzu (36–38-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "Xromosfera: H_α = 656.3 nm | Toj: 1–2 mln K",
+      "Δm / m = 0.7% | 608 mln tonna/s vodorod sarfi",
+      "v = 400–1500 km/s | Geomagnit bo‘ronlar va Qutb yog‘dusi",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 36-§ XROMOSFERA VA QUYOSH TOJI ====================
+  let obsMode = 1; // 0: oddiy, 1: to'liq tutilish, 2: H_alpha
+  let corPulse = 0;
+
+  function setObsMode(m) {
+    obsMode = m;
+    for (let i = 0; i < 3; i++) document.getElementById('obsBtn' + i).classList.toggle('active', i === m);
+  }
+
+  function drawCoronaTab(w, h) {
+    const tMln = parseFloat(document.getElementById('corTSl').value);
+    const tKelvin = tMln * 1e6;
+    const lamMaxNm = (2.898e-3 / tKelvin) * 1e9;
+
+    document.getElementById('corTVal').textContent = `${tMln.toFixed(1)} mln K`;
+    document.getElementById('corTOut').textContent = `${tMln.toFixed(2)} × 10⁶ K`;
+    document.getElementById('corLamOut').textContent = `${lamMaxNm.toFixed(2)} nm (Rentgen)`;
+
+    corPulse += 0.03;
+    const cx = w * 0.5, cy = h * 0.53;
+    const R = Math.min(w * 0.17, h * 0.24);
+
+    if (obsMode === 0) {
+      // Oddiy optik ko'rinish (faqat fotosfera)
+      const g = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, R);
+      g.addColorStop(0, '#fef9c3');
+      g.addColorStop(0.8, '#facc15');
+      g.addColorStop(1, '#ea580c');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Oddiy optik kuzatuv: Xromosfera va Toj yorqin fotosfera fonida ko‘rinmaydi', cx, cy + R + 32);
+      ctx.textAlign = 'left';
+    } else if (obsMode === 1) {
+      // To'liq Quyosh tutilishi: Quyosh toji nurlari + pushti xromosfera + qora Oy diski
+      const corR = R * (2.2 + tMln * 0.22);
+      const cg = ctx.createRadialGradient(cx, cy, R, cx, cy, corR);
+      cg.addColorStop(0, 'rgba(224, 242, 254, 0.75)');
+      cg.addColorStop(0.4, 'rgba(56, 189, 248, 0.25)');
+      cg.addColorStop(1, 'rgba(56, 189, 248, 0)');
+      ctx.fillStyle = cg;
+      ctx.beginPath(); ctx.arc(cx, cy, corR, 0, Math.PI * 2); ctx.fill();
+
+      // Toj nurlari (streamers)
+      ctx.strokeStyle = 'rgba(241, 245, 249, 0.26)';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 24; i++) {
+        const ang = (i / 24) * Math.PI * 2;
+        const len = R * (1.8 + 0.55 * Math.sin(i * 3 + corPulse));
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(ang) * R, cy + Math.sin(ang) * R);
+        ctx.lineTo(cx + Math.cos(ang) * len, cy + Math.sin(ang) * len);
+        ctx.stroke();
+      }
+
+      // Pushti xromosfera halqasi
+      ctx.strokeStyle = '#fb7185';
+      ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.arc(cx, cy, R + 2, 0, Math.PI * 2); ctx.stroke();
+
+      // Qora Oy diski
+      ctx.fillStyle = '#02050c';
+      ctx.beginPath(); ctx.arc(cx, cy, R - 1, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('To‘liq Quyosh tutilishi: Pushti xromosfera (H_α) va marvarid rangli Quyosh toji', cx, cy + corR * 0.92);
+      ctx.textAlign = 'left';
+    } else {
+      // H_alpha (656.3 nm) filtri: Qizil xromosfera diski, spikulalar va gigant protuberans arkalari
+      ctx.fillStyle = '#991b1b';
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#fb7185';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Gigant protuberans arkasi (o'ng chetda)
+      ctx.strokeStyle = '#fda4af';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.arc(cx + R * 0.98, cy - R * 0.15, 36 + Math.sin(corPulse) * 4, -Math.PI * 0.52, Math.PI * 0.52);
+      ctx.stroke();
+
+      // Chap chetda ikkinchi protuberans
+      ctx.beginPath();
+      ctx.arc(cx - R * 0.98, cy + R * 0.2, 28, Math.PI * 0.48, Math.PI * 1.52);
+      ctx.stroke();
+
+      // Spikulalar (tikanaksimon olovli ustunlar)
+      ctx.strokeStyle = '#fb7185';
+      ctx.lineWidth = 1.5;
+      for (let i = 0; i < 60; i++) {
+        const ang = (i / 60) * Math.PI * 2;
+        const spH = 6 + (i % 3) * 4;
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(ang) * R, cy + Math.sin(ang) * R);
+        ctx.lineTo(cx + Math.cos(ang) * (R + spH), cy + Math.sin(ang) * (R + spH));
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = '#fda4af';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('H_α (656.3 nm) filtri: Xromosfera spikulalari va gigant magnit protuberanslar', cx, cy + R + 45);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  // ==================== TAB 2: 37-§ TERMOYADRO REAKSIYALARI ====================
+  let fusPhase = 0;
+
+  function drawFusionTab(w, h) {
+    const tMln = parseFloat(document.getElementById('fusTSl').value);
+    const scale = Math.pow(tMln / 15.0, 4); // p-p reaksiya tezligi ~ T^4
+    const hRate = 608.0 * scale; // mln tonna/s
+    const mDefRate = 4.26 * scale; // mln tonna/s
+    const lum = 3.83e26 * scale;
+    const lifeBln = 10.4 / scale;
+
+    document.getElementById('fusTVal').textContent = `${tMln.toFixed(1)} mln K`;
+    document.getElementById('fusHOut').textContent = `${Math.round(hRate).toLocaleString()} mln tonna/s`;
+    document.getElementById('fusMOut').textContent = `${mDefRate.toFixed(2)} mln tonna/s`;
+    document.getElementById('fusLOut').textContent = `${lum.toExponential(2)} W`;
+    document.getElementById('fusLifeOut').textContent = `~${lifeBln.toFixed(1)} mlrd yil`;
+
+    fusPhase = (fusPhase + 0.015 * Math.sqrt(scale)) % 1.0;
+
+    const cx = w * 0.5, cy = h * 0.54;
+
+    // 4 ta proton (chapdan markazga yaqinlashadi) -> 1 ta Geliy yadrosi (o'ngda)
+    if (fusPhase < 0.55) {
+      const prog = fusPhase / 0.55;
+      const startX = w * 0.18;
+      const curX = startX + prog * (cx - startX);
+      const spread = (1 - prog) * 75;
+
+      const offsets = [-1.5, -0.5, 0.5, 1.5];
+      offsets.forEach(k => {
+        const py = cy + k * spread;
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath(); ctx.arc(curX, py, 14, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#050914';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('p⁺', curX, py + 4);
+      });
+    } else {
+      const prog = (fusPhase - 0.55) / 0.45;
+      // Chaqnash halqasi
+      ctx.strokeStyle = `rgba(251, 191, 36, ${1 - prog})`;
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.arc(cx, cy, 20 + prog * 95, 0, Math.PI * 2); ctx.stroke();
+
+      // Hosil bo'lgan Geliy yadrosi (2 proton + 2 neytron)
+      const heX = cx + prog * (w * 0.25);
+      [[-8, -8, '#38bdf8'], [8, 8, '#38bdf8'], [8, -8, '#94a3b8'], [-8, 8, '#94a3b8']].forEach(p => {
+        ctx.fillStyle = p[2];
+        ctx.beginPath(); ctx.arc(heX + p[0], cy + p[1], 11, 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.fillStyle = '#fef08a';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('⁴He yadrosi', heX, cy + 34);
+
+      // Chiqayotgan gamma-kvant (γ) va neytrino (ν)
+      ctx.fillStyle = '#34d399';
+      ctx.fillText('γ-kvant (26.7 MeV)', cx + prog * 140, cy - 60 - prog * 40);
+      ctx.fillStyle = '#a78bfa';
+      ctx.fillText('2e⁺ + 2ν_e', cx + prog * 140, cy + 70 + prog * 35);
+    }
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 3: 38-§ QUYOSH SHAMOLI VA MAGNITOSFERA ====================
+  let swTick = 0;
+
+  function setSwV(v) {
+    document.getElementById('swVSl').value = v;
+  }
+
+  function drawSolarWindTab(w, h) {
+    const vKmS = parseFloat(document.getElementById('swVSl').value);
+    const distKm = 1.50e8;
+    const tSec = distKm / vKmS;
+    const tHours = tSec / 3600.0;
+    const tDays = tHours / 24.0;
+
+    document.getElementById('swVVal').textContent = `${vKmS.toLocaleString()} km/s`;
+    document.getElementById('swTimeOut').textContent = `${tHours.toFixed(1)} soat (${tDays.toFixed(2)} sutka)`;
+
+    let stormStr = "Tinch geomagnit holat (Kp = 1–2)";
+    let aurStr = "67°–75° (Qutb doirasi atrofida)";
+    if (vKmS >= 1300) {
+      stormStr = "Ekstremal bo‘ron (G4–G5 / Kp = 8–9)";
+      aurStr = "45°–75° (O‘rta kengliklargacha)";
+    } else if (vKmS >= 900) {
+      stormStr = "Kuchli geomagnit bo‘ron (G3 / Kp = 7)";
+      aurStr = "55°–75° kengliklargacha";
+    } else if (vKmS >= 600) {
+      stormStr = "O‘rtacha magnit bo‘roni (G1–G2 / Kp = 5)";
+      aurStr = "62°–75° kengliklarda";
+    }
+    document.getElementById('swStormOut').textContent = stormStr;
+    document.getElementById('swAurOut').textContent = aurStr;
+
+    swTick += vKmS * 0.008;
+
+    // Chapda: Quyosh va otilayotgan plazma zarralari
+    const sunX = w * 0.12, sunY = h * 0.54;
+    ctx.fillStyle = '#facc15';
+    ctx.beginPath(); ctx.arc(sunX, sunY, 36, 0, Math.PI * 2); ctx.fill();
+
+    // O'ngda: Yer va siqilgan Magnitosfera
+    const earthX = w * 0.72, earthY = h * 0.54;
+    const compFactor = Math.max(0.55, 1.0 - (vKmS - 350) / 2600);
+    const bowDist = 95 * compFactor;
+
+    // Magnitosfera qobig'i (zarba to'lqini)
+    ctx.strokeStyle = vKmS >= 900 ? '#fb7185' : '#38bdf8';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(earthX + 140, earthY - 115);
+    ctx.quadraticCurveTo(earthX - bowDist * 1.6, earthY, earthX + 140, earthY + 115);
+    ctx.stroke();
+
+    // Quyosh shamoli zarralari oqimi
+    ctx.fillStyle = vKmS >= 900 ? '#fbbf24' : '#38bdf8';
+    for (let i = 0; i < 28; i++) {
+      const px = sunX + 42 + ((swTick + i * 37) % (earthX - bowDist - sunX - 30));
+      const py = earthY - 95 + ((i * 29) % 190);
+      ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Yer shari va Qutb yog'dulari (Aurora)
+    ctx.fillStyle = '#1d4ed8';
+    ctx.beginPath(); ctx.arc(earthX, earthY, 18, 0, Math.PI * 2); ctx.fill();
+
+    // Shimoliy va Janubiy qutb yog'dulari
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 3.5;
+    ctx.beginPath(); ctx.arc(earthX, earthY - 16, 8, Math.PI * 0.15, Math.PI * 0.85); ctx.stroke();
+    ctx.beginPath(); ctx.arc(earthX, earthY + 16, 8, -Math.PI * 0.85, -Math.PI * 0.15); ctx.stroke();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Yer magnitosferasi va Qutb yog‘dulari', earthX, earthY + 135);
+    ctx.fillText(`Quyosh shamoli: v = ${vKmS} km/s →`, w * 0.40, earthY - 115);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Quyosh atmosferasining fotosfera ustida joylashgan, pushti-qizg‘ish rangda (H_α = 656.3 nm) nurlanuvchi qatlami nima deb ataladi?",
+      opts: ["Quyosh yadrosi", "Xromosfera", "Konvektiv zona"],
+      ans: 1,
+      exp: "Xromosfera («rangli sfera») vodorodning H_α chizig‘ida kuchli nurlanib, pushti-qizg‘ish tus beradi."
+    },
+    {
+      q: "2. Xromosferadan Quyosh tojiga ko‘tarilib, magnit maydon kuch chiziqlari bo‘ylab osilib turuvchi gigant zich plazma arkalari nima deyiladi?",
+      opts: ["Granulalar", "Protuberanslar", "Asteroidlar"],
+      ans: 1,
+      exp: "Protuberanslar o‘lchami yuz minglab kilometrga yetuvchi gigant plazma bulutlari va arkalaridir."
+    },
+    {
+      q: "3. Quyosh tojining harorati taxminan nechaga teng va u asosan qaysi diapazonda kuchli nurlanadi?",
+      opts: ["3 000 K; infraqizil diapazonda", "1–2 mln K; yumshoq rentgen diapazonida", "5 800 K; faqat radio diapazonda"],
+      ans: 1,
+      exp: "Quyosh toji 1–2 mln K haroratga ega bo‘lib, Vin qonuniga ko‘ra ~1.5–3 nm yumshoq rentgen nurlari tarqatadi."
+    },
+    {
+      q: "4. Quyosh tojini oddiy kunda (Quyosh tutilishidan tashqari vaqtda) kuzatish imkonini beruvchi maxsus teleskop nima deb ataladi?",
+      opts: ["Refraktor", "Koronograf", "Radioteleskop"],
+      ans: 1,
+      exp: "Koronograf ichida sun’iy Oy diski bo‘lib, yorqin fotosfera nurini to‘sib Quyosh tojini kuzatish imkonini beradi."
+    },
+    {
+      q: "5. Quyosh energiyasining asosiy manbai qanday fizik jarayondan iborat?",
+      opts: ["Ko‘mir va vodorodning kimyoviy yonishi", "Quyosh yadrosida (T ≈ 15 mln K) vodorodning geliyga aylanish termoyadro sintezi", "Meteorlarning Quyoshga qulashi"],
+      ans: 1,
+      exp: "Proton-proton sikli (4 ¹H → ⁴He) Quyoshning milliardlab yillik ulkan energiyasini ta’minlaydi."
+    },
+    {
+      q: "6. Quyosh yadrosidagi termoyadro reaksiyalarida reaksiyaga kirishgan vodorod massasining necha foizi to‘g‘ridan-to‘g‘ri energiyaga (ΔE = Δm·c²) aylanadi?",
+      opts: ["0.7% (0.007 qismi)", "50%", "100%"],
+      ans: 0,
+      exp: "4 ta proton massasi 1 ta geliy yadrosi massasidan 0.7% ga ortiq; aynan shu massa defekti energiyaga aylanadi."
+    },
+    {
+      q: "7. Quyoshning to‘la faol yashash muddati taxminan necha milliard yilga baholanadi?",
+      opts: ["10 million yil", "~10 milliard yil (hozir ~4.6 mlrd yoshda)", "1 000 milliard yil"],
+      ans: 1,
+      exp: "Quyosh yadrosidagi vodorod zahirasi taxminan 10 milliard yillik barqaror nurlanishga yetadi."
+    },
+    {
+      q: "8. Quyosh tojidan barcha yo‘nalishlarda uzluksiz tarqaladigan zaryadlangan zarralar (proton va elektronlar) oqimi nima deb ataladi?",
+      opts: ["Quyosh shamoli", "Foton bosimi", "Kometalar dumi"],
+      ans: 0,
+      exp: "Quyosh shamoli tinch holatda 400–500 km/s, chaqnashlardan keyin esa 1000–1500 km/s tezlik bilan tarqaladi."
+    },
+    {
+      q: "9. Quyoshdagi kuchli xromosfera chaqnashidan so‘ng 1000 km/s tezlik bilan otilgan plazma buluti Yerga (1.5 × 10⁸ km) taxminan necha soatda yetib keladi?",
+      opts: ["8.3 daqiqada", "~41.7 soatda (1.74 sutkada)", "1 yilda"],
+      ans: 1,
+      exp: "t = 1.5 × 10⁸ km / 1000 km/s = 150 000 s ≈ 41.7 soat."
+    },
+    {
+      q: "10. Quyosh shamoli zarralari Yerning magnit qutblari ustidagi yuqori atmosferaga kirib, kislorod va azot atomlarini uyg‘otishi natijasida qanday hodisa kuzatiladi?",
+      opts: ["Oy tutilishi", "Qutb yog‘dulari (Aurora)", "Yulduzlarning mirillashi"],
+      ans: 1,
+      exp: "Qutb yog‘dulari Quyosh aktivligi va Yer magnitosferasi o‘zaro ta’sirining eng yorqin ko‘rinishidir."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawCoronaTab(w, h);
+      else if (activeTab === 2) drawFusionTab(w, h);
+      else if (activeTab === 3) drawSolarWindTab(w, h);
+      else drawCoronaTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
