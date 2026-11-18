@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>16-Mavzu (41-§): Gigant planetalar, ularning yo‘ldoshlari va halqalari | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.02rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.83rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>16-MAVZU (41-§). Gigant planetalar, ularning yo‘ldoshlari va halqalari</h1>
+    <p>11-sinf Astronomiya | IV Bob: Quyosh sistemasi jismlarining fizik tabiati</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">41-§ Gigant planetalar tuzilishi</button>
+    <button class="tab-btn" onclick="setTab(2)">41-§ Halqalar va Rosh chegarasi</button>
+    <button class="tab-btn" onclick="setTab(3)">41-§ Yo‘ldoshlar va Kepler qonuni</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>41-§. Gigant planetalar: Yupiter, Saturn, Uran, Neptun</h2>
+    <p><strong>Gigant planetalar</strong> — ulkan massali va o‘lchamli, past o‘rtacha zichlikka (687–1638 kg/m³) ega bo‘lgan, qattiq sirti yo‘q, o‘z o‘qi atrofida juda tez (10–17 soatda) aylanuvchi tashqi sayyoralardir. <strong>Yupiter va Saturn</strong> — gaz gigantlari (vodorod-geliy va metall vodorod), <strong>Uran va Neptun</strong> esa — muz gigantlari (suv, ammiak, metan muzlari) hisoblanadi.</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Sayyora</th>
+          <th>Masofa (a.b.)</th>
+          <th>Orbital davr</th>
+          <th>Siderik aylanish</th>
+          <th>Ekv. radius (km)</th>
+          <th>Massa (M⊕)</th>
+          <th>Zichlik (kg/m³)</th>
+          <th>O‘q og‘ishi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Yupiter</strong></td><td>5.203</td><td>11.86 yil</td><td>9 soat 55 daq</td><td>71 492</td><td>317.8</td><td>1 326</td><td>3.1°</td></tr>
+        <tr><td><strong>Saturn</strong></td><td>9.537</td><td>29.45 yil</td><td>10 soat 33 daq</td><td>60 268</td><td>95.2</td><td>687</td><td>26.7°</td></tr>
+        <tr><td><strong>Uran</strong></td><td>19.19</td><td>84.02 yil</td><td>17 soat 14 daq</td><td>25 559</td><td>14.5</td><td>1 270</td><td>97.8°</td></tr>
+        <tr><td><strong>Neptun</strong></td><td>30.07</td><td>164.8 yil</td><td>16 soat 06 daq</td><td>24 764</td><td>17.1</td><td>1 638</td><td>28.3°</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card">
+    <h2>Gigant planetalarning tabiiy yo‘ldoshlari va halqalari (Rosh chegarasi)</h2>
+    <ul>
+      <li><strong>Yupiter yo‘ldoshlari (95 ta):</strong> 1610-yilda Galiley ochgan 4 ta yirik yo‘ldosh — <strong>Io</strong> (faol vulqonlar), <strong>Yevropa</strong> (muz ostidagi suyuq okean), <strong>Ganimed</strong> (Quyosh sistemasidagi eng katta yo‘ldosh, R = 2634 km, Merkuriydan katta) va <strong>Kallisto</strong>.</li>
+      <li><strong>Saturn yo‘ldoshlari (146 ta) va halqalari:</strong> Eng yirik yo‘ldoshi <strong>Titan</strong> (zich azot-metan atmosferasi va suyuq metan ko‘llari bor) hamda <strong>Enselad</strong> (muz geyzerlari). Saturnning ulkan halqalari (diametri ~270 000 km, qalinligi 10–100 m) milliardlab suv muzi bo‘laklaridan iborat; A va B halqalarini <strong>Kassini tirqishi</strong> ajratib turadi.</li>
+      <li><strong>Uran (28 ta) va Neptun (16 ta) yo‘ldoshlari:</strong> Uranning yirik yo‘ldoshlari — Titaniya, Oberon, Umbriel, Ariel, Miranda. Neptunning eng katta yo‘ldoshi <strong>Triton</strong> sayyora aylanishiga <strong>teskari yo‘nalishda</strong> harakatlanadi.</li>
+    </ul>
+    <div class="math-banner">
+      Rosh chegarasi: d_Rosh ≈ 2.44 · R_p · (ρ_p / ρ_m)^(1/3) &nbsp;|&nbsp; Sayyora massasi (Kepler 3-qonuni): M = 4π²a³ / (G T²)
+    </div>
+
+    <div class="problem-box">
+      <strong>1-Masala (Kepler qonuni yordamida Yupiter massasini aniqlash):</strong> Yupiterning Galiley yo‘ldoshi Io sayyora markazidan <em>a = 4.217 × 10⁸ m</em> masofada <em>T = 1.769 sutka = 1.5285 × 10⁵ s</em> davr bilan aylanadi. Yupiter massasini (M_Yup) hisoblang (<em>G = 6.674 × 10⁻¹¹ N·m²/kg²</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        <strong>M_Yup = 4π²a³ / (GT²) = (39.4784 × 7.499 × 10²⁵) / (6.674 × 10⁻¹¹ × 2.3363 × 10¹⁰) ≈ 1.899 × 10²⁷ kg ≈ 318 M⊕</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Saturn halqalari uchun Rosh chegarasi):</strong> Saturn radiusi <em>R_Sat = 60 268 km</em>, o‘rtacha zichligi <em>ρ_Sat = 687 kg/m³</em>. Muz yo‘ldosh zichligi <em>ρ_muz = 920 kg/m³</em> bo‘lsa, Rosh chegarasini (d_Rosh) toping va asosiy A halqasi (136 775 km gacha) hamda Mimas (185 540 km) holatini solishtiring.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>d_Rosh = 2.44 × 60 268 × (687 / 920)^(1/3) = 147 054 × 0.9072 ≈ 133 400 km (2.21 R_Sat)</strong>. Asosiy halqalar Rosh chegarasi ichida bo‘lgani uchun parchalanib halqa hosil qilgan, Mimas esa tashqarida bo‘lgani uchun yaxlit yo‘ldosh bo‘lib qolgan.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Saturn zichligi va ekvatorial tezligi):</strong> Saturn massasi <em>5.68 × 10²⁶ kg</em>, o‘rtacha radiusi <em>5.82 × 10⁷ m</em>. O‘rtacha zichligini (ρ_Sat) hisoblang va ekvatorda aylanish davri <em>10 soat 33 daq (37 980 s)</em> bo‘lganda ekvator chiziqli tezligini (v_ekv, <em>R_ekv = 6.027 × 10⁷ m</em>) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        1) <strong>ρ_Sat = 5.68 × 10²⁶ / ((4/3)π · (5.82 × 10⁷)³) ≈ 688 kg/m³ &lt; 1000 kg/m³ (suvdan yengil)</strong>.<br>
+        2) <strong>v_ekv = 2πR_ekv / T = (2 × 3.1416 × 6.027 × 10⁷) / 37 980 ≈ 9.97 km/s</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">41-§: Gigant planetalar — Ichki tuzilishi, o‘q og‘ishi va o‘rtacha zichligi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Yupiter, Saturn, Uran, Neptun | ρ = 687–1638 kg/m³</div>
+    </div>
+    <canvas id="giantCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 41-§ GIGANT PLANETALAR TUZILISHI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Gigant planetani tanlang</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="gBtn0" onclick="setGiantIdx(0)">1. Yupiter (Mushtariy)</button>
+          <button class="btn" id="gBtn1" onclick="setGiantIdx(1)">2. Saturn (Zuhal)</button>
+          <button class="btn" id="gBtn2" onclick="setGiantIdx(2)">3. Uran</button>
+          <button class="btn" id="gBtn3" onclick="setGiantIdx(3)">4. Neptun</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 id="gNameOut">1. Yupiter — Gaz giganti</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Ekvatorial radius va Massa:</span><span class="t-val" id="gSizeOut">71 492 km (11.2 R⊕) | 317.8 M⊕</span></div>
+          <div class="t-row"><span>O‘rtacha zichligi:</span><span class="t-val" id="gDensOut">1 326 kg/m³</span></div>
+          <div class="t-row"><span>Siderik aylanish va o‘q og‘ishi:</span><span class="t-val" id="gRotOut">9 soat 55 daq | 3.1°</span></div>
+          <div class="t-row"><span>Ichki asosiy qatlam:</span><span class="t-val" id="gCoreOut">Suyuq metall vodorod + tosh yadro</span></div>
+          <div class="t-row"><span>Yo‘ldoshlar soni va yiriklari:</span><span class="t-val" id="gMoonOut">95 ta (Io, Yevropa, Ganimed, Kallisto)</span></div>
+        </div>
+        <p class="desc" id="gDescOut" style="margin-top:8px;">
+          Quyosh sistemasidagi eng katta sayyora. Yuqori bosimli metall vodorod qatlami kuchli magnit maydon hosil qiladi. Atmosferasida Yerdan katta antisiklon — Katta Qizil Dog‘ mavjud.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 41-§ HALQALAR VA ROSH CHEGARASI -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Saturn halqalari va Rosh chegarasi (d_Rosh)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yo‘ldosh orbita radiusi (r / R_Sat):</span>
+            <strong id="rocheRVal">1.80 R_Sat (108 500 km)</strong>
+          </div>
+          <input type="range" id="rocheRSl" min="1.30" max="3.40" step="0.05" value="1.80" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yo‘ldosh zichligi (ρ_m, kg/m³):</span>
+            <strong id="rocheDVal">920 kg/m³ (Suv muzi)</strong>
+          </div>
+          <input type="range" id="rocheDSl" min="600" max="2400" step="20" value="920" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn active" onclick="setRochePreset(1.80, 920)">B halqasi (1.80 R_Sat)</button>
+          <button class="btn" onclick="setRochePreset(2.00, 920)">Kassini tirqishi (2.00 R_Sat)</button>
+          <button class="btn" onclick="setRochePreset(2.21, 920)">Rosh chegarasi (2.21 R_Sat)</button>
+          <button class="btn" onclick="setRochePreset(3.08, 1150)">Mimas yo‘ldoshi (3.08 R_Sat)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Gravitatsion to‘lqin (oqim) barqarorligi</h3>
+        <div class="formula-box">
+          d_Rosh = 2.44 · R_Sat · (ρ_Sat / ρ_m)^(1/3)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Rosh chegarasi (d_Rosh):</span><span class="t-val" id="rocheLimOut">2.21 R_Sat (133 400 km)</span></div>
+          <div class="t-row"><span>Joriy orbita (r):</span><span class="t-val" id="rocheCurOut">1.80 R_Sat (108 500 km)</span></div>
+          <div class="t-row"><span>Jismning fizik holati:</span><span class="t-val" id="rocheStateOut">Parchalanadi → Halqa hosil qiladi!</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 41-§ YO'LDOSHLAR VA KEPLER QONUNI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Yupiterning Galiley yo‘ldoshlari (1610-yil)</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="mBtn0" onclick="setMoonIdx(0)">1. Io (1.77 sutka)</button>
+          <button class="btn" id="mBtn1" onclick="setMoonIdx(1)">2. Yevropa (3.55 sutka)</button>
+          <button class="btn" id="mBtn2" onclick="setMoonIdx(2)">3. Ganimed (7.15 sutka)</button>
+          <button class="btn" id="mBtn3" onclick="setMoonIdx(3)">4. Kallisto (16.69 sutka)</button>
+        </div>
+        <div class="slider-box" style="margin-top:10px;">
+          <div class="slider-label">
+            <span>Simulyatsiya tezligi:</span>
+            <strong id="mSpdVal">1.0×</strong>
+          </div>
+          <input type="range" id="mSpdSl" min="0" max="3" step="0.2" value="1.0" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 id="mTitleOut">1. Io — Faol vulqonli yo‘ldosh</h3>
+        <div class="formula-box">
+          M_Yup = 4π²a³ / (G · T²)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Orbita radiusi (a):</span><span class="t-val" id="mDistOut">421 700 km (5.90 R_Yup)</span></div>
+          <div class="t-row"><span>Orbital davri (T):</span><span class="t-val" id="mPerOut">1.769 sutka (42.5 soat)</span></div>
+          <div class="t-row"><span>Yo‘ldosh radiusi:</span><span class="t-val" id="mRadOut">1 821 km (1.05 R_Oy)</span></div>
+          <div class="t-row"><span>Aniqlangan Yupiter massasi:</span><span class="t-val">1.899 × 10²⁷ kg (318 M⊕)</span></div>
+        </div>
+        <p class="desc" id="mDescOut" style="margin-top:8px;">
+          Io, Yevropa va Ganimed orbital davrlari 1 : 2 : 4 Laplas rezonansida bo‘lgani uchun kuchli to‘lqin deformatsiyasi Io ichki qismini qizdirib, yuzlab faol vulqonlarni yuzaga keltiradi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('giantCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "41-§: Gigant planetalar — Ichki tuzilishi, o‘q og‘ishi va o‘rtacha zichligi",
+      "41-§: Saturn halqalari va Rosh chegarasi — Gravitatsion to‘lqin kuchlari",
+      "41-§: Yupiterning Galiley yo‘ldoshlari (1:2:4 rezonans) va Kepler 3-qonuni",
+      "Bilimlarni tekshirish: 16-Mavzu (41-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "Yupiter, Saturn, Uran, Neptun",
+      "d_Rosh ≈ 2.44 R_p (ρ_p / ρ_m)^(1/3)",
+      "M = 4π²a³ / (G T²)",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 41-§ GIGANT PLANETALAR TUZILISHI ====================
+  let curGiantIdx = 0;
+
+  const giantData = [
+    {
+      name: "1. Yupiter — Gaz giganti",
+      size: "71 492 km (11.2 R⊕) | 317.8 M⊕",
+      dens: 1326,
+      rot: "9 soat 55 daq | O‘q og‘ishi: 3.1°",
+      core: "Suyuq metall vodorod + tosh yadro",
+      moons: "95 ta (Io, Yevropa, Ganimed, Kallisto)",
+      desc: "Quyosh sistemasidagi eng katta sayyora. Yuqori bosimli metall vodorod qatlami kuchli magnit maydon hosil qiladi. Atmosferasida Yerdan katta antisiklon — Katta Qizil Dog‘ mavjud.",
+      atmCol: "#d97706", midCol: "#92400e", coreCol: "#fde047", tiltDeg: 3.1, hasBigRing: false
+    },
+    {
+      name: "2. Saturn — Halqali gaz giganti",
+      size: "60 268 km (9.45 R⊕) | 95.2 M⊕",
+      dens: 687,
+      rot: "10 soat 33 daq | O‘q og‘ishi: 26.7°",
+      core: "Metall vodorod + tosh-muz yadro",
+      moons: "146 ta (Titan, Enselad, Reya, Yapet)",
+      desc: "O‘rtacha zichligi 687 kg/m³ bo‘lib, suvdan (1000 kg/m³) ham yengil. Milliardlab suv muzi bo‘laklaridan iborat ulkan halqalari va Kassini tirqishi bilan ajralib turadi.",
+      atmCol: "#eab308", midCol: "#a16207", coreCol: "#fef08a", tiltDeg: 26.7, hasBigRing: true
+    },
+    {
+      name: "3. Uran — Yonboshlab aylanuvchi muz giganti",
+      size: "25 559 km (4.01 R⊕) | 14.5 M⊕",
+      dens: 1270,
+      rot: "17 soat 14 daq | O‘q og‘ishi: 97.8°",
+      core: "Suv-ammiak-metan muz mantiyasi",
+      moons: "28 ta (Titaniya, Oberon, Umbriel, Miranda)",
+      desc: "1781-yilda Uilyam Gershel kashf etgan. Aylanish o‘qi 97.8° og‘gani sababli Quyosh atrofida «yonboshlab» aylanadi. Atmosferasidagi metan havorang-yashil tus beradi.",
+      atmCol: "#22d3ee", midCol: "#0e7490", coreCol: "#e2e8f0", tiltDeg: 97.8, hasBigRing: false
+    },
+    {
+      name: "4. Neptun — Eng uzoq muz giganti",
+      size: "24 764 km (3.88 R⊕) | 17.1 M⊕",
+      dens: 1638,
+      rot: "16 soat 06 daq | O‘q og‘ishi: 28.3°",
+      core: "Suv-ammiak-metan muz mantiyasi",
+      moons: "16 ta (Triton — teskari orbita, Protey)",
+      desc: "1846-yilda Leverye hisob-kitoblari asosida Galle tomonidan topilgan. Atmosferasida 2100 km/soat tezlikdagi Quyosh sistemasidagi eng kuchli shamollar esadi.",
+      atmCol: "#2563eb", midCol: "#1e3a8a", coreCol: "#cbd5e1", tiltDeg: 28.3, hasBigRing: false
+    }
+  ];
+
+  function setGiantIdx(idx) {
+    curGiantIdx = idx;
+    for (let i = 0; i < 4; i++) document.getElementById('gBtn' + i).classList.toggle('active', i === idx);
+    const g = giantData[idx];
+    document.getElementById('gNameOut').textContent = g.name;
+    document.getElementById('gSizeOut').textContent = g.size;
+    document.getElementById('gDensOut').textContent = `${g.dens.toLocaleString()} kg/m³ ${g.dens < 1000 ? '(Suvdan yengil!)' : ''}`;
+    document.getElementById('gRotOut').textContent = g.rot;
+    document.getElementById('gCoreOut').textContent = g.core;
+    document.getElementById('gMoonOut').textContent = g.moons;
+    document.getElementById('gDescOut').textContent = g.desc;
+  }
+
+  function drawGiantPlanetsTab(w, h) {
+    const g = giantData[curGiantIdx];
+    const cx = w * 0.35, cy = h * 0.53;
+    const R = Math.min(w * 0.21, h * 0.31);
+    const tiltRad = (g.tiltDeg * Math.PI) / 180;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(tiltRad);
+
+    // Orqa halqa yarmi
+    if (g.hasBigRing) {
+      ctx.strokeStyle = 'rgba(253, 224, 71, 0.72)';
+      ctx.lineWidth = 14;
+      ctx.beginPath(); ctx.ellipse(0, 0, R * 1.95, R * 0.42, 0, Math.PI, Math.PI * 2); ctx.stroke();
+      ctx.strokeStyle = '#050914';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.ellipse(0, 0, R * 1.72, R * 0.37, 0, Math.PI, Math.PI * 2); ctx.stroke();
+    } else {
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.ellipse(0, 0, R * 1.55, R * 0.32, 0, Math.PI, Math.PI * 2); ctx.stroke();
+    }
+
+    // Sayyora tanasi (qutbiy siqiqlik bilan)
+    ctx.fillStyle = g.atmCol;
+    ctx.beginPath(); ctx.ellipse(0, 0, R, R * 0.91, 0, 0, Math.PI * 2); ctx.fill();
+
+    // O'rta qatlam (Metall vodorod yoki muz mantiyasi)
+    ctx.fillStyle = g.midCol;
+    ctx.beginPath(); ctx.ellipse(0, 0, R * 0.72, R * 0.66, 0, 0, Math.PI * 2); ctx.fill();
+
+    // Markaziy tosh-muz yadro
+    ctx.fillStyle = g.coreCol;
+    ctx.beginPath(); ctx.arc(0, 0, R * 0.26, 0, Math.PI * 2); ctx.fill();
+
+    // Aylanish o'qi
+    ctx.strokeStyle = '#fb7185';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(0, -R * 1.35); ctx.lineTo(0, R * 1.35); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Old halqa yarmi
+    if (g.hasBigRing) {
+      ctx.strokeStyle = 'rgba(253, 224, 71, 0.85)';
+      ctx.lineWidth = 14;
+      ctx.beginPath(); ctx.ellipse(0, 0, R * 1.95, R * 0.42, 0, 0, Math.PI); ctx.stroke();
+      ctx.strokeStyle = '#050914';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.ellipse(0, 0, R * 1.72, R * 0.37, 0, 0, Math.PI); ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${g.name} (O‘q og‘ishi: ${g.tiltDeg}°)`, cx, cy + R * 1.48);
+
+    // O'ngda: O'rtacha zichlikning Suv zichligi (1000 kg/m³) bilan taqqoslash diagrammasi
+    const gx = w * 0.62, gy = h * 0.26, gw = w * 0.32, gh = h * 0.54;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    ctx.fillStyle = '#fef08a';
+    ctx.fillText('O‘rtacha zichlik (kg/m³) vs Suv (1000)', gx + gw * 0.5, gy - 10);
+
+    const waterY = gy + gh - 22 - (1000 / 2000) * (gh - 35);
+    ctx.strokeStyle = '#38bdf8';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(gx, waterY); ctx.lineTo(gx + gw, waterY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '10px sans-serif';
+    ctx.fillText('Suv: 1000 kg/m³', gx + gw * 0.5, waterY - 5);
+
+    const namesShort = ['Yupiter', 'Saturn', 'Uran', 'Neptun'];
+    const barW = gw / 6.5;
+    giantData.forEach((item, i) => {
+      const bx = gx + (i + 0.5) * (gw / 4);
+      const bh = (item.dens / 2000) * (gh - 35);
+      ctx.fillStyle = i === curGiantIdx ? '#fbbf24' : '#64748b';
+      ctx.fillRect(bx - barW * 0.5, gy + gh - 22 - bh, barW, bh);
+      ctx.fillStyle = '#cbd5e1';
+      ctx.fillText(namesShort[i], bx, gy + gh - 7);
+      ctx.fillText(`${item.dens}`, bx, gy + gh - 26 - bh);
+    });
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 2: 41-§ HALQALAR VA ROSH CHEGARASI ====================
+  let rocheAng = 0;
+
+  function setRochePreset(rRel, rhoM) {
+    document.getElementById('rocheRSl').value = rRel;
+    document.getElementById('rocheDSl').value = rhoM;
+  }
+
+  function drawRocheRingsTab(w, h) {
+    const rRel = parseFloat(document.getElementById('rocheRSl').value);
+    const rhoM = parseFloat(document.getElementById('rocheDSl').value);
+    const rhoSat = 687.0;
+    const rSatKm = 60268.0;
+
+    const dRoshRel = 2.44 * Math.pow(rhoSat / rhoM, 1 / 3);
+    const dRoshKm = dRoshRel * rSatKm;
+    const rCurKm = rRel * rSatKm;
+    const isBroken = rRel < dRoshRel;
+
+    document.getElementById('rocheRVal').textContent = `${rRel.toFixed(2)} R_Sat (${Math.round(rCurKm).toLocaleString()} km)`;
+    document.getElementById('rocheDVal').textContent = `${rhoM} kg/m³`;
+    document.getElementById('rocheLimOut').textContent = `${dRoshRel.toFixed(2)} R_Sat (${Math.round(dRoshKm).toLocaleString()} km)`;
+    document.getElementById('rocheCurOut').textContent = `${rRel.toFixed(2)} R_Sat (${Math.round(rCurKm).toLocaleString()} km)`;
+    document.getElementById('rocheStateOut').textContent = isBroken
+      ? "Parchalanadi → Halqa hosil qiladi!"
+      : "Barqaror → Yaxlit yo‘ldosh saqlanadi";
+
+    rocheAng = (rocheAng + 0.015 / Math.pow(rRel, 1.5)) % (Math.PI * 2);
+
+    const cx = w * 0.5, cy = h * 0.54;
+    const unitR = Math.min(w, h) * 0.125; // 1.0 R_Sat piksellarda
+
+    // Saturnning A, B, C halqalari fon sifatida
+    ctx.strokeStyle = 'rgba(253, 224, 71, 0.22)';
+    ctx.lineWidth = unitR * 0.35;
+    ctx.beginPath(); ctx.arc(cx, cy, unitR * 1.72, 0, Math.PI * 2); ctx.stroke(); // B halqa
+    ctx.lineWidth = unitR * 0.22;
+    ctx.beginPath(); ctx.arc(cx, cy, unitR * 2.14, 0, Math.PI * 2); ctx.stroke(); // A halqa
+
+    // Saturn shari
+    const sg = ctx.createRadialGradient(cx, cy, unitR * 0.1, cx, cy, unitR);
+    sg.addColorStop(0, '#fef08a');
+    sg.addColorStop(1, '#ca8a04');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(cx, cy, unitR, 0, Math.PI * 2); ctx.fill();
+
+    // Rosh chegarasi punkti doirasi
+    const rochePx = unitR * dRoshRel;
+    ctx.strokeStyle = '#fb7185';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 5]);
+    ctx.beginPath(); ctx.arc(cx, cy, rochePx, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Tanlangan orbita radiusi
+    const curPx = unitR * rRel;
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, curPx, 0, Math.PI * 2); ctx.stroke();
+
+    // Yo'ldosh yoki parchalanayotgan muz bo'laklari
+    if (isBroken) {
+      ctx.fillStyle = '#38bdf8';
+      for (let k = -18; k <= 18; k++) {
+        const a = rocheAng + k * 0.055;
+        const dr = (k % 3) * 2.5;
+        const px = cx + Math.cos(a) * (curPx + dr);
+        const py = cy + Math.sin(a) * (curPx + dr);
+        ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2); ctx.fill();
+      }
+    } else {
+      const mx = cx + Math.cos(rocheAng) * curPx;
+      const my = cy + Math.sin(rocheAng) * curPx;
+      ctx.fillStyle = '#34d399';
+      ctx.beginPath(); ctx.arc(mx, my, 9, 0, Math.PI * 2); ctx.fill();
+    }
+
+    ctx.fillStyle = '#fb7185';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Rosh chegarasi: d_Rosh = ${dRoshRel.toFixed(2)} R_Sat`, cx, cy - rochePx - 8);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 3: 41-§ YO'LDOSHLAR VA KEPLER QONUNI ====================
+  let curMoonIdx = 0;
+  let galTime = 0;
+
+  const galMoons = [
+    {
+      name: "1. Io (Eng ichki Galiley yo‘ldoshi)",
+      dist: "421 700 km (5.90 R_Yup)",
+      per: "1.769 sutka (42.5 soat)",
+      rad: "1 821 km (1.05 R_Oy)",
+      desc: "Io, Yevropa va Ganimed orbital davrlari 1 : 2 : 4 Laplas rezonansida bo‘lgani uchun kuchli to‘lqin deformatsiyasi Io ichki qismini qizdirib, yuzlab faol vulqonlarni yuzaga keltiradi.",
+      aRel: 1.0, perDays: 1.769, col: "#facc15", rPx: 5.5
+    },
+    {
+      name: "2. Yevropa (Muz osti okeanli yo‘ldosh)",
+      dist: "670 900 km (9.38 R_Yup)",
+      per: "3.551 sutka (85.2 soat)",
+      rad: "1 561 km (0.90 R_Oy)",
+      desc: "Silliq suv muzi qobig‘i ostida chuqurligi 100 km gacha yetuvchi global suyuq suv okeaniga ega. Astrobiologik tadqiqotlar uchun eng istiqbolli obyektlardan biri.",
+      aRel: 1.59, perDays: 3.551, col: "#bae6fd", rPx: 5.0
+    },
+    {
+      name: "3. Ganimed (Eng yirik yo‘ldosh)",
+      dist: "1 070 400 km (14.97 R_Yup)",
+      per: "7.155 sutka (171.7 soat)",
+      rad: "2 634 km (Merkuriydan katta!)",
+      desc: "Quyosh sistemasidagi eng katta tabiiy yo‘ldosh (radiusi Merkuriy sayyorasidan ham katta) va o‘zining xususiy dipol magnit maydoniga ega yagona yo‘ldosh.",
+      aRel: 2.54, perDays: 7.155, col: "#cbd5e1", rPx: 7.5
+    },
+    {
+      name: "4. Kallisto (Eng tashqi Galiley yo‘ldoshi)",
+      dist: "1 882 700 km (26.33 R_Yup)",
+      per: "16.689 sutka (400.5 soat)",
+      rad: "2 410 km (Merkuriyga yaqin)",
+      desc: "Yupiterning kuchli radiatsion kamarlaridan tashqarida harakatlanadi; qadimiy muz-tosh qobig‘i Quyosh sistemasidagi eng zich meteorit kraterlari bilan qoplangan.",
+      aRel: 4.46, perDays: 16.689, col: "#94a3b8", rPx: 6.8
+    }
+  ];
+
+  function setMoonIdx(idx) {
+    curMoonIdx = idx;
+    for (let i = 0; i < 4; i++) document.getElementById('mBtn' + i).classList.toggle('active', i === idx);
+    const m = galMoons[idx];
+    document.getElementById('mTitleOut').textContent = m.name;
+    document.getElementById('mDistOut').textContent = m.dist;
+    document.getElementById('mPerOut').textContent = m.per;
+    document.getElementById('mRadOut').textContent = m.rad;
+    document.getElementById('mDescOut').textContent = m.desc;
+  }
+
+  function drawGalileanMoonsTab(w, h) {
+    const spd = parseFloat(document.getElementById('mSpdSl').value);
+    document.getElementById('mSpdVal').textContent = `${spd.toFixed(1)}×`;
+    galTime += 0.035 * spd;
+
+    const cx = w * 0.5, cy = h * 0.54;
+    const maxOrbR = Math.min(w, h) * 0.41;
+
+    // Markazda Yupiter
+    const jupR = 24;
+    const jg = ctx.createRadialGradient(cx, cy, 3, cx, cy, jupR);
+    jg.addColorStop(0, '#fef08a');
+    jg.addColorStop(0.6, '#d97706');
+    jg.addColorStop(1, '#78350f');
+    ctx.fillStyle = jg;
+    ctx.beginPath(); ctx.arc(cx, cy, jupR, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Yupiter', cx, cy + jupR + 15);
+
+    const names = ['Io', 'Yevropa', 'Ganimed', 'Kallisto'];
+    galMoons.forEach((m, i) => {
+      const orbR = jupR + 22 + (m.aRel / 4.5) * (maxOrbR - jupR - 26);
+
+      ctx.strokeStyle = i === curMoonIdx ? 'rgba(56, 189, 248, 0.85)' : 'rgba(148, 163, 184, 0.25)';
+      ctx.lineWidth = i === curMoonIdx ? 2 : 1;
+      ctx.beginPath(); ctx.arc(cx, cy, orbR, 0, Math.PI * 2); ctx.stroke();
+
+      // 1 : 2 : 4 Laplas rezonansi burchak tezliklari bilan aylanish
+      const ang = -(galTime * (1.769 / m.perDays));
+      const mx = cx + Math.cos(ang) * orbR;
+      const my = cy + Math.sin(ang) * orbR;
+
+      ctx.fillStyle = m.col;
+      ctx.beginPath(); ctx.arc(mx, my, m.rPx, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = i === curMoonIdx ? '#34d399' : '#cbd5e1';
+      ctx.font = i === curMoonIdx ? 'bold 12px sans-serif' : '11px sans-serif';
+      ctx.fillText(names[i], mx, my - m.rPx - 6);
+    });
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Gigant planetalar fizik-kimyoviy tuzilishiga ko‘ra qaysi ikki kichik guruhga bo‘linadi?",
+      opts: ["Tosh gigantlari va temir gigantlari", "Gaz gigantlari (Yupiter, Saturn) va muz gigantlari (Uran, Neptun)", "Issiq gigantlar va sovuq gigantlar"],
+      ans: 1,
+      exp: "Yupiter va Saturn asosan vodorod-geliyli gaz gigantlari, Uran va Neptun esa suv, ammiak va metan muzlariga boy muz gigantlaridir."
+    },
+    {
+      q: "2. Quyosh sistemasidagi qaysi sayyoraning o‘rtacha zichligi (687 kg/m³) suv zichligidan (1000 kg/m³) ham kichik?",
+      opts: ["Yupiter", "Saturn", "Neptun"],
+      ans: 1,
+      exp: "Saturnning o‘rtacha zichligi 687 kg/m³ bo‘lib, Quyosh sistemasidagi suvdan yengil yagona sayyoradir."
+    },
+    {
+      q: "3. Quyosh sistemasidagi eng yirik tabiiy yo‘ldosh — Ganimed (Merkuriy sayyorasidan ham katta) qaysi sayyora atrofida aylanadi?",
+      opts: ["Saturn", "Yupiter", "Uran"],
+      ans: 1,
+      exp: "Yupiterning 4 ta Galiley yo‘ldoshidan biri bo‘lgan Ganimed (R = 2634 km) Quyosh sistemasidagi eng katta yo‘ldoshdir."
+    },
+    {
+      q: "4. Qaysi gigant sayyoraning aylanish o‘qi orbita tekisligiga 97.8° og‘gan bo‘lib, u Quyosh atrofida «yonboshlab» aylanadi?",
+      opts: ["Neptun", "Uran", "Saturn"],
+      ans: 1,
+      exp: "Uran 97.8° og‘ish burchagi tufayli yonboshlab aylanadi, shu sababli qutblarida 42 yil kun va 42 yil tun bo‘ladi."
+    },
+    {
+      q: "5. «Qalam uchida» — ya’ni Uran harakatidagi chetlanishlar asosida nazariy hisob-kitoblar yordamida kashf etilgan sayyora qaysi?",
+      opts: ["Neptun (1846-yil, Leverye va Galle)", "Uran (1781-yil, Gershel)", "Yupiter"],
+      ans: 0,
+      exp: "Neptun U. Leverye va J. Adamsning matematik hisoblari asosida 1846-yilda I. Galle tomonidan teleskopda topilgan."
+    },
+    {
+      q: "6. Saturn halqalari asosan nimadan tashkil topgan va asosiy A hamda B halqalarini qaysi bo‘shliq ajratib turadi?",
+      opts: ["Yonayotgan gazlardan; Oort bo‘shlig‘i", "Milliardlab suv muzi va chang bo‘laklaridan; Kassini tirqishi (4800 km)", "Suyuq metall vodoroddan; Rosh tirqishi"],
+      ans: 1,
+      exp: "Saturn halqalari suv muzi va chang zarralaridan iborat; A va B halqalari orasidagi 4800 km li oraliq Kassini tirqishi deyiladi."
+    },
+    {
+      q: "7. Sayyoraga juda yaqin masofada gravitatsion to‘lqin kuchlari yo‘ldoshni parchalab tashlaydigan kritik chegara nima deb ataladi?",
+      opts: ["Kepler chegarasi", "Rosh chegarasi (d_Rosh ≈ 2.44 R_p (ρ_p / ρ_m)^(1/3))", "Shvarschild radiusi"],
+      ans: 1,
+      exp: "Rosh chegarasi ichida sayyoraning to‘lqin kuchlari yo‘ldoshning o‘z gravitatsiyasidan ustun kelib, halqa hosil qiladi."
+    },
+    {
+      q: "8. Yupiterning qaysi Galiley yo‘ldoshida 1 : 2 : 4 orbital rezonans tufayli yuzaga kelgan to‘lqin ishqalanishi natijasida yuzlab faol vulqonlar otilib turadi?",
+      opts: ["Kallisto", "Io", "Yevropa"],
+      ans: 1,
+      exp: "Io Quyosh sistemasidagi eng faol vulqonli osmon jismidir."
+    },
+    {
+      q: "9. Zich azot-metan atmosferasiga (1.45 atm) va sirtida suyuq metan ko‘llariga ega bo‘lgan Saturnning eng yirik yo‘ldoshi qaysi?",
+      opts: ["Titan", "Enselad", "Triton"],
+      ans: 0,
+      exp: "Titan (R = 2575 km) zich atmosferaga va suyuq uglevodorod ko‘llariga ega yagona yo‘ldoshdir."
+    },
+    {
+      q: "10. Neptunning eng yirik yo‘ldoshi — Triton boshqa yirik yo‘ldoshlardan qaysi harakat xususiyati bilan keskin farq qiladi?",
+      opts: ["U Neptun atrofida sayyora aylanishiga teskari (retrograd) yo‘nalishda aylanadi", "U umuman harakatlanmaydi", "U Neptun halqalari ichida joylashgan"],
+      ans: 0,
+      exp: "Triton teskari orbita bo‘ylab harakatlanuvchi yagona yirik yo‘ldosh bo‘lib, Koyper belbog‘idan tutib olingan deb hisoblanadi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawGiantPlanetsTab(w, h);
+      else if (activeTab === 2) drawRocheRingsTab(w, h);
+      else if (activeTab === 3) drawGalileanMoonsTab(w, h);
+      else drawGiantPlanetsTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
