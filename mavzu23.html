@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>23-Mavzu (54-§): Fizik o‘zgaruvchi yulduzlar: sefeidlar, yangi va o‘ta yangilar | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.01rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.83rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 7px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>23-MAVZU (54-§). Fizik o‘zgaruvchi yulduzlar: sefeidlar, yangi va o‘ta yangilar</h1>
+    <p>11-sinf Astronomiya | V Bob: Yulduzlar</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">54-§ Sefeidlar va Davr–Yorqinlik</button>
+    <button class="tab-btn" onclick="setTab(2)">54-§ RR Lira va Miridalar</button>
+    <button class="tab-btn" onclick="setTab(3)">54-§ Yangi va O‘ta yangi yulduzlar</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>54-§. Fizik o‘zgaruvchan yulduzlar: pulsatsiyalanuvchi va eruptiv turlar</h2>
+    <p><strong>Fizik o‘zgaruvchan yulduzlar</strong>ning ravshanligi yulduzning o‘z ichki qatlamlaridagi fizik jarayonlar — davriy kengayish-siqilish (<strong>pulsatsiya</strong>) yoki modda qobiqlarining portlab fazoga otilishi (<strong>eruptsiya</strong>) natijasida o‘zgaradi.</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Yulduz turi</th>
+          <th>O‘zgarish tabiati</th>
+          <th>Davri (P)</th>
+          <th>Amplitudasi (Δm)</th>
+          <th>Absolyut kattaligi (M)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Sefeidlar (δ Sefey)</strong></td><td>Sariq o‘ta gigant pulsatsiyasi</td><td>1 – 100 sutka</td><td>0.5m – 2.0m</td><td>−2m dan −7m gacha</td></tr>
+        <tr><td><strong>RR Lira yulduzlari</strong></td><td>Qisqa davrli gigant pulsatsiyasi</td><td>0.2 – 1.0 sutka</td><td>0.5m – 1.5m</td><td><strong>≈ +0.6m (o‘zgarmas)</strong></td></tr>
+        <tr><td><strong>Miridalar (Mira)</strong></td><td>Ulkan qizil gigant pulsatsiyasi</td><td>100 – 1000 sutka</td><td>2.5m – 10m</td><td>−1m dan −3m gacha</td></tr>
+        <tr><td><strong>Yangi yulduz (Nova)</strong></td><td>Oq mitti sirtida vodorod chaqnashi</td><td>Uzoq / takrorlanuvchi</td><td>10m – 15m (10⁴–10⁶×)</td><td>−6m dan −9m gacha</td></tr>
+        <tr><td><strong>O‘ta yangi (Supernova)</strong></td><td>Yulduz halokati (E ~ 10⁴⁴ J)</td><td>Bir martalik portlash</td><td>18m – 22m (10⁸–10¹⁰×)</td><td>−17m dan −19.5m gacha</td></tr>
+      </tbody>
+    </table>
+    <div class="math-banner">
+      Sefeid Davr–Yorqinlik (G. Livitt): M = −2.81 lg P − 1.43 &nbsp;|&nbsp; Masofa: r (pk) = 10^((m − M + 5)/5) &nbsp;|&nbsp; Pogson: I₂ / I₁ = 10^(0.4 Δm)
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>54-§. Hisoblash masalalari va yechimlar bazasi</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Sefeid orqali galaktikagacha masofani aniqlash):</strong> Boshqa galaktikadagi sefeidning pulsatsiya davri <em>P = 10 sutka</em>, o‘rtacha ko‘rinma yulduz kattaligi <em>m = +20.76m</em>. Uning absolyut kattaligini (M) va galaktikagacha masofani (r) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) <strong>M = −2.81 lg(10) − 1.43 = −2.81 − 1.43 = −4.24m</strong>.<br>
+        2) <strong>r = 10^((20.76 − (−4.24) + 5) / 5) = 10^(30 / 5) = 10⁶ pk = 1.0 Mpk (3.26 mln y.y.)</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (RR Lira yulduzi orqali sharsimon to‘dagacha masofa):</strong> Sharsimon yulduz to‘dasidagi RR Lira tipidagi o‘zgaruvchan yulduzning o‘rtacha ko‘rinma kattaligi <em>m = +15.6m</em>, absolyut kattaligi esa <em>M = +0.6m</em>. Sharsimon yulduz to‘dasigacha masofani (r) kiloparseklarda toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>r = 10^((15.6 − 0.6 + 5) / 5) = 10^(20 / 5) = 10⁴ pk = 10 kpk (32 620 y.y.)</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Yangi yulduz ravshanligining keskin ortishi):</strong> Chaqnashdan oldin <em>m₁ = +14.5m</em> bo‘lgan xira yulduz Yangi yulduz sifatida chaqnaganda <em>m₂ = +2.0m</em> ga yetdi. Yulduzning ravshanligi necha marta ortgan?
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>Δm = 14.5 − 2.0 = 12.5m ⇒ I₂ / I₁ = 10^(0.4 × 12.5) = 10⁵ = 100 000 marta</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">54-§: Sefeidlar pulsatsiyasi va Genrietta Livittning Davr–Yorqinlik qonuni</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">M = −2.81 lg P − 1.43 | Standart shamlar</div>
+    </div>
+    <canvas id="varCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 54-§ SEFEIDLAR VA DAVR-YORQINLIK -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Sefeid pulsatsiyasi va Kuzatuv parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Pulsatsiya davri (P, sutka):</span>
+            <strong id="cepPVal">10.0 sutka</strong>
+          </div>
+          <input type="range" id="cepPSl" min="1.0" max="100.0" step="0.5" value="10.0" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>O‘rtacha ko‘rinma kattalik (m):</span>
+            <strong id="cepMVal">+20.76m</strong>
+          </div>
+          <input type="range" id="cepMSl" min="1.5" max="25.0" step="0.05" value="20.76" />
+        </div>
+        <div class="btn-grid" id="cepBtns">
+          <button class="btn" onclick="setCepPreset(3.97, 1.98, this)">Qutb yulduzi (3.97 s.)</button>
+          <button class="btn" onclick="setCepPreset(5.37, 3.75, this)">δ Sefey (5.37 sutka)</button>
+          <button class="btn active" onclick="setCepPreset(10.0, 20.76, this)">Standart Sefeid (1 Mpk)</button>
+          <button class="btn" onclick="setCepPreset(31.4, 18.8, this)">Andromeda Sefeidi (M31)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Hisoblangan yorqinlik va Galaktika masofasi</h3>
+        <div class="formula-box">
+          M = −2.81 lg P − 1.43 &nbsp;|&nbsp; r = 10^((m − M + 5)/5)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Absolyut yulduz kattaligi (M):</span><span class="t-val" id="cepAbsOut">−4.24m</span></div>
+          <div class="t-row"><span>O‘rtacha yorqinligi (L / L☉):</span><span class="t-val" id="cepLumOut">4 246 L☉</span></div>
+          <div class="t-row"><span>Masofa moduli (m − M):</span><span class="t-val" id="cepModOut">25.00m</span></div>
+          <div class="t-row"><span>Obyektgacha masofa (r):</span><span class="t-val" id="cepDistOut">1.00 Mpk (3.26 mln y.y.)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 54-§ RR LIRA VA MIRIDALAR -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Pulsatsiyalanuvchi yulduz sinfini tanlang</h3>
+        <div class="btn-grid" id="rrBtns" style="margin-bottom:10px;">
+          <button class="btn active" onclick="setPulType('rr', this)">RR Lira (Qisqa davrli)</button>
+          <button class="btn" onclick="setPulType('mira', this)">Miridalar (Uzoq davrli)</button>
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>O‘rtacha ko‘rinma kattalik (m):</span>
+            <strong id="rrMVal">+15.6m</strong>
+          </div>
+          <input type="range" id="rrMSl" min="3.0" max="20.0" step="0.1" value="15.6" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Fizik va Fotometrik ko‘rsatkichlar</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Pulsatsiya davri (P):</span><span class="t-val" id="rrPerOut">0.55 sutka (13.2 soat)</span></div>
+          <div class="t-row"><span>Absolyut yulduz kattaligi (M):</span><span class="t-val" id="rrAbsOut">+0.60m (Standart)</span></div>
+          <div class="t-row"><span>Ravshanlik amplitudasi (Δm):</span><span class="t-val" id="rrAmpOut">1.1m (~2.75 marta)</span></div>
+          <div class="t-row"><span>Hisoblangan masofa (r):</span><span class="t-val" id="rrDistOut">10.0 kpk (32 620 y.y.)</span></div>
+        </div>
+        <p class="desc" id="rrDescOut" style="margin-top:8px;">
+          RR Lira tipidagi yulduzlarning o‘rtacha absolyut kattaligi barcha to‘dalarda bir xil (M ≈ +0.6m) bo‘lgani uchun sharsimon yulduz to‘dalari masofasini aniq o‘lchaydi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: 54-§ YANGI VA O'TA YANGI YULDUZLAR -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Chaqnash / Portlash turini tanlang</h3>
+        <div class="btn-grid-3" id="snBtns" style="margin-bottom:10px;">
+          <button class="btn" onclick="setSnType('nova', this)">Yangi (Nova)</button>
+          <button class="btn active" onclick="setSnType('sn1a', this)">Ia O‘ta yangi</button>
+          <button class="btn" onclick="setSnType('sn2', this)">II O‘ta yangi</button>
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Portlashdan keyingi vaqt (t, sutka):</span>
+            <strong id="snTVal">20 sutka</strong>
+          </div>
+          <input type="range" id="snTSl" min="0" max="240" step="1" value="20" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Portlash energetikasi va Qoldiq tahlili</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Hodisa mexanizmi:</span><span class="t-val" id="snMechOut">Oq mitti portlashi (1.44 M☉)</span></div>
+          <div class="t-row"><span>Maksimal absolyut kattalik:</span><span class="t-val" id="snPeakOut">−19.3m (4.5 mlrd L☉)</span></div>
+          <div class="t-row"><span>Joriy absolyut kattalik M(t):</span><span class="t-val" id="snCurOut">−19.3m</span></div>
+          <div class="t-row"><span>Qobiq kengayish tezligi:</span><span class="t-val" id="snVelOut">12 000 km/s</span></div>
+        </div>
+        <p class="desc" id="snDescOut" style="margin-top:8px;">
+          Ia turi o‘ta yangi yulduzlar barcha galaktikalarda bir xil cho‘qqi yorqinlikka (M ≈ −19.3m) ega bo‘lgani uchun kosmologik masofalarni o‘lchashda eng kuchli standart sham hisoblanadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('varCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function highlightBtn(containerId, btnEl) {
+    if (!btnEl) return;
+    document.querySelectorAll(`#${containerId} .btn`).forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "54-§: Sefeidlarning radial pulsatsiyasi va Davr–Yorqinlik qonuni (G. Livitt)",
+      "54-§: RR Lira (qisqa davrli) va Mirida (uzoq davrli qizil gigant) o‘zgaruvchan yulduzlar",
+      "54-§: Yangi (Nova) va O‘ta yangi (Supernova) yulduzlar chaqnashi va ravshanlik egri chizig‘i",
+      "Bilimlarni tekshirish: 23-Mavzu (54-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "M = −2.81 lg P − 1.43",
+      "Sharsimon to‘dalar va qizil gigantlar",
+      "E ~ 10⁴⁴ J | Pogson: I₂ / I₁ = 10^(0.4 Δm)",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 54-§ SEFEIDLAR VA DAVR-YORQINLIK ====================
+  let cepPhase = 0;
+
+  function setCepPreset(p, m, btn) {
+    document.getElementById('cepPSl').value = p;
+    document.getElementById('cepMSl').value = m;
+    highlightBtn('cepBtns', btn);
+  }
+
+  function drawCepheidTab(w, h) {
+    const P = parseFloat(document.getElementById('cepPSl').value);
+    const m = parseFloat(document.getElementById('cepMSl').value);
+
+    const M = -2.81 * Math.log10(P) - 1.43;
+    const lumRatio = Math.pow(10, 0.4 * (4.83 - M));
+    const mod = m - M;
+    const rPk = Math.pow(10, (mod + 5) / 5);
+
+    document.getElementById('cepPVal').textContent = `${P.toFixed(1)} sutka`;
+    document.getElementById('cepMVal').textContent = `${m >= 0 ? '+' : ''}${m.toFixed(2)}m`;
+    document.getElementById('cepAbsOut').textContent = `${M.toFixed(2)}m`;
+    document.getElementById('cepLumOut').textContent = `${Math.round(lumRatio).toLocaleString()} L☉`;
+    document.getElementById('cepModOut').textContent = `${mod.toFixed(2)}m`;
+
+    let distTxt = `${rPk.toFixed(0)} pk (${(rPk * 3.262).toFixed(0)} y.y.)`;
+    if (rPk >= 1e6) distTxt = `${(rPk / 1e6).toFixed(2)} Mpk (${((rPk * 3.262) / 1e6).toFixed(2)} mln y.y.)`;
+    else if (rPk >= 1e3) distTxt = `${(rPk / 1e3).toFixed(1)} kpk (${((rPk * 3.262) / 1e3).toFixed(1)} ming y.y.)`;
+    document.getElementById('cepDistOut').textContent = distTxt;
+
+    cepPhase = (cepPhase + 0.035 / Math.pow(P / 5, 0.25)) % (Math.PI * 4);
+    const brightNorm = 0.5 + 0.38 * Math.sin(cepPhase) + 0.12 * Math.sin(2 * cepPhase);
+
+    const sx = w * 0.26, sy = h * 0.54;
+    const baseR = 34 + Math.log10(P) * 16;
+    const curR = baseR * (0.86 + 0.24 * brightNorm);
+
+    const glow = ctx.createRadialGradient(sx, sy, 4, sx, sy, curR * 1.65);
+    glow.addColorStop(0, '#ffffff');
+    glow.addColorStop(0.5, brightNorm > 0.55 ? '#fef08a' : '#f59e0b');
+    glow.addColorStop(1, 'rgba(245, 158, 11, 0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath(); ctx.arc(sx, sy, curR * 1.65, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = brightNorm > 0.55 ? '#fef9c3' : '#fbbf24';
+    ctx.beginPath(); ctx.arc(sx, sy, curR, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Sefeid pulsatsiyasi (P = ${P.toFixed(1)} sutka)`, sx, sy + baseR * 1.4 + 20);
+    ctx.textAlign = 'left';
+
+    const gx = w * 0.52, gy = h * 0.24, gw = w * 0.42, gh = h * 0.56;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`Ravshanlik egri chizig‘i (2 davr = ${(2 * P).toFixed(1)} sutka)`, gx + 10, gy - 8);
+
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 100; i++) {
+      const ph = (i / 100) * Math.PI * 4;
+      const bVal = 0.5 + 0.38 * Math.sin(ph) + 0.12 * Math.sin(2 * ph);
+      const px = gx + (i / 100) * gw;
+      const py = gy + gh * (0.85 - bVal * 0.70);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    const curX = gx + (cepPhase / (Math.PI * 4)) * gw;
+    const curY = gy + gh * (0.85 - brightNorm * 0.70);
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // ==================== TAB 2: 54-§ RR LIRA VA MIRIDALAR ====================
+  let pulType = 'rr';
+  let pulPhase = 0;
+
+  function setPulType(type, btn) {
+    pulType = type;
+    highlightBtn('rrBtns', btn);
+    if (type === 'rr') document.getElementById('rrMSl').value = 15.6;
+    else document.getElementById('rrMSl').value = 5.0;
+  }
+
+  function drawRrMiraTab(w, h) {
+    const m = parseFloat(document.getElementById('rrMSl').value);
+    document.getElementById('rrMVal').textContent = `+${m.toFixed(1)}m`;
+
+    const absM = pulType === 'rr' ? 0.60 : -1.80;
+    const rPk = Math.pow(10, (m - absM + 5) / 5);
+
+    if (pulType === 'rr') {
+      document.getElementById('rrPerOut').textContent = "0.55 sutka (13.2 soat)";
+      document.getElementById('rrAbsOut').textContent = "+0.60m (Standart)";
+      document.getElementById('rrAmpOut').textContent = "1.1m (~2.75 marta)";
+      document.getElementById('rrDescOut').textContent = "RR Lira tipidagi yulduzlarning o‘rtacha absolyut kattaligi barcha to‘dalarda bir xil (M ≈ +0.6m) bo‘lgani uchun sharsimon yulduz to‘dalari masofasini aniq o‘lchaydi.";
+    } else {
+      document.getElementById('rrPerOut').textContent = "332 sutka (~11 oy)";
+      document.getElementById('rrAbsOut').textContent = "≈ −1.80m (maksimumda)";
+      document.getElementById('rrAmpOut').textContent = "6.5m (~400 marta!)";
+      document.getElementById('rrDescOut').textContent = "Miridalar (Kit yulduz turkumidagi Mira) — ulkan sovuq qizil gigantlar bo‘lib, davri yuzlab sutkaga, ravshanlik o‘zgarishi esa yuzlab va minglab martaga yetadi.";
+    }
+
+    document.getElementById('rrDistOut').textContent = rPk >= 1000
+      ? `${(rPk / 1000).toFixed(2)} kpk (${Math.round(rPk * 3.262).toLocaleString()} y.y.)`
+      : `${Math.round(rPk)} pk (${Math.round(rPk * 3.262)} y.y.)`;
+
+    const speed = pulType === 'rr' ? 0.065 : 0.018;
+    pulPhase = (pulPhase + speed) % (Math.PI * 4);
+    const wave = 0.5 + 0.5 * Math.sin(pulPhase);
+
+    const sx = w * 0.26, sy = h * 0.54;
+    const baseR = pulType === 'rr' ? 32 : 56;
+    const swing = pulType === 'rr' ? 0.16 : 0.34;
+    const curR = baseR * (1 - swing * 0.5 + swing * wave);
+
+    const glow = ctx.createRadialGradient(sx, sy, 4, sx, sy, curR * 1.7);
+    if (pulType === 'rr') {
+      glow.addColorStop(0, '#ffffff');
+      glow.addColorStop(0.5, '#bae6fd');
+      glow.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    } else {
+      glow.addColorStop(0, '#fef08a');
+      glow.addColorStop(0.45, '#f97316');
+      glow.addColorStop(1, 'rgba(220, 38, 38, 0)');
+    }
+    ctx.fillStyle = glow;
+    ctx.beginPath(); ctx.arc(sx, sy, curR * 1.7, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = pulType === 'rr' ? '#e0f2fe' : '#fb7185';
+    ctx.beginPath(); ctx.arc(sx, sy, curR, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(pulType === 'rr' ? 'RR Lira (Oq-sarg‘ish gigant)' : 'Mirida (Ulkan qizil gigant)', sx, sy + 96);
+    ctx.textAlign = 'left';
+
+    // O'ngda: Ravshanlik egri chizig'i
+    const gx = w * 0.52, gy = h * 0.24, gw = w * 0.42, gh = h * 0.56;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    const ampScale = pulType === 'rr' ? 0.32 : 0.76;
+    ctx.strokeStyle = pulType === 'rr' ? '#38bdf8' : '#fb7185';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 100; i++) {
+      const ph = (i / 100) * Math.PI * 4;
+      const wv = 0.5 + 0.5 * Math.sin(ph);
+      const px = gx + (i / 100) * gw;
+      const py = gy + gh * (0.5 + (0.5 - wv) * ampScale);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    const curX = gx + (pulPhase / (Math.PI * 4)) * gw;
+    const curY = gy + gh * (0.5 + (0.5 - wave) * ampScale);
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(pulType === 'rr' ? 'RR Lira ravshanlik egri chizig‘i (Δm ≈ 1.1m)' : 'Mirida ravshanlik egri chizig‘i (Δm ≈ 6.5m)', gx + 10, gy - 8);
+  }
+
+  // ==================== TAB 3: 54-§ YANGI VA O'TA YANGI YULDUZLAR ====================
+  let snType = 'sn1a';
+
+  function setSnType(type, btn) {
+    snType = type;
+    highlightBtn('snBtns', btn);
+  }
+
+  function calcSnMag(type, t) {
+    if (type === 'nova') {
+      if (t < 6) return 4.0 - (11.5 * (t / 6));
+      return -7.5 + 7.5 * (1 - Math.exp(-(t - 6) / 65));
+    } else if (type === 'sn1a') {
+      if (t < 18) return -11.0 - 8.3 * Math.sin((t / 18) * (Math.PI / 2));
+      return -19.3 + (t - 18) * 0.032;
+    } else {
+      if (t < 15) return -10.0 - 7.5 * Math.sin((t / 15) * (Math.PI / 2));
+      if (t < 95) return -17.5 + (t - 15) * 0.012;
+      return -16.54 + (t - 95) * 0.025;
+    }
+  }
+
+  function drawSupernovaTab(w, h) {
+    const t = parseFloat(document.getElementById('snTSl').value);
+    const curM = calcSnMag(snType, t);
+
+    document.getElementById('snTVal').textContent = `${t} sutka`;
+    document.getElementById('snCurOut').textContent = `${curM.toFixed(1)}m`;
+
+    if (snType === 'nova') {
+      document.getElementById('snMechOut').textContent = "Oq mitti sirtida vodorod chaqnashi";
+      document.getElementById('snPeakOut').textContent = "−7.5m (~85 000 L☉)";
+      document.getElementById('snVelOut').textContent = "1 500 km/s (qobiq otilishi)";
+      document.getElementById('snDescOut').textContent = "Yangi yulduz (Nova) portlashida oq mitti yadrosi saqlanib qoladi va akkretsiya davom etsa chaqnash qayta takrorlanadi.";
+    } else if (snType === 'sn1a') {
+      document.getElementById('snMechOut').textContent = "Oq mitti portlashi (1.44 M☉)";
+      document.getElementById('snPeakOut').textContent = "−19.3m (~4.5 mlrd L☉)";
+      document.getElementById('snVelOut').textContent = "12 000 km/s";
+      document.getElementById('snDescOut').textContent = "Ia turi o‘ta yangi yulduzlar barcha galaktikalarda bir xil cho‘qqi yorqinlikka (−19.3m) ega bo‘lib, kosmologik masofalarni o‘lchaydi.";
+    } else {
+      document.getElementById('snMechOut').textContent = "Massiv yulduz (M > 8 M☉) temir yadro kollapsi";
+      document.getElementById('snPeakOut').textContent = "−17.5m (~850 mln L☉)";
+      document.getElementById('snVelOut').textContent = "18 000 km/s (Qisqichbaqa tumanligi)";
+      document.getElementById('snDescOut').textContent = "II turi o‘ta yangi yulduz ravshanlik egri chizig‘ida 80–100 sutkalik xarakterli «plato» bosqichi kuzatiladi (masalan, SN 1054).";
+    }
+
+    const cx = w * 0.26, cy = h * 0.54;
+    const shellR = 14 + (t / 240) * Math.min(w * 0.19, 130);
+
+    const sg = ctx.createRadialGradient(cx, cy, shellR * 0.3, cx, cy, shellR * 1.15);
+    sg.addColorStop(0, 'rgba(56, 189, 248, 0.08)');
+    sg.addColorStop(0.75, snType === 'nova' ? 'rgba(52, 211, 153, 0.45)' : 'rgba(251, 113, 133, 0.55)');
+    sg.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(cx, cy, shellR * 1.15, 0, Math.PI * 2); ctx.fill();
+
+    ctx.strokeStyle = snType === 'sn1a' ? 'rgba(251, 191, 36, 0.5)' : 'rgba(56, 189, 248, 0.5)';
+    for (let k = 0; k < 16; k++) {
+      const a = (k / 16) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(a) * shellR * 0.45, cy + Math.sin(a) * shellR * 0.45);
+      ctx.lineTo(cx + Math.cos(a + 0.15) * shellR, cy + Math.sin(a + 0.15) * shellR);
+      ctx.stroke();
+    }
+
+    if (snType !== 'sn1a' || t < 12) {
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(cx, cy, snType === 'sn2' ? 4 : 6, 0, Math.PI * 2); ctx.fill();
+    }
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Kengayuvchi gaz qobig‘i (t = ${t} sutka)`, cx, cy + 148);
+    ctx.textAlign = 'left';
+
+    const gx = w * 0.52, gy = h * 0.24, gw = w * 0.42, gh = h * 0.56;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    const minM = -20.5, maxM = 2.0;
+    const toY = (mag) => gy + ((mag - minM) / (maxM - minM)) * gh;
+
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 120; i++) {
+      const ti = (i / 120) * 240;
+      const mi = calcSnMag(snType, ti);
+      const px = gx + (ti / 240) * gw;
+      const py = Math.min(gy + gh, Math.max(gy, toY(mi)));
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    const curX = gx + (t / 240) * gw;
+    const curY = Math.min(gy + gh, Math.max(gy, toY(curM)));
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('Absolyut ravshanlik egri chizig‘i M(t)', gx + 10, gy - 8);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Sefeid tipidagi fizik o‘zgaruvchan yulduzlarning ravshanligi nima sababdan davriy o‘zgaradi?",
+      opts: ["Ikkinchi yulduz uni vaqti-vaqti bilan to‘sib qo‘ygani uchun", "Yulduzning tashqi qatlamlari davriy ravishda kengayib va siqilib (pulsatsiyalanib) turgani uchun", "Yulduz atrofida sayyoralar aylangani uchun"],
+      ans: 1,
+      exp: "Sefeidlar pulsatsiyalanuvchi sariq o‘ta gigantlardir; ularning radiusi va sirt temperaturasi davriy o‘zgaradi."
+    },
+    {
+      q: "2. Genrietta Livitt kashf etgan Sefeidlarning «Davr — Yorqinlik» qonuni astronomiyada qanday muhim vazifani bajaradi?",
+      opts: ["Sayyoralarning atmosferasini tahlil qiladi", "Boshqa galaktikalargacha bo‘lgan masofalarni o‘lchash («standart shamlar») imkonini beradi", "Quyosh dog‘lari sonini hisoblaydi"],
+      ans: 1,
+      exp: "Sefeidning pulsatsiya davridan uning absolyut yulduz kattaligi M = −2.81 lg P − 1.43 topiladi va m − M orqali galaktika masofasi aniqlanadi."
+    },
+    {
+      q: "3. Sefeidning pulsatsiya davri P = 10 sutka bo‘lsa, Davr–Yorqinlik qonuniga (M = −2.81 lg P − 1.43) ko‘ra uning absolyut yulduz kattaligi nimaga teng?",
+      opts: ["M = −4.24m", "M = +4.83m", "M = −1.43m"],
+      ans: 0,
+      exp: "lg 10 = 1 bo‘lgani uchun M = −2.81 × 1 − 1.43 = −4.24m."
+    },
+    {
+      q: "4. Sharsimon yulduz to‘dalarida uchraydigan va barchasining o‘rtacha absolyut kattaligi M ≈ +0.6m ga teng bo‘lgan qisqa davrli o‘zgaruvchan yulduzlar qaysilar?",
+      opts: ["Miridalar", "RR Lira tipidagi o‘zgaruvchan yulduzlar", "O‘ta yangi yulduzlar"],
+      ans: 1,
+      exp: "RR Lira yulduzlarining davri 0.2–1.0 sutka, absolyut kattaligi esa deyarli o‘zgarmas (+0.6m)."
+    },
+    {
+      q: "5. Kit yulduz turkumidagi Mira kabi uzoq davrli o‘zgaruvchan qizil gigantlarning (miridalarning) pulsatsiya davri qancha?",
+      opts: ["Bir necha soat", "100 – 1000 sutka (Mira uchun ~332 sutka)", "10 yil"],
+      ans: 1,
+      exp: "Miridalar ulkan qizil gigantlar bo‘lib, davri 100 dan 1000 sutkagacha, ravshanligi esa yuzlab va minglab marta o‘zgaradi."
+    },
+    {
+      q: "6. Yangi yulduz (Nova) chaqnashi qanday fizik tizimda ro‘y beradi?",
+      opts: ["Yakka qizil mitti yulduzda", "Oq mitti va unga yaqin oddiy yo‘ldosh yulduzdan iborat zich qo‘shaloq tizimda", "Galaktika markazida"],
+      ans: 1,
+      exp: "Yo‘ldosh yulduzdan oq mitti sirtiga oqib tushgan vodorod qatlami kritik temperaturaga yetganda termoyadro chaqnashi yuz beradi."
+    },
+    {
+      q: "7. Yangi yulduz chaqnaganda yulduzning yorqinligi qancha ortadi va yulduzning o‘zi saqlanib qoladimi?",
+      opts: ["10⁴–10⁶ marta (10m–15m) ortadi; yulduzning o‘zi saqlanib qoladi", "10 marta ortadi", "Yulduz butunlay yo‘q bo‘lib ketadi"],
+      ans: 0,
+      exp: "Yangi yulduz chaqnashida faqat tashqi gaz qobig‘i fazoga otiladi, oq mitti yadrosi esa saqlanib qoladi."
+    },
+    {
+      q: "8. Chaqnash paytida yulduz kattaligi Δm = 10m ga kamaygan (ravshanlashgan) yulduzning yorqinligi necha marta ortgan?",
+      opts: ["100 marta", "10 000 marta (10⁴ marta)", "1 000 000 marta"],
+      ans: 1,
+      exp: "Pogson formulasiga ko‘ra I₂ / I₁ = 10^(0.4 × 10) = 10⁴ = 10 000 marta."
+    },
+    {
+      q: "9. 1054-yilda Buzoq yulduz turkumida kuzatilgan O‘ta yangi yulduz (SN 1054) portlashi natijasida qaysi mashhur tumanlik vujudga kelgan?",
+      opts: ["Orion tumanligi", "Qisqichbaqasimon tumanlik (M1)", "Andromeda tumanligi"],
+      ans: 1,
+      exp: "Qisqichbaqasimon tumanlik 1054-yildagi o‘ta yangi yulduz portlashining hozirgacha kengayib borayotgan gaz qoldig‘idir."
+    },
+    {
+      q: "10. O‘ta yangi yulduz portlashida qancha energiya ajraladi va uning maksimal yorqinligi nimaga tenglashadi?",
+      opts: ["~10⁴⁴ J energiya ajraladi va yorqinligi butun bir galaktika yorqinligiga tenglashadi", "~10²⁰ J energiya ajraladi", "Oy yorqinligiga tenglashadi"],
+      ans: 0,
+      exp: "O‘ta yangi yulduz portlashida ~10⁴⁴ J energiya ajralib, absolyut kattaligi −17m dan −19.5m gacha yetadi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawCepheidTab(w, h);
+      else if (activeTab === 2) drawRrMiraTab(w, h);
+      else if (activeTab === 3) drawSupernovaTab(w, h);
+      else drawCepheidTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
+
