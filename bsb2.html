@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-Sinf Astronomiya | 2-BSB (50 ball) — Interaktiv Simulyatsiya va Sinov</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.92);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 44px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand h1 { font-size: 1.04rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .hud-badges { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 20px auto;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .task-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .task-card.full { grid-template-columns: 1fr; }
+
+    @media (max-width: 900px) { .task-card { grid-template-columns: 1fr; } }
+
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .task-title { font-size: 1.02rem; font-weight: 700; color: var(--accent); }
+    .task-pts {
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid var(--accent);
+      color: #e0f2fe;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .q-block { margin-bottom: 12px; font-size: 0.9rem; line-height: 1.55; color: #e2e8f0; }
+
+    select, input[type="number"] {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 7px;
+      font-size: 0.84rem;
+      margin-top: 5px;
+      outline: none;
+    }
+
+    select:focus, input:focus { border-color: var(--accent); }
+
+    .sim-box {
+      background: #02050c;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    canvas { width: 100%; height: 225px; display: block; border-radius: 8px; }
+
+    .sim-ctrl {
+      width: 100%;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    input[type="range"] { flex: 1; accent-color: var(--accent); cursor: pointer; }
+
+    .match-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+      font-size: 0.86rem;
+    }
+
+    .match-row:last-child { border-bottom: none; }
+    .match-row select { max-width: 440px; width: 100%; margin-top: 0; }
+
+    .submit-bar {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 12px 26px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+      transition: 0.2s;
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.08); }
+
+    .btn-sec {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .feedback {
+      margin-top: 8px;
+      font-size: 0.83rem;
+      padding: 8px 10px;
+      border-radius: 7px;
+      background: rgba(2, 6, 23, 0.82);
+      border-left: 3px solid var(--gold);
+      color: #fde68a;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .result-modal {
+      background: rgba(13, 21, 38, 0.96);
+      border: 2px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 24px;
+      text-align: center;
+      display: none;
+    }
+
+    .result-modal h2 { color: var(--emerald); font-size: 1.35rem; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>11-SINF ASTRONOMIYA | 2-BSB (Bo‘lim summativ baholash)</h1>
+    <p>Quyosh fizikasi, Parallaks va masofalar, Spektral sinflar hamda Yulduzlar evolyutsiyasi</p>
+  </div>
+  <div class="hud-badges">
+    <div class="pill" id="timerBox">⏱ Vaqt: 40:00</div>
+    <div class="pill" id="liveScorePill" style="color:#34d399;">Maksimal ball: 50 ball</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- NATIJA PANELI -->
+  <div id="resultBox" class="result-modal">
+    <h2 id="finalScoreTitle">2-BSB Yakuniy natija: 0 / 50 ball (0%)</h2>
+    <p id="finalGradeDesc" style="color:#cbd5e1; font-size:0.92rem;"></p>
+  </div>
+
+  <!-- ==================== 1-TOPSHIRIQ (8 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">1-topshiriq. Quyosh atmosferasi va faolligi</span>
+        <span class="task-pts">8 ball (4 + 4)</span>
+      </div>
+      <div class="q-block">
+        <strong>a)</strong> Quyosh fotosferasidagi harorati qo‘shni qatlamlarga nisbatan pastroq bo‘lgan nisbatan qoramtir dog‘lar nima deb ataladi?<br>
+        <select id="q1a">
+          <option value="">— Javobni tanlang —</option>
+          <option value="spots">Quyosh dog‘lari</option>
+          <option value="faculae">Fakellar</option>
+          <option value="chromosphere">Xromosfera</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>b)</strong> Quyoshning eng tashqi, million gradusgacha qizigan va Quyosh tutilishlari paytida ko‘rinadigan qobig‘i nima deb ataladi?<br>
+        <select id="q1b">
+          <option value="">— Javobni tanlang —</option>
+          <option value="photosphere">Fotosfera</option>
+          <option value="corona">Quyosh toji</option>
+          <option value="core">Yadro</option>
+        </select>
+      </div>
+      <div class="feedback" id="fb1"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c1"></canvas>
+      <div class="sim-ctrl">
+        <span>Quyosh fotosferasi, dog‘lar va toj</span>
+        <span style="color:#fbbf24;">T_fotosfera ≈ 5800 K | T_toj ~ 10⁶ K</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 2-TOPSHIRIQ (8 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">2-topshiriq. Yillik parallaks va masofa</span>
+        <span class="task-pts">8 ball (4 + 4)</span>
+      </div>
+      <div class="q-block">
+        Yulduzning yillik parallaksi <strong>π = 0.05″</strong> ga teng.<br>
+        <strong>1)</strong> Masofani parseklarda (<em>r = 1 / π</em>) toping:
+        <input type="number" id="q2a" step="0.1" placeholder="pk" style="width:105px; margin-left:6px;" /> pk
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> Shu masofani yorug‘lik yillarida ifodalang (<em>1 pk ≈ 3.26 y.y.</em>):
+        <input type="number" id="q2b" step="0.1" placeholder="y.y." style="width:105px; margin-left:6px;" /> y.y.
+      </div>
+      <div class="feedback" id="fb2"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c2"></canvas>
+      <div class="sim-ctrl">
+        <span>Parallaks (π): <strong id="parLbl" style="color:#38bdf8;">0.05″ (r = 20.0 pk)</strong></span>
+        <input type="range" id="parSl" min="0.02" max="0.50" step="0.01" value="0.05" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3-TOPSHIRIQ (8 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">3-topshiriq. Yulduzlarning spektral sinflari</span>
+        <span class="task-pts">8 ball (4 + 4)</span>
+      </div>
+      <div class="q-block">
+        <strong>1)</strong> Quyosh qaysi spektral sinfga kiradi va sirt harorati taxminan necha kelvin?<br>
+        <select id="q3a">
+          <option value="">— Tanlang —</option>
+          <option value="G5800">G sinfi, ~5800 K</option>
+          <option value="O30000">O sinfi, ~30 000 K</option>
+          <option value="M3000">M sinfi, ~3000 K</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> <strong>O</strong> va <strong>B</strong> sinf yulduzlari qanday rangda ko‘rinadi va ularning sirt harorati <strong>M</strong> sinf yulduzlariga nisbatan qanday?<br>
+        <select id="q3b">
+          <option value="">— Tanlang —</option>
+          <option value="blue_hot">Ko‘k / ko‘kish-oq rangda; M sinfdan ancha yuqori haroratli</option>
+          <option value="red_cool">Qizil rangda; M sinfdan past haroratli</option>
+          <option value="same">Bir xil haroratda</option>
+        </select>
+      </div>
+      <div class="feedback" id="fb3"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c3"></canvas>
+      <div class="sim-ctrl">
+        <span>Harorat (T): <strong id="tempLbl" style="color:#fbbf24;">5 800 K (G sinf)</strong></span>
+        <input type="range" id="tempSl" min="3000" max="32000" step="200" value="5800" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4-TOPSHIRIQ (14 BALL) ==================== -->
+  <section class="task-card full">
+    <div class="task-header">
+      <span class="task-title">4-topshiriq. Moslashtirish — Yulduzlar evolyutsiyasi va kompakt obyektlar</span>
+      <span class="task-pts">14 ball (7 × 2 ball)</span>
+    </div>
+
+    <div class="match-row">
+      <span>1. Asosiy ketma-ketlik</span>
+      <select id="m4_1">
+        <option value="">— Ta’rifni tanlang —</option>
+        <option value="A">Yadroda vodorodning geliyga termoyadro aylanishi kechadigan asosiy bosqich</option>
+        <option value="B">Oq mittining maksimal massa chegarasi (~1.44 M☉)</option>
+        <option value="C">Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ bo‘lgan kompakt obyekt</option>
+        <option value="D">«Qora o‘ra» atrofida ikkinchi kosmik tezlik yorug‘lik tezligiga tenglashadigan sirt</option>
+        <option value="E">Yadroda vodorod tugagach tashqi qobiqlari kengaygan sovigan bosqich</option>
+        <option value="F">Gaz-chang bulutining gravitatsion siqilishidan shakllanayotgan ilk bosqich</option>
+        <option value="G">R_g = 2GM / c² ≈ 2.95 (M / M☉) km formula</option>
+      </select>
+    </div>
+
+    <div class="match-row">
+      <span>2. Chandrasekhar chegarasi (≈ 1.44 M☉)</span>
+      <select id="m4_2">
+        <option value="">— Ta’rifni tanlang —</option>
+        <option value="A">Yadroda vodorodning geliyga termoyadro aylanishi kechadigan asosiy bosqich</option>
+        <option value="B">Oq mittining maksimal massa chegarasi (~1.44 M☉)</option>
+        <option value="C">Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ bo‘lgan kompakt obyekt</option>
+        <option value="D">«Qora o‘ra» atrofida ikkinchi kosmik tezlik yorug‘lik tezligiga tenglashadigan sirt</option>
+        <option value="E">Yadroda vodorod tugagach tashqi qobiqlari kengaygan sovigan bosqich</option>
+        <option value="F">Gaz-chang bulutining gravitatsion siqilishidan shakllanayotgan ilk bosqich</option>
+        <option value="G">R_g = 2GM / c² ≈ 2.95 (M / M☉) km formula</option>
+      </select>
+    </div>
+
+    <div class="match-row">
+      <span>3. Neytron yulduz (Pulsar)</span>
+      <select id="m4_3">
+        <option value="">— Ta’rifni tanlang —</option>
+        <option value="A">Yadroda vodorodning geliyga termoyadro aylanishi kechadigan asosiy bosqich</option>
+        <option value="B">Oq mittining maksimal massa chegarasi (~1.44 M☉)</option>
+        <option value="C">Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ bo‘lgan kompakt obyekt</option>
+        <option value="D">«Qora o‘ra» atrofida ikkinchi kosmik tezlik yorug‘lik tezligiga tenglashadigan sirt</option>
+        <option value="E">Yadroda vodorod tugagach tashqi qobiqlari kengaygan sovigan bosqich</option>
+        <option value="F">Gaz-chang bulutining gravitatsion siqilishidan shakllanayotgan ilk bosqich</option>
+        <option value="G">R_g = 2GM / c² ≈ 2.95 (M / M☉) km formula</option>
+      </select>
+    </div>
+
+    <div class="match-row">
+      <span>4. Hodisalar gorizonti (R_g)</span>
+      <select id="m4_4">
+        <option value="">— Ta’rifni tanlang —</option>
+        <option value="A">Yadroda vodorodning geliyga termoyadro aylanishi kechadigan asosiy bosqich</option>
+        <option value="B">Oq mittining maksimal massa chegarasi (~1.44 M☉)</option>
+        <option value="C">Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ bo‘lgan kompakt obyekt</option>
+        <option value="D">«Qora o‘ra» atrofida ikkinchi kosmik tezlik yorug‘lik tezligiga tenglashadigan sirt</option>
+        <option value="E">Yadroda vodorod tugagach tashqi qobiqlari kengaygan sovigan bosqich</option>
+        <option value="F">Gaz-chang bulutining gravitatsion siqilishidan shakllanayotgan ilk bosqich</option>
+        <option value="G">R_g = 2GM / c² ≈ 2.95 (M / M☉) km formula</option>
+      </select>
+    </div>
+
+    <div class="match-row">
+      <span>5. Qizil gigant</span>
+      <select id="m4_5">
+        <option value="">— Ta’rifni tanlang —</option>
+        <option value="A">Yadroda vodorodning geliyga termoyadro aylanishi kechadigan asosiy bosqich</option>
+        <option value="B">Oq mittining maksimal massa chegarasi (~1.44 M☉)</option>
+        <option value="C">Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ bo‘lgan kompakt obyekt</option>
+        <option value="D">«Qora o‘ra» atrofida ikkinchi kosmik tezlik yorug‘lik tezligiga tenglashadigan sirt</option>
+        <option value="E">Yadroda vodorod tugagach tashqi qobiqlari kengaygan sovigan bosqich</option>
+        <option value="F">Gaz-chang bulutining gravitatsion siqilishidan shakllanayotgan ilk bosqich</option>
+        <option value="G">R_g = 2GM / c² ≈ 2.95 (M / M☉) km formula</option>
+      </select>
+    </div>
+
+    <div class="match-row">
+      <span>6. Protoyulduz</span>
+      <select id="m4_6">
+        <option value="">— Ta’rifni tanlang —</option>
+        <option value="A">Yadroda vodorodning geliyga termoyadro aylanishi kechadigan asosiy bosqich</option>
+        <option value="B">Oq mittining maksimal massa chegarasi (~1.44 M☉)</option>
+        <option value="C">Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ bo‘lgan kompakt obyekt</option>
+        <option value="D">«Qora o‘ra» atrofida ikkinchi kosmik tezlik yorug‘lik tezligiga tenglashadigan sirt</option>
+        <option value="E">Yadroda vodorod tugagach tashqi qobiqlari kengaygan sovigan bosqich</option>
+        <option value="F">Gaz-chang bulutining gravitatsion siqilishidan shakllanayotgan ilk bosqich</option>
+        <option value="G">R_g = 2GM / c² ≈ 2.95 (M / M☉) km formula</option>
+      </select>
+    </div>
+
+    <div class="match-row">
+      <span>7. Shvarschild radiusi formulasi</span>
+      <select id="m4_7">
+        <option value="">— Ta’rifni tanlang —</option>
+        <option value="A">Yadroda vodorodning geliyga termoyadro aylanishi kechadigan asosiy bosqich</option>
+        <option value="B">Oq mittining maksimal massa chegarasi (~1.44 M☉)</option>
+        <option value="C">Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ bo‘lgan kompakt obyekt</option>
+        <option value="D">«Qora o‘ra» atrofida ikkinchi kosmik tezlik yorug‘lik tezligiga tenglashadigan sirt</option>
+        <option value="E">Yadroda vodorod tugagach tashqi qobiqlari kengaygan sovigan bosqich</option>
+        <option value="F">Gaz-chang bulutining gravitatsion siqilishidan shakllanayotgan ilk bosqich</option>
+        <option value="G">R_g = 2GM / c² ≈ 2.95 (M / M☉) km formula</option>
+      </select>
+    </div>
+
+    <div class="feedback" id="fb4"></div>
+  </section>
+
+  <!-- ==================== 5-TOPSHIRIQ (12 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">5-topshiriq. Yulduz umri va Shvarschild radiusi</span>
+        <span class="task-pts">12 ball (6 + 6)</span>
+      </div>
+      <div class="q-block">
+        <strong>1)</strong> Massasi <em>M = 2 M☉</em> bo‘lgan asosiy ketma-ketlik yulduzining yashash vaqti (<em>τ ≈ 10 · (M/M☉)^(−2.5)</em>) necha mlrd yil?<br>
+        Javob: <em>τ</em> ≈ <input type="number" id="q5a" step="0.01" placeholder="mlrd yil" style="width:110px; margin-top:6px;" /> mlrd yil
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> Massasi <em>M = 10 M☉</em> bo‘lgan «qora o‘ra»ning Shvarschild radiusi (<em>R_g ≈ 2.95 · (M/M☉)</em>) necha km?<br>
+        Javob: <em>R_g</em> ≈ <input type="number" id="q5b" step="0.1" placeholder="km" style="width:110px; margin-top:6px;" /> km
+      </div>
+      <div class="feedback" id="fb5"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c5"></canvas>
+      <div class="sim-ctrl">
+        <span>Qora o‘ra massasi: <strong id="bhLbl" style="color:#fbbf24;">10.0 M☉ (R_g = 29.5 km)</strong></span>
+        <input type="range" id="bhSl" min="3.0" max="40.0" step="0.5" value="10.0" />
+      </div>
+    </div>
+  </section>
+
+  <!-- YAKUNLASH TUGMALARI -->
+  <div class="submit-bar">
+    <button class="btn-primary" onclick="gradeBSB2()">✅ 2-BSB ni yakunlash va Ballni hisoblash</button>
+    <button class="btn-sec" onclick="resetBSB2()">🔄 Qayta ishlash</button>
+  </div>
+
+</div>
+
+<script>
+  let secLeft = 40 * 60;
+  setInterval(() => {
+    if (secLeft > 0) {
+      secLeft--;
+      const m = String(Math.floor(secLeft / 60)).padStart(2, '0');
+      const s = String(secLeft % 60).padStart(2, '0');
+      document.getElementById('timerBox').textContent = `⏱ Vaqt: ${m}:${s}`;
+    }
+  }, 1000);
+
+  let tick = 0;
+
+  function setupCanvas(id) {
+    const c = document.getElementById(id);
+    const rect = c.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    if (c.width !== Math.round(rect.width * dpr)) {
+      c.width = Math.round(rect.width * dpr);
+      c.height = Math.round(rect.height * dpr);
+    }
+    const ctx = c.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: rect.width, h: rect.height };
+  }
+
+  // 1-CANVAS: Quyosh toji va dog'lari
+  function drawC1() {
+    const { ctx, w, h } = setupCanvas('c1');
+    ctx.clearRect(0, 0, w, h);
+    const cx = w * 0.5, cy = h * 0.52, rSun = 44;
+
+    const cg = ctx.createRadialGradient(cx, cy, rSun * 0.9, cx, cy, rSun * 2.1);
+    cg.addColorStop(0, 'rgba(251, 191, 36, 0.45)');
+    cg.addColorStop(1, 'rgba(251, 191, 36, 0)');
+    ctx.fillStyle = cg;
+    ctx.beginPath(); ctx.arc(cx, cy, rSun * 2.1, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx, cy, rSun, 0, Math.PI * 2); ctx.fill();
+
+    // Quyosh dog'lari
+    ctx.fillStyle = '#78350f';
+    ctx.beginPath(); ctx.arc(cx - 12, cy - 6, 4.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + 10, cy + 8, 3.5, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#fef08a'; ctx.font = '11px sans-serif';
+    ctx.fillText('Quyosh toji', cx + rSun + 14, cy - 20);
+    ctx.fillStyle = '#fde68a';
+    ctx.fillText('Dog‘lar', cx - 26, cy - 14);
+  }
+
+  // 2-CANVAS: Parallaks burchagi
+  function drawC2() {
+    const { ctx, w, h } = setupCanvas('c2');
+    ctx.clearRect(0, 0, w, h);
+    const pi = parseFloat(document.getElementById('parSl').value);
+    const distPk = 1.0 / pi;
+    document.getElementById('parLbl').textContent = `${pi.toFixed(2)}″ (r = ${distPk.toFixed(1)} pk)`;
+
+    const sunX = w * 0.25, cy = h * 0.52;
+    const starX = w * 0.82;
+    const orbY = 34;
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(sunX, cy, 9, 0, Math.PI * 2); ctx.fill();
+
+    // Yer (yuqori va pastki yarim yillik holat)
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(sunX, cy - orbY, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(sunX, cy + orbY, 5, 0, Math.PI * 2); ctx.fill();
+
+    // Uzoq yulduz
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(starX, cy, 6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.55)';
+    ctx.beginPath(); ctx.moveTo(sunX, cy - orbY); ctx.lineTo(starX, cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sunX, cy + orbY); ctx.lineTo(starX, cy); ctx.stroke();
+
+    ctx.fillStyle = '#e2e8f0'; ctx.font = '11px sans-serif';
+    ctx.fillText('Quyosh', sunX - 18, cy + 20);
+    ctx.fillText('Yulduz', starX - 16, cy + 20);
+  }
+
+  // 3-CANVAS: Spektral sinf va harorat
+  function drawC3() {
+    const { ctx, w, h } = setupCanvas('c3');
+    ctx.clearRect(0, 0, w, h);
+    const T = parseFloat(document.getElementById('tempSl').value);
+    let cls = 'G', col = '#facc15', r = 28;
+    if (T >= 25000) { cls = 'O'; col = '#60a5fa'; r = 38; }
+    else if (T >= 10000) { cls = 'B'; col = '#93c5fd'; r = 34; }
+    else if (T >= 7500) { cls = 'A'; col = '#e0f2fe'; r = 31; }
+    else if (T >= 6000) { cls = 'F'; col = '#fef9c3'; r = 29; }
+    else if (T >= 5000) { cls = 'G'; col = '#facc15'; r = 28; }
+    else if (T >= 3700) { cls = 'K'; col = '#fb923c'; r = 25; }
+    else { cls = 'M'; col = '#f87171'; r = 22; }
+
+    document.getElementById('tempLbl').textContent = `${Math.round(T).toLocaleString()} K (${cls} sinf)`;
+
+    const cx = w * 0.5, cy = h * 0.5;
+    const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, r * 1.7);
+    g.addColorStop(0, '#ffffff');
+    g.addColorStop(0.5, col);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, r * 1.7, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(`${cls} sinfi — ${Math.round(T)} K`, cx, h - 14);
+    ctx.textAlign = 'left';
+  }
+
+  // 5-CANVAS: Qora o'ra Shvarschild radiusi
+  function drawC5() {
+    const { ctx, w, h } = setupCanvas('c5');
+    ctx.clearRect(0, 0, w, h);
+    const M = parseFloat(document.getElementById('bhSl').value);
+    const rg = 2.95 * M;
+    document.getElementById('bhLbl').textContent = `${M.toFixed(1)} M☉ (R_g = ${rg.toFixed(1)} km)`;
+
+    const cx = w * 0.5, cy = h * 0.52;
+    const rPx = 14 + (M / 40) * 42;
+
+    const dg = ctx.createRadialGradient(cx, cy, rPx, cx, cy, rPx * 2.4);
+    dg.addColorStop(0, '#fef08a');
+    dg.addColorStop(0.5, '#f97316');
+    dg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = dg;
+    ctx.beginPath(); ctx.ellipse(cx, cy, rPx * 2.4, rPx * 0.65, -0.1, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#000';
+    ctx.beginPath(); ctx.arc(cx, cy, rPx, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#fde047'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, cy, rPx + 1.5, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.fillStyle = '#fbbf24'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(`Hodisalar gorizonti: R_g = ${rg.toFixed(1)} km`, cx, h - 14);
+    ctx.textAlign = 'left';
+  }
+
+  function loop() {
+    tick++;
+    drawC1();
+    drawC2();
+    drawC3();
+    drawC5();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  function showFb(id, html, ok) {
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    el.style.borderLeftColor = ok ? '#34d399' : '#fb7185';
+    el.style.color = ok ? '#a7f3d0' : '#fecdd3';
+    el.innerHTML = html;
+  }
+
+  function gradeBSB2() {
+    let total = 0;
+
+    // 1-topshiriq (8 ball)
+    let s1 = 0;
+    if (document.getElementById('q1a').value === 'spots') s1 += 4;
+    if (document.getElementById('q1b').value === 'corona') s1 += 4;
+    total += s1;
+    showFb('fb1', `Ball: <strong>${s1} / 8</strong>. Javoblar: a) Quyosh dog‘lari; b) Quyosh toji.`, s1 === 8);
+
+    // 2-topshiriq (8 ball)
+    let s2 = 0;
+    const v2a = parseFloat(document.getElementById('q2a').value);
+    const v2b = parseFloat(document.getElementById('q2b').value);
+    if (!isNaN(v2a) && Math.abs(v2a - 20.0) <= 0.3) s2 += 4;
+    if (!isNaN(v2b) && Math.abs(v2b - 65.2) <= 1.0) s2 += 4;
+    total += s2;
+    showFb('fb2', `Ball: <strong>${s2} / 8</strong>. Yechim: r = 1 / 0.05 = <strong>20 pk</strong>; 20 × 3.26 ≈ <strong>65.2 y.y.</strong>`, s2 === 8);
+
+    // 3-topshiriq (8 ball)
+    let s3 = 0;
+    if (document.getElementById('q3a').value === 'G5800') s3 += 4;
+    if (document.getElementById('q3b').value === 'blue_hot') s3 += 4;
+    total += s3;
+    showFb('fb3', `Ball: <strong>${s3} / 8</strong>. Javoblar: 1) G sinfi, ~5800 K; 2) Ko‘k / ko‘kish-oq, yuqori haroratli.`, s3 === 8);
+
+    // 4-topshiriq (14 ball)
+    let s4 = 0;
+    const keys4 = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    keys4.forEach((k, idx) => {
+      if (document.getElementById(`m4_${idx + 1}`).value === k) s4 += 2;
+    });
+    total += s4;
+    showFb('fb4', `Ball: <strong>${s4} / 14</strong>. Kalit: 1-A, 2-B, 3-C, 4-D, 5-E, 6-F, 7-G.`, s4 === 14);
+
+    // 5-topshiriq (12 ball)
+    let s5 = 0;
+    const v5a = parseFloat(document.getElementById('q5a').value);
+    const v5b = parseFloat(document.getElementById('q5b').value);
+    if (!isNaN(v5a) && Math.abs(v5a - 3.54) <= 0.1) s5 += 6;
+    if (!isNaN(v5b) && Math.abs(v5b - 29.5) <= 0.3) s5 += 6;
+    total += s5;
+    showFb('fb5', `Ball: <strong>${s5} / 12</strong>. Yechim: 1) τ ≈ 10 / 2^2.5 ≈ <strong>3.54 mlrd yil</strong>; 2) R_g ≈ 2.95 × 10 = <strong>29.5 km</strong>.`, s5 === 12);
+
+    const pct = Math.round((total / 50) * 100);
+    const box = document.getElementById('resultBox');
+    box.style.display = 'block';
+    document.getElementById('finalScoreTitle').textContent = `2-BSB Yakuniy natija: ${total} / 50 ball (${pct}%)`;
+    document.getElementById('liveScorePill').textContent = `Ball: ${total} / 50`;
+
+    let grade = "Qoniqarsiz — mavzularni qayta ko‘rib chiqing.";
+    if (pct >= 86) grade = "A’lo (5 baho)! Quyosh, yulduzlar va evolyutsiya mavzularini yuqori darajada o‘zlashtirgansiz.";
+    else if (pct >= 71) grade = "Yaxshi (4 baho)! Asosiy qonuniyat va formulalarni yaxshi bilasiz.";
+    else if (pct >= 56) grade = "Qoniqarli (3 baho). Hisob-kitoblarni yana bir bor mashq qiling.";
+    document.getElementById('finalGradeDesc').textContent = grade;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetBSB2() {
+    document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
+    document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+    document.getElementById('resultBox').style.display = 'none';
+    document.getElementById('liveScorePill').textContent = 'Maksimal ball: 50 ball';
+  }
+</script>
+</body>
+</html>
