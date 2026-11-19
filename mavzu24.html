@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>24-Mavzu (55-§): Yulduzlar evolyutsiyasi. Neytron yulduzlar va «qora o‘ralar» | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li { font-size: 0.9rem; color: #e2e8f0; margin-bottom: 8px; }
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.83rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.24); padding: 8px 10px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.22); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+    .btn-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 6px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.82rem; line-height: 1.52; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>24-MAVZU (55-§). Yulduzlar evolyutsiyasi. Neytron yulduzlar va «qora o‘ralar»</h1>
+    <p>11-sinf Astronomiya | V Bob: Yulduzlar (Yakuniy mavzu)</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">55-§ Yulduzlar evolyutsiyasi</button>
+    <button class="tab-btn" onclick="setTab(2)">55-§ Neytron yulduz va Pulsar</button>
+    <button class="tab-btn" onclick="setTab(3)">55-§ «Qora o‘ra» va Shvarschild</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>55-§. Yulduzlar evolyutsiyasi: Protoyulduzdan kompakt qoldiqlargacha</h2>
+    <p>Yulduz gaz-chang bulutining gravitatsion siqilishidan (<strong>protoyulduz</strong>) tug‘ilib, markazida harorat <em>10⁷ K</em> ga yetganda vodorodning geliyga aylanish termoyadro reaksiyasi boshlanadi va u <strong>Asosiy ketma-ketlik</strong> bosqichiga o‘tadi. Yulduzning asosiy ketma-ketlikda yashash vaqti boshlang‘ich massaga teskari bog‘liq: <em>τ ≈ τ☉ (M / M☉)^(−2.5)</em>.</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Boshlang‘ich massa (M₀)</th>
+          <th>Evolyutsiya bosqichlari</th>
+          <th>Yakuniy kompakt qoldiq</th>
+          <th>Radiusi (R)</th>
+          <th>O‘rtacha zichligi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>0.08 – 8 M☉</strong></td><td>Protoyulduz → Asosiy ketma-ketlik → Qizil gigant → Sayyora tumanligi</td><td><strong>Oq mitti</strong> (M &lt; 1.44 M☉)</td><td>5 000 – 10 000 km</td><td>~10⁹ kg/m³</td></tr>
+        <tr><td><strong>8 – 20 M☉</strong></td><td>Protoyulduz → Asosiy ketma-ketlik → O‘ta gigant → O‘ta yangi (II tur)</td><td><strong>Neytron yulduz / Pulsar</strong> (1.44–3 M☉)</td><td>10 – 15 km</td><td>~5 × 10¹⁷ kg/m³</td></tr>
+        <tr><td><strong>&gt; 20 M☉</strong></td><td>Protoyulduz → Ko‘k o‘ta gigant → O‘ta yangi / Yadro kollapsi</td><td><strong>«Qora o‘ra»</strong> (M &gt; 3.0 M☉)</td><td>R_g = 2.95 (M/M☉) km</td><td>Singulyarlik</td></tr>
+      </tbody>
+    </table>
+    <div class="math-banner">
+      Umr davomiyligi: τ ≈ τ☉ (M / M☉)^(−2.5) &nbsp;|&nbsp; Chandrasekhar: M_Ch ≈ 1.44 M☉ &nbsp;|&nbsp; Shvarschild radiusi: R_g = 2GM / c² ≈ 2.95 (M / M☉) km
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>55-§. Hisoblash masalalari va yechimlar bazasi</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Yulduzning asosiy ketma-ketlikda yashash davomiyligi):</strong> Asosiy ketma-ketlikdagi yulduzning boshlang‘ich massasi <em>M = 4 M☉</em>. Quyoshning yashash vaqti <em>τ☉ = 10 mlrd yil</em> ekanligini bilgan holda, uning yorqinligini (L / L☉) va umr davomiyligini (τ) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) <strong>L / L☉ = 4^3.5 = 64 × 2 = 128 L☉</strong>.<br>
+        2) <strong>τ = 10 mlrd yil / 4^2.5 = 10 mlrd yil / 32 = 312.5 mln yil</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Neytron yulduz zichligi va pulsar ekvator tezligi):</strong> Qisqichbaqa pulsarining massasi <em>M = 1.5 M☉ = 3.0 × 10³⁰ kg</em>, radiusi <em>R = 12 km</em>, aylanish davri <em>P = 0.033 s</em>. Zichligini (ρ) va ekvator tezligini (v) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        1) <strong>ρ = 3M / (4πR³) = (9.0 × 10³⁰) / (4π × (1.2 × 10⁴)³) ≈ 4.14 × 10¹⁷ kg/m³</strong>.<br>
+        2) <strong>v = 2πR / P = (2π × 12 000 m) / 0.033 s ≈ 2 280 km/s</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala («Qora o‘ra»ning Shvarschild radiusini hisoblash):</strong> Cygnus X-1 qora o‘rasining massasi <em>21 M☉</em>, Somon Yo‘li markazidagi Sagittarius A* qora o‘rasining massasi <em>4.3 × 10⁶ M☉</em>. Har ikkalasining Shvarschild radiusini (R_g) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        1) Cygnus X-1: <strong>R_g = 21 × 2.95 km ≈ 62.0 km</strong>.<br>
+        2) Sagittarius A*: <strong>R_g = 4.3 × 10⁶ × 2.95 km ≈ 1.27 × 10⁷ km (18.2 R☉)</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">55-§: Yulduzlar evolyutsiyasi — Boshlang‘ich massaga bog‘liq hayot yo‘li</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">τ ≈ τ☉ (M / M☉)^(−2.5) | Chandrasekhar: 1.44 M☉</div>
+    </div>
+    <canvas id="evoCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 55-§ YULDUZLAR EVOLYUTSIYASI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Boshlang‘ich massa va Evolyutsiya bosqichi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yulduz boshlang‘ich massasi (M₀, M☉):</span>
+            <strong id="evoMVal">1.00 M☉ (Quyosh)</strong>
+          </div>
+          <input type="range" id="evoMSl" min="0.5" max="30.0" step="0.1" value="1.0" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Evolyutsiya jarayoni (0% → 100%):</span>
+            <strong id="evoStVal">100% (Yakuniy qoldiq)</strong>
+          </div>
+          <input type="range" id="evoStSl" min="0" max="100" step="1" value="100" />
+        </div>
+        <div class="btn-grid" id="evoBtns">
+          <button class="btn active" onclick="setEvoPreset(1.0, 100, this)">Quyosh (1.0 M☉ → Oq mitti)</button>
+          <button class="btn" onclick="setEvoPreset(4.0, 100, this)">O‘rta yulduz (4.0 M☉)</button>
+          <button class="btn" onclick="setEvoPreset(14.0, 100, this)">Massiv (14 M☉ → Pulsar)</button>
+          <button class="btn" onclick="setEvoPreset(26.0, 100, this)">O‘ta massiv (26 M☉ → Qora o‘ra)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Evolyutsion ko‘rsatkichlar va Yakuniy taqdir</h3>
+        <div class="formula-box">
+          τ ≈ 10 mlrd yil · (M₀ / M☉)^(−2.5) &nbsp;|&nbsp; L / L☉ ≈ (M₀ / M☉)^3.5
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Asosiy ketma-ketlik umri (τ):</span><span class="t-val" id="evoLifeOut">10.0 mlrd yil</span></div>
+          <div class="t-row"><span>Asosiy ketma-ketlik yorqinligi:</span><span class="t-val" id="evoLumOut">1.00 L☉</span></div>
+          <div class="t-row"><span>Joriy evolyutsiya bosqichi:</span><span class="t-val" id="evoCurOut">Sayyora tumanligi + Oq mitti</span></div>
+          <div class="t-row"><span>Yakuniy kompakt qoldiq:</span><span class="t-val" id="evoRemOut">Oq mitti (~0.54 M☉)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 55-§ NEYTRON YULDUZ VA PULSAR -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Neytron yulduz va Pulsar parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Neytron yulduz massasi (M, M☉):</span>
+            <strong id="pulMVal">1.50 M☉</strong>
+          </div>
+          <input type="range" id="pulMSl" min="1.44" max="2.80" step="0.02" value="1.50" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yulduz radiusi (R, km):</span>
+            <strong id="pulRVal">12.0 km</strong>
+          </div>
+          <input type="range" id="pulRSl" min="10.0" max="15.0" step="0.5" value="12.0" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Aylanish davri (P, sek):</span>
+            <strong id="pulPVal">0.033 s (30.3 Hz)</strong>
+          </div>
+          <input type="range" id="pulPSl" min="0.005" max="1.200" step="0.005" value="0.033" />
+        </div>
+        <div class="btn-grid" id="pulBtns">
+          <button class="btn active" onclick="setPulPreset(1.50, 12.0, 0.033, this)">Qisqichbaqa pulsari (33 ms)</button>
+          <button class="btn" onclick="setPulPreset(1.85, 11.0, 0.006, this)">Millisekundli pulsar (6 ms)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Yadro zichligi va «Mayoq effekti» tahlili</h3>
+        <div class="formula-box">
+          p⁺ + e⁻ → n + ν_e &nbsp;|&nbsp; ρ = 3M / (4πR³) &nbsp;|&nbsp; v = 2πR / P
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>O‘rtacha zichligi (ρ):</span><span class="t-val" id="pulRhoOut">4.14 × 10¹⁷ kg/m³</span></div>
+          <div class="t-row"><span>Ekvator chiziqli tezligi (v):</span><span class="t-val" id="pulVelOut">2 285 km/s</span></div>
+          <div class="t-row"><span>Ikkinchi kosmik tezlik (v_II):</span><span class="t-val" id="pulEscOut">182 300 km/s (0.61 c)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 55-§ "QORA O'RA" VA SHVARSCHILD RADIUSI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>«Qora o‘ra» massasi (M > 3.0 M☉)</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Qora o‘ra massasi (M, M☉):</span>
+            <strong id="bhMVal">21.0 M☉</strong>
+          </div>
+          <input type="range" id="bhMSl" min="3.1" max="65.0" step="0.1" value="21.0" />
+        </div>
+        <div class="btn-grid-3" id="bhBtns">
+          <button class="btn" onclick="setBhPreset(3.5, this)">Minimal (3.5 M☉)</button>
+          <button class="btn active" onclick="setBhPreset(21.0, this)">Cygnus X-1 (21 M☉)</button>
+          <button class="btn" onclick="setBhPreset(62.0, this)">GW150914 (62 M☉)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Hodisalar gorizonti va Relyativistik sferalar</h3>
+        <div class="formula-box">
+          R_g = 2GM / c² ≈ 2.95 (M / M☉) km &nbsp;|&nbsp; v_II(R_g) = c
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Shvarschild radiusi (R_g):</span><span class="t-val" id="bhRgOut">62.0 km</span></div>
+          <div class="t-row"><span>Foton sferasi radiusi (1.5 R_g):</span><span class="t-val" id="bhPhOut">92.9 km</span></div>
+          <div class="t-row"><span>Ichki barqaror orbita (3 R_g):</span><span class="t-val" id="bhIscoOut">185.9 km</span></div>
+          <div class="t-row"><span>Hodisalar gorizonti diametri:</span><span class="t-val" id="bhDiaOut">123.9 km</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          Hodisalar gorizonti (<em>r = R_g</em>) ichidan hatto yorug‘lik kvantlari ham tashqariga chiqa olmaydi; atrofda esa gravitatsion linzalangan issiq akkretsiya diski nurlanadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('evoCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function highlightBtn(containerId, btnEl) {
+    if (!btnEl) return;
+    document.querySelectorAll(`#${containerId} .btn`).forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "55-§: Yulduzlar evolyutsiyasi — Protoyulduzdan oq mitti, neytron yulduz va qora o‘ragacha",
+      "55-§: Neytron yulduz va Pulsar — «Mayoq effekti» va davriy radioimpulslar",
+      "55-§: «Qora o‘ra» — Hodisalar gorizonti (Shvarschild radiusi) va akkretsiya diski",
+      "Bilimlarni tekshirish: 24-Mavzu (55-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "τ ≈ τ☉ (M₀ / M☉)^(−2.5)",
+      "ρ ~ 10¹⁷–10¹⁸ kg/m³ | R ≈ 10–15 km",
+      "R_g = 2GM / c² ≈ 2.95 (M / M☉) km",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 55-§ YULDUZLAR EVOLYUTSIYASI ====================
+  function setEvoPreset(m0, st, btn) {
+    document.getElementById('evoMSl').value = m0;
+    document.getElementById('evoStSl').value = st;
+    highlightBtn('evoBtns', btn);
+  }
+
+  function drawEvolutionTab(w, h) {
+    const m0 = parseFloat(document.getElementById('evoMSl').value);
+    const st = parseFloat(document.getElementById('evoStSl').value);
+
+    const lum = Math.pow(m0, 3.5);
+    const lifeGyr = 10.0 * Math.pow(m0, -2.5);
+
+    document.getElementById('evoMVal').textContent = `${m0.toFixed(1)} M☉`;
+    document.getElementById('evoStVal').textContent = `${st}%`;
+    document.getElementById('evoLumOut').textContent = lum >= 100 ? `${Math.round(lum).toLocaleString()} L☉` : `${lum.toFixed(2)} L☉`;
+
+    if (lifeGyr >= 1.0) document.getElementById('evoLifeOut').textContent = `${lifeGyr.toFixed(2)} mlrd yil`;
+    else document.getElementById('evoLifeOut').textContent = `${(lifeGyr * 1000).toFixed(1)} mln yil`;
+
+    let fateType = 'wd'; // oq mitti
+    let remTxt = `Oq mitti (~${(0.45 + 0.09 * m0).toFixed(2)} M☉)`;
+    if (m0 >= 8.0 && m0 <= 20.0) {
+      fateType = 'ns';
+      remTxt = `Neytron yulduz / Pulsar (~${(1.35 + 0.04 * m0).toFixed(2)} M☉)`;
+    } else if (m0 > 20.0) {
+      fateType = 'bh';
+      remTxt = `«Qora o‘ra» (~${(0.28 * m0).toFixed(1)} M☉, M > 3 M☉)`;
+    }
+    document.getElementById('evoRemOut').textContent = remTxt;
+
+    // 4 bosqichli evolyutsiya chizig'i (yuqorida)
+    const stages = [
+      { name: '1. Protoyulduz', pct: 0 },
+      { name: '2. Asosiy ketma-ketlik', pct: 35 },
+      { name: fateType === 'wd' ? '3. Qizil gigant' : '3. O‘ta gigant', pct: 70 },
+      { name: fateType === 'wd' ? '4. Oq mitti' : (fateType === 'ns' ? '4. Neytron yulduz' : '4. «Qora o‘ra»'), pct: 100 }
+    ];
+
+    const barX = w * 0.12, barW = w * 0.76, barY = h * 0.22;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(barX, barY); ctx.lineTo(barX + barW, barY); ctx.stroke();
+
+    ctx.strokeStyle = '#38bdf8';
+    ctx.beginPath(); ctx.moveTo(barX, barY); ctx.lineTo(barX + barW * (st / 100), barY); ctx.stroke();
+
+    stages.forEach(sg => {
+      const sx = barX + barW * (sg.pct / 100);
+      ctx.fillStyle = st >= sg.pct ? '#34d399' : '#475569';
+      ctx.beginPath(); ctx.arc(sx, barY, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = st >= sg.pct ? '#e2e8f0' : '#94a3b8';
+      ctx.font = '11px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(sg.name, sx, barY - 14);
+    });
+
+    // Markazda: Tanlangan bosqichdagi obyekt vizualizatsiyasi
+    const cx = w * 0.5, cy = h * 0.60;
+    let curStageLabel = "";
+
+    if (st < 20) {
+      curStageLabel = "1-bosqich: Gaz-chang buluti siqilishi (Protoyulduz)";
+      const rCloud = 85 - st * 1.5;
+      const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, rCloud);
+      g.addColorStop(0, '#fbbf24');
+      g.addColorStop(0.45, 'rgba(249, 115, 22, 0.35)');
+      g.addColorStop(1, 'rgba(56, 189, 248, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, rCloud, 0, Math.PI * 2); ctx.fill();
+    } else if (st < 55) {
+      curStageLabel = `2-bosqich: Asosiy ketma-ketlik (H → He sintezi, τ = ${document.getElementById('evoLifeOut').textContent})`;
+      const rStar = 24 + Math.pow(m0, 0.45) * 10;
+      const col = m0 > 8 ? '#93c5fd' : (m0 > 2 ? '#e0f2fe' : (m0 >= 0.8 ? '#facc15' : '#fb7185'));
+      const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, rStar * 1.6);
+      g.addColorStop(0, '#ffffff');
+      g.addColorStop(0.5, col);
+      g.addColorStop(1, 'rgba(56, 189, 248, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, rStar * 1.6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(cx, cy, rStar, 0, Math.PI * 2); ctx.fill();
+    } else if (st < 88) {
+      curStageLabel = fateType === 'wd' ? "3-bosqich: Qizil gigant (tashqi qobiqlar kengayishi)" : "3-bosqich: O‘ta gigant (og‘ir elementlar va temir yadro)";
+      const rGiant = fateType === 'wd' ? 76 : 102;
+      const g = ctx.createRadialGradient(cx, cy, 6, cx, cy, rGiant * 1.35);
+      g.addColorStop(0, '#fef08a');
+      g.addColorStop(0.5, fateType === 'wd' ? '#f97316' : '#ef4444');
+      g.addColorStop(1, 'rgba(220, 38, 38, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, rGiant * 1.35, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = fateType === 'wd' ? '#fb923c' : '#f87171';
+      ctx.beginPath(); ctx.arc(cx, cy, rGiant, 0, Math.PI * 2); ctx.fill();
+    } else {
+      if (fateType === 'wd') {
+        curStageLabel = "4-bosqich: Sayyora tumanligi va markazda Oq mitti (M < 1.44 M☉)";
+        // Sayyora tumanligi halqasi
+        ctx.strokeStyle = 'rgba(52, 211, 153, 0.55)';
+        ctx.lineWidth = 14;
+        ctx.beginPath(); ctx.arc(cx, cy, 78, 0, Math.PI * 2); ctx.stroke();
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+        ctx.lineWidth = 6;
+        ctx.beginPath(); ctx.arc(cx, cy, 90, 0, Math.PI * 2); ctx.stroke();
+        // Oq mitti
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2); ctx.fill();
+      } else if (fateType === 'ns') {
+        curStageLabel = "4-bosqich: O‘ta yangi yulduz qoldig‘i va markazda Neytron yulduz (Pulsar)";
+        ctx.strokeStyle = 'rgba(251, 113, 133, 0.45)';
+        ctx.lineWidth = 12;
+        ctx.beginPath(); ctx.arc(cx, cy, 92, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath(); ctx.arc(cx, cy, 8, 0, Math.PI * 2); ctx.fill();
+      } else {
+        curStageLabel = "4-bosqich: To‘liq gravitatsion kollaps — «Qora o‘ra» (M > 3.0 M☉)";
+        const dg = ctx.createRadialGradient(cx, cy, 22, cx, cy, 88);
+        dg.addColorStop(0, '#fef08a');
+        dg.addColorStop(0.5, '#f97316');
+        dg.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = dg;
+        ctx.beginPath(); ctx.ellipse(cx, cy, 88, 22, -0.15, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#000000';
+        ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#fde047';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(cx, cy, 23, 0, Math.PI * 2); ctx.stroke();
+      }
+    }
+
+    document.getElementById('evoCurOut').textContent = curStageLabel.split(':')[1].trim();
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText(curStageLabel, cx, h - 22);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 2: 55-§ NEYTRON YULDUZ VA PULSAR ====================
+  let pulAngle = 0;
+
+  function setPulPreset(m, r, p, btn) {
+    document.getElementById('pulMSl').value = m;
+    document.getElementById('pulRSl').value = r;
+    document.getElementById('pulPSl').value = p;
+    highlightBtn('pulBtns', btn);
+  }
+
+  function drawPulsarTab(w, h) {
+    const M = parseFloat(document.getElementById('pulMSl').value);
+    const R = parseFloat(document.getElementById('pulRSl').value);
+    const P = parseFloat(document.getElementById('pulPSl').value);
+
+    const massKg = M * 1.989e30;
+    const radM = R * 1000.0;
+    const rho = massKg / ((4 / 3) * Math.PI * Math.pow(radM, 3));
+    const vEq = (2 * Math.PI * R) / P;
+    const vEscKm = Math.sqrt((2 * 6.674e-11 * massKg) / radM) / 1000.0;
+
+    document.getElementById('pulMVal').textContent = `${M.toFixed(2)} M☉`;
+    document.getElementById('pulRVal').textContent = `${R.toFixed(1)} km`;
+    document.getElementById('pulPVal').textContent = `${P.toFixed(3)} s (${(1 / P).toFixed(1)} Hz)`;
+    document.getElementById('pulRhoOut').textContent = `${rho.toExponential(2)} kg/m³`;
+    document.getElementById('pulVelOut').textContent = `${Math.round(vEq).toLocaleString()} km/s`;
+    document.getElementById('pulEscOut').textContent = `${Math.round(vEscKm).toLocaleString()} km/s (${(vEscKm / 300000).toFixed(2)} c)`;
+
+    pulAngle = (pulAngle + Math.min(0.24, 0.006 / P)) % (Math.PI * 2);
+    const tilt = 0.55 * Math.sin(pulAngle);
+
+    // Yuqori qism: Pulsar "mayoq effekti"
+    const cx = w * 0.5, cy = h * 0.36;
+    const beamLen = h * 0.24;
+
+    ctx.strokeStyle = 'rgba(167, 139, 250, 0.35)';
+    ctx.lineWidth = 1.4;
+    [-1, 1].forEach(side => {
+      ctx.beginPath();
+      ctx.ellipse(cx + side * 42, cy, 42, 70, tilt, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(tilt);
+
+    const bg1 = ctx.createLinearGradient(0, 0, 0, -beamLen);
+    bg1.addColorStop(0, 'rgba(56, 189, 248, 0.85)');
+    bg1.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = bg1;
+    ctx.beginPath(); ctx.moveTo(-4, 0); ctx.lineTo(-34, -beamLen); ctx.lineTo(34, -beamLen); ctx.lineTo(4, 0); ctx.fill();
+
+    const bg2 = ctx.createLinearGradient(0, 0, 0, beamLen);
+    bg2.addColorStop(0, 'rgba(56, 189, 248, 0.85)');
+    bg2.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = bg2;
+    ctx.beginPath(); ctx.moveTo(-4, 0); ctx.lineTo(-34, beamLen); ctx.lineTo(34, beamLen); ctx.lineTo(4, 0); ctx.fill();
+    ctx.restore();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(cx, cy, 13, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI * 2); ctx.fill();
+
+    // Pastki qism: Radioteleskop qabul qilayotgan davriy impulslar ossillogrammasi
+    const gx = w * 0.14, gy = h * 0.67, gw = w * 0.72, gh = h * 0.22;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 0; i <= 180; i++) {
+      const ph = (i / 180) * Math.PI * 6 + pulAngle;
+      const pulse = Math.pow(Math.max(0, Math.cos(ph)), 18);
+      const px = gx + (i / 180) * gw;
+      const py = gy + gh * (0.85 - pulse * 0.72);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`Radioteleskopdagi davriy impulslar (Davr P = ${P.toFixed(3)} s)`, gx + 8, gy - 7);
+  }
+
+  // ==================== TAB 3: 55-§ "QORA O'RA" VA SHVARSCHILD RADIUSI ====================
+  function setBhPreset(m, btn) {
+    document.getElementById('bhMSl').value = m;
+    highlightBtn('bhBtns', btn);
+  }
+
+  function drawBlackHoleTab(w, h) {
+    const M = parseFloat(document.getElementById('bhMSl').value);
+    const rgKm = 2.95 * M;
+    const rPhKm = 1.5 * rgKm;
+    const rIscoKm = 3.0 * rgKm;
+
+    document.getElementById('bhMVal').textContent = `${M.toFixed(1)} M☉`;
+    document.getElementById('bhRgOut').textContent = `${rgKm.toFixed(1)} km`;
+    document.getElementById('bhPhOut').textContent = `${rPhKm.toFixed(1)} km`;
+    document.getElementById('bhIscoOut').textContent = `${rIscoKm.toFixed(1)} km`;
+    document.getElementById('bhDiaOut').textContent = `${(2 * rgKm).toFixed(1)} km`;
+
+    const cx = w * 0.5, cy = h * 0.52;
+    const ehR = 24 + (M / 65) * 44;
+
+    // Gravitatsion linzalangan yuqori va pastki akkretsiya yoylari
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.72)';
+    ctx.lineWidth = 10;
+    ctx.beginPath(); ctx.arc(cx, cy, ehR * 1.62, Math.PI, Math.PI * 2); ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(249, 115, 22, 0.45)';
+    ctx.lineWidth = 7;
+    ctx.beginPath(); ctx.arc(cx, cy, ehR * 1.55, 0, Math.PI); ctx.stroke();
+
+    // Asosiy akkretsiya diski
+    const dg = ctx.createRadialGradient(cx, cy, ehR, cx, cy, ehR * 3.3);
+    dg.addColorStop(0, '#fef08a');
+    dg.addColorStop(0.35, '#f97316');
+    dg.addColorStop(0.75, 'rgba(220, 38, 38, 0.35)');
+    dg.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = dg;
+    ctx.beginPath(); ctx.ellipse(cx, cy, ehR * 3.3, ehR * 0.68, -0.12, 0, Math.PI * 2); ctx.fill();
+
+    // Mutlaq qora hodisalar gorizonti (r = R_g)
+    ctx.fillStyle = '#000000';
+    ctx.beginPath(); ctx.arc(cx, cy, ehR, 0, Math.PI * 2); ctx.fill();
+
+    // Foton sferasi halqasi
+    ctx.strokeStyle = '#fde047';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, cy, ehR + 2, 0, Math.PI * 2); ctx.stroke();
+
+    // R_g o'lcham ko'rsatkichi
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + ehR, cy); ctx.stroke();
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = '12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Hodisalar gorizonti: R_g = ${rgKm.toFixed(1)} km (M = ${M.toFixed(1)} M☉)`, cx, h - 22);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Yulduzlar qanday kosmik muhitdan vujudga keladi?",
+      opts: ["Qora o‘ra ichidan", "Sovuq va zich molekulyar gaz-chang bulutlarining gravitatsion siqilishidan (protoyulduz)", "Sayyoralarning to‘qnashuvidan"],
+      ans: 1,
+      exp: "Gaz-chang buluti o‘z gravitatsiyasi ta’sirida siqilib, markaziy harorat ~10⁷ K ga yetganda termoyadro reaksiyalari boshlanadi."
+    },
+    {
+      q: "2. Yulduzning asosiy ketma-ketlikda yashash vaqti (τ) uning boshlang‘ich massasiga (M) qanday bog‘liq?",
+      opts: ["Massa qanchalik katta bo‘lsa, umri shunchalik qisqa (τ ∝ M^(−2.5))", "Massa qanchalik katta bo‘lsa, umri shunchalik uzoq", "Massaga bog‘liq emas"],
+      ans: 0,
+      exp: "Massiv yulduzlar yorqinligi L ∝ M^3.5 bo‘lgani uchun yadro yoqilg‘isini minglab marta tezroq sarflaydi."
+    },
+    {
+      q: "3. Quyosh kabi o‘rtacha massali yulduzlar (M < 8 M☉) evolyutsiyasining eng oxirida qanday kompakt qoldiqqa aylanadi?",
+      opts: ["Qora o‘raga", "Sayyora tumanligi tashlab, markazda oq mittiga", "Pulsarga"],
+      ans: 1,
+      exp: "Qizil gigant bosqichidan so‘ng tashqi qobiq sayyora tumanligi bo‘lib tarqaladi, markazda esa oq mitti qoladi."
+    },
+    {
+      q: "4. Oq mittining barqaror yashashi mumkin bo‘lgan maksimal massa chegarasi (Chandrasekhar chegarasi) nimaga teng?",
+      opts: ["0.50 M☉", "1.44 M☉", "10.0 M☉"],
+      ans: 1,
+      exp: "Chandrasekhar chegarasi M_Ch ≈ 1.44 M☉; bu chegaradan oshganda elektron gaz bosimi gravitatsiyani to‘xtata olmaydi."
+    },
+    {
+      q: "5. Neytron yulduzlarning o‘rtacha radiusi va zichligi taxminan qanday qiymatlarga ega?",
+      opts: ["Radiusi ~10–15 km, zichligi ~10¹⁷–10¹⁸ kg/m³ (atom yadrosi zichligida)", "Radiusi ~700 000 km, zichligi ~1400 kg/m³", "Radiusi ~6 400 km, zichligi ~5500 kg/m³"],
+      ans: 0,
+      exp: "1.5–2 Quyosh massasi atigi 10–15 km radiusli sferaga siqilgani uchun yadro zichligiga erishiladi."
+    },
+    {
+      q: "6. Neytron yulduz hosil bo‘lishida elektronlar protonlar bilan birikib qanday zarrachalarga aylanadi?",
+      opts: ["Fotonlarga", "Neytron va neytrinoga (p⁺ + e⁻ → n + ν_e)", "Geliy yadrosiga"],
+      ans: 1,
+      exp: "O‘ta yuqori bosim ostida elektronlar protonlarga singib, neytronizatsiya reaksiyasi yuz beradi."
+    },
+    {
+      q: "7. Pulsarlarning nihoyatda qat’iy davr bilan radioimpulslar chiqarishi («mayoq effekti») qanday izohlanadi?",
+      opts: ["Pulsar har sekundda portlab turadi", "Tez aylanuvchi neytron yulduzning magnit o‘qi aylanish o‘qiga og‘gan bo‘lib, magnit qutblaridan chiquvchi nurlanish dastasi Yerni kesib o‘tadi", "Pulsar atrofida sayyoralar aylanadi"],
+      ans: 1,
+      exp: "Magnit va aylanish o‘qlari mos kelmagani sababli magnit qutblaridan chiqayotgan nurlanish konusi kosmik mayoq kabi aylanadi."
+    },
+    {
+      q: "8. Yulduz qoldiq yadrosining massasi ~3 M☉ dan (Oppenxaymer–Volkov chegarasidan) katta bo‘lganda gravitatsion kollaps nima hosil bo‘lishi bilan tugaydi?",
+      opts: ["Oq mitti", "Qizil mitti", "«Qora o‘ra»"],
+      ans: 2,
+      exp: "3 M☉ dan yuqori massalarda hatto neytron gaz bosimi ham gravitatsiyani to‘xtata olmaydi va «qora o‘ra» shakllanadi."
+    },
+    {
+      q: "9. «Qora o‘ra» atrofidagi hodisalar gorizontining radiusi (Shvarschild radiusi) qaysi formula bilan aniqlanadi?",
+      opts: ["R_g = 2GM / c²", "R_g = GM / R²", "R_g = 4πR²σT⁴"],
+      ans: 0,
+      exp: "Ikkinchi kosmik tezlik √(2GM / R) = c shartidan Shvarschild radiusi R_g = 2GM / c² ≈ 2.95 (M / M☉) km kelib chiqadi."
+    },
+    {
+      q: "10. Massasi 10 Quyosh massasiga teng (M = 10 M☉) bo‘lgan «qora o‘ra»ning Shvarschild radiusi taxminan necha kilometr?",
+      opts: ["2.95 km", "29.5 km", "295 km"],
+      ans: 1,
+      exp: "R_g ≈ 2.95 × (10 M☉ / M☉) = 29.5 km."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawEvolutionTab(w, h);
+      else if (activeTab === 2) drawPulsarTab(w, h);
+      else if (activeTab === 3) drawBlackHoleTab(w, h);
+      else drawEvolutionTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
