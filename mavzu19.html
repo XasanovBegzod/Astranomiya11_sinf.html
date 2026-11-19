@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>19-Mavzu (45-§): Quyosh sistemasining kelib chiqishi haqida hozirgi zamon qarashlari | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.01rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul, .theory-card ol { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.83rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>19-MAVZU (45-§). Quyosh sistemasining kelib chiqishi haqida hozirgi zamon qarashlari</h1>
+    <p>11-sinf Astronomiya | IV Bob: Quyosh sistemasi jismlarining fizik tabiati</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">45-§ Gaz-chang buluti kollapsi</button>
+    <button class="tab-btn" onclick="setTab(2)">45-§ Qor chizig‘i va Kondensatsiya</button>
+    <button class="tab-btn" onclick="setTab(3)">45-§ Akkretsiya va Radioizotop yoshi</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>45-§. Quyosh sistemasining asosiy kuzatuv qonuniyatlari va kosmogonik gipotezalar</h2>
+    <p><strong>Kosmogoniya</strong> — Quyosh sistemasi jismlarining kelib chiqishi va evolyutsiyasini o‘rganuvchi astrofizika bo‘limidir. Har qanday ilmiy nazariya quyidagi asosiy faktlarni tushuntirishi shart:</p>
+    <ul>
+      <li><strong>Tekislik va yo‘nalish birligi:</strong> Barcha katta sayyoralar Quyosh atrofida bir yo‘nalishda (shimoliy qutbdan qaraganda soat miliga teskari) va deyarli bitta tekislikda (ekliptikaga og‘ishi &lt; 7°) aylanaga yaqin orbitalar bo‘ylab aylanadi.</li>
+      <li><strong>Ikki fizik-kimyoviy guruh:</strong> Ichki zonada kichik va zich tosh-metall <strong>Yer guruhi sayyoralari</strong>, tashqi zonada esa ulkan va siyrak vodorod-geliyli/muzli <strong>gigant planetalar</strong> joylashgan.</li>
+      <li><strong>Impuls momenti taqsimoti:</strong> Quyosh sistema massasining <strong>99.86%</strong> ini tashkil etsa-da, to‘liq impuls momentining atigi <strong>~2%</strong> iga ega; impuls momentining <strong>~98%</strong> i sayyoralar orbital harakatida jamlangan.</li>
+      <li><strong>Klassik gipotezalar:</strong> <em>Kant–Laplas nebulyar gipotezasi</em> (aylanuvchi qaynoq tumanlikning siqilishi), <em>J. Jinsning halokat gipotezasi</em> (boshqa yulduzning yaqin o‘tishi — rad etilgan) va <em>O. Yu. Shmidtning sovuq gaz-chang buluti nazariyasi</em> (qattiq zarralar akkretsiyasi).</li>
+    </ul>
+  </div>
+
+  <div class="theory-card">
+    <h2>Hozirgi zamon protoplanetar disk nazariyasi (V. S. Safronov va zamonaviy astrofizika)</h2>
+    <ol>
+      <li><strong>Gravitatsion kollaps (~4.57 mlrd yil avval):</strong> Sovuq (10–20 K) molekulyar gaz-chang buluti (73% H₂, 25% He, 2% chang) yaqin atrofdagi O‘ta yangi yulduz zarba to‘lqini ta’sirida siqila boshlaydi (Jins beqarorligi).</li>
+      <li><strong>Protoquyosh va protoplanetar disk:</strong> Impuls momenti saqlanish qonuni (<em>L = Iω = const</em>) tufayli bulutning aylanishi tezlashib, markazda qaynoq <strong>Protoquyosh</strong>, atrofida esa yassi aylanuvchi <strong>protoplanetar disk</strong> shakllanadi.</li>
+      <li><strong>«Qor chizig‘i» (r_qor ≈ 2.7 a.b., T ≈ 170 K):</strong> Ichki issiq zonada faqat metall va silikatlar kondensatsiyalanib <em>Yer guruhi sayyoralari</em>ni, «qor chizig‘i» tashqarisida esa suv, ammiak va metan muzlab 10–15 M⊕ yadrolarni va vodorod-geliyni tortib olib <em>gigant planetalar</em>ni hosil qiladi.</li>
+      <li><strong>Planetezimallar akkretsiyasi va Radioizotop yoshi:</strong> Chang zarralari kilometr o‘lchamli <strong>planetezimallar</strong>ga, ular esa to‘qnashib protoplanetalar va sayyoralarga birikadi. Meteoritlarning <strong>uran-qo‘rg‘oshin (²³⁸U → ²⁰⁶Pb)</strong> tahlili Quyosh sistemasining yoshi <strong>4.568 mlrd yil</strong> ekanligini tasdiqlaydi.</li>
+    </ol>
+    <div class="math-banner">
+      Impuls momenti: I₀ω₀ = I₁ω₁ &nbsp;|&nbsp; Disk harorati: T(r) = T₀ · (r₀ / r)^(1/2) &nbsp;|&nbsp; Radioaktiv yemirilish: N = N₀ · 2^(−t / T₁/₂)
+    </div>
+
+    <div class="problem-box">
+      <strong>1-Masala (Bulut siqilishi va aylanish tezlashuvi):</strong> Radiusi <em>R₀ = 1.0 × 10¹⁵ m</em> va burchak tezligi <em>ω₀ = 2.0 × 10⁻¹⁵ rad/s</em> bo‘lgan sferik gaz-chang buluti siqilib, radiusi <em>R₁ = 5.0 × 10¹² m</em> bo‘lgan yupqa protoplanetar diskka aylandi (<em>I₀ = (2/5)MR₀²</em>, <em>I₁ = (1/2)MR₁²</em>). Diskning burchak tezligini (ω₁) va aylanish davrini (T₁) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) <strong>ω₁ = (4/5)(R₀ / R₁)² ω₀ = 0.8 × (200)² × 2.0 × 10⁻¹⁵ = 6.4 × 10⁻¹¹ rad/s</strong>.<br>
+        2) <strong>T₁ = 2π / ω₁ = 6.2832 / (6.4 × 10⁻¹¹) ≈ 9.82 × 10¹⁰ s ≈ 3 110 yil</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala («Qor chizig‘i» masofasini aniqlash):</strong> Protoplanetar diskda harorat <em>T(r) = T₀ (r₀ / r)^(1/2)</em> qonuni bo‘yicha o‘zgaradi (<em>r₀ = 1.0 a.b.</em> da <em>T₀ = 280 K</em>). Suv bug‘ining muzlash harorati <em>T_qor = 170 K</em> bo‘lsa, «qor chizig‘i» masofasini (r_qor) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>r_qor = r₀ · (T₀ / T_qor)² = 1.0 × (280 / 170)² = (1.6471)² ≈ 2.71 a.b.</strong> (Mars va Yupiter orbitalari orasidagi Asosiy asteroidlar belbog‘i hududi).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Meteoritlarning radioizotop yoshi):</strong> Xondrit meteoritida yarim yemirilish davri <em>T₁/₂ = 4.47 × 10⁹ yil</em> bo‘lgan <em>²³⁸U</em> izotopining ulushi <em>N / N₀ = 0.492</em> ga teng. Quyosh sistemasining yoshini (t) hisoblang (<em>ln(0.492) = −0.7093</em>, <em>ln 2 = 0.6931</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>t = T₁/₂ · (−ln(0.492) / ln 2) = 4.47 × 10⁹ × (0.7093 / 0.6931) ≈ 4.57 × 10⁹ yil = 4.57 mlrd yil</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">45-§: Molekulyar gaz-chang buluti kollapsi va impuls momenti saqlanish qonuni</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">L = Iω = const | Sferik bulut → Protoplanetar disk</div>
+    </div>
+    <canvas id="cosmoCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 45-§ GAZ-CHANG BULUTI KOLLAPSI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Bulutning gravitatsion siqilish darajasi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Siqilish koeffitsiyenti (R₀ / R₁):</span>
+            <strong id="colRatioVal">200× (R₁ = 33 a.b.)</strong>
+          </div>
+          <input type="range" id="colRatioSl" min="1" max="200" step="1" value="200" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setCollapsePreset(1)">1. Boshlang‘ich bulut (R₀)</button>
+          <button class="btn" onclick="setCollapsePreset(25)">2. Siqilish boshlanishi (25×)</button>
+          <button class="btn" onclick="setCollapsePreset(100)">3. Yassilashish bosqichi (100×)</button>
+          <button class="btn active" onclick="setCollapsePreset(200)">4. Protoplanetar disk (200×)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Impuls momenti saqlanish ko‘rsatkichlari</h3>
+        <div class="formula-box">
+          I₀ω₀ = I₁ω₁ &nbsp;⇒&nbsp; ω₁ = 0.8 · (R₀ / R₁)² · ω₀
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Joriy radius (R₁):</span><span class="t-val" id="colRadOut">5.00 × 10¹² m (33.4 a.b.)</span></div>
+          <div class="t-row"><span>Burchak tezligi (ω₁):</span><span class="t-val" id="colOmOut">6.40 × 10⁻¹¹ rad/s</span></div>
+          <div class="t-row"><span>Chekka aylanish davri (T₁):</span><span class="t-val" id="colPerOut">3 110 yil</span></div>
+          <div class="t-row"><span>Markaziy harorat holati:</span><span class="t-val" id="colTempOut">Protoquyosh yadrosi (qizigan)</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          Bulut radiusi kichraygan sari impuls momenti saqlanish qonuni tufayli aylanish keskin tezlashadi va markazdan qochma kuch moddani ekvatorial diskka yoyadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 45-§ QOR CHIZIG'I VA KONDENSATSIYA -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Protoplanetar diskda harorat va Qor chizig‘i</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Zondning Quyoshdan uzoqligi (r, a.b.):</span>
+            <strong id="snowRVal">2.71 a.b.</strong>
+          </div>
+          <input type="range" id="snowRSl" min="0.4" max="12.0" step="0.05" value="2.71" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Protoquyosh nurlanish quvvati (L / L☉):</span>
+            <strong id="snowLVal">1.00 L☉</strong>
+          </div>
+          <input type="range" id="snowLSl" min="0.5" max="2.5" step="0.1" value="1.0" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setSnowPreset(1.0, 1.0)">Yer zonasi (1.0 a.b.)</button>
+          <button class="btn active" onclick="setSnowPreset(2.71, 1.0)">Qor chizig‘i (2.71 a.b.)</button>
+          <button class="btn" onclick="setSnowPreset(5.20, 1.0)">Yupiter zonasi (5.20 a.b.)</button>
+          <button class="btn" onclick="setSnowPreset(9.54, 1.0)">Saturn zonasi (9.54 a.b.)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Kondensatsiya va Sayyora turi tahlili</h3>
+        <div class="formula-box">
+          T(r) = 280 · (L / L☉)^(1/4) · r^(−1/2) [K]
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Zond nuqtasidagi harorat T(r):</span><span class="t-val" id="snowTOut">170.1 K (−103 °C)</span></div>
+          <div class="t-row"><span>Joriy «Qor chizig‘i» (170 K):</span><span class="t-val" id="snowLimOut">2.71 a.b.</span></div>
+          <div class="t-row"><span>Qattiq fazaga o‘tuvchi modda:</span><span class="t-val" id="snowMatOut">Suv muzi kondensatsiyasi chegarasi</span></div>
+          <div class="t-row"><span>Shakllanuvchi sayyora tipi:</span><span class="t-val" id="snowTypeOut">Asosiy asteroidlar belbog‘i</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 45-§ AKKRETSIYA VA RADIOIZOTOP YOSHI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Quyosh sistemasi evolyutsiyasi va Radioizotop soati</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Kollapsdan keyingi vaqt (t, mlrd yil):</span>
+            <strong id="accTVal">4.57 mlrd yil</strong>
+          </div>
+          <input type="range" id="accTSl" min="0.00" max="4.57" step="0.01" value="4.57" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setAccPreset(0.01)">1. Planetezimallar (10 mln yil)</button>
+          <button class="btn" onclick="setAccPreset(0.08)">2. Protoplanetalar (80 mln yil)</button>
+          <button class="btn" onclick="setAccPreset(2.20)">3. O‘rta davr (2.20 mlrd yil)</button>
+          <button class="btn active" onclick="setAccPreset(4.57)">4. Hozirgi davr (4.57 mlrd yil)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Uran-238 (T₁/₂ = 4.47 mlrd yil) radioizotop tahlili</h3>
+        <div class="formula-box">
+          N(t) / N₀ = 2^(−t / 4.47 mlrd yil)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Evolyutsion bosqich:</span><span class="t-val" id="accStageOut">Zamonaviy 8 sayyorali Quyosh sistemasi</span></div>
+          <div class="t-row"><span>Qolgan ²³⁸U ulushi (N / N₀):</span><span class="t-val" id="accUOut">49.2 %</span></div>
+          <div class="t-row"><span>Hosil bo‘lgan ²⁰⁶Pb ulushi:</span><span class="t-val" id="accPbOut">50.8 %</span></div>
+          <div class="t-row"><span>Xondrit meteoritlar yoshi:</span><span class="t-val">4.568 ± 0.002 mlrd yil</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('cosmoCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "45-§: Molekulyar gaz-chang buluti kollapsi va impuls momenti saqlanish qonuni",
+      "45-§: Protoplanetar diskda harorat taqsimoti va «Qor chizig‘i» (r_qor ≈ 2.7 a.b.)",
+      "45-§: Planetezimallar akkretsiyasi va Quyosh sistemasining radioizotop yoshi",
+      "Bilimlarni tekshirish: 19-Mavzu (45-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "L = Iω = const | R₀ → R₁",
+      "Ichki tosh-metall zona vs Tashqi muz-gaz zona",
+      "²³⁸U → ²⁰⁶Pb | Yosh: 4.568 mlrd yil",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 45-§ GAZ-CHANG BULUTI KOLLAPSI ====================
+  let colSpin = 0;
+
+  function setCollapsePreset(ratio) {
+    document.getElementById('colRatioSl').value = ratio;
+  }
+
+  // Bulut zarralari
+  const nebParticles = [];
+  for (let i = 0; i < 180; i++) {
+    nebParticles.push({
+      rFrac: 0.12 + ((i * 37) % 88) / 100,
+      ang0: (i * 2.39996) % (Math.PI * 2),
+      zFrac: (((i * 73) % 100) / 50) - 1.0,
+      col: i % 5 === 0 ? '#fbbf24' : (i % 3 === 0 ? '#38bdf8' : '#cbd5e1')
+    });
+  }
+
+  function drawCollapseTab(w, h) {
+    const ratio = parseFloat(document.getElementById('colRatioSl').value);
+    const r0 = 1.0e15; // m
+    const w0 = 2.0e-15; // rad/s
+    const r1 = r0 / ratio;
+    const r1Au = r1 / 1.496e11;
+
+    // ratio == 1 da sfera (I_0 = 2/5 M R_0^2), diskka o'tganda 0.8 * ratio^2 * w0
+    const factor = ratio === 1 ? 1.0 : 0.8 * ratio * ratio;
+    const w1 = factor * w0;
+    const perSec = (2 * Math.PI) / w1;
+    const perYrs = perSec / 3.156e7;
+
+    document.getElementById('colRatioVal').textContent = `${ratio}× (R₁ = ${r1Au >= 100 ? Math.round(r1Au).toLocaleString() : r1Au.toFixed(1)} a.b.)`;
+    document.getElementById('colRadOut').textContent = `${r1.toExponential(2)} m (${r1Au >= 100 ? Math.round(r1Au).toLocaleString() : r1Au.toFixed(1)} a.b.)`;
+    document.getElementById('colOmOut').textContent = `${w1.toExponential(2)} rad/s`;
+    document.getElementById('colPerOut').textContent = perYrs >= 1e6 ? `${(perYrs / 1e6).toFixed(1)} mln yil` : `${Math.round(perYrs).toLocaleString()} yil`;
+    document.getElementById('colTempOut').textContent = ratio < 20 ? "Sovuq molekulyar bulut (~15 K)" : (ratio < 120 ? "Isiyotgan protoyadro (~500 K)" : "Qaynoq Protoquyosh + Disk");
+
+    const visualSpin = 0.004 + Math.min(0.06, Math.log10(ratio + 1) * 0.022);
+    colSpin = (colSpin + visualSpin) % (Math.PI * 2);
+
+    const cx = w * 0.5, cy = h * 0.54;
+    const maxW = Math.min(w * 0.40, 290);
+    const diskRx = maxW * (0.45 + 0.55 * (1 - Math.log10(ratio) / 2.35));
+    const flatness = 1.0 - 0.86 * (Math.log10(ratio) / Math.log10(200));
+    const diskRy = diskRx * Math.max(0.14, flatness);
+
+    // Tashqi punkti boshlang'ich bulut chegarasi
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, maxW * 0.92, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Zarralarni chizish
+    nebParticles.forEach(p => {
+      const ang = p.ang0 + colSpin / Math.sqrt(p.rFrac);
+      const px = cx + Math.cos(ang) * (p.rFrac * diskRx);
+      const py = cy + Math.sin(ang) * (p.rFrac * diskRy) + p.zFrac * (diskRy * 0.55);
+      ctx.fillStyle = p.col;
+      ctx.beginPath(); ctx.arc(px, py, 2.0, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // Markaziy Protoquyosh yorug'ligi
+    const coreR = 8 + (ratio / 200) * 18;
+    const cg = ctx.createRadialGradient(cx, cy, 2, cx, cy, coreR * 2.2);
+    cg.addColorStop(0, '#ffffff');
+    cg.addColorStop(0.4, ratio > 50 ? '#facc15' : '#38bdf8');
+    cg.addColorStop(1, 'rgba(250, 204, 21, 0)');
+    ctx.fillStyle = cg;
+    ctx.beginPath(); ctx.arc(cx, cy, coreR * 2.2, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`R₀ / R₁ = ${ratio}×  |  Yassilashgan protoplanetar disk`, cx, cy + maxW * 0.92 + 18);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 2: 45-§ QOR CHIZIG'I VA KONDENSATSIYA ====================
+  function setSnowPreset(r, l) {
+    document.getElementById('snowRSl').value = r;
+    document.getElementById('snowLSl').value = l;
+  }
+
+  function drawSnowLineTab(w, h) {
+    const rProbe = parseFloat(document.getElementById('snowRSl').value);
+    const lum = parseFloat(document.getElementById('snowLSl').value);
+
+    const tProbe = 280.0 * Math.pow(lum, 0.25) / Math.sqrt(rProbe);
+    const rSnow = Math.pow((280.0 * Math.pow(lum, 0.25)) / 170.0, 2);
+
+    document.getElementById('snowRVal').textContent = `${rProbe.toFixed(2)} a.b.`;
+    document.getElementById('snowLVal').textContent = `${lum.toFixed(2)} L☉`;
+    document.getElementById('snowTOut').textContent = `${tProbe.toFixed(1)} K (${Math.round(tProbe - 273.15)} °C)`;
+    document.getElementById('snowLimOut').textContent = `${rSnow.toFixed(2)} a.b.`;
+
+    if (Math.abs(rProbe - rSnow) < 0.15) {
+      document.getElementById('snowMatOut').textContent = "Suv muzi kondensatsiya chegarasi (170 K)";
+      document.getElementById('snowTypeOut').textContent = "Asosiy asteroidlar belbog‘i chegarasi";
+    } else if (rProbe < rSnow) {
+      document.getElementById('snowMatOut').textContent = "Faqat temir, nikel va silikatlar (suv bug‘ holatda)";
+      document.getElementById('snowTypeOut').textContent = "Zich tosh-metall Yer guruhi sayyoralari";
+    } else {
+      document.getElementById('snowMatOut').textContent = "Suv, ammiak va metan muzlari + H₂, He gazi";
+      document.getElementById('snowTypeOut').textContent = "Ulkan gaz va muz gigant planetalari";
+    }
+
+    // Yuqori qismda disk kesmasi, pastki qismda T(r) grafik
+    const leftX = w * 0.10, rightX = w * 0.92;
+    const spanW = rightX - leftX;
+    const maxAu = 12.5;
+    const toX = (au) => leftX + (au / maxAu) * spanW;
+
+    const diskY = h * 0.27;
+    const snowX = Math.min(rightX, toX(rSnow));
+
+    // Issiq ichki disk zonasi
+    ctx.fillStyle = 'rgba(251, 113, 133, 0.22)';
+    ctx.fillRect(leftX, diskY - 22, Math.max(0, snowX - leftX), 44);
+
+    // Sovuq tashqi muz zonasi
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.22)';
+    ctx.fillRect(snowX, diskY - 30, Math.max(0, rightX - snowX), 60);
+
+    // Chapda Protoquyosh
+    const sg = ctx.createRadialGradient(leftX, diskY, 3, leftX, diskY, 26);
+    sg.addColorStop(0, '#ffffff');
+    sg.addColorStop(0.5, '#facc15');
+    sg.addColorStop(1, 'rgba(250, 204, 21, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(leftX, diskY, 26, 0, Math.PI * 2); ctx.fill();
+
+    // Qor chizig'i vertikal chegarasi
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.moveTo(snowX, diskY - 46); ctx.lineTo(snowX, h * 0.86); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`Qor chizig‘i: ${rSnow.toFixed(2)} a.b. (170 K)`, snowX + 6, diskY - 34);
+
+    // Zond nuqtasi
+    const probeX = toX(rProbe);
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(probeX, diskY, 7, 0, Math.PI * 2); ctx.fill();
+
+    // Pastki qism: T(r) egri chizig'i
+    const gTop = h * 0.48, gBot = h * 0.86, gH = gBot - gTop;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(leftX, gTop, spanW, gH);
+
+    // 170 K gorizontal chizig'i
+    const y170 = gBot - (170 / 500) * gH;
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+    ctx.beginPath(); ctx.moveTo(leftX, y170); ctx.lineTo(rightX, y170); ctx.stroke();
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '10px sans-serif';
+    ctx.fillText('170 K (Suv muzlash chegarasi)', leftX + 6, y170 - 4);
+
+    // T(r) egri chizig'i
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 100; i++) {
+      const au = 0.4 + (i / 100) * (maxAu - 0.4);
+      const tVal = Math.min(500, 280.0 * Math.pow(lum, 0.25) / Math.sqrt(au));
+      const px = toX(au);
+      const py = gBot - (tVal / 500) * gH;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // Zond nuqtasi grafikda
+    const pyProbe = gBot - (Math.min(500, tProbe) / 500) * gH;
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(probeX, pyProbe, 5.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText(`r = ${rProbe.toFixed(2)} a.b. → T = ${tProbe.toFixed(0)} K`, probeX + 8, pyProbe - 6);
+  }
+
+  // ==================== TAB 3: 45-§ AKKRETSIYA VA RADIOIZOTOP YOSHI ====================
+  let accAnim = 0;
+
+  function setAccPreset(tGyr) {
+    document.getElementById('accTSl').value = tGyr;
+  }
+
+  function drawAccretionTab(w, h) {
+    const tGyr = parseFloat(document.getElementById('accTSl').value);
+    const halfLife = 4.47; // mlrd yil (U-238)
+    const uFrac = Math.pow(2, -tGyr / halfLife);
+    const pbFrac = 1.0 - uFrac;
+
+    document.getElementById('accTVal').textContent = `${tGyr.toFixed(2)} mlrd yil`;
+    document.getElementById('accUOut').textContent = `${(uFrac * 100).toFixed(1)} %`;
+    document.getElementById('accPbOut').textContent = `${(pbFrac * 100).toFixed(1)} %`;
+
+    let stName = "Zamonaviy 8 sayyorali Quyosh sistemasi";
+    if (tGyr < 0.03) stName = "1-bosqich: Chang va kilometrlik planetezimallar";
+    else if (tGyr < 0.15) stName = "2-bosqich: Protoplanetalar to‘qnashuvi (akkretsiya)";
+    else if (tGyr < 0.70) stName = "3-bosqich: Keingi og‘ir bombardimon va orbitani tozalash";
+    document.getElementById('accStageOut').textContent = stName;
+
+    accAnim += 0.015;
+
+    // Chapda: Planetezimal -> Sayyoralar akkretsiya manzarasi
+    const cx = w * 0.30, cy = h * 0.54;
+    const maxR = Math.min(w * 0.23, h * 0.34);
+
+    // Quyosh
+    ctx.fillStyle = '#facc15';
+    ctx.beginPath(); ctx.arc(cx, cy, 13, 0, Math.PI * 2); ctx.fill();
+
+    if (tGyr < 0.10) {
+      // Ko'p sonli mayda planetezimallar halqalari
+      for (let k = 0; k < 95; k++) {
+        const rOrb = 24 + ((k * 19) % 100) / 100 * (maxR - 24);
+        const ang = (k * 1.7) + accAnim * (45 / rOrb);
+        const px = cx + Math.cos(ang) * rOrb;
+        const py = cy + Math.sin(ang) * rOrb;
+        ctx.fillStyle = rOrb < maxR * 0.45 ? '#fb7185' : '#38bdf8';
+        ctx.fillRect(px, py, 2.5, 2.5);
+      }
+    } else {
+      // Shakllangan sayyoralar orbitalari
+      const pRadii = [0.22, 0.32, 0.42, 0.54, 0.72, 0.85, 0.94, 1.0];
+      const pCols = ['#94a3b8', '#fde047', '#38bdf8', '#fb7185', '#f59e0b', '#eab308', '#22d3ee', '#2563eb'];
+      const pSizes = [3, 4, 4.5, 3.5, 8.5, 7.5, 5.5, 5.5];
+      pRadii.forEach((rf, i) => {
+        const rOrb = rf * maxR;
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+        ctx.beginPath(); ctx.arc(cx, cy, rOrb, 0, Math.PI * 2); ctx.stroke();
+        const ang = i * 0.9 - accAnim * (0.4 / rf);
+        ctx.fillStyle = pCols[i];
+        ctx.beginPath(); ctx.arc(cx + Math.cos(ang) * rOrb, cy + Math.sin(ang) * rOrb, pSizes[i], 0, Math.PI * 2); ctx.fill();
+      });
+    }
+
+    // O'ngda: U-238 radioaktiv yemirilish grafigi
+    const gx = w * 0.58, gy = h * 0.24, gw = w * 0.36, gh = h * 0.56;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('²³⁸U izotopining yemirilish egri chizig‘i', gx + gw * 0.5, gy - 10);
+
+    // Egri chiziq (0 dan 5 mlrd yilgacha)
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 50; i++) {
+      const t = (i / 50) * 5.0;
+      const frac = Math.pow(2, -t / halfLife);
+      const px = gx + (t / 5.0) * gw;
+      const py = gy + gh - frac * gh;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // Joriy vaqt nuqtasi
+    const curX = gx + (tGyr / 5.0) * gw;
+    const curY = gy + gh - uFrac * gh;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '10px sans-serif';
+    ctx.fillText(`t = ${tGyr.toFixed(2)} mlrd yil (²³⁸U: ${(uFrac * 100).toFixed(1)}%)`, gx + gw * 0.5, gy + gh + 16);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Quyosh sistemasida to‘liq massaning 99.86% i Quyoshda jamlangan bo‘lsa, to‘liq impuls momentining taxminan necha foizi sayyoralar harakatiga to‘g‘ri keladi?",
+      opts: ["Atigi 0.14% i", "Taxminan 98% i (Quyoshda atigi ~2% i)", "Teng yarmi (50% i)"],
+      ans: 1,
+      exp: "Quyosh sistemasining fundamental xususiyati: massaning 99.86% i Quyoshda, impuls momentining ~98% i esa sayyoralarda (ayniqsa Yupiter va Saturnda) jamlangan."
+    },
+    {
+      q: "2. Aylanayotgan qaynoq gaz-chang tumanligining gravitatsion siqilishi va markazdan qochma kuchlar ta’sirida halqalar ajralib sayyoralarga aylanishi haqidagi klassik gipoteza mualliflari kimlar?",
+      opts: ["Immanuil Kant va Pyer-Simon Laplas", "Jeyms Jins va Artur Eddington", "Nikolay Kopernik va Iogann Kepler"],
+      ans: 0,
+      exp: "Kant (1755) va Laplas (1796) nebulyar gipotezani yaratib, sayyoralarning bir tekislikda va bir tomonga aylanishini tushuntirdilar."
+    },
+    {
+      q: "3. Sayyoralar qaynoq gazdan emas, balki sovuq gaz-chang bulutidagi qattiq zarralarning o‘zaro birikishi (akkretsiya) natijasida shakllanganini asoslab bergan olimlar kimlar?",
+      opts: ["O. Yu. Shmidt va V. S. Safronov", "Galileo Galiley va Tiho Brage", "Uilyam Gershel va Urben Leverye"],
+      ans: 0,
+      exp: "O. Yu. Shmidt sovuq gaz-chang buluti g‘oyasini ilgari surdi, V. S. Safronov esa planetezimallar akkretsiyasining matematik nazariyasini yaratdi."
+    },
+    {
+      q: "4. Protoplanetar diskda Quyoshdan taxminan 2.7–3.0 a.b. masofada (T ≈ 170 K) suv bug‘ining muz kristallariga aylanish chegarasi nima deb ataladi?",
+      opts: ["Rosh chegarasi", "«Qor chizig‘i» (kondensatsiya chegarasi)", "Shvarschild radiusi"],
+      ans: 1,
+      exp: "«Qor chizig‘i» dan ichkarida faqat tosh-metall (Yer guruhi), tashqarisida esa muz yadroli gigant planetalar shakllangan."
+    },
+    {
+      q: "5. Nima uchun Yer guruhi sayyoralari kichik va zich (tosh-metall), gigant planetalar esa ulkan (vodorod-geliyli va muzli) bo‘lib shakllangan?",
+      opts: ["«Qor chizig‘i» dan tashqarida suv, ammiak va metan muzlab qattiq yadro massasini keskin oshirgani uchun", "Gigant planetalar Quyoshga juda yaqin bo‘lgani uchun", "Yer guruhi sayyoralarida umuman gravitatsiya bo‘lmagani uchun"],
+      ans: 0,
+      exp: "Sovuq zonada muzlarning qattiq holatga o‘tishi 10–15 M⊕ li yadrolar tez yig‘ilishiga va ularning diskdagi H₂ va He gazlarini tortib olishiga imkon bergan."
+    },
+    {
+      q: "6. Protoplanetar diskdagi chang zarralarining yopishib birikishidan hosil bo‘lgan kilometr o‘lchamli (1–100 km) boshlang‘ich qattiq osmon jismlari nima deb ataladi?",
+      opts: ["Planetezimallar", "Pulsarlar", "Kvazarlar"],
+      ans: 0,
+      exp: "Planetezimallar — sayyoralarning «qurilish g‘ishtlari» bo‘lib, ularning o‘zaro birikishidan (akkretsiya) protoplanetalar vujudga kelgan."
+    },
+    {
+      q: "7. Gaz-chang buluti gravitatsion kollaps natijasida siqilganda uning aylanish burchak tezligining keskin ortishi fizikaning qaysi qonuniga asoslanadi?",
+      opts: ["Impuls momenti saqlanish qonuniga (L = Iω = const)", "Arximed qonuniga", "Om qonuniga"],
+      ans: 0,
+      exp: "Bulut radiusi kichrayganda inersiya momenti I kamayadi, natijada L = Iω o‘zgarmas qolishi uchun burchak tezligi ω keskin ortadi."
+    },
+    {
+      q: "8. Eng qadimiy xondrit meteoritlari tarkibidagi radioaktiv izotoplar (²³⁸U → ²⁰⁶Pb) tahlili Quyosh sistemasining yoshi qancha ekanligini ko‘rsatadi?",
+      opts: ["Taxminan 4.57 mlrd yil (4.6 mlrd yil)", "Taxminan 100 mln yil", "Taxminan 50 mlrd yil"],
+      ans: 0,
+      exp: "Uran-qo‘rg‘oshin radioizotop usuli Quyosh sistemasi qattiq jismlarining yoshi 4.568 mlrd yil ekanligini aniqlagan."
+    },
+    {
+      q: "9. J. Jinsning halokat gipotezasiga ko‘ra Quyosh sistemasi qanday paydo bo‘lgan deb taxmin qilingan va nima uchun u rad etilgan?",
+      opts: ["Boshqa yulduzning Quyosh yonidan yaqin o‘tishi natijasida; qaynoq plazma sayyoraga yig‘ilmay fazoga tarqalib ketishi tufayli", "Oyning Quyoshga urilishi natijasida; Oy kichik bo‘lgani uchun", "Kometalarning birikishi natijasida; kometalar muzdan iborat bo‘lgani uchun"],
+      ans: 0,
+      exp: "Quyoshdan tortib chiqarilgan million gradusli gaz kondensatsiyalanmasdan tarqalib ketar edi, shuningdek yulduzlarning bunday yaqinlashish ehtimoli nolga yaqin."
+    },
+    {
+      q: "10. Asosiy asteroidlar belbog‘i (2.2–3.2 a.b.) hududida nima uchun yirik sayyora shakllanmay qolgan?",
+      opts: ["Yupiterning kuchli gravitatsion g‘alayonlari (rezonanslari) planetezimallarning birikishiga to‘sqinlik qilgani uchun", "U yerda hech qanday chang bo‘lmagani uchun", "Quyosh nuri u yerga yetib bormagani uchun"],
+      ans: 0,
+      exp: "Yupiter birinchi bo‘lib ulkan massaga ega bo‘lgach, uning tortishish kuchi qo‘shni hududdagi planetezimallarni tezlashtirib, birikish o‘rniga parchalanishiga sabab bo‘lgan."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawCollapseTab(w, h);
+      else if (activeTab === 2) drawSnowLineTab(w, h);
+      else if (activeTab === 3) drawAccretionTab(w, h);
+      else drawCollapseTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
+
