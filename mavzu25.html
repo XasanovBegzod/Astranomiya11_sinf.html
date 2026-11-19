@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>25-Mavzu (56–57-§§): Galaktikamizning tuzilishi va aylanishi. Yulduz to‘dalari | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li { font-size: 0.9rem; color: #e2e8f0; margin-bottom: 8px; }
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.83rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.24); padding: 8px 10px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.22); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 7px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.82rem; line-height: 1.52; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>25-MAVZU (56–57-§§). Galaktikamizning tuzilishi va aylanishi. Yulduz to‘dalari</h1>
+    <p>11-sinf Astronomiya | VI Bob: Koinotning tuzilishi va evolyutsiyasi</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">56-§ Galaktika tuzilishi va Aylanishi</button>
+    <button class="tab-btn" onclick="setTab(2)">57-§ Sochma va Sharsimon to‘dalar</button>
+    <button class="tab-btn" onclick="setTab(3)">56–57-§§ Xarlou Shepli usuli</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>56–57-§§. Somon Yo‘li Galaktikasi va Yulduz to‘dalari</h2>
+    <p>Bizning <strong>Somon Yo‘li</strong> galaktikamiz diametri <em>D ≈ 30 kpk</em> (100 000 y.y.) bo‘lgan ulkan spiral yulduzlar tizimi bo‘lib, tarkibida <em>200–400 mlrd</em> yulduz, gaz-chang bulutlari hamda ko‘rinmas <strong>qorong‘i materiya</strong> mavjud. Quyosh Galaktika markazidan (Qavs yulduz turkumi yo‘nalishidan) <em>R₀ ≈ 8.2 kpk</em> masofada joylashib, <em>v₀ ≈ 225 km/s</em> tezlik bilan 1 Galaktika yilida (<em>T_gal ≈ 224 mln yil</em>) bir marta to‘liq aylanib chiqadi.</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Ko‘rsatkich</th>
+          <th>Sochma (ochiq) yulduz to‘dalari (57-§)</th>
+          <th>Sharsimon yulduz to‘dalari (57-§)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Shakli va tuzilishi</strong></td><td>Noto‘g‘ri shaklli, siyrak yulduzlar guruhi</td><td>Markazga tomon o‘ta zichlashgan sferik simmetriya</td></tr>
+        <tr><td><strong>Diametri (D)</strong></td><td>2 – 20 pk</td><td>20 – 100 pk</td></tr>
+        <tr><td><strong>Yulduzlar soni (N)</strong></td><td>Bir necha o‘ndan 3 000 tagacha</td><td>10⁵ – 10⁶ (yuz mingdan milliongacha)</td></tr>
+        <tr><td><strong>Galaktikadagi o‘rni</strong></td><td>Galaktika diski va spiral tarmoqlari (yassi)</td><td>Galaktika galosi va markaz atrofida (sferik)</td></tr>
+        <tr><td><strong>Yoshi va populyatsiyasi</strong></td><td>Yosh (10⁶–10⁸ yil), I populyatsiya (metallarga boy)</td><td>Qadimgi (11–13 mlrd yil), II populyatsiya (metallari kam)</td></tr>
+        <tr><td><strong>Mashhur namunalari</strong></td><td>Hulkar (Pleyadalar, M45), Giadalar, Yaslilar</td><td>Gerkules (M13), Omega Sentavr, 47 Tukana</td></tr>
+      </tbody>
+    </table>
+    <div class="math-banner">
+      1 Galaktika yili: T_gal = 2π R₀ / v₀ &nbsp;|&nbsp; Ichki massa: M(R) = v² R / G &nbsp;|&nbsp; Chiziqli o‘lcham: D = r · α_rad
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>56–57-§§. Hisoblash masalalari va yechimlar bazasi</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (1 Galaktika yili va Quyosh orbitasi ichidagi massa):</strong> Quyosh Galaktika markazidan <em>R₀ = 8.2 kpk</em> masofada <em>v₀ = 225 km/s</em> tezlik bilan aylanmoqda. 1 Galaktika yilini (T_gal) va Quyosh orbitasi ichidagi Galaktika massasini (M) Quyosh massasi birliklarida hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) <strong>T_gal = 2π × (8.2 × 3.086 × 10¹⁹ m) / (2.25 × 10⁵ m/s) ≈ 7.07 × 10¹⁵ s ≈ 224 million yil</strong>.<br>
+        2) <strong>M = v₀² R₀ / G = (2.25 × 10⁵)² × (2.53 × 10²⁰) / (6.674 × 10⁻¹¹) ≈ 1.92 × 10⁴¹ kg ≈ 9.65 × 10¹⁰ M☉</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Hulkar sochma yulduz to‘dasining chiziqli diametri):</strong> Hulkar (Pleyadalar, M45) yulduz to‘dasigacha masofa <em>r = 135 pk</em>, ko‘rinma burchak diametri <em>α = 2°</em>. To‘daning chiziqli diametrini (D) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>D = r · (α° / 57.3°) = 135 pk × (2 / 57.3) ≈ 4.71 pk (15.4 yorug‘lik yili)</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (M13 sharsimon yulduz to‘dasidagi yulduzlar zichligi):</strong> M13 sharsimon yulduz to‘dasining radiusi <em>R = 22 pk</em>, yulduzlar soni <em>N = 3.0 × 10⁵</em> ta. 1 pk³ hajmga o‘rtacha nechta yulduz to‘g‘ri keladi?
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>V = (4/3)π R³ ≈ 44 600 pk³ ⇒ n = N / V = 300 000 / 44 600 ≈ 6.73 yulduz/pk³</strong> (Quyosh atrofidan ~48 marta zich).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">56-§: Somon Yo‘li Galaktikasining spiral tuzilishi va differensial aylanishi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">D ≈ 30 kpk | T_gal = 2πR₀ / v₀</div>
+    </div>
+    <canvas id="galCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 56-§ GALAKTIKA TUZILISHI VA AYLANISHI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Orbital masofa va Dinamika modeli</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Markazdan orbital masofa (R, kpk):</span>
+            <strong id="galRVal">8.2 kpk (Quyosh orbitasi)</strong>
+          </div>
+          <input type="range" id="galRSl" min="1.5" max="14.0" step="0.1" value="8.2" />
+        </div>
+        <div class="btn-grid" id="galBtns">
+          <button class="btn active" onclick="setGalMode('dm', this)">Real (Qorong‘i materiya bilan)</button>
+          <button class="btn" onclick="setGalMode('kepler', this)">Nazariy Kepler (Qorong‘i materiyasiz)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Orbital tezlik, 1 Galaktika yili va Ichki massa</h3>
+        <div class="formula-box">
+          T_gal = 2πR / v &nbsp;|&nbsp; M(R) = v² R / G
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Orbital aylanish tezligi (v):</span><span class="t-val" id="galVelOut">225 km/s</span></div>
+          <div class="t-row"><span>To‘liq aylanish davri (1 Galaktika yili):</span><span class="t-val" id="galPerOut">224 mln yil</span></div>
+          <div class="t-row"><span>Orbita ichidagi jami massa M(R):</span><span class="t-val" id="galMassOut">9.65 × 10¹⁰ M☉</span></div>
+          <div class="t-row"><span>Galaktika kichik tizimi:</span><span class="t-val" id="galZoneOut">Orion spiral shoxobchasi</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 57-§ SOCHMA VA SHARSIMON TO'DALAR -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Yulduz to‘dasi sinfini tanlang</h3>
+        <div class="btn-grid" id="clBtns" style="margin-bottom:10px;">
+          <button class="btn active" onclick="setClusterType('open', this)">Sochma to‘da (Hulkar / M45)</button>
+          <button class="btn" onclick="setClusterType('glob', this)">Sharsimon to‘da (M13)</button>
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>To‘dagacha masofa (r, kpk):</span>
+            <strong id="clDistVal">0.135 kpk (135 pk)</strong>
+          </div>
+          <input type="range" id="clDistSl" min="0.05" max="12.0" step="0.05" value="0.135" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Fizik tarkib va HR diagramma tahlili</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Yulduzlar soni (N):</span><span class="t-val" id="clNOut">~1 000 ta</span></div>
+          <div class="t-row"><span>Chiziqli diametri (D):</span><span class="t-val" id="clDiaOut">4.7 pk (~15.4 y.y.)</span></div>
+          <div class="t-row"><span>Ko‘rinma burchak diametri (α):</span><span class="t-val" id="clAngOut">2.00° (120′)</span></div>
+          <div class="t-row"><span>Yoshi va kimyoviy tarkibi:</span><span class="t-val" id="clAgeOut">~100 mln yil (I populyatsiya)</span></div>
+        </div>
+        <p class="desc" id="clDescOut" style="margin-top:8px;">
+          Sochma yulduz to‘dalari (Hulkar) Galaktika diskida joylashgan yosh tizimlar bo‘lib, Spektr–yorqinlik diagrammasida ko‘k-oq yulduzlar saqlanib qolgan.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: 56-57-§§ XARLOU SHEPLI USULI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Sharsimon to‘dalar orqali Galaktika markazini topish</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Sharsimon to‘dalar kuzatuv soni:</span>
+            <strong id="shNVal">45 ta sharsimon to‘da</strong>
+          </div>
+          <input type="range" id="shNSl" min="10" max="90" step="5" value="45" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Xarlou Shepli ($1918$) kosmik xaritasi</h3>
+        <div class="formula-box">
+          RR Lira: M ≈ +0.6m &nbsp;|&nbsp; r = 10^((m − M + 5)/5)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>To‘dalarning simmetriya markazi:</span><span class="t-val">Qavs (Sagittarius) yo‘nalishi</span></div>
+          <div class="t-row"><span>Quyoshdan Galaktika markazigacha:</span><span class="t-val">R₀ ≈ 8.2 kpk (~26 700 y.y.)</span></div>
+          <div class="t-row"><span>Galaktika galosi diametri:</span><span class="t-val">&gt; 35 kpk</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          Sharsimon yulduz to‘dalari Galaktika diskidan tashqarida — sferik galoda joylashgan va Galaktikaning haqiqiy massa markazi atrofida simmetrik taqsimlangan.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('galCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function highlightBtn(containerId, btnEl) {
+    if (!btnEl) return;
+    document.querySelectorAll(`#${containerId} .btn`).forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "56-§: Somon Yo‘li Galaktikasining spiral tuzilishi, differensial aylanish va qorong‘i materiya",
+      "57-§: Sochma (Hulkar) va Sharsimon (M13) yulduz to‘dalari hamda Spektr–yorqinlik diagrammasi",
+      "56–57-§§: Xarlou Shepli usuli — Sharsimon to‘dalar orqali Galaktika markazini aniqlash",
+      "Bilimlarni tekshirish: 25-Mavzu (56–57-§§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "D ≈ 30 kpk | R₀ ≈ 8.2 kpk | T_gal ≈ 224 mln yil",
+      "I populyatsiya (yosh) vs II populyatsiya (qadimgi)",
+      "Qavs (Sagittarius) yo‘nalishi | R₀ ≈ 8.2 kpk",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 56-§ GALAKTIKA TUZILISHI VA AYLANISHI ====================
+  let galMode = 'dm';
+  let galPhase = 0;
+
+  function setGalMode(mode, btn) {
+    galMode = mode;
+    highlightBtn('galBtns', btn);
+  }
+
+  function getGalVelocity(rKpc) {
+    if (galMode === 'dm') {
+      if (rKpc < 2.5) return 225 * (rKpc / 2.5);
+      return 225;
+    } else {
+      if (rKpc < 2.5) return 225 * (rKpc / 2.5);
+      return 225 * Math.sqrt(2.5 / rKpc);
+    }
+  }
+
+  function drawGalaxyTab(w, h) {
+    const rKpc = parseFloat(document.getElementById('galRSl').value);
+    const vel = getGalVelocity(rKpc);
+
+    // T_gal (mln yil) = 2 * pi * rKpc * 3.086e19 / (vel * 1000 * 3.156e7 * 1e6)
+    const perMyr = (2 * Math.PI * rKpc * 3.086e19) / (vel * 1000 * 3.156e13);
+    // M (M_sun) = v^2 * R / G / 1.989e30
+    const massSolar = (Math.pow(vel * 1000, 2) * (rKpc * 3.086e19)) / (6.674e-11 * 1.989e30);
+
+    document.getElementById('galRVal').textContent = `${rKpc.toFixed(1)} kpk`;
+    document.getElementById('galVelOut').textContent = `${Math.round(vel)} km/s`;
+    document.getElementById('galPerOut').textContent = `${Math.round(perMyr)} mln yil`;
+    document.getElementById('galMassOut').textContent = `${massSolar.toExponential(2)} M☉`;
+    document.getElementById('galZoneOut').textContent = rKpc < 3.2 ? "Markaziy baldj" : (rKpc <= 12.5 ? "Spiral disk (yassi)" : "Tashqi galo chegarasi");
+
+    // Chap tomonda: Somon Yo'li spiral ko'rinishi
+    const cx = w * 0.30, cy = h * 0.53;
+    const maxPx = Math.min(w * 0.24, h * 0.38);
+    const pxPerKpc = maxPx / 15.0;
+
+    galPhase = (galPhase + (vel / 225) * (8.2 / rKpc) * 0.015) % (Math.PI * 2);
+
+    // 4 ta spiral tarmoq
+    for (let arm = 0; arm < 4; arm++) {
+      const baseAng = (arm * Math.PI) / 2 + galPhase * 0.25;
+      ctx.strokeStyle = arm % 2 === 0 ? 'rgba(56, 189, 248, 0.28)' : 'rgba(167, 139, 250, 0.24)';
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      for (let t = 0.2; t <= 1.0; t += 0.03) {
+        const rr = t * maxPx;
+        const theta = baseAng + t * 3.4;
+        const x = cx + Math.cos(theta) * rr;
+        const y = cy + Math.sin(theta) * rr;
+        if (t <= 0.21) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+
+    // Markaziy baldj
+    const bg = ctx.createRadialGradient(cx, cy, 3, cx, cy, maxPx * 0.26);
+    bg.addColorStop(0, '#ffffff');
+    bg.addColorStop(0.5, '#fbbf24');
+    bg.addColorStop(1, 'rgba(251, 191, 36, 0)');
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.arc(cx, cy, maxPx * 0.26, 0, Math.PI * 2); ctx.fill();
+
+    // Tanlangan orbita (R) va yulduz
+    const orbR = rKpc * pxPerKpc;
+    ctx.strokeStyle = 'rgba(52, 211, 153, 0.55)';
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, orbR, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    const sx = cx + Math.cos(galPhase) * orbR;
+    const sy = cy + Math.sin(galPhase) * orbR;
+    ctx.fillStyle = '#fde047';
+    ctx.beginPath(); ctx.arc(sx, sy, 5.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a';
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`R = ${rKpc.toFixed(1)} kpk`, sx + 8, sy + 4);
+
+    // O'ng tomonda: Galaktika aylanish egri chizig'i v(R)
+    const gx = w * 0.56, gy = h * 0.24, gw = w * 0.39, gh = h * 0.56;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    // Kepler pasayuvchi egri chizig'i (kulrang punktir)
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.55)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    for (let i = 0; i <= 60; i++) {
+      const rk = 0.5 + (i / 60) * 14.5;
+      const vk = rk < 2.5 ? 225 * (rk / 2.5) : 225 * Math.sqrt(2.5 / rk);
+      const px = gx + (rk / 15.0) * gw;
+      const py = gy + gh * (1 - vk / 280);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Real qorong'i materiya yassi egri chizig'i (ko'k)
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    for (let i = 0; i <= 60; i++) {
+      const rk = 0.5 + (i / 60) * 14.5;
+      const vk = rk < 2.5 ? 225 * (rk / 2.5) : 225;
+      const px = gx + (rk / 15.0) * gw;
+      const py = gy + gh * (1 - vk / 280);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // Joriy nuqta
+    const curX = gx + (rKpc / 15.0) * gw;
+    const curY = gy + gh * (1 - vel / 280);
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('Galaktika aylanish egri chizig‘i v(R)', gx + 10, gy - 8);
+  }
+
+  // ==================== TAB 2: 57-§ SOCHMA VA SHARSIMON TO'DALAR ====================
+  let clusterType = 'open';
+  const openStars = Array.from({ length: 65 }, (_, i) => ({
+    a: (i * 2.39996) % (Math.PI * 2),
+    r: Math.pow(((i * 37) % 100) / 100, 0.55),
+    sz: 1.5 + (i % 4) * 0.7,
+    col: i % 3 === 0 ? '#93c5fd' : '#e0f2fe'
+  }));
+  const globStars = Array.from({ length: 240 }, (_, i) => ({
+    a: (i * 2.39996) % (Math.PI * 2),
+    r: Math.pow(((i * 53) % 100) / 100, 1.85),
+    sz: 1.2 + (i % 3) * 0.45,
+    col: i % 2 === 0 ? '#fde68a' : '#fdba74'
+  }));
+
+  function setClusterType(type, btn) {
+    clusterType = type;
+    highlightBtn('clBtns', btn);
+    document.getElementById('clDistSl').value = type === 'open' ? 0.135 : 7.1;
+  }
+
+  function drawClusterTab(w, h) {
+    const distKpc = parseFloat(document.getElementById('clDistSl').value);
+    const distPk = distKpc * 1000.0;
+    const linDiaPk = clusterType === 'open' ? 4.71 : 44.0;
+    const angDeg = (linDiaPk / distPk) * 57.3;
+
+    document.getElementById('clDistVal').textContent = `${distKpc.toFixed(2)} kpk (${Math.round(distPk)} pk)`;
+    document.getElementById('clDiaOut').textContent = `${linDiaPk.toFixed(1)} pk (~${Math.round(linDiaPk * 3.262)} y.y.)`;
+    document.getElementById('clAngOut').textContent = angDeg >= 1 ? `${angDeg.toFixed(2)}°` : `${(angDeg * 60).toFixed(1)}′`;
+
+    if (clusterType === 'open') {
+      document.getElementById('clNOut').textContent = "~1 000 ta yulduz";
+      document.getElementById('clAgeOut').textContent = "~100 mln yil (I populyatsiya)";
+      document.getElementById('clDescOut').textContent = "Sochma yulduz to‘dalari (Hulkar) Galaktika diskida joylashgan yosh tizimlar bo‘lib, Spektr–yorqinlik diagrammasida ko‘k-oq yulduzlar saqlanib qolgan.";
+    } else {
+      document.getElementById('clNOut').textContent = "~300 000 ta yulduz";
+      document.getElementById('clAgeOut').textContent = "~12.5 mlrd yil (II populyatsiya)";
+      document.getElementById('clDescOut').textContent = "Sharsimon yulduz to‘dalari (M13) Galaktika galosidagi eng qadimgi tizimlar bo‘lib, massiv ko‘k yulduzlar allaqachon qizil gigantlarga aylangan.";
+    }
+
+    // Chapda: Yulduz to'dasi ko'rinishi
+    const cx = w * 0.28, cy = h * 0.54;
+    const maxR = Math.min(w * 0.20, h * 0.34);
+
+    if (clusterType === 'glob') {
+      const cg = ctx.createRadialGradient(cx, cy, 4, cx, cy, maxR * 0.75);
+      cg.addColorStop(0, 'rgba(254, 240, 138, 0.75)');
+      cg.addColorStop(0.5, 'rgba(251, 146, 60, 0.25)');
+      cg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = cg;
+      ctx.beginPath(); ctx.arc(cx, cy, maxR * 0.75, 0, Math.PI * 2); ctx.fill();
+    }
+
+    const list = clusterType === 'open' ? openStars : globStars;
+    list.forEach(st => {
+      const x = cx + Math.cos(st.a) * st.r * maxR;
+      const y = cy + Math.sin(st.a) * st.r * maxR;
+      ctx.fillStyle = st.col;
+      ctx.beginPath(); ctx.arc(x, y, st.sz, 0, Math.PI * 2); ctx.fill();
+    });
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(clusterType === 'open' ? 'Hulkar (M45) — Sochma to‘da' : 'Gerkules (M13) — Sharsimon to‘da', cx, cy + maxR + 24);
+    ctx.textAlign = 'left';
+
+    // O'ngda: Spektr-yorqinlik (HR) diagrammasi burilish nuqtasi
+    const gx = w * 0.54, gy = h * 0.24, gw = w * 0.40, gh = h * 0.56;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    // Asosiy ketma-ketlik chizig'i
+    ctx.strokeStyle = clusterType === 'open' ? '#38bdf8' : '#fbbf24';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    if (clusterType === 'open') {
+      ctx.moveTo(gx + gw * 0.16, gy + gh * 0.15);
+      ctx.lineTo(gx + gw * 0.85, gy + gh * 0.88);
+    } else {
+      ctx.moveTo(gx + gw * 0.48, gy + gh * 0.52);
+      ctx.lineTo(gx + gw * 0.85, gy + gh * 0.88);
+      // Qizil gigantlar tarmog'i
+      ctx.moveTo(gx + gw * 0.48, gy + gh * 0.52);
+      ctx.quadraticCurveTo(gx + gw * 0.62, gy + gh * 0.32, gx + gw * 0.82, gy + gh * 0.18);
+    }
+    ctx.stroke();
+
+    ctx.fillStyle = '#fef08a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(clusterType === 'open' ? 'HR diagramma: Yosh ko‘k yulduzlar mavjud' : 'HR diagramma: Burilish nuqtasi va Qizil gigantlar', gx + 10, gy - 8);
+  }
+
+  // ==================== TAB 3: 56-57-§§ XARLOU SHEPLI USULI ====================
+  const shepliClusters = Array.from({ length: 90 }, (_, i) => ({
+    ang: (i * 2.39996) % (Math.PI * 2),
+    rad: Math.pow(((i * 41) % 100) / 100, 0.75)
+  }));
+
+  function drawShepliTab(w, h) {
+    const count = parseInt(document.getElementById('shNSl').value, 10);
+    document.getElementById('shNVal').textContent = `${count} ta sharsimon to‘da`;
+
+    // Galaktika yon kesmasi (markaz o'ngroqda, Quyosh chaproqda)
+    const gcX = w * 0.58, gcY = h * 0.52;
+    const diskRx = Math.min(w * 0.36, 290);
+    const diskRy = 18;
+
+    // Galaktika galosi doirasi
+    ctx.strokeStyle = 'rgba(167, 139, 250, 0.3)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(gcX, gcY, diskRx * 0.92, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Galaktika diski va markaziy baldj
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+    ctx.beginPath(); ctx.ellipse(gcX, gcY, diskRx, diskRy, 0, 0, Math.PI * 2); ctx.fill();
+
+    const bg = ctx.createRadialGradient(gcX, gcY, 4, gcX, gcY, 46);
+    bg.addColorStop(0, '#ffffff');
+    bg.addColorStop(0.5, '#fbbf24');
+    bg.addColorStop(1, 'rgba(251, 191, 36, 0)');
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.arc(gcX, gcY, 46, 0, Math.PI * 2); ctx.fill();
+
+    // Sharsimon yulduz to'dalari (Galaktika markazi atrofida simmetrik)
+    for (let i = 0; i < count; i++) {
+      const c = shepliClusters[i];
+      const x = gcX + Math.cos(c.ang) * c.rad * diskRx * 0.88;
+      const y = gcY + Math.sin(c.ang) * c.rad * diskRx * 0.88;
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Quyosh o'rni (R0 = 8.2 kpk chapda)
+    const sunX = gcX - diskRx * 0.55, sunY = gcY;
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(sunX, sunY, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.font = '11px sans-serif';
+    ctx.fillText('Quyosh', sunX - 20, sunY - 12);
+
+    // Masofa chizig'i R0
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(sunX, sunY + 26); ctx.lineTo(gcX, gcY + 26); ctx.stroke();
+    ctx.fillStyle = '#a7f3d0';
+    ctx.textAlign = 'center';
+    ctx.fillText('R₀ ≈ 8.2 kpk (Qavs yo‘nalishi)', (sunX + gcX) / 2, gcY + 42);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Bizning Galaktikamiz (Somon Yo‘li) qanday tuzilishga ega va uning diametri taxminan necha kiloparsek?",
+      opts: ["Elliptik galaktika, diametri 2 kpk", "Spiral galaktika, diskining diametri ~30 kpk (~100 000 yorug‘lik yili)", "Noto‘g‘ri galaktika, diametri 500 pk"],
+      ans: 1,
+      exp: "Somon Yo‘li diametri ~30 kpk bo‘lgan 4 ta asosiy spiral tarmoqli ulkan yulduzlar tizimidir."
+    },
+    {
+      q: "2. Galaktikamizning markazi (yadrosi) osmon sferasining qaysi yulduz turkumi yo‘nalishida joylashgan?",
+      opts: ["Katta Ayiq", "Qavs (Sagittarius) yulduz turkumi yo‘nalishida", "Orion yulduz turkumi yo‘nalishida"],
+      ans: 1,
+      exp: "Galaktika markazi Qavs yulduz turkumi yo‘nalishida bo‘lib, u yerda 4.3 mln Quyosh massali qora o‘ra (Sagittarius A*) joylashgan."
+    },
+    {
+      q: "3. Quyosh Galaktika markazidan qancha masofada joylashgan va bir marta to‘liq aylanib chiqish davri (1 Galaktika yili) qancha?",
+      opts: ["R₀ ≈ 8.2 kpk masofada; 1 Galaktika yili ≈ 220–240 million yil", "R₀ ≈ 1 a.b. masofada; 1 yil", "R₀ ≈ 100 kpk masofada; 10 mlrd yil"],
+      ans: 0,
+      exp: "Quyosh markazdan ~8.2 kpk uzoqlikda ~225 km/s tezlik bilan aylanib, bir orbitani ~224 mln yilda bosib o‘tadi."
+    },
+    {
+      q: "4. Galaktika diskining tashqi qismlarida yulduzlarning orbital tezligi pasaymasdan deyarli o‘zgarmas (~225 km/s) qolishi nimani isbotlaydi?",
+      opts: ["Galaktika qattiq jism kabi aylanishini", "Galaktikada ko‘rinuvchi moddadan bir necha barobar katta ko‘rinmas qorong‘i materiya galosi mavjudligini", "Gravitatsiya kuchi yo‘qligini"],
+      ans: 1,
+      exp: "Yassi aylanish egri chizig‘i v(R) ≈ const Galaktikani ulkan ko‘rinmas qorong‘i materiya galosi o‘rab turganini isbotlaydi."
+    },
+    {
+      q: "5. Galaktikaning «yassi tashkil etuvchisi» (disk va spiral tarmoqlari) tarkibiga qanday obyektlar kiradi?",
+      opts: ["Faqat sharsimon yulduz to‘dalari", "Yosh issiq O va B sinf yulduzlari, klassik sefeidlar, sochma yulduz to‘dalari va gaz-chang bulutlari", "Faqat qora o‘ralar"],
+      ans: 1,
+      exp: "Yulduzlar tug‘ilishi asosan gaz-changga boy Galaktika diskining spiral tarmoqlarida kechadi."
+    },
+    {
+      q: "6. Sochma (ochiq) yulduz to‘dalariga xos bo‘lgan asosiy xususiyatlar qaysilar?",
+      opts: ["10⁵–10⁶ ta qadimgi yulduzdan iborat sferik tizim", "Galaktika diskida joylashgan, bir necha o‘ndan bir necha minggacha yosh yulduzlardan iborat siyrak guruhlar (masalan, Hulkar)", "Galaktikadan tashqarida joylashgan"],
+      ans: 1,
+      exp: "Sochma to‘dalar (Hulkar, Giadalar) yosh va og‘ir elementlarga boy I populyatsiya yulduzlaridan tashkil topgan."
+    },
+    {
+      q: "7. Sharsimon yulduz to‘dalarida nechtagacha yulduz bo‘ladi va ular Galaktikaning qaysi qismida joylashgan?",
+      opts: ["10–50 ta yulduz, faqat Quyosh atrofida", "10⁵–10⁶ (yuz mingdan milliongacha) qadimgi yulduz; Galaktika galosida (sferik tashkil etuvchi)", "100 ta yulduz, spiral tarmoqlarda"],
+      ans: 1,
+      exp: "Sharsimon yulduz to‘dalari (M13, Omega Sentavr) 11–13 mlrd yoshdagi eng qadimgi II populyatsiya yulduzlaridan iborat."
+    },
+    {
+      q: "8. Amerikalik astronom Xarlou Shepli (1918) Quyoshning Galaktika markazida emas, balki chekkasida joylashganini qanday kashf etdi?",
+      opts: ["Sayyoralar harakatini kuzatib", "Sharsimon yulduz to‘dalaridagi RR Lira o‘zgaruvchan yulduzlari orqali ularning masofasi va fazoviy simmetriya markazini aniqlab", "Oy tutilishini o‘lchab"],
+      ans: 1,
+      exp: "Sharsimon to‘dalar osmon sferasida asosan Qavs yulduz turkumi atrofida to‘plangani va ularning markazi bizdan ~8 kpk uzoqlikda ekani aniqlandi."
+    },
+    {
+      q: "9. Hulkar (M45) sochma yulduz to‘dasigacha masofa r = 135 pk, ko‘rinma burchak diametri α = 2° bo‘lsa, uning chiziqli diametri taxminan necha parsek?",
+      opts: ["~4.7 pk", "~135 pk", "~0.5 pk"],
+      ans: 0,
+      exp: "D = r · (α° / 57.3°) = 135 × (2 / 57.3) ≈ 4.71 pk."
+    },
+    {
+      q: "10. V. A. Ambartsumyan (1947) kashf etgan «yulduz assotsiatsiyalari» astronomiya uchun qanday muhim xulosani berdi?",
+      opts: ["Barcha yulduzlar bir vaqtda so‘nib bormoqda", "Galaktikamizda yulduzlar tug‘ilishi o‘tmishda tugamagan, balki hozirgi davrda ham davom etmoqda", "Yulduzlar hech qachon harakatlanmaydi"],
+      ans: 1,
+      exp: "OB-assotsiatsiyalardagi issiq yulduzlar atigi bir necha million yil yashagani sababli ular yaqinda vujudga kelganini isbotlaydi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawGalaxyTab(w, h);
+      else if (activeTab === 2) drawClusterTab(w, h);
+      else if (activeTab === 3) drawShepliTab(w, h);
+      else drawGalaxyTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
