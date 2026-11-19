@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>22-Mavzu (52–53-§): Fizik qo‘shaloq yulduzlar va yulduzlarning massalarini hisoblash | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li { font-size: 0.9rem; color: #e2e8f0; margin-bottom: 8px; }
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 6px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.82rem; line-height: 1.52; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>22-MAVZU (52–53-§). Fizik qo‘shaloq yulduzlar va yulduzlarning massalarini hisoblash</h1>
+    <p>11-sinf Astronomiya | V Bob: Yulduzlar</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">52-§ Tutiluvchi qo‘shaloq yulduzlar</button>
+    <button class="tab-btn" onclick="setTab(2)">52-§ Spektral qo‘shaloq yulduzlar</button>
+    <button class="tab-btn" onclick="setTab(3)">53-§ Yulduzlar massasini hisoblash</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>52-§. Fizik qo‘shaloq yulduzlar va ularning turlari</h2>
+    <p><strong>Fizik qo‘shaloq yulduzlar</strong> — o‘zaro gravitatsion tortishish kuchi ta’sirida <strong>umumiy massa markazi</strong> atrofida ellips orbitalar bo‘ylab harakatlanuvchi yulduzlar juftligidir. Kuzatish usuliga ko‘ra 3 turga bo‘linadi:</p>
+    <ul>
+      <li><strong>Vizual qo‘shaloq yulduzlar:</strong> Teleskopda ikkala komponentini alohida-alohida ko‘rish va ko‘rinma orbital harakatini o‘lchash mumkin (Sirius A va B, Mizar, α Sentavra).</li>
+      <li><strong>Spektral qo‘shaloq yulduzlar:</strong> Yulduzlar bir-biriga juda yaqin joylashgani sababli teleskopda bitta nuqtadek ko‘rinadi; ularning qo‘shaloqligi <strong>Dopler effekti</strong> (<em>Δλ / λ₀ = v_r / c</em>) tufayli spektral chiziqlarning davriy ikkilanishi orqali aniqlanadi.</li>
+      <li><strong>Tutiluvchi qo‘shaloq (o‘zgaruvchan) yulduzlar:</strong> Orbita tekisligi ko‘rish nuriga juda yaqin yotgani bois yulduzlar har bir aylanishda bir-birini to‘sib qo‘yadi va bosh hamda ikkilamchi ravshanlik minimumlari kuzatiladi (masalan, <strong>Algol</strong>).</li>
+    </ul>
+
+    <div class="problem-box">
+      <strong>1-Masala (Spektral qo‘shaloq yulduz va Dopler siljishi):</strong> Spektral qo‘shaloq yulduz spektrida vodorodning <em>H_α</em> chizig‘i (<em>λ₀ = 656.3 nm</em>) davriy ravishda <em>Δλ = ±0.131 nm</em> ga siljiydi. Yulduzning orbital nur tezligi amplitudasini (v_r) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        <strong>v_r = c · (Δλ / λ₀) = 3.00 × 10⁵ km/s × (0.131 / 656.3) ≈ 59.9 km/s ≈ 60 km/s</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>53-§. Yulduzlarning massalarini hisoblash</h2>
+    <p>Yulduzlar massasini bevosita aniqlashning yagona aniq usuli — qo‘shaloq yulduzlarga <strong>Keplerning umumlashgan uchinchi qonuni</strong>ni qo‘llashdir:</p>
+    <div class="math-banner">
+      m₁ + m₂ = a³ / T² &nbsp;|&nbsp; m₁ · a₁ = m₂ · a₂ &nbsp;|&nbsp; a = a₁ + a₂ &nbsp;|&nbsp; L / L☉ ≈ (m / M☉)^3.5
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Sirius A va B massalarini hisoblash):</strong> Sirius A (<em>m₁</em>) va Sirius B (<em>m₂</em>) umumiy massa markazi atrofida <em>T = 50.1 yil</em> davr bilan aylanadi. Ular orasidagi o‘rtacha masofa <em>a = 19.8 a.b.</em>, massa markazidan uzoqliklari nisbati <em>a₂ / a₁ = 2.02</em>. Ikkala yulduz massasini (M☉ birliklarida) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        1) <strong>m₁ + m₂ = 19.8³ / 50.1² = 7762.4 / 2510.0 ≈ 3.09 M☉</strong>.<br>
+        2) <strong>m₁ / m₂ = 2.02 ⇒ 3.02 m₂ = 3.09 ⇒ m₂ ≈ 1.02 M☉</strong> (Sirius B), <strong>m₁ ≈ 2.07 M☉</strong> (Sirius A).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">52-§: Tutiluvchi qo‘shaloq yulduzlar (Algol turi) va ravshanlik egri chizig‘i</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Bosh minimum (qaynoq yulduz to‘silishi) va Ikkilamchi minimum</div>
+    </div>
+    <canvas id="binCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 52-§ TUTILUVCHI QO'SHALOQ YULDUZLAR -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Tutiluvchi tizimning geometriyasi va Yulduzlar</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Orbita og‘ish burchagi (i, gradus):</span>
+            <strong id="eclIncVal">88° (To‘liq tutilish)</strong>
+          </div>
+          <input type="range" id="eclIncSl" min="65" max="90" step="1" value="88" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yo‘ldosh (sovuq) yulduz radiusi (R₂ / R₁):</span>
+            <strong id="eclRadVal">1.30 R₁</strong>
+          </div>
+          <input type="range" id="eclRadSl" min="0.6" max="1.8" step="0.05" value="1.30" />
+        </div>
+        <div class="btn-grid" id="eclBtns">
+          <button class="btn active" onclick="setEclPreset(88, 1.30, this)">Algol (β Persey, i = 88°)</button>
+          <button class="btn" onclick="setEclPreset(81, 1.15, this)">Qisman tutilish (i = 81°)</button>
+          <button class="btn" style="grid-column: span 2;" onclick="setEclPreset(66, 1.20, this)">Tutilish yo‘q (i = 66°)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Fotometrik ravshanlik tahlili</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Bosh minimum chuqurligi:</span><span class="t-val" id="eclPrimOut">1.25m (ravshanlik 3.2× kamayadi)</span></div>
+          <div class="t-row"><span>Ikkilamchi minimum:</span><span class="t-val" id="eclSecOut">0.18m (sovuq yulduz to‘silishi)</span></div>
+          <div class="t-row"><span>Joriy faza holati:</span><span class="t-val" id="eclPhaseOut">To‘liq ravshanlik (I₀)</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          Qaynoq yorqin yulduz sovuq yirik yo‘ldosh ortiga o‘tganda chuqur <strong>bosh minimum</strong>, aksincha bo‘lganda esa sayoz <strong>ikkilamchi minimum</strong> kuzatiladi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 52-§ SPEKTRAL QO'SHALOQ YULDUZLAR (DOPLER) -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Orbital tezlik va Dopler spektral siljishi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>1-yulduz orbital tezlik amplitudasi (v₁):</span>
+            <strong id="dopV1Val">60 km/s</strong>
+          </div>
+          <input type="range" id="dopV1Sl" min="15" max="150" step="5" value="60" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>2-yulduz orbital tezlik amplitudasi (v₂):</span>
+            <strong id="dopV2Val">90 km/s</strong>
+          </div>
+          <input type="range" id="dopV2Sl" min="15" max="150" step="5" value="90" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Hα (656.3 nm) chizig‘ining davriy ikkilanishi</h3>
+        <div class="formula-box">
+          Δλ / λ₀ = v_r / c &nbsp;|&nbsp; m₁ / m₂ = v₂ / v₁
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>1-chiziq siljishi (Δλ₁):</span><span class="t-val" id="dopL1Out">±0.131 nm</span></div>
+          <div class="t-row"><span>2-chiziq siljishi (Δλ₂):</span><span class="t-val" id="dopL2Out">±0.197 nm</span></div>
+          <div class="t-row"><span>Massalar nisbati (m₁ / m₂ = v₂ / v₁):</span><span class="t-val" id="dopRatOut">1.50</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 53-§ YULDUZLAR MASSASINI HISOBLASH -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Qo‘shaloq tizim massalari va Masofasi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>1-yulduz massasi (m₁, M☉):</span>
+            <strong id="binM1Val">2.07 M☉</strong>
+          </div>
+          <input type="range" id="binM1Sl" min="0.5" max="10.0" step="0.05" value="2.07" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>2-yulduz massasi (m₂, M☉):</span>
+            <strong id="binM2Val">1.02 M☉</strong>
+          </div>
+          <input type="range" id="binM2Sl" min="0.3" max="8.0" step="0.05" value="1.02" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>O‘rtacha masofa (a = a₁ + a₂, a.b.):</span>
+            <strong id="binAVal">19.8 a.b.</strong>
+          </div>
+          <input type="range" id="binASl" min="2.0" max="30.0" step="0.2" value="19.8" />
+        </div>
+        <div class="btn-grid" id="binBtns">
+          <button class="btn active" onclick="setBinPreset(2.07, 1.02, 19.8, this)">Sirius A + B (50.1 yil)</button>
+          <button class="btn" onclick="setBinPreset(1.10, 0.91, 23.4, this)">Alfa Sentavra A + B</button>
+          <button class="btn" style="grid-column: span 2;" onclick="setBinPreset(3.00, 3.00, 12.0, this)">Teng massali simmetrik tizim</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Kepler 3-qonuni va Massa markazi</h3>
+        <div class="formula-box">
+          m₁ + m₂ = a³ / T² &nbsp;|&nbsp; m₁ · a₁ = m₂ · a₂
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Massalar yig‘indisi (m₁ + m₂):</span><span class="t-val" id="binMtotOut">3.09 M☉</span></div>
+          <div class="t-row"><span>Orbital aylanish davri (T):</span><span class="t-val" id="binTOut">50.1 yil</span></div>
+          <div class="t-row"><span>Massa markazigacha (a₁ / a₂):</span><span class="t-val" id="binArmOut">6.54 / 13.26 a.b.</span></div>
+          <div class="t-row"><span>1-yulduz yorqinligi (m₁^3.5):</span><span class="t-val" id="binLumOut">12.7 L☉</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('binCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function highlightBtn(containerId, btnEl) {
+    if (!btnEl) return;
+    document.querySelectorAll(`#${containerId} .btn`).forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "52-§: Tutiluvchi qo‘shaloq yulduzlar — Bosh va ikkilamchi ravshanlik minimumlari",
+      "52-§: Spektral qo‘shaloq yulduzlar — Dopler effekti tufayli Hα chizig‘i ikkilanishi",
+      "53-§: Yulduzlar massasini hisoblash — Keplerning umumlashgan uchinchi qonuni",
+      "Bilimlarni tekshirish: 22-Mavzu (52–53-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "Algol (β Persey) fotometriyasi",
+      "Δλ / λ₀ = v_r / c",
+      "m₁ + m₂ = a³ / T² | m₁a₁ = m₂a₂",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 52-§ TUTILUVCHI QO'SHALOQ YULDUZLAR ====================
+  let eclPhase = 0;
+
+  function setEclPreset(inc, rRatio, btn) {
+    document.getElementById('eclIncSl').value = inc;
+    document.getElementById('eclRadSl').value = rRatio;
+    highlightBtn('eclBtns', btn);
+  }
+
+  function calcEclipseLight(phase, incDeg, r2Ratio) {
+    // phase: 0..2*PI; 0.5*PI -> bosh tutilish (sovuq yulduz oldinda), 1.5*PI -> ikkilamchi tutilish
+    const r1 = 18;
+    const r2 = r1 * r2Ratio;
+    const orbR = 95;
+    const cosInc = Math.cos((incDeg * Math.PI) / 180);
+
+    const xRel = orbR * Math.cos(phase);
+    const yRel = orbR * Math.sin(phase) * cosInc;
+    const dist = Math.hypot(xRel, yRel);
+
+    if (dist >= r1 + r2) return 1.0;
+    const overlap = Math.min(1.0, (r1 + r2 - dist) / (2 * Math.min(r1, r2)));
+    const isPrimary = Math.sin(phase) > 0; // sovuq yulduz oldinda
+    const maxDrop = isPrimary ? 0.68 : 0.16;
+    return 1.0 - overlap * maxDrop;
+  }
+
+  function drawEclipsingTab(w, h) {
+    const inc = parseFloat(document.getElementById('eclIncSl').value);
+    const r2Ratio = parseFloat(document.getElementById('eclRadSl').value);
+
+    document.getElementById('eclIncVal').textContent = `${inc}°`;
+    document.getElementById('eclRadVal').textContent = `${r2Ratio.toFixed(2)} R₁`;
+
+    const minPrim = calcEclipseLight(Math.PI * 0.5, inc, r2Ratio);
+    const minSec = calcEclipseLight(Math.PI * 1.5, inc, r2Ratio);
+    const dmPrim = -2.5 * Math.log10(minPrim);
+    const dmSec = -2.5 * Math.log10(minSec);
+
+    document.getElementById('eclPrimOut').textContent = dmPrim > 0.02 ? `${dmPrim.toFixed(2)}m` : "Tutilish yo‘q (0.00m)";
+    document.getElementById('eclSecOut').textContent = dmSec > 0.02 ? `${dmSec.toFixed(2)}m` : "Tutilish yo‘q (0.00m)";
+
+    eclPhase = (eclPhase + 0.022) % (Math.PI * 2);
+    const curFlux = calcEclipseLight(eclPhase, inc, r2Ratio);
+
+    let phTxt = "To‘liq ravshanlik (I₀)";
+    if (curFlux < 0.75) phTxt = "BOSH MINIMUM (qaynoq yulduz to‘silmoqda)";
+    else if (curFlux < 0.96) phTxt = "Ikkilamchi minimum (sovuq yulduz to‘silmoqda)";
+    document.getElementById('eclPhaseOut').textContent = phTxt;
+
+    // Yuqori qism: Yulduzlar orbital ko'rinishi
+    const cx = w * 0.5, cy = h * 0.30;
+    const r1 = 18, r2 = r1 * r2Ratio, orbR = 95;
+    const cosInc = Math.cos((inc * Math.PI) / 180);
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
+    ctx.beginPath(); ctx.ellipse(cx, cy, orbR, Math.max(3, orbR * cosInc), 0, 0, Math.PI * 2); ctx.stroke();
+
+    const x2 = cx + orbR * Math.cos(eclPhase);
+    const y2 = cy + orbR * Math.sin(eclPhase) * cosInc;
+    const coldInFront = Math.sin(eclPhase) > 0;
+
+    const drawHot = () => {
+      ctx.fillStyle = '#93c5fd';
+      ctx.beginPath(); ctx.arc(cx, cy, r1, 0, Math.PI * 2); ctx.fill();
+    };
+    const drawCold = () => {
+      ctx.fillStyle = '#fb923c';
+      ctx.beginPath(); ctx.arc(x2, y2, r2, 0, Math.PI * 2); ctx.fill();
+    };
+
+    if (coldInFront) { drawHot(); drawCold(); }
+    else { drawCold(); drawHot(); }
+
+    // Pastki qism: Ravshanlik egri chizig'i I(t)
+    const gx = w * 0.12, gy = h * 0.50, gw = w * 0.76, gh = h * 0.36;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(gx, gy, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(gx, gy, gw, gh);
+
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 160; i++) {
+      const ph = (i / 160) * Math.PI * 2;
+      const fl = calcEclipseLight(ph, inc, r2Ratio);
+      const px = gx + (i / 160) * gw;
+      const py = gy + gh * (0.92 - fl * 0.78);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    const curX = gx + (eclPhase / (Math.PI * 2)) * gw;
+    const curY = gy + gh * (0.92 - curFlux * 0.78);
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(curX, curY, 5.5, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('Ravshanlik egri chizig‘i (1 to‘liq orbital davr)', gx + 8, gy - 8);
+    ctx.fillText('Bosh minimum', gx + gw * 0.25 - 32, gy + gh + 15);
+    ctx.fillText('Ikkilamchi minimum', gx + gw * 0.75 - 45, gy + gh + 15);
+  }
+
+  // ==================== TAB 2: 52-§ SPEKTRAL QO'SHALOQ YULDUZLAR ====================
+  let dopPhase = 0;
+
+  function drawSpectralBinaryTab(w, h) {
+    const v1 = parseFloat(document.getElementById('dopV1Sl').value);
+    const v2 = parseFloat(document.getElementById('dopV2Sl').value);
+    const cKm = 3.0e5;
+    const lam0 = 656.3;
+
+    const dLam1 = lam0 * (v1 / cKm);
+    const dLam2 = lam0 * (v2 / cKm);
+
+    document.getElementById('dopV1Val').textContent = `${v1} km/s`;
+    document.getElementById('dopV2Val').textContent = `${v2} km/s`;
+    document.getElementById('dopL1Out').textContent = `±${dLam1.toFixed(3)} nm`;
+    document.getElementById('dopL2Out').textContent = `±${dLam2.toFixed(3)} nm`;
+    document.getElementById('dopRatOut').textContent = (v2 / v1).toFixed(2);
+
+    dopPhase = (dopPhase + 0.025) % (Math.PI * 2);
+
+    // Yuqori qism: Orbital harakat va Kuzatuvchi nuri (pastdan)
+    const cx = w * 0.5, cy = h * 0.30;
+    const r1 = 42, r2 = 64;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+    ctx.beginPath(); ctx.arc(cx, cy, r1, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r2, 0, Math.PI * 2); ctx.stroke();
+
+    const x1 = cx + Math.cos(dopPhase) * r1, y1 = cy + Math.sin(dopPhase) * r1;
+    const x2 = cx - Math.cos(dopPhase) * r2, y2 = cy - Math.sin(dopPhase) * r2;
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(x1, y1, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(x2, y2, 7, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('↓ Kuzatuvchi teleskopi yo‘nalishi (nur tezligi v_r) ↓', cx, cy + r2 + 22);
+
+    // Pastki qism: Spektr polosasi va Hα chizig'ining Dopler ikkilanishi
+    const sx = w * 0.14, sy = h * 0.62, sw = w * 0.72, sh = 64;
+    ctx.fillStyle = '#dc2626'; // Qizil Hα sohasi foni
+    ctx.fillRect(sx, sy, sw, sh);
+
+    const midX = sx + sw * 0.5;
+    // Laboratoriya λ₀ chizig'i (punkti)
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(midX, sy - 12); ctx.lineTo(midX, sy + sh + 12); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Nur tezligi v_r = v * cos(dopPhase)
+    const shift1 = Math.cos(dopPhase) * (v1 / 150) * (sw * 0.32);
+    const shift2 = -Math.cos(dopPhase) * (v2 / 150) * (sw * 0.32);
+
+    ctx.fillStyle = '#020617';
+    ctx.fillRect(midX + shift1 - 3, sy, 6, sh);
+    ctx.fillRect(midX + shift2 - 2.5, sy, 5, sh);
+
+    ctx.fillStyle = '#fef08a';
+    ctx.fillText('λ₀ = 656.3 nm (Laboratoriya)', midX, sy - 18);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillText('← Ko‘kish siljish (yaqinlashish)', sx + 95, sy + sh + 18);
+    ctx.fillStyle = '#fb7185';
+    ctx.fillText('Qizil siljish (uzoqlashish) →', sx + sw - 95, sy + sh + 18);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 3: 53-§ YULDUZLAR MASSASINI HISOBLASH ====================
+  let binAngle = 0;
+
+  function setBinPreset(m1, m2, a, btn) {
+    document.getElementById('binM1Sl').value = m1;
+    document.getElementById('binM2Sl').value = m2;
+    document.getElementById('binASl').value = a;
+    highlightBtn('binBtns', btn);
+  }
+
+  function drawBinaryTab(w, h) {
+    const m1 = parseFloat(document.getElementById('binM1Sl').value);
+    const m2 = parseFloat(document.getElementById('binM2Sl').value);
+    const aTot = parseFloat(document.getElementById('binASl').value);
+
+    const mTot = m1 + m2;
+    const T = Math.sqrt(Math.pow(aTot, 3) / mTot);
+    const a1 = aTot * (m2 / mTot);
+    const a2 = aTot * (m1 / mTot);
+    const lum1 = Math.pow(m1, 3.5);
+
+    document.getElementById('binM1Val').textContent = `${m1.toFixed(2)} M☉`;
+    document.getElementById('binM2Val').textContent = `${m2.toFixed(2)} M☉`;
+    document.getElementById('binAVal').textContent = `${aTot.toFixed(1)} a.b.`;
+    document.getElementById('binMtotOut').textContent = `${mTot.toFixed(2)} M☉`;
+    document.getElementById('binTOut').textContent = `${T.toFixed(1)} yil`;
+    document.getElementById('binArmOut').textContent = `${a1.toFixed(2)} / ${a2.toFixed(2)} a.b.`;
+    document.getElementById('binLumOut').textContent = `${lum1.toFixed(1)} L☉`;
+
+    binAngle = (binAngle + 0.025 * Math.pow(20 / T, 0.35)) % (Math.PI * 2);
+
+    const cx = w * 0.5, cy = h * 0.54;
+    const maxPx = Math.min(w, h) * 0.38;
+    const scale = maxPx / Math.max(a1, a2, 5);
+
+    const r1Px = a1 * scale;
+    const r2Px = a2 * scale;
+
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(cx, cy, r1Px, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
+    ctx.beginPath(); ctx.arc(cx, cy, r2Px, 0, Math.PI * 2); ctx.stroke();
+
+    const x1 = cx + Math.cos(binAngle) * r1Px;
+    const y1 = cy + Math.sin(binAngle) * r1Px;
+    const x2 = cx - Math.cos(binAngle) * r2Px;
+    const y2 = cy - Math.sin(binAngle) * r2Px;
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - 7, cy); ctx.lineTo(cx + 7, cy);
+    ctx.moveTo(cx, cy - 7); ctx.lineTo(cx, cy + 7);
+    ctx.stroke();
+
+    const sz1 = Math.min(18, 6 + Math.pow(m1, 0.55) * 4);
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(x1, y1, sz1, 0, Math.PI * 2); ctx.fill();
+
+    const sz2 = Math.min(16, 5 + Math.pow(m2, 0.55) * 4);
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(x2, y2, sz2, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#34d399';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('Massa markazi', cx + 10, cy - 8);
+    ctx.fillStyle = '#bae6fd';
+    ctx.fillText(`m₁ = ${m1.toFixed(2)} M☉`, x1 + sz1 + 6, y1 + 4);
+    ctx.fillStyle = '#fef08a';
+    ctx.fillText(`m₂ = ${m2.toFixed(2)} M☉`, x2 + sz2 + 6, y2 + 4);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. O‘zaro gravitatsion tortishish kuchi ta’sirida umumiy massa markazi atrofida aylanuvchi yulduzlar juftligi nima deb ataladi?",
+      opts: ["Optik qo‘shaloq yulduzlar", "Fizik qo‘shaloq yulduzlar", "Yulduz to‘dalari"],
+      ans: 1,
+      exp: "Fizik qo‘shaloq yulduzlar umumiy gravitatsiya bilan bog‘langan va umumiy massa markazi atrofida harakatlanadi."
+    },
+    {
+      q: "2. Teleskopda bitta yulduzdek ko‘rinadigan, lekin Dopler effekti tufayli spektral chiziqlari davriy ikkilanadigan qo‘shaloq yulduzlar qanday ataladi?",
+      opts: ["Vizual qo‘shaloq yulduzlar", "Spektral qo‘shaloq yulduzlar", "Optik qo‘shaloq yulduzlar"],
+      ans: 1,
+      exp: "Spektral qo‘shaloq yulduzlar orbital nur tezligi v_r o‘zgarishidan yuzaga keladigan Dopler siljishi orqali aniqlanadi."
+    },
+    {
+      q: "3. Persey yulduz turkumidagi Algol (β Persey) qaysi turdagi qo‘shaloq yulduzlarga klassik misol bo‘ladi?",
+      opts: ["Tutiluvchi qo‘shaloq yulduzlar", "Optik qo‘shaloq yulduzlar", "Pulsarlar"],
+      ans: 0,
+      exp: "Algol tizimida orbita tekisligi ko‘rish nuriga yaqin yotgani uchun yulduzlar bir-birini davriy to‘sib qo‘yadi."
+    },
+    {
+      q: "4. Tutiluvchi qo‘shaloq yulduzlarning ravshanlik egri chizig‘ida chuqurroq bo‘lgan «bosh minimum» qachon kuzatiladi?",
+      opts: ["Sovuq yulduz qaynoq yulduzni to‘sib qo‘yganda", "Qaynoq yulduz sovuq yulduzni to‘sib qo‘yganda", "Ikkala yulduz yonma-yon turganda"],
+      ans: 0,
+      exp: "Sirt birligidan ko‘proq energiya chiqaruvchi qaynoq yulduz to‘silganda umumiy ravshanlik keskin pasayadi."
+    },
+    {
+      q: "5. Yulduzlarning massasini bevosita aniqlashning yagona aniq astrofizik usuli qaysi?",
+      opts: ["Yulduz rangiga qarab", "Fizik qo‘shaloq yulduzlarga Keplerning umumlashgan uchinchi qonunini qo‘llash", "Yulduzning yillik parallaksini o‘lchash"],
+      ans: 1,
+      exp: "Keplerning umumlashgan 3-qonuni (m₁ + m₂ = a³ / T²) orqali qo‘shaloq yulduzlar massasi aniq hisoblanadi."
+    },
+    {
+      q: "6. Qo‘shaloq yulduz komponentlari orasidagi o‘rtacha masofa a = 10 a.b., aylanish davri esa T = 20 yil ga teng. Tizimning umumiy massasi (m₁ + m₂) necha Quyosh massasiga teng?",
+      opts: ["2.5 M☉", "5.0 M☉", "10.0 M☉"],
+      ans: 0,
+      exp: "m₁ + m₂ = a³ / T² = 10³ / 20² = 1000 / 400 = 2.5 M☉."
+    },
+    {
+      q: "7. Qo‘shaloq yulduz tizimida birinchi yulduz umumiy massa markazidan ikkinchi yulduzga qaraganda 3 marta yaqinroq (a₂ = 3 a₁) joylashgan. Ularning massalari nisbati qanday?",
+      opts: ["m₁ = 3 m₂", "m₂ = 3 m₁", "m₁ = m₂"],
+      ans: 0,
+      exp: "Massa markazi sharti m₁ a₁ = m₂ a₂ dan m₁ / m₂ = a₂ / a₁ = 3 kelib chiqadi."
+    },
+    {
+      q: "8. Spektral qo‘shaloq yulduzda birinchi komponentning orbital tezligi v₁ = 40 km/s, ikkinchisiniki v₂ = 120 km/s. Ularning massalari nisbati (m₁ / m₂) nimaga teng?",
+      opts: ["3.0 (m₁ = 3 m₂)", "0.33", "1.0"],
+      ans: 0,
+      exp: "Massa markazi atrofida tezliklar massalarga teskari proporsional: m₁ / m₂ = v₂ / v₁ = 120 / 40 = 3.0."
+    },
+    {
+      q: "9. Asosiy ketma-ketlik yulduzlarining massasi (m) va yorqinligi (L) o‘rtasidagi bog‘liqlik qaysi formula bilan ifodalanadi?",
+      opts: ["L / L☉ ≈ (m / M☉)^3.5", "L / L☉ = m / M☉", "L / L☉ = (M☉ / m)²"],
+      ans: 0,
+      exp: "Eddingtonning massa–yorqinlik qonuniga ko‘ra yorqinlik massaning ~3.5-darajasiga proporsional."
+    },
+    {
+      q: "10. Asosiy ketma-ketlikda massasi Quyosh massasidan 2 marta katta (m = 2 M☉) bo‘lgan yulduzning yorqinligi Quyoshnikidan taxminan necha marta katta?",
+      opts: ["2 marta", "11.3 marta (2^3.5)", "100 marta"],
+      ans: 1,
+      exp: "L / L☉ ≈ 2^3.5 = 8 × √2 ≈ 11.3 L☉."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawEclipsingTab(w, h);
+      else if (activeTab === 2) drawSpectralBinaryTab(w, h);
+      else if (activeTab === 3) drawBinaryTab(w, h);
+      else drawEclipsingTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
