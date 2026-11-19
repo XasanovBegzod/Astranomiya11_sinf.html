@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-Sinf Astronomiya | 1-CHSB (40 ball) — Interaktiv Simulyatsiya va Imtihon</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.92);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 44px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand h1 { font-size: 1.04rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .hud-badges { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .sec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sec-title { font-size: 1.04rem; font-weight: 700; color: var(--accent); }
+    .sec-pts {
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid var(--accent);
+      color: #e0f2fe;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 850px) { .test-grid { grid-template-columns: 1fr; } }
+
+    .q-item {
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 10px;
+      padding: 13px;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .q-item p { font-weight: 600; color: #f8fafc; margin-bottom: 8px; }
+
+    .opt-lbl {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 5px 8px;
+      margin-top: 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #cbd5e1;
+      transition: 0.15s;
+    }
+
+    .opt-lbl:hover { background: rgba(56, 189, 248, 0.12); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+    .match-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+      font-size: 0.85rem;
+    }
+
+    .match-row:last-child { border-bottom: none; }
+
+    select, input[type="number"] {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #fff;
+      padding: 6px 9px;
+      border-radius: 7px;
+      font-size: 0.84rem;
+      outline: none;
+    }
+
+    select { max-width: 260px; width: 100%; }
+    select:focus, input:focus { border-color: var(--accent); }
+
+    .sim-box {
+      background: #02050c;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    canvas { width: 100%; height: 225px; display: block; border-radius: 8px; }
+
+    .sim-ctrl {
+      width: 100%;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    input[type="range"] { flex: 1; accent-color: var(--accent); cursor: pointer; }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-size: 0.83rem;
+      padding: 9px 12px;
+      border-radius: 7px;
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 3px solid var(--gold);
+      color: #fde68a;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .submit-bar {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 12px 26px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+      transition: 0.2s;
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.08); }
+
+    .btn-sec {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .result-modal {
+      background: rgba(13, 21, 38, 0.96);
+      border: 2px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 24px;
+      text-align: center;
+      display: none;
+    }
+
+    .result-modal h2 { color: var(--emerald); font-size: 1.35rem; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>11-SINF ASTRONOMIYA | 1-CHSB (Choraklik summativ baholash)</h1>
+    <p>I Chorak: Sferik astronomiya, Vaqt, Tutilishlar, Kepler qonunlari va Kosmik tezliklar</p>
+  </div>
+  <div class="hud-badges">
+    <div class="pill" id="timerBox">⏱ Vaqt: 45:00</div>
+    <div class="pill" id="liveScorePill" style="color:#34d399;">Maksimal ball: 40 ball</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- NATIJA PANELI -->
+  <div id="resultBox" class="result-modal">
+    <h2 id="finalScoreTitle">1-CHSB Natijasi: 0 / 40 ball (0%)</h2>
+    <p id="finalGradeDesc" style="color:#cbd5e1; font-size:0.92rem;"></p>
+  </div>
+
+  <!-- ==================== 1-BO'LIM: TEST TOPSHIRIQLARI (15 BALL) ==================== -->
+  <section class="section-card">
+    <div class="sec-header">
+      <span class="sec-title">1-bo‘lim. Yopiq test topshiriqlari (10 ta savol)</span>
+      <span class="sec-pts">15 ball (10 × 1.5 ball)</span>
+    </div>
+    <div class="test-grid" id="testContainer"></div>
+    <div class="feedback" id="fbSec1"></div>
+  </section>
+
+  <!-- ==================== 2-BO'LIM: MOSLASHTIRISH VA TUTILISHLAR SIMULYATORI (10 BALL) ==================== -->
+  <section class="section-card">
+    <div class="sec-header">
+      <span class="sec-title">2-bo‘lim. Moslashtirish va Tutilishlar geometriyasi</span>
+      <span class="sec-pts">10 ball (5 + 5)</span>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <p style="font-weight:700; color:#38bdf8; margin-bottom:8px; font-size:0.9rem;">2.1. Quyosh va Oy tutilishlari shartlarini moslashtiring (5 ball):</p>
+        <div class="match-row">
+          <span>1. Quyosh tutilishi yuz beradigan Oy fazasi</span>
+          <select id="m21_1">
+            <option value="">— Tanlang —</option>
+            <option value="new">Yangi oy fazasi (Oy Yer va Quyosh orasida)</option>
+            <option value="full">To‘lin oy fazasi (Yer Quyosh va Oy orasida)</option>
+            <option value="nodes">Oy orbitasi tugunlari yaqini (±17°)</option>
+            <option value="apogee">Oy apogeyda (ko‘rinma o‘lchami kichik)</option>
+            <option value="umbra">Yerning to‘liq soyasi (umbra)</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>2. Oy tutilishi yuz beradigan Oy fazasi</span>
+          <select id="m21_2">
+            <option value="">— Tanlang —</option>
+            <option value="new">Yangi oy fazasi (Oy Yer va Quyosh orasida)</option>
+            <option value="full">To‘lin oy fazasi (Yer Quyosh va Oy orasida)</option>
+            <option value="nodes">Oy orbitasi tugunlari yaqini (±17°)</option>
+            <option value="apogee">Oy apogeyda (ko‘rinma o‘lchami kichik)</option>
+            <option value="umbra">Yerning to‘liq soyasi (umbra)</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>3. Har oyda tutilish bo‘lmasligining sababi</span>
+          <select id="m21_3">
+            <option value="">— Tanlang —</option>
+            <option value="new">Yangi oy fazasi</option>
+            <option value="full">To‘lin oy fazasi</option>
+            <option value="nodes">Oy orbitasi ekliptikaga 5°09′ og‘gan (tugunlar sharti)</option>
+            <option value="apogee">Oy apogeyda</option>
+            <option value="umbra">Yerning to‘liq soyasi</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>4. Halqasimon Quyosh tutilishi sababi</span>
+          <select id="m21_4">
+            <option value="">— Tanlang —</option>
+            <option value="new">Yangi oy fazasi</option>
+            <option value="full">To‘lin oy fazasi</option>
+            <option value="nodes">Tugunlar sharti</option>
+            <option value="apogee">Oy apogeyda bo‘lib, soya konusi Yerga yetmaydi</option>
+            <option value="umbra">Yerning to‘liq soyasi</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>5. To‘liq Oy tutilishida Oy kiradigan hudud</span>
+          <select id="m21_5">
+            <option value="">— Tanlang —</option>
+            <option value="new">Yangi oy fazasi</option>
+            <option value="full">To‘lin oy fazasi</option>
+            <option value="nodes">Tugunlar sharti</option>
+            <option value="apogee">Oy apogeyda</option>
+            <option value="umbra">Yerning to‘liq soyasi (umbra) ichiga</option>
+          </select>
+        </div>
+
+        <p style="font-weight:700; color:#fbbf24; margin:14px 0 8px; font-size:0.9rem;">2.2. Sayyoralar konfiguratsiyalarini moslashtiring (5 ball):</p>
+        <div class="match-row">
+          <span>1. Qarama-qarshilik (oppozitsiya)</span>
+          <select id="m22_1">
+            <option value="">— Tanlang —</option>
+            <option value="opp">Tashqi sayyora Quyoshga qarama-qarshi nuqtada</option>
+            <option value="inf">Ichki sayyora Yer va Quyosh orasida</option>
+            <option value="sup">Sayyora Quyosh ortida bir to‘g‘ri chiziqda</option>
+            <option value="elo">Ichki sayyoraning Quyoshdan eng katta burchak uzoqligi</option>
+            <option value="quad">Sayyora Quyoshdan 90° burchak masofada</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>2. Quyi birlashish</span>
+          <select id="m22_2">
+            <option value="">— Tanlang —</option>
+            <option value="opp">Tashqi sayyora Quyoshga qarama-qarshi nuqtada</option>
+            <option value="inf">Ichki sayyora Yer va Quyosh orasida</option>
+            <option value="sup">Sayyora Quyosh ortida bir to‘g‘ri chiziqda</option>
+            <option value="elo">Ichki sayyoraning Quyoshdan eng katta burchak uzoqligi</option>
+            <option value="quad">Sayyora Quyoshdan 90° burchak masofada</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>3. Yuqori birlashish</span>
+          <select id="m22_3">
+            <option value="">— Tanlang —</option>
+            <option value="opp">Tashqi sayyora Quyoshga qarama-qarshi nuqtada</option>
+            <option value="inf">Ichki sayyora Yer va Quyosh orasida</option>
+            <option value="sup">Sayyora Quyosh ortida bir to‘g‘ri chiziqda</option>
+            <option value="elo">Ichki sayyoraning Quyoshdan eng katta burchak uzoqligi</option>
+            <option value="quad">Sayyora Quyoshdan 90° burchak masofada</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>4. Maksimal elongatsiya</span>
+          <select id="m22_4">
+            <option value="">— Tanlang —</option>
+            <option value="opp">Tashqi sayyora Quyoshga qarama-qarshi nuqtada</option>
+            <option value="inf">Ichki sayyora Yer va Quyosh orasida</option>
+            <option value="sup">Sayyora Quyosh ortida bir to‘g‘ri chiziqda</option>
+            <option value="elo">Ichki sayyoraning Quyoshdan eng katta burchak uzoqligi</option>
+            <option value="quad">Sayyora Quyoshdan 90° burchak masofada</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <span>5. Kvadratura</span>
+          <select id="m22_5">
+            <option value="">— Tanlang —</option>
+            <option value="opp">Tashqi sayyora Quyoshga qarama-qarshi nuqtada</option>
+            <option value="inf">Ichki sayyora Yer va Quyosh orasida</option>
+            <option value="sup">Sayyora Quyosh ortida bir to‘g‘ri chiziqda</option>
+            <option value="elo">Ichki sayyoraning Quyoshdan eng katta burchak uzoqligi</option>
+            <option value="quad">Sayyora Quyoshdan 90° burchak masofada</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sim-box">
+        <canvas id="cEclipse"></canvas>
+        <div class="sim-ctrl">
+          <span>Tutilish rejimi: <strong id="eclLbl" style="color:#fbbf24;">Quyosh tutilishi (Yangi oy)</strong></span>
+          <input type="range" id="eclSl" min="0" max="1" step="1" value="0" />
+        </div>
+      </div>
+    </div>
+    <div class="feedback" id="fbSec2"></div>
+  </section>
+
+  <!-- ==================== 3-BO'LIM: HISOBLASH MASALALARI (15 BALL) ==================== -->
+  <section class="section-card">
+    <div class="sec-header">
+      <span class="sec-title">3-bo‘lim. Amaliy va hisoblash masalalari (3 ta masala)</span>
+      <span class="sec-pts">15 ball (3 × 5 ball)</span>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="problem-box">
+          <strong>1-masala (5 ball — Yoritgich kulminatsiyasi):</strong> Toshkent shahrining geografik kengligi <em>φ = 41°20′</em>. Og‘ishi <em>δ = +28°40′</em> bo‘lgan yulduzning janub tomondagi yuqori kulminatsiya balandligini (<em>h_max</em>) graduslarda hisoblang.<br>
+          Javob: <em>h_max</em> = <input type="number" id="p1" step="0.1" placeholder="gradus" style="width:110px; margin-top:6px;" /> °
+        </div>
+
+        <div class="problem-box">
+          <strong>2-masala (5 ball — Keplerning III qonuni):</strong> Quyosh atrofida aylanayotgan asteroid orbitasining katta yarim o‘qi <em>a = 4 a.b.</em> ga teng. Asteroidning siderik aylanish davrini (<em>T</em>) Yer yillarida hisoblang.<br>
+          Javob: <em>T</em> = <input type="number" id="p2" step="0.1" placeholder="yil" style="width:110px; margin-top:6px;" /> yil
+        </div>
+
+        <div class="problem-box" style="margin-bottom:0;">
+          <strong>3-masala (5 ball — Kosmik tezliklar):</strong> Yer sirti yaqinida birinchi kosmik tezlik <em>v_I(0) = 7.91 km/s</em>. Yer markazidan <em>r = 2 R_Yer</em> masofada (Yer sirtidan 1 radius balandlikda) doiraviy orbita bo‘ylab uchayotgan sun’iy yo‘ldoshning orbital tezligini (<em>v</em>) km/s larda hisoblang.<br>
+          Javob: <em>v</em> = <input type="number" id="p3" step="0.01" placeholder="km/s" style="width:110px; margin-top:6px;" /> km/s
+        </div>
+      </div>
+
+      <div class="sim-box">
+        <canvas id="cOrbit"></canvas>
+        <div class="sim-ctrl">
+          <span>Orbita radiusi (r / R_Yer): <strong id="orbLbl" style="color:#34d399;">2.0 R_Yer (v = 5.59 km/s)</strong></span>
+          <input type="range" id="orbSl" min="1.0" max="4.0" step="0.1" value="2.0" />
+        </div>
+      </div>
+    </div>
+    <div class="feedback" id="fbSec3"></div>
+  </section>
+
+  <!-- YAKUNLASH TUGMALARI -->
+  <div class="submit-bar">
+    <button class="btn-primary" onclick="gradeCHSB()">✅ 1-CHSB ni yakunlash va Ballni hisoblash</button>
+    <button class="btn-sec" onclick="resetCHSB()">🔄 Qayta ishlash</button>
+  </div>
+
+</div>
+
+<script>
+  // ==================== 45 DAQIQALIK TAYMER ====================
+  let secLeft = 45 * 60;
+  setInterval(() => {
+    if (secLeft > 0) {
+      secLeft--;
+      const m = String(Math.floor(secLeft / 60)).padStart(2, '0');
+      const s = String(secLeft % 60).padStart(2, '0');
+      document.getElementById('timerBox').textContent = `⏱ Vaqt: ${m}:${s}`;
+    }
+  }, 1000);
+
+  // ==================== 1-BO'LIM: 10 TA TEST SAVOLI ====================
+  const testData = [
+    {
+      q: "1. Ekvatorial koordinatalar sistemasida yoritgichning osmon ekvatoridan burchak uzoqligi nima deb ataladi?",
+      opts: ["To‘g‘ri chiqish (α)", "Og‘ish (δ)", "Azimut (A)"],
+      ans: 1
+    },
+    {
+      q: "2. Yulduz sutkasi o‘rtacha quyosh sutkasidan taxminan qanchaga qisqa?",
+      opts: ["3 daqiqa 56 soniyaga", "1 soat 15 daqiqaga", "24 daqiqaga"],
+      ans: 0
+    },
+    {
+      q: "3. Grigorian kalendarida har 400 yilda nechta kabisa yili bo‘ladi?",
+      opts: ["100 ta", "97 ta", "96 ta"],
+      ans: 1
+    },
+    {
+      q: "4. Quyoshning yillik ko‘rinma harakatida bahorgi tengkunlik nuqtasi (♈) qaysi sanaga to‘g‘ri keladi?",
+      opts: ["22-iyun", "21-mart", "22-dekabr"],
+      ans: 1
+    },
+    {
+      q: "5. Quyosh tizimidagi barcha sayyoralar Quyosh atrofida qanday trayektoriya bo‘ylab harakatlanadi (Keplerning I qonuni)?",
+      opts: ["Fokuslaridan birida Quyosh joylashgan ellipslar bo‘ylab", "Markazida Yer joylashgan aylanalar bo‘ylab", "Parabolalar bo‘ylab"],
+      ans: 0
+    },
+    {
+      q: "6. Sayyora orbitasining Quyoshga eng yaqin nuqtasi nima deb ataladi?",
+      opts: ["Afeliy", "Perigeliy", "Zenit"],
+      ans: 1
+    },
+    {
+      q: "7. Sayyora orbitasi bo‘ylab harakatlanganda uning eng katta chiziqli tezligi qaysi nuqtada kuzatiladi (Keplerning II qonuni)?",
+      opts: ["Afeliyda", "Perigeliyda", "Barcha nuqtalarda bir xil"],
+      ans: 1
+    },
+    {
+      q: "8. Yer sirti yaqinida ikkinchi kosmik (parabolik) tezlik nimaga teng?",
+      opts: ["7.91 km/s", "11.2 km/s", "16.7 km/s"],
+      ans: 1
+    },
+    {
+      q: "9. Oyning Yer atrofida yulduzlarga nisbatan to‘liq aylanish davri (siderik oy) qanchaga teng?",
+      opts: ["27.32 sutka", "29.53 sutka", "365.25 sutka"],
+      ans: 0
+    },
+    {
+      q: "10. Yoritgich sutkalik harakatida osmon meridianidan o‘tish hodisasi nima deb ataladi?",
+      opts: ["Elongatsiya", "Kulminatsiya", "Pretsessiya"],
+      ans: 1
+    }
+  ];
+
+  const testBox = document.getElementById('testContainer');
+  testData.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    let html = `<p>${item.q}</p>`;
+    item.opts.forEach((opt, oi) => {
+      html += `<label class="opt-lbl"><input type="radio" name="tq${idx}" value="${oi}" /> <span>${opt}</span></label>`;
+    });
+    div.innerHTML = html;
+    testBox.appendChild(div);
+  });
+
+  // ==================== HTML5 CANVAS SIMULYATSIYALAR ====================
+  let satAngle = 0;
+
+  function setupCanvas(id) {
+    const c = document.getElementById(id);
+    const rect = c.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    if (c.width !== Math.round(rect.width * dpr)) {
+      c.width = Math.round(rect.width * dpr);
+      c.height = Math.round(rect.height * dpr);
+    }
+    const ctx = c.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: rect.width, h: rect.height };
+  }
+
+  // Tutilishlar geometriyasi Canvas
+  function drawEclipse() {
+    const { ctx, w, h } = setupCanvas('cEclipse');
+    ctx.clearRect(0, 0, w, h);
+    const mode = parseInt(document.getElementById('eclSl').value, 10);
+    document.getElementById('eclLbl').textContent = mode === 0 ? 'Quyosh tutilishi (Yangi oy)' : 'Oy tutilishi (To‘lin oy)';
+
+    const sunX = 48, cy = h * 0.52, sunR = 26;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(sunX, cy, sunR, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a'; ctx.font = '11px sans-serif'; ctx.fillText('Quyosh', sunX - 20, cy + sunR + 15);
+
+    if (mode === 0) {
+      // Quyosh tutilishi: Quyosh -> Oy -> Yer
+      const moonX = w * 0.52, moonR = 9;
+      const earthX = w * 0.84, earthR = 18;
+
+      // Soya konusi
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.22)';
+      ctx.beginPath();
+      ctx.moveTo(sunX, cy - sunR);
+      ctx.lineTo(earthX, cy);
+      ctx.lineTo(sunX, cy + sunR);
+      ctx.fill();
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.beginPath(); ctx.arc(moonX, cy, moonR, 0, Math.PI * 2); ctx.fill();
+      ctx.fillText('Oy (Yangi oy)', moonX - 30, cy - 16);
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath(); ctx.arc(earthX, cy, earthR, 0, Math.PI * 2); ctx.fill();
+      ctx.fillText('Yer', earthX - 10, cy + earthR + 15);
+    } else {
+      // Oy tutilishi: Quyosh -> Yer -> Oy
+      const earthX = w * 0.56, earthR = 18;
+      const moonX = w * 0.85, moonR = 9;
+
+      // Yer soya konusi (umbra)
+      ctx.fillStyle = 'rgba(244, 63, 94, 0.22)';
+      ctx.beginPath();
+      ctx.moveTo(earthX, cy - earthR);
+      ctx.lineTo(w - 12, cy - 6);
+      ctx.lineTo(w - 12, cy + 6);
+      ctx.lineTo(earthX, cy + earthR);
+      ctx.fill();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath(); ctx.arc(earthX, cy, earthR, 0, Math.PI * 2); ctx.fill();
+      ctx.fillText('Yer', earthX - 10, cy + earthR + 15);
+
+      ctx.fillStyle = '#fb7185';
+      ctx.beginPath(); ctx.arc(moonX, cy, moonR, 0, Math.PI * 2); ctx.fill();
+      ctx.fillText('Oy (To‘lin oy)', moonX - 30, cy - 16);
+    }
+  }
+
+  // Orbital tezlik simulyatori Canvas
+  function drawOrbit() {
+    const { ctx, w, h } = setupCanvas('cOrbit');
+    ctx.clearRect(0, 0, w, h);
+    const ratio = parseFloat(document.getElementById('orbSl').value);
+    const vOrb = 7.91 / Math.sqrt(ratio);
+    document.getElementById('orbLbl').textContent = `${ratio.toFixed(1)} R_Yer (v = ${vOrb.toFixed(2)} km/s)`;
+
+    const cx = w * 0.5, cy = h * 0.52;
+    const earthPx = 22;
+    const orbPx = earthPx * ratio;
+
+    // Orbita aylanasi
+    ctx.strokeStyle = 'rgba(52, 211, 153, 0.5)';
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, orbPx, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Yer shari
+    ctx.fillStyle = '#0284c7';
+    ctx.beginPath(); ctx.arc(cx, cy, earthPx, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#7dd3fc'; ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.font = '10px sans-serif'; ctx.fillText('Yer', cx - 8, cy + 3);
+
+    // Sun'iy yo'ldosh
+    satAngle = (satAngle + 0.035 / Math.pow(ratio, 1.5)) % (Math.PI * 2);
+    const sx = cx + Math.cos(satAngle) * orbPx;
+    const sy = cy + Math.sin(satAngle) * orbPx;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(sx, sy, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a';
+    ctx.fillText(`v = ${vOrb.toFixed(2)} km/s`, sx + 8, sy + 4);
+  }
+
+  function loop() {
+    drawEclipse();
+    drawOrbit();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // ==================== 1-CHSB BAHOLASH TIZIMI (40 BALL) ====================
+  function showFb(id, html, ok) {
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    el.style.borderLeftColor = ok ? '#34d399' : '#fb7185';
+    el.style.color = ok ? '#a7f3d0' : '#fecdd3';
+    el.innerHTML = html;
+  }
+
+  function gradeCHSB() {
+    let total = 0;
+
+    // 1-bo'lim (10 * 1.5 = 15 ball)
+    let s1 = 0;
+    testData.forEach((item, idx) => {
+      const sel = document.querySelector(`input[name="tq${idx}"]:checked`);
+      if (sel && parseInt(sel.value, 10) === item.ans) s1 += 1.5;
+    });
+    total += s1;
+    showFb('fbSec1', `1-bo‘lim bali: <strong>${s1} / 15 ball</strong>. Kalit: 1-B, 2-A, 3-B, 4-B, 5-A, 6-B, 7-B, 8-B, 9-A, 10-B.`, s1 >= 12);
+
+    // 2-bo'lim (10 ball)
+    let s2 = 0;
+    if (document.getElementById('m21_1').value === 'new') s2 += 1;
+    if (document.getElementById('m21_2').value === 'full') s2 += 1;
+    if (document.getElementById('m21_3').value === 'nodes') s2 += 1;
+    if (document.getElementById('m21_4').value === 'apogee') s2 += 1;
+    if (document.getElementById('m21_5').value === 'umbra') s2 += 1;
+
+    if (document.getElementById('m22_1').value === 'opp') s2 += 1;
+    if (document.getElementById('m22_2').value === 'inf') s2 += 1;
+    if (document.getElementById('m22_3').value === 'sup') s2 += 1;
+    if (document.getElementById('m22_4').value === 'elo') s2 += 1;
+    if (document.getElementById('m22_5').value === 'quad') s2 += 1;
+    total += s2;
+    showFb('fbSec2', `2-bo‘lim bali: <strong>${s2} / 10 ball</strong>. Tutilishlar: 1-Yangi oy, 2-To‘lin oy, 3-Tugunlar, 4-Apogey, 5-Umbra.`, s2 >= 8);
+
+    // 3-bo'lim (3 * 5 = 15 ball)
+    let s3 = 0;
+    const v1 = parseFloat(document.getElementById('p1').value);
+    const v2 = parseFloat(document.getElementById('p2').value);
+    const v3 = parseFloat(document.getElementById('p3').value);
+
+    // 1-masala: 90° - 41°20' + 28°40' = 77°20' ≈ 77.33°
+    if (!isNaN(v1) && Math.abs(v1 - 77.33) <= 0.4) s3 += 5;
+    // 2-masala: sqrt(4^3) = sqrt(64) = 8 yil
+    if (!isNaN(v2) && Math.abs(v2 - 8.0) <= 0.1) s3 += 5;
+    // 3-masala: 7.91 / sqrt(2) ≈ 5.59 km/s
+    if (!isNaN(v3) && Math.abs(v3 - 5.59) <= 0.08) s3 += 5;
+    total += s3;
+
+    showFb('fbSec3',
+      `3-bo‘lim bali: <strong>${s3} / 15 ball</strong>.<br>` +
+      `• 1-masala: h_max = 90° − 41°20′ + 28°40′ = 77°20′ (<strong>77.33°</strong>).<br>` +
+      `• 2-masala: T = √(a³) = √(4³) = √64 = <strong>8 yil</strong>.<br>` +
+      `• 3-masala: v = v_I(0) / √2 = 7.91 / 1.414 ≈ <strong>5.59 km/s</strong>.`,
+      s3 === 15
+    );
+
+    const pct = Math.round((total / 40) * 100);
+    const resBox = document.getElementById('resultBox');
+    resBox.style.display = 'block';
+    document.getElementById('finalScoreTitle').textContent = `1-CHSB Yakuniy natija: ${total} / 40 ball (${pct}%)`;
+    document.getElementById('liveScorePill').textContent = `Ball: ${total} / 40`;
+
+    let grade = "Qoniqarsiz (2 baho) — I chorak mavzularini qayta takrorlang.";
+    if (pct >= 86) grade = "A’lo (5 baho)! 1-chorak dasturini mukammal o‘zlashtirgansiz.";
+    else if (pct >= 71) grade = "Yaxshi (4 baho)! Asosiy qonuniyatlar va hisob-kitoblarni yaxshi bilasiz.";
+    else if (pct >= 56) grade = "Qoniqarli (3 baho). Masalalar yechishni ko‘proq mashq qiling.";
+    document.getElementById('finalGradeDesc').textContent = grade;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetCHSB() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
+    document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+    document.getElementById('resultBox').style.display = 'none';
+    document.getElementById('liveScorePill').textContent = 'Maksimal ball: 40 ball';
+  }
+</script>
+</body>
+</html>
