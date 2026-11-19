@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>18-Mavzu (43–44-§): Kometalar, meteorlar va meteoritlar | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.01rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.83rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--accent);
+    }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      main.sim-layout { grid-template-columns: 1fr; }
+    }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      flex: 1;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { max-height: none; }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 8px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.16);
+    }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc {
+      font-size: 0.82rem;
+      line-height: 1.52;
+      color: #cbd5e1;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 11px;
+      margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>18-MAVZU (43–44-§). Kometalar («dumli yulduzlar»). Meteorlar («uchar yulduzlar») va meteoritlar</h1>
+    <p>11-sinf Astronomiya | IV Bob: Quyosh sistemasi jismlarining fizik tabiati</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">43-§ Kometalar va Quyosh shamoli</button>
+    <button class="tab-btn" onclick="setTab(2)">44-§ Meteor oqimlari va Radiant</button>
+    <button class="tab-btn" onclick="setTab(3)">44-§ Meteorlar va Meteoritlar</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>43-§. Kometalar («dumli yulduzlar»): tuzilishi, orbitalari va Bredixin dum tasnifi</h2>
+    <p><strong>Kometalar</strong> — Quyosh atrofida cho‘ziq elliptik, parabolik yoki giperbolik orbitalar bo‘ylab harakatlanuvchi muz-chang jismlardir. Qisqa davrli kometalar ($T < 200\text{ yil}$, masalan, Galley kometasi $T = 75.1\text{ yil}$, Enke kometasi $T = 3.3\text{ yil}$) <strong>Koyper belbog‘i</strong>dan, uzoq davrli kometalar esa <strong>Oort buluti</strong>dan ($2000\text{–}100\,000\text{ a.b.}$) keladi.</p>
+    <ul>
+      <li><strong>Yadro va Koma:</strong> Yadro ($1\text{–}50\text{ km}$) suv muzi, muzlagan gazlar ($\text{CO}_2, \text{CO}, \text{CH}_4, \text{NH}_3$) va changdan iborat. Quyoshga $3\text{ a.b.}$ dan yaqinlashganda sublimatsiya natijasida $10^5\text{–}10^6\text{ km}$ o‘lchamli gaz-chang qobig‘i — <strong>koma</strong> hosil bo‘ladi.</li>
+      <li><strong>Kometaning dumi (har doim Quyoshga teskari):</strong> F. A. Bredixin tasnifiga ko‘ra, <strong>I tur dumi</strong> (to‘g‘ri, zangori-ko‘k ion/plazma dumi) <strong>Quyosh shamoli</strong> ta’sirida, <strong>II tur dumi</strong> (egri, sarg‘ish-oq chang dumi) esa <strong>Quyosh nuri (foton) bosimi</strong> va orbital inersiya ta’sirida hosil bo‘ladi.</li>
+    </ul>
+    <div class="math-banner">
+      q = a(1 − e) &nbsp;|&nbsp; Q = a(1 + e) &nbsp;|&nbsp; T = a^(3/2) &nbsp;|&nbsp; v_per / v_af = Q / q = (1 + e) / (1 − e)
+    </div>
+
+    <div class="problem-box">
+      <strong>1-Masala (Galley kometasi orbitasi va tezliklar nisbati):</strong> Galley kometasi orbitasining katta yarim o‘qi <em>a = 17.8 a.b.</em>, ekssentrisiteti <em>e = 0.967</em>. Perigeliy (q), afeliy (Q) masofalarini, orbital davrini (T) hamda perigeliydagi tezligi afeliydagi tezligidan necha marta katta ekanligini hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) <strong>q = 17.8 × (1 − 0.967) = 0.587 a.b.</strong>; <strong>Q = 17.8 × (1 + 0.967) = 35.01 a.b.</strong>; <strong>T = √(17.8³) ≈ 75.1 yil</strong>.<br>
+        2) Kepler 2-qonunidan: <strong>v_per / v_af = Q / q = 1.967 / 0.033 ≈ 59.6 marta</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>44-§. Meteorlar («uchar yulduzlar»), bolidlar, meteor oqimlari va meteoritlar</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Obyekt / Hodisa</th>
+          <th>Joylashuvi</th>
+          <th>Fizik tabiati</th>
+          <th>Asosiy ko‘rsatkichlari</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Meteor</strong></td><td>Atmosfera ($80\text{–}120\text{ km}$)</td><td>$11.2\text{–}72.8\text{ km/s}$ tezlikda havo siqilishidan yonish</td><td>Qisqa yorug‘ iz («uchar yulduz»)</td></tr>
+        <tr><td><strong>Bolid</strong></td><td>Atmosfera ($30\text{–}100\text{ km}$)</td><td>Yirik meteoroidning portlab parchalanishi</td><td>Veneradan yorqin ($m &lt; -4^m$), tutun izi va gumburlash</td></tr>
+        <tr><td><strong>Meteor oqimi</strong></td><td>Yer orbitasi + Kometa izi</td><td>Parallel meteor izlarining perspektiva bo‘yicha tarqalishi</td><td><strong>Radiant</strong> nuqtasi (Perseidlar, Orionidlar, Leonidlar)</td></tr>
+        <tr><td><strong>Meteorit</strong></td><td>Yer sirti</td><td>Atmosferada to‘liq yonmay qolgan kosmik qoldiq</td><td>Tosh ($\sim 93\%$), Temir ($\sim 6\%$), Temir-tosh ($\sim 1.5\%$)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="problem-box">
+      <strong>2-Masala (Meteorning maksimal kirish tezligi):</strong> Yer orbital tezligi <em>v⊕ = 29.8 km/s</em>, $1\text{ a.b.}$ masofada Quyoshdan parabolik tezlik <em>v_par = 42.1 km/s</em>, Yerning 2-kosmik tezligi <em>v₂,⊕ = 11.2 km/s</em>. Kometa meteoroidi Yerga qarama-qarshi to‘qnashganda maksimal kirish tezligini (v_max) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>v∞ = 42.1 + 29.8 = 71.9 km/s ⇒ v_max = √(71.9² + 11.2²) = √(5295) ≈ 72.8 km/s</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Bolidning kinetik energiyasi):</strong> Radiusi <em>r = 0.50 m</em> va zichligi <em>ρ = 3500 kg/m³</em> bo‘lgan tosh meteoroid Yer atmosferasiga <em>v = 30 km/s</em> tezlik bilan kirdi. Uning massasini va kinetik energiyasini (E_k) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        1) <strong>m = 3500 × (4/3)π × (0.50)³ ≈ 1833 kg</strong>.<br>
+        2) <strong>E_k = ½ m v² = 0.5 × 1833 × (3 × 10⁴)² ≈ 8.25 × 10¹¹ J</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">43-§: Kometalar — Ellips orbita, koma va Quyoshga teskari yo‘nalgan dumlar</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">I tur (ion/plazma) va II tur (chang) dumlari</div>
+    </div>
+    <canvas id="comMetCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 43-§ KOMETALAR VA QUYOSH SHAMOLI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Kometa orbitasi parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Katta yarim o‘q (a, a.b.):</span>
+            <strong id="comAVal">17.8 a.b.</strong>
+          </div>
+          <input type="range" id="comASl" min="3.3" max="28.0" step="0.1" value="17.8" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Ekssentrisitet (e):</span>
+            <strong id="comEVal">0.967</strong>
+          </div>
+          <input type="range" id="comESl" min="0.50" max="0.97" step="0.005" value="0.967" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn active" onclick="setCometPreset(17.8, 0.967)">Galley kometasi (75.1 yil)</button>
+          <button class="btn" onclick="setCometPreset(3.3, 0.85)">Enke kometasi (6.0 yil)</button>
+          <button class="btn" style="grid-column: span 2;" onclick="setCometPreset(25.0, 0.94)">Uzoq cho‘ziq orbita (125 yil)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Orbita va Bredixin dum ko‘rsatkichlari</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Perigeliy masofasi (q):</span><span class="t-val" id="comQOut">0.59 a.b.</span></div>
+          <div class="t-row"><span>Afeliy masofasi (Q):</span><span class="t-val" id="comApOut">35.01 a.b.</span></div>
+          <div class="t-row"><span>Orbital davri (T = a^1.5):</span><span class="t-val" id="comTOut">75.1 yil</span></div>
+          <div class="t-row"><span>Tezliklar nisbati (v_per / v_af):</span><span class="t-val" id="comVratOut">59.6 marta</span></div>
+          <div class="t-row"><span>I tur (ko‘k) / II tur (sariq):</span><span class="t-val">Quyosh shamoli / Foton bosimi</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 44-§ METEOR OQIMLARI VA RADIANT -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Yillik asosiy meteor oqimini tanlang</h3>
+        <div class="btn-grid">
+          <button class="btn active" id="shBtn0" onclick="setShowerIdx(0)">1. Perseidlar (12-avgust)</button>
+          <button class="btn" id="shBtn1" onclick="setShowerIdx(1)">2. Orionidlar (21-oktabr)</button>
+          <button class="btn" id="shBtn2" onclick="setShowerIdx(2)">3. Leonidlar (17-noyabr)</button>
+          <button class="btn" id="shBtn3" onclick="setShowerIdx(3)">4. Geminidlar (14-dekabr)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 id="shTitleOut">1. Perseidlar meteor oqimi</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Maksimum sanasi:</span><span class="t-val" id="shDateOut">11–13 avgust</span></div>
+          <div class="t-row"><span>Radiant yulduz turkumi:</span><span class="t-val" id="shRadOut">Persey (Perseus)</span></div>
+          <div class="t-row"><span>Ona osmon jismi:</span><span class="t-val" id="shParOut">Svift–Tattl kometasi (109P)</span></div>
+          <div class="t-row"><span>Atmosferaga kirish tezligi:</span><span class="t-val" id="shVelOut">59 km/s</span></div>
+          <div class="t-row"><span>Soatlik soni (ZHR):</span><span class="t-val" id="shZhrOut">~100 meteor/soat</span></div>
+        </div>
+        <p class="desc" id="shDescOut" style="margin-top:8px;">
+          Oqimdagi barcha zarrachalar atmosferaga parallel kirsa-da, perspektiva qonuniga ko‘ra ularning yorug‘ izlari osmon sferasida bitta nuqtadan — radiantdan tarqalayotgandek ko‘rinadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: 44-§ METEORLAR VA METEORITLAR -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Meteoroid parametrlari va Tarkibi</h3>
+        <div class="btn-grid" style="margin-bottom:10px;">
+          <button class="btn active" id="matBtn0" onclick="setMatType(0)">Tosh meteoroid (3500 kg/m³)</button>
+          <button class="btn" id="matBtn1" onclick="setMatType(1)">Temir meteoroid (7800 kg/m³)</button>
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Meteoroid radiusi (r, m):</span>
+            <strong id="metRVal">0.50 m</strong>
+          </div>
+          <input type="range" id="metRSl" min="0.02" max="4.0" step="0.02" value="0.50" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Atmosferaga kirish tezligi (v):</span>
+            <strong id="metVVal">30 km/s</strong>
+          </div>
+          <input type="range" id="metVSl" min="12" max="72" step="2" value="30" />
+        </div>
+        <div class="btn-grid">
+          <button class="btn" onclick="setMetPreset(0.04, 60, 0)">Oddiy meteor (r = 4 sm)</button>
+          <button class="btn active" onclick="setMetPreset(0.50, 30, 0)">3-Masala bolidi (r = 0.5 m)</button>
+          <button class="btn" style="grid-column: span 2;" onclick="setMetPreset(3.20, 18, 1)">Temir meteorit va krater (r = 3.2 m)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Energiya va Hodisa tasnifi</h3>
+        <div class="formula-box">
+          m = ρ · (4/3)πr³ &nbsp;|&nbsp; E_k = ½ m v²
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Meteoroid massasi (m):</span><span class="t-val" id="metMOut">1 833 kg</span></div>
+          <div class="t-row"><span>Kinetik energiya (E_k):</span><span class="t-val" id="metEOut">8.25 × 10¹¹ J</span></div>
+          <div class="t-row"><span>TNT ekvivalenti:</span><span class="t-val" id="metTntOut">197 tonna TNT</span></div>
+          <div class="t-row"><span>Kuzatiladigan hodisa:</span><span class="t-val" id="metTypeOut">Yorqin Bolid + Meteorit</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('comMetCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) {
+    document.getElementById(id).classList.toggle('hidden');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "43-§: Kometalar — Cho‘ziq ellips orbita, koma va Quyoshga teskari yo‘nalgan dumlar",
+      "44-§: Meteor oqimlari («yulduz yomg‘irlari») — Radiant nuqtasi va perspektiva effekti",
+      "44-§: Meteorlar, bolidlar va meteoritlar — Atmosferaga kirish va zarba energiyasi",
+      "Bilimlarni tekshirish: 18-Mavzu (43–44-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "I tur (ion/plazma) va II tur (chang) dumlari",
+      "Perseidlar, Orionidlar, Leonidlar, Geminidlar",
+      "Tosh (~93%), Temir (~6%), Temir-tosh (~1.5%)",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 43-§ KOMETALAR VA QUYOSH SHAMOLI ====================
+  let comAngle = 0.5;
+
+  function setCometPreset(a, e) {
+    document.getElementById('comASl').value = a;
+    document.getElementById('comESl').value = e;
+  }
+
+  function drawCometTab(w, h) {
+    const a = parseFloat(document.getElementById('comASl').value);
+    const e = parseFloat(document.getElementById('comESl').value);
+    const q = a * (1 - e);
+    const Q = a * (1 + e);
+    const T = Math.pow(a, 1.5);
+    const vRat = (1 + e) / (1 - e);
+
+    document.getElementById('comAVal').textContent = `${a.toFixed(1)} a.b.`;
+    document.getElementById('comEVal').textContent = e.toFixed(3);
+    document.getElementById('comQOut').textContent = `${q.toFixed(2)} a.b.`;
+    document.getElementById('comApOut').textContent = `${Q.toFixed(2)} a.b.`;
+    document.getElementById('comTOut').textContent = `${T.toFixed(1)} yil`;
+    document.getElementById('comVratOut').textContent = `${vRat.toFixed(1)} marta`;
+
+    const rCurrent = (a * (1 - e * e)) / (1 + e * Math.cos(comAngle));
+    comAngle = (comAngle + 0.024 * Math.pow(a / rCurrent, 1.25)) % (Math.PI * 2);
+
+    const cx = w * 0.52, cy = h * 0.54;
+    const scale = Math.min(w * 0.36, h * 0.36) / a;
+    const rx = a * scale;
+    const ry = a * Math.sqrt(1 - e * e) * scale;
+    const focusOffset = a * e * scale;
+
+    // Ellips orbita
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.stroke();
+
+    // Quyosh (o'ng fokusda)
+    const sunX = cx + focusOffset, sunY = cy;
+    const sg = ctx.createRadialGradient(sunX, sunY, 2, sunX, sunY, 22);
+    sg.addColorStop(0, '#ffffff');
+    sg.addColorStop(0.5, '#facc15');
+    sg.addColorStop(1, 'rgba(250, 204, 21, 0)');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(sunX, sunY, 22, 0, Math.PI * 2); ctx.fill();
+
+    // Kometa koordinatalari
+    const kx = sunX + rCurrent * scale * Math.cos(comAngle);
+    const ky = sunY + rCurrent * scale * Math.sin(comAngle);
+
+    const activity = Math.max(0.08, Math.min(1.0, 4.2 / rCurrent));
+    const tailLen = activity * Math.min(w * 0.24, 155);
+
+    const dx = kx - sunX, dy = ky - sunY;
+    const dist = Math.hypot(dx, dy) || 1;
+    const ux = dx / dist, uy = dy / dist;
+
+    // I tur dumi (To'g'ri ko'k ion/plazma dumi — Quyosh shamoli)
+    const ionGrad = ctx.createLinearGradient(kx, ky, kx + ux * tailLen, ky + uy * tailLen);
+    ionGrad.addColorStop(0, `rgba(56, 189, 248, ${0.88 * activity})`);
+    ionGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.strokeStyle = ionGrad;
+    ctx.lineWidth = 5 * activity + 1;
+    ctx.beginPath(); ctx.moveTo(kx, ky); ctx.lineTo(kx + ux * tailLen, ky + uy * tailLen); ctx.stroke();
+
+    // II tur dumi (Egri sariq chang dumi — foton bosimi)
+    const dustEndX = kx + ux * tailLen * 0.85 - uy * tailLen * 0.28;
+    const dustEndY = ky + uy * tailLen * 0.85 + ux * tailLen * 0.28;
+    const dustGrad = ctx.createLinearGradient(kx, ky, dustEndX, dustEndY);
+    dustGrad.addColorStop(0, `rgba(253, 224, 71, ${0.78 * activity})`);
+    dustGrad.addColorStop(1, 'rgba(253, 224, 71, 0)');
+    ctx.strokeStyle = dustGrad;
+    ctx.lineWidth = 9 * activity + 1;
+    ctx.beginPath();
+    ctx.moveTo(kx, ky);
+    ctx.quadraticCurveTo(kx + ux * tailLen * 0.45, ky + uy * tailLen * 0.45, dustEndX, dustEndY);
+    ctx.stroke();
+
+    // Koma va Yadro
+    const comaR = 4 + activity * 11;
+    ctx.fillStyle = `rgba(186, 230, 253, ${0.45 * activity})`;
+    ctx.beginPath(); ctx.arc(kx, ky, comaR, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(kx, ky, 3.2, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`r = ${rCurrent.toFixed(2)} a.b.`, kx + 10, ky - 10);
+    ctx.fillText('Perigeliy (q)', sunX + q * scale + 6, sunY + 16);
+    ctx.fillText('Afeliy (Q)', cx - rx - 52, cy + 4);
+  }
+
+  // ==================== TAB 2: 44-§ METEOR OQIMLARI VA RADIANT ====================
+  let curShowerIdx = 0;
+
+  const showerData = [
+    {
+      title: "1. Perseidlar meteor oqimi",
+      date: "11–13 avgust",
+      rad: "Persey (Perseus)",
+      parent: "Svift–Tattl kometasi (109P)",
+      vel: "59 km/s",
+      zhr: "~100 meteor/soat",
+      desc: "Eng mashhur yozgi yulduz yomg‘iri. Yer Svift–Tattl kometasi qoldirgan chang izini kesib o‘tganda barcha meteor izlari Persey yulduz turkumidagi radiantdan tarqalayotgandek ko‘rinadi.",
+      col: "#38bdf8", rxFrac: 0.48, ryFrac: 0.42
+    },
+    {
+      title: "2. Orionidlar meteor oqimi",
+      date: "21–22 oktabr",
+      rad: "Orion (Orion)",
+      parent: "Galley kometasi (1P)",
+      vel: "66 km/s (juda tezkor)",
+      zhr: "~25 meteor/soat",
+      desc: "Mashhur Galley kometasi qoldirgan chang zarralari tomonidan hosil qilinadi (may oyidagi Eta-Akvaridlar oqimi ham Galley kometasi bilan bog‘liq).",
+      col: "#34d399", rxFrac: 0.54, ryFrac: 0.50
+    },
+    {
+      title: "3. Leonidlar meteor oqimi",
+      date: "17–18 noyabr",
+      rad: "Asad (Leo)",
+      parent: "Tempel–Tattl kometasi (55P)",
+      vel: "71 km/s (rekord tezlik)",
+      zhr: "~15–20 (har 33 yilda bo‘ron)",
+      desc: "Yerga deyarli peshonama-peshona to‘qnashgani sababli meteorlar 71 km/s ulkan tezlikda kiradi; har 33 yilda soatiga minglab meteorli «yulduz bo‘ronlari»ni keltirib chiqaradi.",
+      col: "#fbbf24", rxFrac: 0.44, ryFrac: 0.46
+    },
+    {
+      title: "4. Geminidlar meteor oqimi",
+      date: "13–14 dekabr",
+      rad: "Javzo (Gemini)",
+      parent: "3200 Faeton asteroidi",
+      vel: "35 km/s",
+      zhr: "~120–150 meteor/soat",
+      desc: "Ona jismi kometa emas, balki «tosh kometa» xususiyatiga ega 3200 Faeton asteroidi bo‘lgan yorqin va zich qishki meteor oqimi.",
+      col: "#a78bfa", rxFrac: 0.52, ryFrac: 0.38
+    }
+  ];
+
+  // Meteor zarralari pooli
+  const showerStreaks = [];
+  for (let i = 0; i < 24; i++) {
+    showerStreaks.push({
+      ang: (i / 24) * Math.PI * 2 + (i % 3) * 0.14,
+      prog: (i * 0.17) % 1.0,
+      spd: 0.012 + (i % 5) * 0.003
+    });
+  }
+
+  function setShowerIdx(idx) {
+    curShowerIdx = idx;
+    for (let i = 0; i < 4; i++) document.getElementById('shBtn' + i).classList.toggle('active', i === idx);
+    const s = showerData[idx];
+    document.getElementById('shTitleOut').textContent = s.title;
+    document.getElementById('shDateOut').textContent = s.date;
+    document.getElementById('shRadOut').textContent = s.rad;
+    document.getElementById('shParOut').textContent = s.parent;
+    document.getElementById('shVelOut').textContent = s.vel;
+    document.getElementById('shZhrOut').textContent = s.zhr;
+    document.getElementById('shDescOut').textContent = s.desc;
+  }
+
+  function drawShowerTab(w, h) {
+    const s = showerData[curShowerIdx];
+    const rx = w * s.rxFrac, ry = h * s.ryFrac;
+    const maxDist = Math.hypot(w, h) * 0.52;
+
+    // Fon yulduzlari
+    ctx.fillStyle = 'rgba(226, 232, 240, 0.45)';
+    for (let k = 0; k < 55; k++) {
+      const sx = ((k * 137) % 100) / 100 * w;
+      const sy = ((k * 251) % 100) / 100 * h;
+      ctx.fillRect(sx, sy, 1.5, 1.5);
+    }
+
+    // Radiant nuqtasi (perspektiva markazi)
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(rx, ry, 14, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(rx, ry, 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText(`RADIANT (${s.rad})`, rx + 18, ry + 4);
+
+    // Radiantdan tarqalayotgan meteor izlari
+    showerStreaks.forEach(st => {
+      st.prog = (st.prog + st.spd) % 1.0;
+      const rStart = 28 + st.prog * (maxDist * 0.72);
+      const rEnd = rStart + 45 + st.prog * 55;
+
+      const x1 = rx + Math.cos(st.ang) * rStart;
+      const y1 = ry + Math.sin(st.ang) * rStart;
+      const x2 = rx + Math.cos(st.ang) * rEnd;
+      const y2 = ry + Math.sin(st.ang) * rEnd;
+
+      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+      grad.addColorStop(0, 'rgba(255,255,255,0)');
+      grad.addColorStop(0.7, s.col);
+      grad.addColorStop(1, '#ffffff');
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.2 + st.prog * 1.8;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    });
+  }
+
+  // ==================== TAB 3: 44-§ METEORLAR VA METEORITLAR ====================
+  let matType = 0; // 0: tosh (3500), 1: temir (7800)
+  let metAnim = 0;
+
+  function setMatType(t) {
+    matType = t;
+    document.getElementById('matBtn0').classList.toggle('active', t === 0);
+    document.getElementById('matBtn1').classList.toggle('active', t === 1);
+  }
+
+  function setMetPreset(r, v, mType) {
+    document.getElementById('metRSl').value = r;
+    document.getElementById('metVSl').value = v;
+    setMatType(mType);
+  }
+
+  function drawMeteorTab(w, h) {
+    const r = parseFloat(document.getElementById('metRSl').value);
+    const vKmS = parseFloat(document.getElementById('metVSl').value);
+    const rho = matType === 0 ? 3500.0 : 7800.0;
+    const m = rho * (4 / 3) * Math.PI * Math.pow(r, 3);
+    const vMS = vKmS * 1000.0;
+    const ek = 0.5 * m * vMS * vMS;
+    const kt = ek / 4.184e12;
+
+    document.getElementById('metRVal').textContent = `${r.toFixed(2)} m`;
+    document.getElementById('metVVal').textContent = `${vKmS} km/s`;
+    document.getElementById('metMOut').textContent = m >= 1000 ? `${(m / 1000).toFixed(2)} tonna` : `${m.toFixed(1)} kg`;
+    document.getElementById('metEOut').textContent = `${ek.toExponential(2)} J`;
+    document.getElementById('metTntOut').textContent = kt < 0.01 ? `${(kt * 1000).toFixed(1)} tonna TNT` : `${kt.toFixed(2)} kilotonna TNT`;
+
+    let evType = "Oddiy Meteor (80–120 km da to‘liq yonadi)";
+    if (m >= 50000) evType = "Super-Bolid + Yirik Meteorit (Krater)";
+    else if (m >= 150) evType = "Yorqin Bolid + Meteorit qoldig‘i";
+    document.getElementById('metTypeOut').textContent = evType;
+
+    metAnim = (metAnim + 0.008 * (vKmS / 22)) % 1.0;
+
+    const groundY = h * 0.82;
+    const atmTopY = h * 0.22;
+
+    const atmGrad = ctx.createLinearGradient(0, atmTopY, 0, groundY);
+    atmGrad.addColorStop(0, 'rgba(2, 6, 23, 0)');
+    atmGrad.addColorStop(0.5, 'rgba(14, 165, 233, 0.16)');
+    atmGrad.addColorStop(1, 'rgba(56, 189, 248, 0.35)');
+    ctx.fillStyle = atmGrad;
+    ctx.fillRect(0, atmTopY, w, groundY - atmTopY);
+
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(0, groundY, w, h - groundY);
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, groundY); ctx.lineTo(w, groundY); ctx.stroke();
+
+    const reachesGround = m >= 150;
+    const startX = w * 0.18, startY = h * 0.14;
+    const endX = w * 0.78, endY = reachesGround ? groundY : h * 0.56;
+    const curX = startX + metAnim * (endX - startX);
+    const curY = startY + metAnim * (endY - startY);
+
+    const streakGrad = ctx.createLinearGradient(startX, startY, curX, curY);
+    streakGrad.addColorStop(0, 'rgba(251, 191, 36, 0)');
+    streakGrad.addColorStop(1, reachesGround ? '#fb7185' : '#fde047');
+    ctx.strokeStyle = streakGrad;
+    ctx.lineWidth = Math.min(14, 2 + r * 3.2);
+    ctx.beginPath(); ctx.moveTo(startX, startY); ctx.lineTo(curX, curY); ctx.stroke();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(curX, curY, Math.min(12, 3 + r * 2.2), 0, Math.PI * 2); ctx.fill();
+
+    if (reachesGround && metAnim > 0.9) {
+      const blastR = Math.min(85, 18 + r * 16);
+      ctx.fillStyle = 'rgba(251, 113, 133, 0.55)';
+      ctx.beginPath(); ctx.arc(endX, groundY, blastR, Math.PI, Math.PI * 2); ctx.fill();
+    }
+
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('120 km — Atmosfera yuqori chegarasi (Meteorlar yonish zonasi)', 24, atmTopY + 16);
+    ctx.fillStyle = '#34d399';
+    ctx.fillText('Yer sirti (0 km) — Meteoritlar tushish darajasi', 24, groundY + 18);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Qisqa davrli (T < 200 yil) va uzoq davrli kometalar asosan Quyosh sistemasining qaysi hududlaridan keladi?",
+      opts: ["Qisqa davrli — Koyper belbog‘idan; Uzoq davrli — Oort bulutidan", "Ikkalasi ham Oy orbitasidan", "Ikkalasi ham Merkuriy orbitasidan"],
+      ans: 0,
+      exp: "Galley va Enke kabi qisqa davrli kometalar Koyper belbog‘idan, uzoq davrli kometalar esa Oort bulutidan keladi."
+    },
+    {
+      q: "2. Kometa Quyoshga yaqinlashganda uning dumi qaysi tomonga yo‘nalgan bo‘ladi?",
+      opts: ["Har doim kometaning harakat yo‘nalishiga teskari tomonga", "Har doim Quyoshga teskari tomonga (Quyosh shamoli va yorug‘lik bosimi tufayli)", "Har doim Quyosh markazi tomon"],
+      ans: 1,
+      exp: "Quyosh shamoli va foton bosimi ta’sirida kometa dumi har doim Quyoshdan qarama-qarshi tomonga yo‘naladi."
+    },
+    {
+      q: "3. F. A. Bredixin tasnifiga ko‘ra kometaning I tur (to‘g‘ri ko‘k ion) va II tur (egri sariq chang) dumlarini mos ravishda nima hosil qiladi?",
+      opts: ["I tur — Quyosh shamoli (plazma); II tur — Quyosh nuri (foton) bosimi", "I tur — Yer magnit maydoni; II tur — Oy tortishishi", "Ikkalasini ham faqat gravitatsiya"],
+      ans: 0,
+      exp: "Ionlashgan gazlar Quyosh shamoli ta’sirida to‘g‘ri I tur dumini, chang zarralari esa foton bosimi ta’sirida egri II tur dumini hosil qiladi."
+    },
+    {
+      q: "4. Mashhur Galley kometasining Quyosh atrofida to‘liq aylanish davri taxminan necha yilga teng?",
+      opts: ["3.3 yil", "75.1 yil", "248 yil"],
+      ans: 1,
+      exp: "Galley kometasi (a = 17.8 a.b., e = 0.967) Quyosh atrofini 75.1 yilda bir marta aylanib chiqadi."
+    },
+    {
+      q: "5. Meteoroid Yer atmosferasining qanday balandligida qizib bug‘lanishi natijasida «uchar yulduz» — meteor hodisasi kuzatiladi?",
+      opts: ["80–120 km balandlikda", "1–5 km balandlikda", "10 000 km balandlikda"],
+      ans: 0,
+      exp: "11.2–72.8 km/s tezlikda kirgan meteoroidlar 80–120 km balandlikda havo siqilishi tufayli yonib yorug‘ iz qoldiradi."
+    },
+    {
+      q: "6. Venera sayyorasidan ham yorqinroq (m < −4^m) bo‘lgan, tutun izi va gumburlash tovushi bilan kuzatiladigan ulkan olovli shar ko‘rinishidagi meteor nima deyiladi?",
+      opts: ["Asteroid", "Bolid", "Pulsar"],
+      ans: 1,
+      exp: "O‘ta yorqin meteor hodisasi bolid deb ataladi."
+    },
+    {
+      q: "7. Meteor oqimi («yulduz yomg‘iri») paytida parallel harakatlanayotgan meteor izlari osmon sferasida bitta nuqtadan tarqalayotgandek ko‘rinadi. Bu nuqta nima deb ataladi?",
+      opts: ["Zenit", "Radiant", "Perigeliy"],
+      ans: 1,
+      exp: "Perspektiva qonuniga ko‘ra meteor izlari kesishadigan nuqta oqimning radianti deyiladi."
+    },
+    {
+      q: "8. Har yili 11–13 avgust kunlari kuzatiladigan mashhur Perseidlar meteor oqimining ona kometasi qaysi?",
+      opts: ["Svift–Tattl kometasi (109P)", "Enke kometasi", "Xeyl–Bopp kometasi"],
+      ans: 0,
+      exp: "Perseidlar meteor oqimi Yer Svift–Tattl kometasining chang izini kesib o‘tganda yuz beradi."
+    },
+    {
+      q: "9. Atmosferada to‘liq yonib ulgurmay Yer sirtiga yetib kelgan kosmik jism qoldig‘i nima deb ataladi?",
+      opts: ["Meteor", "Meteorit", "Kometa"],
+      ans: 1,
+      exp: "Atmosferadagi chaqnash — meteor, Yer sirtiga tushgan qattiq jism esa — meteoritdir."
+    },
+    {
+      q: "10. Yer yuziga tushgan barcha meteoritlarning taxminan 93% ini qaysi sinf tashkil etadi?",
+      opts: ["Tosh meteoritlar (xondritlar va axondritlar)", "Temir meteoritlar", "Temir-tosh meteoritlar"],
+      ans: 0,
+      exp: "Meteoritlarning ~92.8% i tosh, ~5.7% i temir va ~1.5% i temir-tosh meteoritlardir."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawCometTab(w, h);
+      else if (activeTab === 2) drawShowerTab(w, h);
+      else if (activeTab === 3) drawMeteorTab(w, h);
+      else drawCometTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
