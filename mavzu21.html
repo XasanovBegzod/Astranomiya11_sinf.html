@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>21-Mavzu (49–51-§): Absolyut kattalik, spektral sinflar va spektr–yorqinlik diagrammasi | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li { font-size: 0.9rem; color: #e2e8f0; margin-bottom: 8px; }
+    .theory-card ul { padding-left: 20px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.83rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.24); padding: 8px 10px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.22); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+    .btn-grid-7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 6px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.82rem; line-height: 1.52; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>21-MAVZU (49–51-§). Absolyut kattalik, yorqinlik, spektral sinflar va spektr–yorqinlik diagrammasi</h1>
+    <p>11-sinf Astronomiya | V Bob: Yulduzlar</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">49-§ Absolyut kattalik va Yorqinlik</button>
+    <button class="tab-btn" onclick="setTab(2)">50-§ Spektral sinflar (O–M)</button>
+    <button class="tab-btn" onclick="setTab(3)">51-§ Spektr–yorqinlik diagrammasi</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>49-§. Yulduzning absolyut kattaligi va uning yorqinligi bilan bog‘liqligi</h2>
+    <p><strong>Absolyut yulduz kattaligi (<em>M</em>)</strong> — yulduz bizdan standart <em>r₀ = 10 pk</em> (<em>p₀ = 0.1''</em>) masofada joylashganda ega bo‘ladigan ko‘rinma yulduz kattaligidir. Yulduzning <strong>yorqinligi (<em>L</em>)</strong> esa uning 1 sekundda barcha yo‘nalishlarga chiqaradigan to‘liq nurlanish quvvatidir (<em>L☉ = 3.828 × 10²⁶ Vt, M☉ = +4.83m</em>).</p>
+    <div class="math-banner">
+      M = m + 5 − 5 lg r (pk) = m + 5 + 5 lg p'' &nbsp;|&nbsp; L / L☉ = 2.512^(M☉ − M) = 10^(0.4(M☉ − M))
+    </div>
+
+    <div class="problem-box">
+      <strong>1-Masala (Ko‘rinma kattalik va parallaksdan yorqinlikni topish):</strong> Vega yulduzining ko‘rinma kattaligi <em>m = +0.03m</em>, yillik parallaksi <em>p = 0.130''</em> (<em>lg 0.130 = −0.8861</em>). Uning absolyut kattaligini (M) va Quyoshga nisbatan yorqinligini (L / L☉) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) <strong>M = 0.03 + 5 + 5 × (−0.8861) = +0.60m</strong>.<br>
+        2) <strong>L / L☉ = 10^(0.4 × (4.83 − 0.60)) = 10^1.692 ≈ 49.2 L☉</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Yorqinlikdan absolyut kattalikni hisoblash):</strong> Rigel yulduzining yorqinligi Quyoshnikidan <em>L = 40 000 L☉</em> marta katta (<em>lg 4 = 0.6021</em>). Rigelning absolyut yulduz kattaligini (M) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>M = 4.83 − 2.5 lg(40 000) = 4.83 − 2.5 × 4.6021 = −6.68m</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>50–51-§. Yulduzlarning spektral sinflari (O–M) va Spektr–yorqinlik (G–R) diagrammasi</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Sinf</th>
+          <th>Rangi</th>
+          <th>Temperatura (K)</th>
+          <th>Asosiy yutilish chiziqlari</th>
+          <th>Vakillari</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>O</strong></td><td>Ko‘k</td><td>30 000 – 60 000</td><td>Ionlashgan geliy (He II), O III, N III</td><td>Alnitak, Mintaka</td></tr>
+        <tr><td><strong>B</strong></td><td>Ko‘k-oq</td><td>10 000 – 30 000</td><td>Neytral geliy (He I), zaif vodorod</td><td>Rigel, Spika</td></tr>
+        <tr><td><strong>A</strong></td><td>Oq</td><td>7 500 – 10 000</td><td><strong>Vodorod Balmer chiziqlari (eng kuchli)</strong></td><td>Sirius A, Vega, Altair</td></tr>
+        <tr><td><strong>F</strong></td><td>Sarg‘ish-oq</td><td>6 000 – 7 500</td><td>Vodorod + Ca II (H, K) va metallar</td><td>Protsion, Kanopus</td></tr>
+        <tr><td><strong>G</strong></td><td>Sariq</td><td>5 200 – 6 000</td><td>Kuchli Ca II (H, K) va neytral metallar (Fe)</td><td><strong>Quyosh (G2V)</strong>, Kapella</td></tr>
+        <tr><td><strong>K</strong></td><td>Zarg‘aldoq</td><td>3 700 – 5 200</td><td><strong>Ca II maksimumi (~5000 K)</strong>, metallar, CH/CN</td><td>Arktur, Aldebaran</td></tr>
+        <tr><td><strong>M</strong></td><td>Qizil</td><td>2 400 – 3 700</td><td><strong>Titan oksidi (TiO) molekula polosalari</strong></td><td>Betelgeyze, Proksima</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Spektr–yorqinlik diagrammasida</strong> (Gershprung–Ressel diagrammasi) 4 asosiy soha ajralib turadi: <strong>Asosiy ketma-ketlik (~90% yulduzlar)</strong>, <strong>Qizil gigantlar</strong>, <strong>O‘ta gigantlar</strong> va <strong>Oq mittilar</strong>.</p>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">49-§: Ko‘rinma kattalik (m), Masofa (r) va Absolyut kattalik (M)</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Standart masofa r₀ = 10 pk | L / L☉ = 10^(0.4(M☉ − M))</div>
+    </div>
+    <canvas id="hrCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 49-§ ABSOLYUT KATTALIK VA YORQINLIK -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Yulduzning ko‘rinma ravshanligi va masofasi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Ko‘rinma yulduz kattaligi (m):</span>
+            <strong id="absMAppVal">−1.46m</strong>
+          </div>
+          <input type="range" id="absMAppSl" min="-5.0" max="12.0" step="0.05" value="-1.46" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yulduzgacha masofa (r, parsek):</span>
+            <strong id="absDistVal">2.64 pk (p = 0.379'')</strong>
+          </div>
+          <input type="range" id="absDistSl" min="1.3" max="300.0" step="0.5" value="2.64" />
+        </div>
+        <div class="btn-grid" id="absBtns">
+          <button class="btn active" onclick="setAbsPreset(-1.46, 2.64, this)">Sirius (2.64 pk)</button>
+          <button class="btn" onclick="setAbsPreset(0.03, 7.69, this)">Vega (7.69 pk)</button>
+          <button class="btn" onclick="setAbsPreset(11.13, 1.30, this)">Proksima (1.30 pk)</button>
+          <button class="btn" onclick="setAbsPreset(0.13, 260.0, this)">Rigel (260 pk)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Hisoblangan absolyut kattalik va Yorqinlik</h3>
+        <div class="formula-box">
+          M = m + 5 − 5 lg r &nbsp;|&nbsp; L / L☉ = 10^(0.4(4.83 − M))
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Absolyut yulduz kattaligi (M):</span><span class="t-val" id="absMOut">+1.43m</span></div>
+          <div class="t-row"><span>Quyoshga nisbatan yorqinligi:</span><span class="t-val" id="absLumOut">22.9 L☉</span></div>
+          <div class="t-row"><span>To‘liq nurlanish quvvati (L):</span><span class="t-val" id="absWattOut">8.77 × 10²⁷ Vt</span></div>
+          <div class="t-row"><span>10 pk dagi ko‘rinish holati:</span><span class="t-val" id="absVisOut">Oddiy ko‘zga ravshan</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 50-§ SPEKTRAL SINFLAR (O-M) -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Spektral sinf va Fotosfera temperaturasi</h3>
+        <div class="btn-grid-7" id="specBtns" style="margin-bottom:10px;">
+          <button class="btn" onclick="setSpecTemp(35000, this)">O</button>
+          <button class="btn" onclick="setSpecTemp(16000, this)">B</button>
+          <button class="btn" onclick="setSpecTemp(9200, this)">A</button>
+          <button class="btn" onclick="setSpecTemp(6700, this)">F</button>
+          <button class="btn active" onclick="setSpecTemp(5780, this)">G</button>
+          <button class="btn" onclick="setSpecTemp(4400, this)">K</button>
+          <button class="btn" onclick="setSpecTemp(3200, this)">M</button>
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Fotosfera temperaturasi (T, K):</span>
+            <strong id="spTVal">5 780 K</strong>
+          </div>
+          <input type="range" id="spTSl" min="2500" max="40000" step="100" value="5780" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Spektral tahlil natijalari</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Garvard spektral sinfi:</span><span class="t-val" id="spClsOut">G2 (Sariq yulduz)</span></div>
+          <div class="t-row"><span>Vodorod (Balmer) chiziqlari:</span><span class="t-val" id="spHydOut">O‘rtacha / Zaiflashgan</span></div>
+          <div class="t-row"><span>Asosiy hukmron chiziqlar:</span><span class="t-val" id="spDomOut">Ca II (H, K) va Fe I metallari</span></div>
+          <div class="t-row"><span>Mashhur vakili:</span><span class="t-val" id="spExOut">Quyosh (G2V), Kapella</span></div>
+        </div>
+        <p class="desc" id="spDescOut" style="margin-top:8px;">
+          5200–6000 K haroratda ionlashgan kalsiy (Ca II) H va K chiziqlari hamda neytral metallarning ko‘plab ingichka chiziqlari yaqqol ko‘rinadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: 51-§ SPEKTR-YORQINLIK DIAGRAMMASI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Spektr–yorqinlik diagrammasida yulduzni tanlang</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Sirt temperaturasi (T, K):</span>
+            <strong id="hrTVal">5 780 K</strong>
+          </div>
+          <input type="range" id="hrTSl" min="2600" max="35000" step="100" value="5780" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Absolyut yulduz kattaligi (M):</span>
+            <strong id="hrMVal">+4.83m</strong>
+          </div>
+          <input type="range" id="hrMSl" min="-7.5" max="14.5" step="0.1" value="4.83" />
+        </div>
+        <div class="btn-grid" id="hrBtns">
+          <button class="btn active" onclick="setHrPreset(5780, 4.83, this)">Quyosh (G2V)</button>
+          <button class="btn" onclick="setHrPreset(9600, 0.60, this)">Vega (A0V)</button>
+          <button class="btn" onclick="setHrPreset(3100, 13.0, this)">Proksima (Qizil mitti)</button>
+          <button class="btn" onclick="setHrPreset(4300, -0.3, this)">Arktur (Qizil gigant)</button>
+          <button class="btn" onclick="setHrPreset(3500, -5.8, this)">Betelgeyze (O‘ta gigant)</button>
+          <button class="btn" onclick="setHrPreset(25000, 11.2, this)">Sirius B (Oq mitti)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Diagramma bo‘yicha tasnif</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Diagrammadagi sohasi:</span><span class="t-val" id="hrRegOut">Asosiy ketma-ketlik (V sinf)</span></div>
+          <div class="t-row"><span>Spektral sinfi:</span><span class="t-val" id="hrSpOut">G sinf</span></div>
+          <div class="t-row"><span>Yorqinligi (L / L☉):</span><span class="t-val" id="hrLumOut">1.00 L☉</span></div>
+          <div class="t-row"><span>Radiusi (R / R☉):</span><span class="t-val" id="hrRadOut">1.00 R☉</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('hrCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function highlightBtn(containerId, btnEl) {
+    if (!btnEl) return;
+    document.querySelectorAll(`#${containerId} .btn`).forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "49-§: Yulduzning absolyut kattaligi (M) va yorqinligi (L / L☉) — r₀ = 10 pk standarti",
+      "50-§: Yulduzlarning spektri va Garvard spektral sinflari (O–B–A–F–G–K–M)",
+      "51-§: Spektr–yorqinlik (Gershprung–Ressel) diagrammasi",
+      "Bilimlarni tekshirish: 21-Mavzu (49–51-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "M = m + 5 − 5 lg r | L / L☉ = 10^(0.4(M☉ − M))",
+      "O — B — A — F — G — K — M",
+      "Asosiy ketma-ketlik, gigantlar va oq mittilar",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 49-§ ABSOLYUT KATTALIK VA YORQINLIK ====================
+  function setAbsPreset(mApp, rPk, btn) {
+    document.getElementById('absMAppSl').value = mApp;
+    document.getElementById('absDistSl').value = rPk;
+    highlightBtn('absBtns', btn);
+  }
+
+  function drawAbsMagTab(w, h) {
+    const mApp = parseFloat(document.getElementById('absMAppSl').value);
+    const rPk = parseFloat(document.getElementById('absDistSl').value);
+    const pArcsec = 1.0 / rPk;
+
+    const absM = mApp + 5 - 5 * Math.log10(rPk);
+    const lumRatio = Math.pow(10, 0.4 * (4.83 - absM));
+    const lumWatt = lumRatio * 3.828e26;
+
+    document.getElementById('absMAppVal').textContent = `${mApp >= 0 ? '+' : ''}${mApp.toFixed(2)}m`;
+    document.getElementById('absDistVal').textContent = `${rPk.toFixed(1)} pk (p = ${pArcsec.toFixed(3)}'')`;
+    document.getElementById('absMOut').textContent = `${absM >= 0 ? '+' : ''}${absM.toFixed(2)}m`;
+    document.getElementById('absLumOut').textContent = lumRatio >= 100 ? `${Math.round(lumRatio).toLocaleString()} L☉` : (lumRatio < 0.05 ? `${lumRatio.toExponential(2)} L☉` : `${lumRatio.toFixed(2)} L☉`);
+    document.getElementById('absWattOut').textContent = `${lumWatt.toExponential(2)} Vt`;
+    document.getElementById('absVisOut').textContent = absM <= 6.0 ? "10 pk dan oddiy ko‘zga ko‘rinadi" : "10 pk dan faqat teleskopda ko‘rinadi";
+
+    // Yuqori qism: Haqiqiy masofa r (pk) vs Standart masofa r0 = 10 pk
+    const leftX = w * 0.14, rightX = w * 0.86;
+    const midY = h * 0.34;
+    const stdX = leftX + (rightX - leftX) * 0.32; // 10 pk nuqtasi
+    const realX = leftX + (rightX - leftX) * Math.min(1.0, Math.log10(rPk + 1) / Math.log10(305));
+
+    // Kuzatuvchi (Yer) chapda
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(leftX, midY, 10, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#bae6fd';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Kuzatuvchi (Yer)', leftX, midY + 24);
+
+    // Masofa chizig'i
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(leftX, midY); ctx.lineTo(rightX, midY); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Standart 10 pk chizig'i
+    ctx.strokeStyle = '#34d399';
+    ctx.beginPath(); ctx.moveTo(stdX, midY - 45); ctx.lineTo(stdX, midY + 45); ctx.stroke();
+    ctx.fillStyle = '#34d399';
+    ctx.fillText('Standart r₀ = 10 pk', stdX, midY - 52);
+
+    // 10 pk dagi yulduz ko'rinishi (M ga bog'liq)
+    const rStdPx = Math.max(4, Math.min(26, 15 - absM * 1.3));
+    ctx.fillStyle = 'rgba(52, 211, 153, 0.25)';
+    ctx.beginPath(); ctx.arc(stdX, midY, rStdPx * 1.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(stdX, midY, rStdPx, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText(`M = ${absM >= 0 ? '+' : ''}${absM.toFixed(1)}m`, stdX, midY + 58);
+
+    // Haqiqiy masofadagi yulduz ko'rinishi (m ga bog'liq)
+    const rAppPx = Math.max(4, Math.min(26, 15 - mApp * 1.3));
+    ctx.fillStyle = 'rgba(251, 191, 36, 0.25)';
+    ctx.beginPath(); ctx.arc(realX, midY, rAppPx * 1.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(realX, midY, rAppPx, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText(`Haqiqiy r = ${rPk.toFixed(1)} pk (m = ${mApp.toFixed(1)}m)`, realX, midY - 34);
+
+    // Pastki qism: Logarifmik yorqinlik shkalasi (L / L☉)
+    const bx = w * 0.14, by = h * 0.68, bw = w * 0.72, bh = 32;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.fillRect(bx, by, bw, bh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(bx, by, bw, bh);
+
+    // Log10(L / L_sun) (-4 dan +5 gacha)
+    const logL = Math.max(-4, Math.min(5, Math.log10(lumRatio)));
+    const frac = (logL - (-4)) / 9.0;
+    const sunFrac = (0 - (-4)) / 9.0;
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(bx, by + 4, frac * bw, bh - 8);
+
+    // Quyosh belgisi (1 L☉)
+    const sunMarkX = bx + sunFrac * bw;
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(sunMarkX, by - 8); ctx.lineTo(sunMarkX, by + bh + 8); ctx.stroke();
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillText('Quyosh (1 L☉, M☉ = +4.83m)', sunMarkX, by - 14);
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillText('10⁻⁴ L☉', bx, by + bh + 18);
+    ctx.fillText(`Yulduz yorqinligi: ${lumRatio >= 10 ? Math.round(lumRatio).toLocaleString() : lumRatio.toFixed(2)} L☉`, bx + bw * 0.5, by + bh + 18);
+    ctx.fillText('10⁵ L☉', bx + bw, by + bh + 18);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 2: 50-§ SPEKTRAL SINFLAR (O-M) ====================
+  function setSpecTemp(T, btn) {
+    document.getElementById('spTSl').value = T;
+    highlightBtn('specBtns', btn);
+  }
+
+  function getSpectralInfo(T) {
+    if (T >= 30000) return { cls: "O sinf (Ko‘k)", hyd: "Zaif (vodorod ionlashgan)", dom: "Ionlashgan geliy (He II), O III", ex: "Alnitak, Mintaka", desc: "30 000 K dan yuqori haroratda vodorod atomlari elektronini yo‘qotgani bois He II chiziqlari ustun bo‘ladi." };
+    if (T >= 10000) return { cls: "B sinf (Ko‘k-oq)", hyd: "O‘rtacha (kuchayib boradi)", dom: "Neytral geliy (He I)", ex: "Rigel, Spika", desc: "10 000–30 000 K oralig‘ida neytral geliy (He I) chiziqlari maksimumga yetadi." };
+    if (T >= 7500) return { cls: "A sinf (Oq)", hyd: "MAKSIMAL KUCHLI (Balmer)", dom: "Vodorod (Hα, Hβ, Hγ, Hδ)", ex: "Sirius A, Vega, Altair", desc: "7500–10 000 K harorat vodorodning Balmer yutilish chiziqlari hosil bo‘lishi uchun eng qulay sharoitdir." };
+    if (T >= 6000) return { cls: "F sinf (Sarg‘ish-oq)", hyd: "Kuchsizlana boshlaydi", dom: "Ca II (H, K) va Fe, Ti metallari", ex: "Protsion, Kanopus", desc: "Vodorod chiziqlari susayib, ionlashgan kalsiy va metall chiziqlari yaqqollashadi." };
+    if (T >= 5200) return { cls: "G sinf (Sariq)", hyd: "Zaiflashgan", dom: "Kuchli Ca II (H, K), neytral metallar", ex: "Quyosh (G2V), Kapella", desc: "5200–6000 K haroratda ionlashgan kalsiy (Ca II) H va K chiziqlari hamda neytral temir chiziqlari yaqqol ko‘rinadi." };
+    if (T >= 3700) return { cls: "K sinf (Zarg‘aldoq)", hyd: "Juda zaif", dom: "Ca II maksimumi (~5000 K), metallar, CH/CN", ex: "Arktur, Aldebaran", desc: "G8–K0 chegarasida Ca II chiziqlari maksimumga yetadi; sovuqroq atmosferada neytral metallar va CH/CN molekulalari ko‘payadi." };
+    return { cls: "M sinf (Qizil)", hyd: "Deyarli yo‘q", dom: "Titan oksidi (TiO) polosalari", ex: "Betelgeyze, Proksima", desc: "3700 K dan past haroratda titan oksidi (TiO) molekulalari parchalanmaydi va keng yutilish polosalari hosil qiladi." };
+  }
+
+  function drawSpectralTab(w, h) {
+    const T = parseFloat(document.getElementById('spTSl').value);
+    const info = getSpectralInfo(T);
+
+    document.getElementById('spTVal').textContent = `${T.toLocaleString()} K`;
+    document.getElementById('spClsOut').textContent = info.cls;
+    document.getElementById('spHydOut').textContent = info.hyd;
+    document.getElementById('spDomOut').textContent = info.dom;
+    document.getElementById('spExOut').textContent = info.ex;
+    document.getElementById('spDescOut').textContent = info.desc;
+
+    const leftX = w * 0.08, rightX = w * 0.92;
+    const gw = rightX - leftX;
+    const spY = h * 0.16, spH = 68;
+
+    const grad = ctx.createLinearGradient(leftX, 0, rightX, 0);
+    grad.addColorStop(0.00, '#4c1d95');
+    grad.addColorStop(0.18, '#2563eb');
+    grad.addColorStop(0.38, '#06b6d4');
+    grad.addColorStop(0.55, '#22c55e');
+    grad.addColorStop(0.72, '#eab308');
+    grad.addColorStop(0.86, '#f97316');
+    grad.addColorStop(1.00, '#dc2626');
+    ctx.fillStyle = grad;
+    ctx.fillRect(leftX, spY, gw, spH);
+
+    const strHe2 = Math.exp(-Math.pow((T - 36000) / 8000, 2));
+    const strHe1 = Math.exp(-Math.pow((T - 17000) / 6500, 2));
+    const strHyd = Math.exp(-Math.pow((T - 9200) / 2800, 2));
+    const strCa2 = Math.exp(-Math.pow((T - 5000) / 1800, 2));
+    const strTiO = T < 4200 ? Math.min(1, (4200 - T) / 1500) : 0;
+
+    const toLamX = (lam) => leftX + ((lam - 380) / (720 - 380)) * gw;
+
+    if (strHyd > 0.08) {
+      ctx.fillStyle = `rgba(2, 6, 23, ${0.95 * strHyd})`;
+      [410, 434, 486, 656].forEach(lam => {
+        const lx = toLamX(lam);
+        const lw = 2 + strHyd * 5;
+        ctx.fillRect(lx - lw / 2, spY, lw, spH);
+      });
+    }
+    if (strCa2 > 0.08) {
+      ctx.fillStyle = `rgba(2, 6, 23, ${0.9 * strCa2})`;
+      [393, 397, 517, 527, 589].forEach(lam => ctx.fillRect(toLamX(lam) - 1.5, spY, 3, spH));
+    }
+    if (strHe1 > 0.08) {
+      ctx.fillStyle = `rgba(2, 6, 23, ${0.85 * strHe1})`;
+      [447, 587].forEach(lam => ctx.fillRect(toLamX(lam) - 1.5, spY, 3, spH));
+    }
+    if (strHe2 > 0.08) {
+      ctx.fillStyle = `rgba(2, 6, 23, ${0.9 * strHe2})`;
+      ctx.fillRect(toLamX(468) - 2, spY, 4, spH);
+    }
+    if (strTiO > 0.05) {
+      ctx.fillStyle = `rgba(2, 6, 23, ${0.78 * strTiO})`;
+      [495, 545, 615, 670].forEach(lam => ctx.fillRect(toLamX(lam), spY, 18, spH));
+    }
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('380 nm (Binafsha)', leftX, spY - 6);
+    ctx.fillText('Hα (656 nm)', toLamX(656) - 28, spY + spH + 14);
+    ctx.fillText('720 nm (Qizil)', rightX - 72, spY - 6);
+
+    const gTop = h * 0.44, gBot = h * 0.86, gh = gBot - gTop;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(leftX, gTop, gw, gh);
+
+    const classes = [
+      { name: 'O', t: 35000 }, { name: 'B', t: 16000 }, { name: 'A', t: 9200 },
+      { name: 'F', t: 6700 },  { name: 'G', t: 5780 },  { name: 'K', t: 4400 }, { name: 'M', t: 3200 }
+    ];
+    const toTempX = (temp) => {
+      const lMin = Math.log10(2500), lMax = Math.log10(40000);
+      return leftX + ((lMax - Math.log10(temp)) / (lMax - lMin)) * gw;
+    };
+
+    classes.forEach(c => {
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(c.name, toTempX(c.t), gBot + 16);
+    });
+
+    const curves = [
+      { col: '#60a5fa', label: 'He II', fn: (t) => Math.exp(-Math.pow((t - 36000) / 8000, 2)) },
+      { col: '#38bdf8', label: 'He I',  fn: (t) => Math.exp(-Math.pow((t - 17000) / 6500, 2)) },
+      { col: '#34d399', label: 'H (Balmer)', fn: (t) => Math.exp(-Math.pow((t - 9200) / 2800, 2)) },
+      { col: '#fbbf24', label: 'Ca II / Fe', fn: (t) => Math.exp(-Math.pow((t - 5000) / 1800, 2)) },
+      { col: '#fb7185', label: 'TiO', fn: (t) => (t < 4200 ? Math.min(1, (4200 - t) / 1500) : 0) }
+    ];
+
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'left';
+    curves.forEach((cv, idx) => {
+      const lx = leftX + 10 + idx * 82;
+      ctx.fillStyle = cv.col;
+      ctx.fillRect(lx, gTop + 9, 10, 3);
+      ctx.fillText(cv.label, lx + 14, gTop + 14);
+    });
+
+    curves.forEach(cv => {
+      ctx.strokeStyle = cv.col;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= 100; i++) {
+        const px = leftX + (i / 100) * gw;
+        const lMin = Math.log10(2500), lMax = Math.log10(40000);
+        const tVal = Math.pow(10, lMax - (i / 100) * (lMax - lMin));
+        const py = gBot - cv.fn(tVal) * (gh * 0.78);
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    });
+
+    const curX = toTempX(T);
+    ctx.strokeStyle = '#ffffff';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(curX, gTop); ctx.lineTo(curX, gBot); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.textAlign = 'left';
+  }
+
+  // ==================== TAB 3: 51-§ SPEKTR-YORQINLIK DIAGRAMMASI ====================
+  function setHrPreset(T, M, btn) {
+    document.getElementById('hrTSl').value = T;
+    document.getElementById('hrMSl').value = M;
+    highlightBtn('hrBtns', btn);
+  }
+
+  function drawHrDiagramTab(w, h) {
+    const T = parseFloat(document.getElementById('hrTSl').value);
+    const M = parseFloat(document.getElementById('hrMSl').value);
+
+    const lumRatio = Math.pow(10, 0.4 * (4.83 - M));
+    const radRatio = Math.pow(5780.0 / T, 2) * Math.sqrt(lumRatio);
+    const spInfo = getSpectralInfo(T);
+
+    document.getElementById('hrTVal').textContent = `${T.toLocaleString()} K`;
+    document.getElementById('hrMVal').textContent = `${M >= 0 ? '+' : ''}${M.toFixed(2)}m`;
+    document.getElementById('hrSpOut').textContent = spInfo.cls;
+    document.getElementById('hrLumOut').textContent = lumRatio >= 100 ? `${Math.round(lumRatio).toLocaleString()} L☉` : (lumRatio < 0.05 ? `${lumRatio.toExponential(1)} L☉` : `${lumRatio.toFixed(2)} L☉`);
+    document.getElementById('hrRadOut').textContent = radRatio < 0.05 ? `${radRatio.toFixed(4)} R☉` : `${radRatio.toFixed(2)} R☉`;
+
+    let reg = "Asosiy ketma-ketlik (V yorqinlik sinfi)";
+    if (radRatio < 0.04) reg = "Oq mittilar sohasi (D sinf)";
+    else if (M < -3.5) reg = "O‘ta gigantlar sohasi (I sinf)";
+    else if (M < 1.5 && T < 5400) reg = "Qizil gigantlar sohasi (III sinf)";
+    document.getElementById('hrRegOut').textContent = reg;
+
+    const leftX = w * 0.11, rightX = w * 0.91;
+    const topY = h * 0.16, botY = h * 0.85;
+    const gw = rightX - leftX, gh = botY - topY;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.72)';
+    ctx.fillRect(leftX, topY, gw, gh);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.strokeRect(leftX, topY, gw, gh);
+
+    const toX = (temp) => {
+      const lMin = Math.log10(2500), lMax = Math.log10(38000);
+      return leftX + ((lMax - Math.log10(temp)) / (lMax - lMin)) * gw;
+    };
+    const toY = (absM) => topY + ((absM - (-8.5)) / (15.5 - (-8.5))) * gh;
+
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.24)';
+    ctx.lineWidth = 22;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(toX(32000), toY(-5.5));
+    ctx.lineTo(toX(9600), toY(0.6));
+    ctx.lineTo(toX(5780), toY(4.83));
+    ctx.lineTo(toX(3000), toY(13.5));
+    ctx.stroke();
+    ctx.lineWidth = 1;
+
+    ctx.fillStyle = 'rgba(251, 113, 133, 0.15)';
+    ctx.fillRect(leftX + gw * 0.15, topY + 6, gw * 0.80, gh * 0.20);
+    ctx.fillStyle = 'rgba(251, 191, 36, 0.16)';
+    ctx.beginPath(); ctx.ellipse(toX(4400), toY(-0.5), 48, 26, -0.2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'rgba(167, 139, 250, 0.18)';
+    ctx.beginPath(); ctx.ellipse(toX(16000), toY(11.5), 75, 22, 0.3, 0, Math.PI * 2); ctx.fill();
+
+    ctx.font = '10px sans-serif';
+    ctx.fillStyle = '#fb7185'; ctx.fillText('O‘TA GIGANTLAR (I)', leftX + gw * 0.42, topY + 22);
+    ctx.fillStyle = '#fbbf24'; ctx.fillText('QIZIL GIGANTLAR (III)', toX(4900), toY(-2.0));
+    ctx.fillStyle = '#38bdf8'; ctx.fillText('ASOSIY KETMA-KETLIK (V)', toX(8200), toY(3.8));
+    ctx.fillStyle = '#c4b5fd'; ctx.fillText('OQ MITTILAR (D)', toX(19000), toY(13.2));
+
+    const axisSpecs = [
+      { n: 'O', t: 34000 }, { n: 'B', t: 16000 }, { n: 'A', t: 9200 },
+      { n: 'F', t: 6700 },  { n: 'G', t: 5780 },  { n: 'K', t: 4400 }, { n: 'M', t: 3100 }
+    ];
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    axisSpecs.forEach(s => ctx.fillText(s.n, toX(s.t), botY + 16));
+    ctx.textAlign = 'left';
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '10px sans-serif';
+    ctx.fillText('−8m', leftX - 28, toY(-8));
+    ctx.fillText('0m', leftX - 22, toY(0));
+    ctx.fillText('+5m', leftX - 28, toY(5));
+    ctx.fillText('+14m', leftX - 32, toY(14));
+
+    const landmarks = [
+      { n: 'Rigel', t: 12100, m: -6.7, col: '#93c5fd', alignLeft: false },
+      { n: 'Vega', t: 9600, m: 0.6, col: '#e0f2fe', alignLeft: false },
+      { n: 'Quyosh', t: 5780, m: 4.83, col: '#facc15', alignLeft: false },
+      { n: 'Arktur', t: 4290, m: -0.3, col: '#fb923c', alignLeft: true },
+      { n: 'Betelgeyze', t: 3500, m: -5.85, col: '#f87171', alignLeft: true },
+      { n: 'Sirius B', t: 25000, m: 11.18, col: '#c4b5fd', alignLeft: false }
+    ];
+    landmarks.forEach(st => {
+      const sx = toX(st.t), sy = toY(st.m);
+      ctx.fillStyle = st.col;
+      ctx.beginPath(); ctx.arc(sx, sy, 3.5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#94a3b8';
+      if (st.alignLeft) {
+        ctx.textAlign = 'right';
+        ctx.fillText(st.n, sx - 6, sy + 3);
+        ctx.textAlign = 'left';
+      } else {
+        ctx.fillText(st.n, sx + 6, sy + 3);
+      }
+    });
+
+    const ux = Math.min(rightX, Math.max(leftX, toX(T)));
+    const uy = Math.min(botY, Math.max(topY, toY(M)));
+    ctx.strokeStyle = '#34d399';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.arc(ux, uy, 9, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(ux, uy, 4, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Absolyut yulduz kattaligi (M) ta’rifiga ko‘ra, yulduz bizdan qanday standart masofada joylashgan deb qabul qilinadi?",
+      opts: ["1 a.b. masofada", "10 parsek (10 pk) masofada", "100 yorug‘lik yili masofada"],
+      ans: 1,
+      exp: "Absolyut yulduz kattaligi — yulduz 10 pk standart masofada ega bo‘ladigan ko‘rinma yulduz kattaligidir."
+    },
+    {
+      q: "2. Ko‘rinma kattaligi m = +5.0m bo‘lgan yulduz bizdan r = 100 pk masofada joylashgan. Uning absolyut yulduz kattaligi (M) nimaga teng?",
+      opts: ["M = 0.0m (M = 5 + 5 − 5 lg 100)", "M = +10.0m", "M = −5.0m"],
+      ans: 0,
+      exp: "M = m + 5 − 5 lg r = 5.0 + 5 − 5 × 2 = 0.0m."
+    },
+    {
+      q: "3. Quyoshning absolyut yulduz kattaligi M☉ = +4.83m. Absolyut kattaligi M = −0.17m bo‘lgan yulduzning yorqinligi Quyoshnikidan necha marta katta?",
+      opts: ["5 marta", "100 marta (ΔM = 5.0m)", "1000 marta"],
+      ans: 1,
+      exp: "L / L☉ = 10^(0.4 × (4.83 − (−0.17))) = 10^(0.4 × 5) = 10² = 100."
+    },
+    {
+      q: "4. Garvard spektral tasnifida yulduzlarning sirt temperaturasi kamayib borishi bo‘yicha to‘g‘ri ketma-ketlik qaysi?",
+      opts: ["A — B — O — F — G — K — M", "O — B — A — F — G — K — M", "M — K — G — F — A — B — O"],
+      ans: 1,
+      exp: "Eng qaynoq O sinfdan (30 000–60 000 K) eng sovuq M sinfgacha (2400–3700 K): O — B — A — F — G — K — M."
+    },
+    {
+      q: "5. Qaysi spektral sinfga mansub oq yulduzlar spektrida vodorodning Balmer yutilish chiziqlari maksimal darajada kuchli bo‘ladi?",
+      opts: ["O sinf", "A sinf (Sirius, Vega, Altair)", "M sinf"],
+      ans: 1,
+      exp: "7500–10 000 K haroratli A sinf yulduzlarida vodorod atomlari Balmer chiziqlarini eng kuchli yutadi."
+    },
+    {
+      q: "6. Quyosh qaysi spektral sinf va yorqinlik sinfiga kiradi?",
+      opts: ["A0V", "G2V (Sariq asosiy ketma-ketlik yulduzi)", "M2I"],
+      ans: 1,
+      exp: "Sirt temperaturasi 5780 K bo‘lgan Quyosh G2V sinfiga mansub."
+    },
+    {
+      q: "7. Eng sovuq M spektral sinf yulduzlari (masalan, Betelgeyze) spektrida qaysi molekulaning keng yutilish polosalari hukmron?",
+      opts: ["Ionlashgan geliy (He II)", "Titan oksidi (TiO)", "Vodorod Balmer chiziqlari"],
+      ans: 1,
+      exp: "3700 K dan past haroratda titan oksidi (TiO) molekulalari parchalanmaydi."
+    },
+    {
+      q: "8. Spektr–yorqinlik (Gershprung–Ressel) diagrammasida barcha yulduzlarning taxminan 90% i qaysi sohada joylashgan?",
+      opts: ["Oq mittilar sohasida", "Asosiy ketma-ketlikda", "Qizil gigantlar sohasida"],
+      ans: 1,
+      exp: "Yulduzlar umrining ~90% ini yadrosida vodorod yonayotgan Asosiy ketma-ketlikda o‘tkazadi."
+    },
+    {
+      q: "9. Spektr–yorqinlik diagrammasining yuqori o‘ng qismida sirt temperaturasi past (3000–4500 K), lekin radiusi ulkan bo‘lgani uchun o‘ta yorqin ko‘rinadigan qaysi yulduzlar joylashgan?",
+      opts: ["Oq mittilar", "Qizil gigantlar va o‘ta gigantlar (Arktur, Betelgeyze)", "Ko‘k mittilar"],
+      ans: 1,
+      exp: "L = 4πR²σT⁴ formulaga ko‘ra radius R ulkan bo‘lgani uchun past temperaturada ham yorqinlik juda yuqori."
+    },
+    {
+      q: "10. Spektr–yorqinlik diagrammasining pastki chap burchagida sirt temperaturasi yuqori, ammo radiusi Yer o‘lchamida (~0.01 R☉) bo‘lgan qaysi yulduzlar joylashgan?",
+      opts: ["Oq mittilar (Sirius B)", "Qizil gigantlar", "O‘ta gigantlar"],
+      ans: 0,
+      exp: "Oq mittilar qaynoq, lekin juda kichik o‘lchamli bo‘lgani uchun yorqinligi past."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawAbsMagTab(w, h);
+      else if (activeTab === 2) drawSpectralTab(w, h);
+      else if (activeTab === 3) drawHrDiagramTab(w, h);
+      else drawAbsMagTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
