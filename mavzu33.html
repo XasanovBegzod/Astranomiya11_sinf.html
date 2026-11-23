@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>33-Mavzu (67-§): Tortishishning markaziy maydonida harakatlanayotgan jismning orbitalari | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.93);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .theory-container {
+      max-width: 1280px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      line-height: 1.72;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .theory-card h3 { color: var(--gold); font-size: 0.98rem; margin: 14px 0 6px; }
+    .theory-card p, .theory-card li { font-size: 0.92rem; color: #e2e8f0; margin-bottom: 9px; }
+    .theory-card ul { padding-left: 22px; margin-bottom: 10px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.88);
+      border-left: 4px solid var(--gold);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.26); padding: 9px 11px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.24); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin-top: 12px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.28);
+      color: #a7f3d0;
+      font-size: 0.89rem;
+      line-height: 1.6;
+    }
+
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1540px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.88);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.93rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .ctrl-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      color: var(--text);
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 0.79rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+      flex: 1;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.24);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.84);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    .desc { font-size: 0.83rem; line-height: 1.58; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>33-MAVZU (67-§). Tortishishning markaziy maydonida harakatlanayotgan jismning orbitalari</h1>
+    <p>11-sinf Astronomiya | II Qism: Kosmonavtika elementlari (144-bet)</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">1-Sim: Konus kesimlari</button>
+    <button class="tab-btn" onclick="setTab(2)">2-Sim: Ellips & Vis-viva</button>
+    <button class="tab-btn" onclick="setTab(3)">3-Sim: v₁(h) va v₂(h) grafigi</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: KENGAYTIRILGAN NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+
+  <div class="theory-card">
+    <h2>1. Markaziy gravitatsiya maydoni va Saqlanish qonunlari (67-§)</h2>
+    <p><strong>Markaziy tortishish maydoni</strong> — har bir nuqtasida kosmik apparat (KA) yoki sun’iy yo‘ldoshga ta’sir etuvchi gravitatsion kuch doimo bitta qo‘zg‘almas markazga (sayyora yoki yulduz massa markaziga) yo‘nalgan va kattaligi faqat markazgacha bo‘lgan masofaga (<em>r</em>) bog‘liq bo‘lgan kuch maydonidir.</p>
+    <p>Nyutonning butun olam tortishish qonuniga ko‘ra (markaziy jism massasi <em>M</em> ≫ apparat massasi <em>m</em> bo‘lganda):</p>
+    <div class="math-banner">
+      F(r) = G · M · m / r² &nbsp;|&nbsp; L = m · r · v · sin α = const &nbsp;|&nbsp; E = m·v²/2 − G·M·m/r = const
+    </div>
+    <ul>
+      <li><strong>Impuls momenti (<em>L</em>) va sektor tezligi saqlanishi:</strong> Markaziy kuchning markazga nisbatan momenti nolga teng bo‘lgani uchun jism radius-vektori teng vaqt oralig‘ida teng yuzalarni chizadi (Keplerning II qonuni umumlashmasi).</li>
+      <li><strong>To‘liq mexanik energiya (<em>E</em>) saqlanishi:</strong> Konservativ markaziy maydonda kinetik va potensial energiyalar yig‘indisi o‘zgarmas bo‘lib, traektoriyaning yopiq yoki ochiqligini belgilaydi.</li>
+    </ul>
+  </div>
+
+  <div class="theory-card">
+    <h2>2. Konus kesimlari, Kosmik tezliklar va Vis-viva tenglamasi</h2>
+    <p>Markazdan <em>r</em> masofada gorizontal yo‘nalishda <em>v</em> tezlik bilan harakatlanayotgan jismning traektoriyasi <strong>konus kesimi</strong> (aylana, ellips, parabola yoki giperbola) ko‘rinishida bo‘ladi:</p>
+    <div class="math-banner">
+      Birinchi kosmik tezlik: v₁ = √(G·M / r) &nbsp;|&nbsp; Ikkinchi kosmik tezlik: v₂ = √(2·G·M / r) = √2 · v₁<br>
+      Vis-viva (energiya) tenglamasi: v² = G·M · (2 / r − 1 / a) &nbsp;|&nbsp; a = (r_p + r_a) / 2, &nbsp; e = (r_a − r_p) / (r_a + r_p)
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Orbita turi</th>
+          <th>Ekssentrisitet (e)</th>
+          <th>To‘liq energiya (E)</th>
+          <th>Tezlik sharti (r masofada)</th>
+          <th>Katta yarim o‘q (a)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Aylana orbita</strong></td><td>e = 0</td><td>E &lt; 0</td><td>v = v₁ = √(GM/r)</td><td>a = r</td></tr>
+        <tr><td><strong>Elliptik orbita</strong></td><td>0 &lt; e &lt; 1</td><td>E &lt; 0</td><td>v₁ &lt; v &lt; v₂ (perisentrda)</td><td>a = (r_p + r_a) / 2 &gt; 0</td></tr>
+        <tr><td><strong>Parabolik traektoriya</strong></td><td>e = 1</td><td>E = 0</td><td>v = v₂ = √2 · v₁</td><td>a = ∞</td></tr>
+        <tr><td><strong>Giperbolik traektoriya</strong></td><td>e &gt; 1</td><td>E &gt; 0</td><td>v &gt; v₂ (v_∞ = √(v₀² − v₂²))</td><td>a &lt; 0</td></tr>
+      </tbody>
+    </table>
+    <p class="desc"><strong>Izoh:</strong> Yer sirti yaqinida (<em>R_⊕ ≈ 6371 km</em>, <em>μ_⊕ = GM_⊕ ≈ 3.986 × 10¹⁴ m³/s²</em>) birinchi kosmik tezlik <em>v₁ ≈ 7.91 km/s</em>, ikkinchi kosmik tezlik esa <em>v₂ ≈ 11.19 km/s</em> ga teng. Elliptik orbitada eng yaqin nuqta <strong>perisentr</strong> (Yer uchun <em>perigey</em>, tezlik maksimal), eng uzoq nuqta esa <strong>aposentr</strong> (Yer uchun <em>apogey</em>, tezlik minimal) deyiladi.</p>
+  </div>
+
+  <div class="theory-card">
+    <h2>3. 67-§ bo‘yicha 4 ta darajali yechimli masala</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Oson — Mars uchun 2-kosmik tezlik):</strong> Mars sirtida birinchi kosmik tezlik <em>v₁ = 3.55 km/s</em>. Marsning tortishish maydonini tark etish uchun zarur ikkinchi kosmik tezlikni (<em>v₂</em>) hisoblang (<em>√2 ≈ 1.414</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol1')">Yechim</button>
+      <div id="sol1" class="problem-sol">
+        <strong>Berilgan:</strong> v₁ = 3.55 km/s.<br>
+        <strong>Formula:</strong> v₂ = √2 · v₁.<br>
+        <strong>Hisoblash:</strong> v₂ = 1.414 × 3.55 ≈ <strong>5.02 km/s</strong>.<br>
+        <strong>Fizik xulosa:</strong> Marsning tortishish maydonidan chiqish uchun sirtdagi tezlikni kamida ~5.02 km/s ga yetkazish lozim.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (O‘rta — Elliptik orbita elementlari):</strong> Sun’iy yo‘ldosh perigeyda markazdan <em>r_p = 7000 km</em>, apogeyda esa <em>r_a = 13 000 km</em> masofada harakatlanadi. Katta yarim o‘q (<em>a</em>) va ekssentrisitetni (<em>e</em>) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol2')">Yechim</button>
+      <div id="sol2" class="problem-sol">
+        <strong>a = (r_p + r_a) / 2 = (7000 + 13 000) / 2 = 10 000 km</strong>;<br>
+        <strong>e = (r_a − r_p) / (r_a + r_p) = (13 000 − 7000) / 20 000 = 0.30</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Murakkab — Vis-viva tenglamasi):</strong> <em>μ_⊕ = 4.0 × 10¹⁴ m³/s²</em>, <em>r_p = 8000 km</em> (<em>8.0 × 10⁶ m</em>) va <em>r_a = 24 000 km</em> (<em>2.4 × 10⁷ m</em>) bo‘lsa, perigey va apogeydagi tezliklarni (<em>v_p, v_a</em>) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol3')">Yechim</button>
+      <div id="sol3" class="problem-sol">
+        <strong>a = (8000 + 24 000) / 2 = 16 000 km = 1.6 × 10⁷ m</strong>.<br>
+        <strong>v_p = √[4.0×10¹⁴ · (2/(8.0×10⁶) − 1/(1.6×10⁷))] = √(7.5×10⁷) ≈ 8.66 km/s</strong>.<br>
+        <strong>v_a = √[4.0×10¹⁴ · (2/(2.4×10⁷) − 1/(1.6×10⁷))] = √(8.33×10⁶) ≈ 2.89 km/s</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>4-Masala (Olimpiada — Giperbolik qoldiq tezlik):</strong> Yer sirtidan (<em>v₂ = 11.2 km/s</em>) kosmik apparat <em>v₀ = 13.0 km/s</em> tezlik bilan uchirildi. Cheksiz uzoqlashganda apparat qanday qoldiq tezlikka (<em>v_∞</em>) ega bo‘ladi?
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol4')">Yechim</button>
+      <div id="sol4" class="problem-sol">
+        <strong>Energiya saqlanishidan:</strong> v_∞ = √(v₀² − v₂²) = √(13.0² − 11.2²) = √(169 − 125.44) = √43.56 = <strong>6.60 km/s</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">67-§: Markaziy maydon orbitalari simulyatsiyasi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Jonli Canvas</div>
+    </div>
+    <canvas id="orbCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1 -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>1-Sim: Konus kesimlari (v / v₁)</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Boshlang‘ich tezlik nisbati:</span><strong id="ratVal">1.00 v₁ (7.91 km/s)</strong></div>
+          <input type="range" id="ratSl" min="0.90" max="1.60" step="0.02" value="1.00" />
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn1" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Orbita ko‘rsatkichlari</h3>
+        <div class="formula-box">v₁ = √(GM/r) &nbsp;|&nbsp; v₂ = √2 · v₁ ≈ 1.414 v₁</div>
+        <div class="telemetry">
+          <div class="t-row"><span>Traektoriya:</span><span class="t-val" id="shapeOut">Aylana (e = 0)</span></div>
+          <div class="t-row"><span>Ekssentrisitet (e):</span><span class="t-val" id="eccOut">0.000</span></div>
+          <div class="t-row"><span>Energiya holati:</span><span class="t-val" id="enOut">E &lt; 0 (Yopiq)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>2-Sim: Ellips va Vis-viva tezligi</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Perigey masofasi r_p:</span><strong id="rpVal">7 000 km</strong></div>
+          <input type="range" id="rpSl" min="6600" max="12000" step="200" value="7000" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label"><span>Apogey masofasi r_a:</span><strong id="raVal">16 000 km</strong></div>
+          <input type="range" id="raSl" min="12000" max="36000" step="500" value="16000" />
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn2" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Vis-viva natijalari (μ_⊕ = 3.986×10⁵ km³/s²)</h3>
+        <div class="formula-box">v² = μ · (2/r − 1/a)</div>
+        <div class="telemetry">
+          <div class="t-row"><span>Katta yarim o‘q (a):</span><span class="t-val" id="aOut">11 500 km</span></div>
+          <div class="t-row"><span>Perigey tezligi (v_p):</span><span class="t-val" id="vpOut">8.93 km/s</span></div>
+          <div class="t-row"><span>Apogey tezligi (v_a):</span><span class="t-val" id="vaOut">3.91 km/s</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>3-Sim: Balandlikka bog‘liqlik v₁(h), v₂(h)</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Balandlik h:</span><strong id="hVal">400 km</strong></div>
+          <input type="range" id="hSl" min="200" max="36000" step="200" value="400" />
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>r = R_⊕ + h masofadagi tezliklar</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>1-kosmik tezlik v₁(h):</span><span class="t-val" id="v1hOut">7.67 km/s</span></div>
+          <div class="t-row"><span>2-kosmik tezlik v₂(h):</span><span class="t-val" id="v2hOut">10.85 km/s</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TEST (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Bilimni sinash (67-§)</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="flex:none;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('orbCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+  let tick = 0;
+  let paused = false;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+  function togglePause() {
+    paused = !paused;
+    ['pauseBtn1', 'pauseBtn2'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.textContent = paused ? '▶ Davom' : '⏸ Pauza';
+    });
+  }
+  function resetSim() {
+    tick = 0;
+    paused = false;
+    ['pauseBtn1', 'pauseBtn2'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.textContent = '⏸ Pauza';
+    });
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.getElementById('theoryView').classList.toggle('hidden', idx !== 0);
+    document.getElementById('simView').classList.toggle('hidden', idx === 0);
+    if (idx > 0) {
+      resize();
+      document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+    }
+  }
+
+  function drawConicTab(w, h) {
+    const rat = parseFloat(document.getElementById('ratSl').value);
+    const e = Math.max(0, rat * rat - 1);
+    const vKms = rat * 7.91;
+
+    document.getElementById('ratVal').textContent = `${rat.toFixed(2)} v₁ (${vKms.toFixed(2)} km/s)`;
+    document.getElementById('eccOut').textContent = e.toFixed(3);
+
+    let sh = "Elliptik orbita (0 < e < 1)", en = "E < 0 (Bog‘langan)", col = "#38bdf8";
+    if (rat < 1) { sh = "Ellips (v < v₁, ichki)"; col = "#a78bfa"; }
+    else if (Math.abs(e) < 0.01) { sh = "Aylana orbita (e = 0)"; col = "#34d399"; }
+    else if (Math.abs(e - 1) < 0.04) { sh = "Parabolik traektoriya (e ≈ 1)"; en = "E ≈ 0 (Qochish)"; col = "#fbbf24"; }
+    else if (e > 1) { sh = "Giperbolik traektoriya (e > 1)"; en = "E > 0 (Ochiq)"; col = "#fb7185"; }
+
+    document.getElementById('shapeOut').textContent = sh;
+    document.getElementById('enOut').textContent = en;
+
+    const fx = w * 0.36, fy = h * 0.52, p = 72;
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(fx, fy, 18, 0, Math.PI * 2); ctx.fill();
+
+    const effE = Math.min(e, 1.85);
+    const maxTh = effE >= 1 ? Math.acos(-1 / effE) - 0.14 : Math.PI;
+    ctx.strokeStyle = col; ctx.lineWidth = 3;
+    ctx.beginPath();
+    let started = false;
+    for (let th = -maxTh; th <= maxTh; th += 0.02) {
+      const denom = 1 + effE * Math.cos(th);
+      if (denom > 0.15) {
+        const r = Math.min(420, p / denom);
+        const x = fx - r * Math.cos(th);
+        const y = fy + r * Math.sin(th);
+        if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+      }
+    }
+    ctx.stroke();
+
+    const ang = effE < 1 ? ((tick * 0.025) % (Math.PI * 2)) - Math.PI : (((tick * 0.018) % 2) - 1) * maxTh * 0.85;
+    const denomA = Math.max(0.2, 1 + effE * Math.cos(ang));
+    const rr = Math.min(420, p / denomA);
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(fx - rr * Math.cos(ang), fy + rr * Math.sin(ang), 6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function drawEllipseTab(w, h) {
+    const rp = parseFloat(document.getElementById('rpSl').value);
+    const ra = Math.max(rp + 2000, parseFloat(document.getElementById('raSl').value));
+    const a = (rp + ra) / 2;
+    const mu = 3.986e5;
+    const vp = Math.sqrt(mu * (2 / rp - 1 / a));
+    const va = Math.sqrt(mu * (2 / ra - 1 / a));
+
+    document.getElementById('rpVal').textContent = `${rp.toLocaleString()} km`;
+    document.getElementById('raVal').textContent = `${ra.toLocaleString()} km`;
+    document.getElementById('aOut').textContent = `${Math.round(a).toLocaleString()} km`;
+    document.getElementById('vpOut').textContent = `${vp.toFixed(2)} km/s`;
+    document.getElementById('vaOut').textContent = `${va.toFixed(2)} km/s`;
+
+    const cx = w * 0.52, cy = h * 0.52;
+    const scale = Math.min(w, h) * 0.36 / 36000;
+    const aPx = a * scale;
+    const cPx = ((ra - rp) / 2) * scale;
+    const bPx = Math.sqrt(Math.max(120, aPx * aPx - cPx * cPx));
+
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.ellipse(cx, cy, aPx, bPx, 0, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(cx - cPx, cy, 14, 0, Math.PI * 2); ctx.fill();
+
+    const th = tick * 0.025;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx + aPx * Math.cos(th), cy + bPx * Math.sin(th), 6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function drawVelHeightTab(w, h) {
+    const alt = parseFloat(document.getElementById('hSl').value);
+    const r = 6371 + alt;
+    const mu = 3.986e5;
+    const v1 = Math.sqrt(mu / r);
+    const v2 = Math.sqrt(2) * v1;
+
+    document.getElementById('hVal').textContent = `${alt.toLocaleString()} km`;
+    document.getElementById('v1hOut').textContent = `${v1.toFixed(2)} km/s`;
+    document.getElementById('v2hOut').textContent = `${v2.toFixed(2)} km/s`;
+
+    const padL = 65, padB = h - 50, padT = 65, padR = w - 40;
+    const gw = padR - padL, gh = padB - padT;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.5)';
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padB); ctx.lineTo(padR, padB); ctx.stroke();
+
+    // v2 egri chizig'i
+    ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const hh = 200 + (i / 80) * 35800;
+      const vv = Math.sqrt(2 * mu / (6371 + hh));
+      const x = padL + ((hh - 200) / 35800) * gw;
+      const y = padB - (vv / 12) * gh;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // v1 egri chizig'i
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const hh = 200 + (i / 80) * 35800;
+      const vv = Math.sqrt(mu / (6371 + hh));
+      const x = padL + ((hh - 200) / 35800) * gw;
+      const y = padB - (vv / 12) * gh;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    const gx = padL + ((alt - 200) / 35800) * gw;
+    const gy = padB - (v1 / 12) * gh;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(gx, gy, 6.5, 0, Math.PI * 2); ctx.fill();
+  }
+
+  const quizQuestions = [
+    { q: "1. Markaziy gravitatsiya maydonida jismning traektoriyasi qanday egri chiziq bo‘ladi?", opts: ["Konus kesimlari (aylana, ellips, parabola, giperbola)", "Faqat to‘g‘ri chiziq", "Sinusoida"], ans: 0, exp: "Tezlik va to‘liq energiyaga qarab traektoriya konus kesimi bo‘ladi." },
+    { q: "2. Yer sirti yaqinida birinchi kosmik tezlik (v₁) taxminan nechaga teng?", opts: ["7.91 km/s", "11.19 km/s", "3.0 km/s"], ans: 0, exp: "v₁ = √(GM_⊕ / R_⊕) ≈ 7.91 km/s." },
+    { q: "3. Ikkinchi kosmik tezlik (v₂) birinchi kosmik tezlikdan necha marta katta?", opts: ["√2 (≈ 1.414) marta", "2 marta", "4 marta"], ans: 0, exp: "v₂ = √(2GM / r) = √2 · v₁." },
+    { q: "4. Elliptik orbitadagi jismning to‘liq mexanik energiyasi (E) qanday bo‘ladi?", opts: ["Manfiy (E < 0)", "Musbat (E > 0)", "Nolga teng (E = 0)"], ans: 0, exp: "Yopiq orbitalar (aylana va ellips) uchun E < 0." },
+    { q: "5. Parabolik traektoriya uchun ekssentrisitet (e) va energiya (E) nimaga teng?", opts: ["e = 1, E = 0", "e = 0, E < 0", "e > 1, E > 0"], ans: 0, exp: "Ikkinchi kosmik tezlikda E = 0 va e = 1 bo‘ladi." },
+    { q: "6. Elliptik orbitaning qaysi nuqtasida tezlik maksimal bo‘ladi?", opts: ["Perisentrda (perigeyda)", "Aposentrda (apogeyda)", "Barcha nuqtada bir xil"], ans: 0, exp: "Markaziy jismga eng yaqin nuqtada tezlik eng katta bo‘ladi." },
+    { q: "7. Perigey r_p = 7000 km va apogey r_a = 13 000 km bo‘lsa, katta yarim o‘q (a) qancha?", opts: ["10 000 km", "20 000 km", "6000 km"], ans: 0, exp: "a = (7000 + 13 000) / 2 = 10 000 km." },
+    { q: "8. Yuqoridagi masalada ekssentrisitet (e) nechaga teng?", opts: ["0.30", "0.60", "0.15"], ans: 0, exp: "e = (13 000 − 7000) / (13 000 + 7000) = 0.30." },
+    { q: "9. Vis-viva (energiya) tenglamasini ko‘rsating:", opts: ["v² = G·M · (2/r − 1/a)", "v = g · t", "F = m · a"], ans: 0, exp: "Istalgan nuqtadagi tezlik kvadrati v² = μ(2/r − 1/a)." },
+    { q: "10. Giperbolik uchishda cheksizlikdagi qoldiq tezlik (v_∞) qanday topiladi?", opts: ["v_∞ = √(v₀² − v₂²)", "v_∞ = v₀ + v₂", "v_∞ = 0"], ans: 0, exp: "Energiya saqlanish qonunidan v_∞² = v₀² − v₂²." }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Izoh: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) { qScore = 0; document.getElementById('qScore').textContent = `Natija: 0 / 10`; }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  function loop() {
+    if (!paused) tick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      if (activeTab === 1) drawConicTab(w, h);
+      else if (activeTab === 2) drawEllipseTab(w, h);
+      else if (activeTab === 3) drawVelHeightTab(w, h);
+      else drawConicTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
