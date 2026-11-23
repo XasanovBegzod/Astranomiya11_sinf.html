@@ -2,7 +2,7 @@
 
 Ushbu loyiha **11-sinf Astronomiya** fani bo‘yicha 40 ta mavzuni o‘z ichiga olgan interaktiv veb-qo‘llanma hisoblanadi.
 
-🔗 **Saytni ochish:** [https://xasanovbegzod.github.io/Astronomiya11_sinf.html/](https://xasanovbegzod.github.io/Astronomiya11_sinf.html/)
+🔗 **Saytni ochish:** [https://xasanovbegzod.github.io/Astronomiya11_sinf.html/](xasanovbegzod.github.io/Astranomiya11_sinf.html/)
 
 ## ✨ Imkoniyatlari
 * **40 ta tizimli mavzu:** Nazariy ma’lumotlar, qoidalar va asosiy formulalar jamlanmasi.
