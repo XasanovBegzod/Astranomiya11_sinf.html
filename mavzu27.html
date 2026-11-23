@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>27-Mavzu (59–60-§§): Galaktikalarning turlari. Kvazarlar va faol yadroli galaktikalar | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li { font-size: 0.9rem; color: #e2e8f0; margin-bottom: 8px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.83rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.24); padding: 8px 10px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.22); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+    .btn-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 7px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.82rem; line-height: 1.52; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>27-MAVZU (59–60-§§). Galaktikalarning turlari. Kvazarlar va faol yadroli galaktikalar</h1>
+    <p>11-sinf Astronomiya | VI Bob: Koinotning tuzilishi va evolyutsiyasi</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">59-§ Galaktikalar morfologiyasi</button>
+    <button class="tab-btn" onclick="setTab(2)">60-§ Kvazar va Faol yadro</button>
+    <button class="tab-btn" onclick="setTab(3)">59–60-§§ Qizil siljish (z)</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>59–60-§§. Boshqa galaktikalar tasnifi, Kvazarlar va Faol yadroli galaktikalar</h2>
+    <p>1923–1924-yillarda <strong>Edvin Xabbl</strong> Andromeda (M31) galaktikasidagi sefeid yulduzlar masofasini aniqlab, Somon Yo‘li tashqarisida ulkan mustaqil galaktikalar olami mavjudligini isbotladi. Xabbl tasnifiga ko‘ra galaktikalar <strong>elliptik (E)</strong>, <strong>spiral (S)</strong>, <strong>to‘siqli spiral (SB)</strong>, <strong>linzasimon (S0)</strong> va <strong>noto‘g‘ri (Irr)</strong> turlarga bo‘linadi.</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Galaktika turi</th>
+          <th>Belgisi</th>
+          <th>Tuzilishi va yulduz tarkibi</th>
+          <th>Mashhur namunalari</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Elliptik</strong></td><td>E0 – E7</td><td>Sferik/ellipsoidal shakl; asosan qadimgi yulduzlar, gaz kam</td><td>M87, M32</td></tr>
+        <tr><td><strong>Spiral</strong></td><td>Sa, Sb, Sc</td><td>Yadro, disk va spiral tarmoqlar; yosh yulduzlar va gaz ko‘p</td><td>Andromeda (M31), Somon Yo‘li, M51</td></tr>
+        <tr><td><strong>To‘siqli spiral</strong></td><td>SBa – SBc</td><td>Markaziy yulduz-gaz ko‘prigi («bar») va tarmoqlar</td><td>NGC 1300</td></tr>
+        <tr><td><strong>Linzasimon</strong></td><td>S0</td><td>Disk va markaziy qabariqlik bor, spiral tarmoqlar yo‘q</td><td>NGC 2787</td></tr>
+        <tr><td><strong>Noto‘g‘ri</strong></td><td>Irr</td><td>Muntazam shaklsiz; yosh yulduz va H II tumanliklarga boy</td><td>Katta va Kichik Magellan Bulutlari</td></tr>
+      </tbody>
+    </table>
+    <div class="math-banner">
+      Qizil siljish: z = (λ − λ₀) / λ₀ &nbsp;|&nbsp; O‘zgaruvchanlik vaqtidan o‘lcham chegarasi: l ≤ c · Δt
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>59–60-§§. Hisoblash masalalari va yechimlar bazasi</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Kvazar spektridagi qizil siljish):</strong> Vodorodning <em>λ₀ = 656.3 nm</em> chizig‘i kvazar spektrida <em>λ = 984.45 nm</em> da kuzatildi. Qizil siljish parametrini (z) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        <strong>z = (984.45 − 656.3) / 656.3 = 328.15 / 656.3 = 0.50</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Kvazar markaziy sohasining chiziqli o‘lchami):</strong> Kvazar yorqinligi <em>Δt = 12 soat</em> (<em>4.32 × 10⁴ s</em>) davomida o‘zgardi. Markaziy soha o‘lchami chegarasini (<em>l ≤ cΔt</em>) km va a.b. da hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>l ≤ (3.00 × 10⁸ m/s) × (4.32 × 10⁴ s) = 1.296 × 10¹⁰ km ≈ 86.6 a.b.</strong>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Galaktikagacha masofa):</strong> Diametri <em>D = 30 kpk</em> bo‘lgan galaktika ko‘rinma burchak diametri <em>θ = 1°</em> (<em>≈ 1/57.3 rad</em>). Masofani (r) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>r ≈ 30 kpk / (1 / 57.3) ≈ 1 719 kpk ≈ 1.72 Mpk</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">59-§: Xabbl morfologik tasnifi — Elliptik, Spiral, To‘siqli, Linzasimon va Noto‘g‘ri galaktikalar</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">M31 (Andromeda) • M87 • KMB</div>
+    </div>
+    <canvas id="extCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 59-§ GALAKTIKALAR MORFOLOGIYASI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Galaktika morfologik turi</h3>
+        <div class="btn-grid-3" id="morphBtns" style="margin-bottom:10px;">
+          <button class="btn" onclick="setMorph('E', this)">Elliptik (E)</button>
+          <button class="btn active" onclick="setMorph('S', this)">Spiral (S)</button>
+          <button class="btn" onclick="setMorph('SB', this)">To‘siqli (SB)</button>
+          <button class="btn" onclick="setMorph('S0', this)">Linzasimon (S0)</button>
+          <button class="btn" onclick="setMorph('Irr', this)">Noto‘g‘ri (Irr)</button>
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Shakl / Tarmoq parametri:</span>
+            <strong id="morphParamVal">0.65</strong>
+          </div>
+          <input type="range" id="morphParamSl" min="0.2" max="1.0" step="0.05" value="0.65" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Morfologik tavsif</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Asosiy yulduz populyatsiyasi:</span><span class="t-val" id="mPopOut">Yosh + Qadimgi</span></div>
+          <div class="t-row"><span>Gaz va chang miqdori:</span><span class="t-val" id="mGasOut">Ko‘p (spiral tarmoqlarda)</span></div>
+          <div class="t-row"><span>Mashhur namuna:</span><span class="t-val" id="mExOut">Andromeda (M31)</span></div>
+        </div>
+        <p class="desc" id="mDescOut" style="margin-top:8px;">
+          Spiral galaktikalar markaziy yadro, yassi disk va yosh ko‘k yulduzlar hamda tumanliklarga boy spiral tarmoqlardan iborat.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 60-§ KVAZAR VA FAOL YADRO -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Faol yadro va Kvazar parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Qora o‘ra massasi (log₁₀(M/M☉)):</span>
+            <strong id="agnMVal">8.8 (6.3 × 10⁸ M☉)</strong>
+          </div>
+          <input type="range" id="agnMSl" min="6.0" max="10.0" step="0.1" value="8.8" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>O‘zgaruvchanlik vaqti (Δt, soat):</span>
+            <strong id="agnDtVal">12 soat</strong>
+          </div>
+          <input type="range" id="agnDtSl" min="1" max="72" step="1" value="12" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Energiya manbai va O‘lcham chegarasi</h3>
+        <div class="formula-box">
+          Akkretsiya diski + O‘ta massiv qora o‘ra &nbsp;|&nbsp; l ≤ c · Δt
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Markaziy soha o‘lchami (l ≤ cΔt):</span><span class="t-val" id="agnSizeOut">86.6 a.b.</span></div>
+          <div class="t-row"><span>Energiya mexanizmi:</span><span class="t-val">Modda akkretsiyasi</span></div>
+          <div class="t-row"><span>Qutbiy oqimlar:</span><span class="t-val">Relyativistik jetlar</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 59-60-§§ QIZIL SILJISH (z) -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Spektral qizil siljish (z) laboratoriyasi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Qizil siljish parametri (z):</span>
+            <strong id="zVal">z = 0.50</strong>
+          </div>
+          <input type="range" id="zSl" min="0.0" max="2.5" step="0.05" value="0.50" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>To‘lqin uzunligi siljishi (Hα = 656.3 nm)</h3>
+        <div class="formula-box">
+          λ = λ₀ · (1 + z) &nbsp;|&nbsp; z = (λ − λ₀) / λ₀
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Laboratoriya to‘lqin uzunligi (λ₀):</span><span class="t-val">656.3 nm</span></div>
+          <div class="t-row"><span>Kuzatilayotgan to‘lqin uzunligi (λ):</span><span class="t-val" id="zLamOut">984.5 nm</span></div>
+          <div class="t-row"><span>To‘lqin uzunligi ortishi (Δλ):</span><span class="t-val" id="zDlamOut">+328.2 nm</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('extCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function highlightBtn(containerId, btnEl) {
+    if (!btnEl) return;
+    document.querySelectorAll(`#${containerId} .btn`).forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "59-§: Xabbl morfologik tasnifi — Galaktikalar turlari va tuzilishi",
+      "60-§: Faol yadroli galaktikalar va Kvazarlar — Akkretsiya diski va relyativistik jetlar",
+      "59–60-§§: Spektral qizil siljish (z) va masofa / o‘lcham tahlili",
+      "Bilimlarni tekshirish: 27-Mavzu (59–60-§§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "E • S • SB • S0 • Irr",
+      "O‘ta massiv qora o‘ra (10⁶–10¹⁰ M☉)",
+      "z = (λ − λ₀) / λ₀",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 59-§ GALAKTIKALAR MORFOLOGIYASI ====================
+  let morphType = 'S';
+  let tTick = 0;
+
+  function setMorph(t, btn) {
+    morphType = t;
+    highlightBtn('morphBtns', btn);
+    const meta = {
+      E: { pop: "Qadimgi (II populyatsiya)", gas: "Juda kam", ex: "M87 / M32", desc: "Elliptik galaktikalar sferik yoki cho‘ziq ellipsoidal shaklda bo‘lib, asosan qadimgi yulduzlardan tashkil topgan." },
+      S: { pop: "Yosh + Qadimgi", gas: "Ko‘p (tarmoqlarda)", ex: "Andromeda (M31)", desc: "Spiral galaktikalar markaziy yadro, yassi disk va yosh ko‘k yulduzlarga boy spiral tarmoqlardan iborat." },
+      SB: { pop: "Yosh + Qadimgi", gas: "Ko‘p", ex: "NGC 1300", desc: "To‘siqli spiral galaktikalarda markazdan o‘tuvchi cho‘ziq yulduz-gaz ko‘prigi («bar») mavjud." },
+      S0: { pop: "Qadimgi / O‘rta", gas: "Kam", ex: "NGC 2787", desc: "Linzasimon galaktikalar disk va markaziy qabariqlikka ega, ammo spiral tarmoqlari ko‘rinmaydi." },
+      Irr: { pop: "Juda yosh (I populyatsiya)", gas: "Juda ko‘p", ex: "Katta Magellan Buluti", desc: "Noto‘g‘ri galaktikalar muntazam shaklsiz bo‘lib, faol yulduz tug‘ilish hududlari va H II tumanliklarga boy." }
+    };
+    const m = meta[t];
+    document.getElementById('mPopOut').textContent = m.pop;
+    document.getElementById('mGasOut').textContent = m.gas;
+    document.getElementById('mExOut').textContent = m.ex;
+    document.getElementById('mDescOut').textContent = m.desc;
+  }
+
+  function drawMorphTab(w, h) {
+    const p = parseFloat(document.getElementById('morphParamSl').value);
+    document.getElementById('morphParamVal').textContent = p.toFixed(2);
+    const cx = w * 0.5, cy = h * 0.52;
+
+    if (morphType === 'E') {
+      const rx = 120, ry = 120 * (1 - p * 0.65);
+      const g = ctx.createRadialGradient(cx, cy, 5, cx, cy, rx);
+      g.addColorStop(0, '#fef08a');
+      g.addColorStop(0.5, 'rgba(251, 191, 36, 0.45)');
+      g.addColorStop(1, 'rgba(251, 191, 36, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+    } else if (morphType === 'S0') {
+      ctx.fillStyle = 'rgba(253, 224, 71, 0.25)';
+      ctx.beginPath(); ctx.ellipse(cx, cy, 130, 32, -0.15, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fef08a';
+      ctx.beginPath(); ctx.ellipse(cx, cy, 45, 28, -0.15, 0, Math.PI * 2); ctx.fill();
+    } else if (morphType === 'Irr') {
+      for (let i = 0; i < 90; i++) {
+        const ang = (i * 2.39996) % (Math.PI * 2);
+        const rad = Math.pow(((i * 29) % 100) / 100, 0.6) * 115;
+        const x = cx + Math.cos(ang) * rad * (1 + 0.25 * Math.sin(i));
+        const y = cy + Math.sin(ang) * rad * 0.75;
+        ctx.fillStyle = i % 4 === 0 ? '#f43f5e' : (i % 2 === 0 ? '#38bdf8' : '#e0f2fe');
+        ctx.beginPath(); ctx.arc(x, y, 2.2 + (i % 3), 0, Math.PI * 2); ctx.fill();
+      }
+    } else {
+      // Spiral (S) yoki To'siqli spiral (SB)
+      if (morphType === 'SB') {
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 8;
+        ctx.beginPath(); ctx.moveTo(cx - 42, cy); ctx.lineTo(cx + 42, cy); ctx.stroke();
+      }
+      for (let arm = 0; arm < 2; arm++) {
+        ctx.strokeStyle = arm === 0 ? 'rgba(56, 189, 248, 0.65)' : 'rgba(167, 139, 250, 0.55)';
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        for (let t = 0.15; t <= 1.0; t += 0.03) {
+          const rr = t * 135;
+          const th = arm * Math.PI + t * (2 + p * 3.5) + tTick * 0.008;
+          const x = cx + Math.cos(th) * rr;
+          const y = cy + Math.sin(th) * rr * 0.72;
+          if (t <= 0.16) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#fef08a';
+      ctx.beginPath(); ctx.arc(cx, cy, 16, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  // ==================== TAB 2: 60-§ KVAZAR VA FAOL YADRO ====================
+  function drawAgnTab(w, h) {
+    const logM = parseFloat(document.getElementById('agnMSl').value);
+    const dtHr = parseFloat(document.getElementById('agnDtSl').value);
+    const massVal = Math.pow(10, logM);
+    const sizeKm = 3.0e8 * (dtHr * 3600) / 1000.0;
+    const sizeAu = sizeKm / 1.496e8;
+
+    document.getElementById('agnMVal').textContent = `${logM.toFixed(1)} (${massVal.toExponential(1)} M☉)`;
+    document.getElementById('agnDtVal').textContent = `${dtHr} soat`;
+    document.getElementById('agnSizeOut').textContent = `${sizeAu.toFixed(1)} a.b.`;
+
+    const cx = w * 0.5, cy = h * 0.52;
+
+    // Relyativistik jetlar (yuqori va pastki)
+    const j1 = ctx.createLinearGradient(cx, cy - 10, cx, 25);
+    j1.addColorStop(0, 'rgba(56, 189, 248, 0.85)');
+    j1.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = j1;
+    ctx.beginPath(); ctx.moveTo(cx - 4, cy - 10); ctx.lineTo(cx - 18, 25); ctx.lineTo(cx + 18, 25); ctx.lineTo(cx + 4, cy - 10); ctx.fill();
+
+    const j2 = ctx.createLinearGradient(cx, cy + 10, cx, h - 25);
+    j2.addColorStop(0, 'rgba(56, 189, 248, 0.85)');
+    j2.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = j2;
+    ctx.beginPath(); ctx.moveTo(cx - 4, cy + 10); ctx.lineTo(cx - 18, h - 25); ctx.lineTo(cx + 18, h - 25); ctx.lineTo(cx + 4, cy + 10); ctx.fill();
+
+    // Akkretsiya diski
+    const dg = ctx.createRadialGradient(cx, cy, 12, cx, cy, 120);
+    dg.addColorStop(0, '#ffffff');
+    dg.addColorStop(0.35, '#fbbf24');
+    dg.addColorStop(0.75, 'rgba(244, 63, 94, 0.45)');
+    dg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = dg;
+    ctx.beginPath(); ctx.ellipse(cx, cy, 120, 28, -0.15, 0, Math.PI * 2); ctx.fill();
+
+    // Markaziy qora o'ra
+    ctx.fillStyle = '#000';
+    ctx.beginPath(); ctx.arc(cx, cy, 12, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // ==================== TAB 3: 59-60-§§ QIZIL SILJISH (z) ====================
+  function drawRedshiftTab(w, h) {
+    const z = parseFloat(document.getElementById('zSl').value);
+    const lam0 = 656.3;
+    const lam = lam0 * (1 + z);
+    const dlam = lam - lam0;
+
+    document.getElementById('zVal').textContent = `z = ${z.toFixed(2)}`;
+    document.getElementById('zLamOut').textContent = `${lam.toFixed(1)} nm`;
+    document.getElementById('zDlamOut').textContent = `+${dlam.toFixed(1)} nm`;
+
+    const bx = w * 0.1, by = h * 0.42, bw = w * 0.8, bh = 44;
+
+    // Ko'rinma spektr chizig'i
+    const grad = ctx.createLinearGradient(bx, by, bx + bw, by);
+    grad.addColorStop(0, '#60a5fa');
+    grad.addColorStop(0.35, '#34d399');
+    grad.addColorStop(0.65, '#facc15');
+    grad.addColorStop(1, '#ef4444');
+    ctx.fillStyle = grad;
+    ctx.fillRect(bx, by, bw, bh);
+
+    // Laboratoriya chizig'i (656.3 nm)
+    const x0 = bx + bw * 0.62;
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(x0, by - 12); ctx.lineTo(x0, by + bh + 12); ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.font = '11px sans-serif';
+    ctx.fillText('λ₀ = 656.3 nm', x0 - 34, by - 16);
+
+    // Siljigan chiziq
+    const shiftPx = Math.min(bw * 0.34, z * 45);
+    const x1 = x0 + shiftPx;
+    ctx.strokeStyle = '#fb7185';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x1, by - 12); ctx.lineTo(x1, by + bh + 12); ctx.stroke();
+    ctx.fillStyle = '#fda4af';
+    ctx.fillText(`λ = ${lam.toFixed(0)} nm`, x1 - 24, by + bh + 26);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. 1923–1924-yillarda Andromeda (M31) galaktikasidagi sefeid yulduzlar orqali boshqa galaktikalarning mavjudligini kim isbotladi?",
+      opts: ["Galileo Galiley", "Edvin Xabbl", "Iogann Kepler"],
+      ans: 1,
+      exp: "Edvin Xabbl Andromeda galaktikasigacha masofa juda katta ekanligini aniqlab, uning alohida galaktika ekanini isbotladi."
+    },
+    {
+      q: "2. Xabbl morfologik tasnifida elliptik galaktikalar qanday belgilanadi?",
+      opts: ["E0 – E7 (sferikdan cho‘ziq ellipslargacha)", "Sa – Sc", "Irr"],
+      ans: 0,
+      exp: "Elliptik galaktikalar E0 dan E7 gacha belgilanadi."
+    },
+    {
+      q: "3. Katta va Kichik Magellan Bulutlari qanday galaktikalar turiga kiradi?",
+      opts: ["Elliptik", "Noto‘g‘ri (Irr) galaktikalar", "Linzasimon"],
+      ans: 1,
+      exp: "Magellan Bulutlari Somon Yo‘lining yo‘ldosh noto‘g‘ri (irregulyar) galaktikalaridir."
+    },
+    {
+      q: "4. Linzasimon galaktikalar (S0) ning asosiy xususiyati nimada?",
+      opts: ["Disk va markaziy qabariqlik bor, lekin aniq spiral tarmoqlari yo‘q", "Faqat bitta yulduzdan iborat", "Hech qanday markaziy yadrosi yo‘q"],
+      ans: 0,
+      exp: "S0 galaktikalar elliptik va spiral galaktikalar o‘rtasidagi oraliq sinf hisoblanadi."
+    },
+    {
+      q: "5. Bizning Somon Yo‘li va Andromeda galaktikalari qaysi galaktikalar guruhiga kiradi?",
+      opts: ["Mahalliy guruh", "Virgo klasteri", "Koma to‘dasi"],
+      ans: 0,
+      exp: "Somon Yo‘li, Andromeda (M31), M33 va o‘nlab mitti galaktikalar Mahalliy guruhni tashkil etadi."
+    },
+    {
+      q: "6. Faol yadroli galaktikalar (AGN) va kvazarlarning ulkan energiyasi asosan qanday jarayondan hosil bo‘ladi?",
+      opts: ["Markazdagi o‘ta massiv qora o‘raga modda akkretsiyasi (tushishi) natijasida", "Faqat quyosh shamolidan", "Sayyoralar nurlanishidan"],
+      ans: 0,
+      exp: "O‘ta massiv qora o‘ra (10⁶–10¹⁰ M☉) atrofidagi qizigan akkretsiya diski ulkan energiya ajratadi."
+    },
+    {
+      q: "7. Kvazarlar spektrida kuzatiladigan katta qizil siljish (z) nimani anglatadi?",
+      opts: ["Koinotning kengayishi tufayli kvazarlarning bizdan juda katta masofada joylashganini", "Kvazar sovuq ekanini", "Yorug‘lik tezligi kamayganini"],
+      ans: 0,
+      exp: "Katta qizil siljish ulkan masofani va shuning bilan birga kvazarlarning o‘ta yuqori haqiqiy yorqinligini ko‘rsatadi."
+    },
+    {
+      q: "8. Kvazar yorqinligining qisqa vaqt oralig‘ida (masalan, bir necha soat yoki kun ichida) o‘zgarishi nimani ko‘rsatadi?",
+      opts: ["Energiya ajralib chiqayotgan markaziy soha o‘lchami ixcham (l ≤ cΔt) ekanligini", "Kvazar Yer yaqinida ekanini", "Kvazar o‘chib qolganini"],
+      ans: 0,
+      exp: "Yorug‘lik signali o‘lchamdan tez o‘ta olmasligi sababli Δt o‘zgarish vaqti markaziy soha o‘lchamini cheklaydi."
+    },
+    {
+      q: "9. Agar λ₀ = 656.3 nm va λ = 984.45 nm bo‘lsa, qizil siljish parametri z nechaga teng?",
+      opts: ["0.50", "1.50", "0.25"],
+      ans: 0,
+      exp: "z = (984.45 − 656.3) / 656.3 = 0.50."
+    },
+    {
+      q: "10. To‘siqli spiral galaktikalarda (SB) markaziy qismda qanday tuzilma ko‘zga tashlanadi?",
+      opts: ["Markazdan o‘tuvchi cho‘ziq yulduz-gaz ko‘prigi («bar»)", "Halqa shaklidagi sayyoralar tizimi", "Bo‘shliq"],
+      ans: 0,
+      exp: "SB galaktikalar markazidagi cho‘ziq ko‘prik («bar») va uning uchlaridan chiquvchi spiral tarmoqlari bilan ajralib turadi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    tTick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawMorphTab(w, h);
+      else if (activeTab === 2) drawAgnTab(w, h);
+      else if (activeTab === 3) drawRedshiftTab(w, h);
+      else drawMorphTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
+
