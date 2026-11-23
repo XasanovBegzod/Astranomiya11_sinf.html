@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5-BSB (A/B Variant + Yozma Masalalar) | 11-sinf Astronomiya</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.94);
+      --card: rgba(15, 23, 42, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 13px 18px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+
+    .mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover { filter: brightness(1.12); }
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .meta-card input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 17px 20px;
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(30, 41, 59, 0.82);
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .opt-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.14); }
+    .opt-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.18); }
+    .opt-btn.correct { border-color: var(--emerald); background: rgba(16, 185, 129, 0.25); color: #d1fae5; }
+    .opt-btn.wrong { border-color: var(--rose); background: rgba(244, 63, 94, 0.25); color: #ffe4e6; }
+
+    .explain {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      font-size: 0.84rem;
+      color: var(--emerald);
+      display: none;
+    }
+
+    .written-card {
+      background: var(--card);
+      border: 1px solid rgba(251, 191, 36, 0.32);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .written-card h3 { color: var(--gold); font-size: 0.98rem; margin-bottom: 8px; }
+    .written-card textarea {
+      width: 100%;
+      min-height: 76px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.86rem;
+      font-family: inherit;
+    }
+
+    .sol-box {
+      display: none;
+      margin-top: 10px;
+      padding: 11px 14px;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border-left: 3px solid var(--emerald);
+      font-size: 0.86rem;
+      color: #a7f3d0;
+    }
+
+    .result-box {
+      background: var(--panel);
+      border: 1px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: none;
+    }
+
+    .result-box h2 { color: var(--gold); font-size: 1.18rem; margin-bottom: 8px; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .score-item {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .score-item span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .score-item strong { font-size: 1.12rem; color: var(--emerald); }
+
+    .actions-bottom {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>5-BSB NAZORAT ISHI — 11-SINF ASTRONOMIYA</h1>
+    <p>Quyosh, Yulduzlar, Galaktika va Koinot tuzilishi (Kosmologiya) | A/B Variant (15 savoldan) + Yozma Masalalar</p>
+  </div>
+  <div class="mode-tabs">
+    <button class="tab-btn active" id="tabA" onclick="switchMode('A')">A Variant (15 savol)</button>
+    <button class="tab-btn" id="tabB" onclick="switchMode('B')">B Variant (15 savol)</button>
+    <button class="tab-btn" id="tabW" onclick="switchMode('W')">Yozma Masalalar (3 ta)</button>
+  </div>
+  <div class="status-bar" id="testControls">
+    <div class="pill" id="answeredPill">Javoblar: 0 / 15</div>
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="meta-card">
+    <div>
+      <label for="stName">O‘quvchining F.I.Sh.:</label>
+      <input type="text" id="stName" placeholder="Masalan: Karimov Azizbek" />
+    </div>
+    <div>
+      <label for="stClass">Sinf va maktab:</label>
+      <input type="text" id="stClass" placeholder="Masalan: 11-«A» sinf" />
+    </div>
+    <div>
+      <label for="stDate">Sana:</label>
+      <input type="text" id="stDate" value="2026-11-23" />
+    </div>
+  </div>
+
+  <div id="resultBox" class="result-box">
+    <h2 id="resTitle">5-BSB Natijasi</h2>
+    <p id="resStudent" style="color: var(--muted); font-size: 0.88rem;"></p>
+    <div class="score-grid">
+      <div class="score-item"><span>To‘g‘ri javoblar</span><strong id="resCorrect">0 / 15</strong></div>
+      <div class="score-item"><span>Foiz ko‘rsatkichi</span><strong id="resPercent">0%</strong></div>
+      <div class="score-item"><span>Taxminiy baho</span><strong id="resGrade">—</strong></div>
+    </div>
+    <p style="font-size: 0.84rem; color: #cbd5e1;">Har bir savol ostida qisqacha izoh ko‘rsatildi. Xatolarni tahlil qilib, bob mavzularini mustahkamlashingiz mumkin.</p>
+  </div>
+
+  <!-- TEST BLOKI (A VA B VARIANT) -->
+  <div id="testSection">
+    <div id="questionsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+    <div class="actions-bottom">
+      <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+      <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+    </div>
+  </div>
+
+  <!-- YOZMA MASALALAR BLOKI -->
+  <div id="writtenSection" class="hidden" style="display:flex; flex-direction:column; gap:14px;">
+    <div class="written-card">
+      <h3>1-Yozma masala (Yulduzlargacha masofa va Mutlaq yulduz kattaligi)</h3>
+      <p>Sirius yulduzining yillik parallaksi <em>p = 0.379″</em>, ko‘rinma yulduz kattaligi esa <em>m = −1.46ᵐ</em>. (a) Siriusgacha bo‘lgan masofani (<em>r</em>) parseklarda va yorug‘lik yillarida hisoblang (<em>1 pk ≈ 3.26 y.y.</em>); (b) Mutlaq yulduz kattaligi formulasi <em>M = m + 5 − 5·lg(r)</em> yordamida (<em>lg(2.64) ≈ 0.42</em>) Siriusning mutlaq yulduz kattaligini (<em>M</em>) toping.</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol1')">Yechimni ko‘rish</button>
+      <div id="wsol1" class="sol-box">
+        <strong>(a)</strong> r = 1 / p = 1 / 0.379 ≈ <strong>2.64 pk</strong> ≈ 2.64 × 3.26 ≈ <strong>8.6 yorug‘lik yili</strong>.<br>
+        <strong>(b)</strong> M = −1.46 + 5 − 5 × 0.42 = 3.54 − 2.10 = <strong>+1.44ᵐ</strong>.
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>2-Yozma masala (Yulduz temperaturasi va Vin siljish qonuni)</h3>
+      <p>Vin siljish qonuniga ko‘ra mutlaq qora jism nurlanishining maksimal intensivligiga mos to‘lqin uzunligi <em>λ_max = b / T</em> (bu yerda <em>b ≈ 2.9 × 10⁻³ m·K</em>). (a) Sirt temperaturasi <em>T = 5800 K</em> bo‘lgan Quyosh spektridagi maksimal nurlanish to‘lqin uzunligini (<em>λ_max</em>) nanometrlarda hisoblang; (b) Agar ko‘k gigant yulduzning sirt temperaturasi <em>T = 29 000 K</em> bo‘lsa, uning maksimal nurlanishi spektrning qaysi diapazoniga to‘g‘ri keladi?</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol2')">Yechimni ko‘rish</button>
+      <div id="wsol2" class="sol-box">
+        <strong>(a)</strong> λ_max = (2.9 × 10⁻³) / 5800 = 0.5 × 10⁻⁶ m = <strong>500 nm</strong> (ko‘rinadigan yorug‘likning yashil-sariq sohasi).<br>
+        <strong>(b)</strong> λ_max = (2.9 × 10⁻³) / 29 000 = 10⁻⁷ m = <strong>100 nm</strong> (ultrabinafsha diapazon).
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>3-Yozma masala (Galaktikalar va Xabbl qonuni)</h3>
+      <p>Xabbl doimiysi <em>H₀ = 70 km/(s·Mpk)</em> deb olinsin. (a) Uzoq galaktika spektridagi chiziqlar qizilga siljishi bo‘yicha uning bizdan uzoqlashish tezligi <em>v = 14 000 km/s</em> ekani aniqlandi. Ushbu galaktikagacha bo‘lgan masofani (<em>r</em>) megaparseklarda hisoblang; (b) Kosmik relikt nurlanish (CMB) va galaktikalar qizilga siljishi Koinot haqida qanday fundamental xulosani tasdiqlaydi?</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol3')">Yechimni ko‘rish</button>
+      <div id="wsol3" class="sol-box">
+        <strong>(a)</strong> Xabbl qonuni: v = H₀ · r ⇒ r = v / H₀ = 14 000 / 70 = <strong>200 Mpk</strong> (≈ 652 mln yorug‘lik yili).<br>
+        <strong>(b)</strong> Koinot statsionar emas, balki <strong>kengaymoqda</strong> va o‘tmishda o‘ta issiq hamda o‘ta zich holatdan («Katta Portlash» modelidan) boshlangan.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const variantA = [
+    { sec: "Quyosh fizikasi", q: "1. Quyosh qa’rida (yadrosida) ulkan energiya ajralib chiqishining asosiy manbai qanday jarayon?", opts: ["Vodorod yadrolarining (protonlarning) geliyga aylanish termoyadro reaksiyasi", "Kimyoviy yonish reaksiyasi", "Og‘ir uran yadrolarining bo‘linishi", "Meteoritlarning Quyoshga tushishi"], ans: 0, exp: "Quyosh markazida ~15 mln K temperaturada proton-proton sikli orqali vodorod geliyga aylanadi." },
+    { sec: "Quyosh fizikasi", q: "2. Quyosh atmosferasining ko‘rinadigan nurlanishining asosiy qismini chiqaruvchi va temperaturasi ~5800 K bo‘lgan qatlami nima deyiladi?", opts: ["Fotosfera", "Xromosfera", "Quyosh toji", "Konvektiv zona"], ans: 0, exp: "Fotosfera («yorug‘lik sferasi») Quyoshning ko‘rinadigan sirt qatlamidir." },
+    { sec: "Quyosh fizikasi", q: "3. Quyosh dog‘larining fotosferaga nisbatan qoraroq ko‘rinishining asosiy sababi nimada?", opts: ["Kuchli magnit maydon konveksiyani susaytirib, dog‘ temperaturasini ~4000–4500 K gacha pasaytiradi", "Dog‘lar Quyosh ustidan uchib o‘tayotgan sayyoralar soyasidir", "Dog‘lar bo‘shliq (teshik) dan iborat", "Dog‘lar muzlagan moddadan tashkil topgan"], ans: 0, exp: "Atrofdagi fotosferadan ~1500 K sovuqroq bo‘lgani uchun dog‘lar kontrast hisobiga qoraroq ko‘rinadi." },
+    { sec: "Yulduzlar astronomiyasi", q: "4. Yulduzlargacha bo‘lgan masofani o‘lchashda ishlatiladigan 1 parsek (1 pk) nimaga teng?", opts: ["Yillik parallaksi 1″ (bir yoy soniya) ga teng bo‘lgan masofa (≈ 3.26 yorug‘lik yili)", "Yerning Quyoshdan o‘rtacha masofasi (1 a.b.)", "Yorug‘lik bir kunda bosib o‘tadigan masofa", "Galaktikamiz diametri"], ans: 0, exp: "r (pk) = 1 / p″; 1 pk ≈ 3.26 y.y. ≈ 206 265 a.b." },
+    { sec: "Yulduzlar astronomiyasi", q: "5. Yulduzlarning sirt temperaturasiga ko‘ra asosiy spektral sinflari qaynoqdan sovuqqa tomon qaysi tartibda joylashadi?", opts: ["O – B – A – F – G – K – M", "M – K – G – F – A – B – O", "A – B – C – D – E – F – G", "G – K – M – O – B – A – F"], ans: 0, exp: "O sinfi eng qaynoq (~30 000–50 000 K, ko‘k), M sinfi eng sovuq (~2500–3500 K, qizil); Quyosh — G2 sinf." },
+    { sec: "Yulduzlar astronomiyasi", q: "6. Gershprung – Rassel (H–R) diagrammasida yulduzlarning asosiy qismi (jumladan Quyosh ham) qaysi sohada joylashgan?", opts: ["Bosh ketma-ketlikda", "Oq mitti yulduzlar sohasida", "Qizil o‘ta gigantlar sohasida", "Neytron yulduzlar sohasida"], ans: 0, exp: "Yulduzlar umrining ~90% ini vodorod yoqish bosqichi — Bosh ketma-ketlikda o‘tkazadi." },
+    { sec: "Yulduzlar evolyutsiyasi", q: "7. Massasi Quyosh massasiga yaqin bo‘lgan yulduz evolyutsiyasining yakuniy bosqichida qanday obyektga aylanadi?", opts: ["Qizil gigant → Sayyoraviy tumanlik va Oq mitti yulduzga", "Qora tuynukka", "Kvazarga", "Gaz gigant sayyoraga"], ans: 0, exp: "Quyosh tipidagi yulduzlar tashqi qobig‘ini tashlab sayyoraviy tumanlik hosil qiladi, yadrosi esa oq mittiga aylanadi." },
+    { sec: "Yulduzlar evolyutsiyasi", q: "8. O‘ta massiv yulduzning «O‘ta yangi» (Supernova) sifatida portlashidan so‘ng uning siqilgan yadrosi nimaga aylanishi mumkin?", opts: ["Neytron yulduz (pulsar) yoki Qora tuynukka", "Oq mitti yulduzga", "Kometaga", "Sariq mittiga"], ans: 0, exp: "Yadro massasi Chandrasekar chegarasidan oshsa neytron yulduz, Oppengeymer–Volkov chegarasidan oshsa qora tuynuk hosil bo‘ladi." },
+    { sec: "Qo‘shaloq va o‘zgaruvchan yulduzlar", q: "9. Sefeida tipidagi o‘zgaruvchan yulduzlarning astronomiyadagi eng muhim «standart sham» (masofa o‘lchagich) sifatidagi xususiyati nimada?", opts: ["Pulsatsiya davri va haqiqiy yorqinligi (mutlaq yulduz kattaligi) o‘rtasida aniq bog‘liqlik mavjud", "Ular umuman harakatlanmaydi", "Ular faqat Quyosh tizimida joylashgan", "Ularning rangi faqat qizil bo‘ladi"], ans: 0, exp: "Davr – yorqinlik bog‘liqligi orqali boshqa galaktikalargacha bo‘lgan masofani o‘lchash mumkin." },
+    { sec: "Somon Yo‘li Galaktikasi", q: "10. Bizning Somon Yo‘li Galaktikamiz tuzilishi jihatidan qaysi turdagi galaktikalarga kiradi?", opts: ["Spirali (to‘siqli spiral) galaktika", "Elliptik galaktika", "Noto‘g‘ri shakldagi galaktika", "Linzasimon galaktika"], ans: 0, exp: "Somon Yo‘li diametri ~100 000 yorug‘lik yili bo‘lgan yirik spiral galaktikadir." },
+    { sec: "Somon Yo‘li Galaktikasi", q: "11. Quyosh tizimi Somon Yo‘li Galaktikasi markazidan taxminan qanday masofada joylashgan?", opts: ["≈ 26 000 – 28 000 yorug‘lik yili (≈ 8–8.5 kpk)", "Galaktikaning qoq markazida", "≈ 100 yorug‘lik yili", "≈ 2.5 mln yorug‘lik yili"], ans: 0, exp: "Quyosh Galaktika markazidan ~8 kpk masofada Orion yengida joylashgan." },
+    { sec: "Galaktikalar", q: "12. Edvin Xabbl galaktikalarni tashqi ko‘rinishiga ko‘ra qaysi asosiy turlarga ajratgan?", opts: ["Elliptik (E), Spiral (S) va Noto‘g‘ri (Irr)", "Qattiq, suyuq va gazsimon", "Issiq, iliq va sovuq", "Yaqin, o‘rta va uzoq"], ans: 0, exp: "Xabbl kamerton tasnifi: elliptik, linzasimon, spiral va noto‘g‘ri galaktikalar." },
+    { sec: "Kosmologiya", q: "13. Uzoq galaktikalar spektrida kuzatiladigan «kosmologik qizilga siljish» nimani isbotlaydi?", opts: ["Koinotning kengayayotganini (galaktikalar bir-biridan uzoqlashayotganini)", "Galaktikalarning Quyosh atrofida aylanayotganini", "Yulduzlarning sovib borayotganini", "Yorug‘lik tezligining kamayishini"], ans: 0, exp: "Xabbl qonuniga ko‘ra v = H₀·r; fazo kengayishi tufayli to‘lqin uzunligi uzayadi." },
+    { sec: "Kosmologiya", q: "14. Xabbl qonuni formulasini ko‘rsating (v — uzoqlashish tezligi, r — masofa, H₀ — Xabbl doimiysi):", opts: ["v = H₀ · r", "v = H₀ / r²", "r = H₀ · v²", "H₀ = v · r"], ans: 0, exp: "Galaktikaning uzoqlashish tezligi ungacha bo‘lgan masofaga to‘g‘ri proporsional: v = H₀ · r." },
+    { sec: "Kosmologiya", q: "15. Butun Koinotni bir tekis to‘ldirib turgan ~2.725 K temperaturali mikroto‘lqinli fon nurlanishi nima deb ataladi?", opts: ["Relikt nurlanish (kosmik mikroto‘lqinli fon)", "Rentgen nurlanishi", "Quyosh shamoli", "Cherenkov nurlanishi"], ans: 0, exp: "Relikt nurlanish Koinotning ilk issiq bosqichidan (Katta Portlashdan) qolgan nurlanishdir." }
+  ];
+
+  const variantB = [
+    { sec: "Quyosh fizikasi", q: "1. Quyosh spektrini tahlil qilish orqali uning tarkibida eng ko‘p uchraydigan ikkita kimyoviy element qaysilar ekani aniqlangan?", opts: ["Vodorod (~73%) va Geliy (~25%)", "Temir va Nikel", "Kislorod va Azot", "Uglerod va Kremniy"], ans: 0, exp: "Quyosh massasining ~98% ini vodorod va geliy tashkil etadi." },
+    { sec: "Quyosh fizikasi", q: "2. Quyosh aktivligining o‘rtacha davri (dog‘lar sonining maksimumdan maksimumgacha o‘zgarish sikli) necha yilga teng?", opts: ["≈ 11 yil", "≈ 1 yil", "≈ 27.3 kun", "≈ 100 yil"], ans: 0, exp: "Quyosh aktivligining asosiy sikli o‘rtacha 11 yilni tashkil etadi." },
+    { sec: "Quyosh fizikasi", q: "3. To‘liq Quyosh tutilishi paytidagina oddiy ko‘z bilan ko‘rish mumkin bo‘lgan, temperaturasi ~1–2 mln K ga yetadigan eng tashqi qatlam nima?", opts: ["Quyosh toji", "Fotosfera", "Yadro", "Nurlanish zonasi"], ans: 0, exp: "Quyosh toji juda siyrak, ammo o‘ta qaynoq tashqi plazma qatlamidir." },
+    { sec: "Yulduzlar astronomiyasi", q: "4. Yulduzning yillik parallaksi 2 marta kichik bo‘lsa, ungacha bo‘lgan masofa qanday o‘zgaradi?", opts: ["2 marta ortadi", "2 marta kamayadi", "4 marta ortadi", "O‘zgarmaydi"], ans: 0, exp: "r = 1 / p″ bo‘lgani uchun masofa parallaksga teskari proporsional." },
+    { sec: "Yulduzlar astronomiyasi", q: "5. Quyosh qaysi spektral sinfga mansub yulduz hisoblanadi?", opts: ["G (G2) sinf — sariq mitti yulduz", "O sinf — ko‘k gigant", "M sinf — qizil gigant", "A sinf — oq yulduz"], ans: 0, exp: "Quyosh sirt temperaturasi ~5778 K bo‘lgan G2V spektral sinf yulduzidir." },
+    { sec: "Yulduzlar astronomiyasi", q: "6. Yulduzning mutlaq yulduz kattaligi (M) deganda nimani tushunamiz?", opts: ["Yulduzni 10 parsek standart masofaga olib kelingandagi ko‘rinma yulduz kattaligi", "Yulduzning Yerdan ko‘rinadigan ravshanligi", "Yulduzning massasi", "Yulduzning radiusi"], ans: 0, exp: "Yulduzlarning haqiqiy yorqinligini solishtirish uchun ular 10 pk masofaga keltirib hisoblanadi." },
+    { sec: "Yulduzlar evolyutsiyasi", q: "7. Yulduzning evolyutsiya yo‘li va umr davomiyligini belgilovchi eng asosiy fizik parametr qaysi?", opts: ["Yulduzning boshlang‘ich massasi", "Yulduzning nomi", "Yulduzning Yerga nisbatan tezligi", "Sayyoralari soni"], ans: 0, exp: "Massasi katta yulduzlar yoqilg‘ini juda tez sarflab qisqa umr ko‘radi, kichik massalilar esa milliardlab yil yashaydi." },
+    { sec: "Yulduzlar evolyutsiyasi", q: "8. Juda tez aylanuvchi va qutblaridan kuchli radioto‘lqinlar dastasini chiqaruvchi neytron yulduz nima deb ataladi?", opts: ["Pulsar", "Oq mitti", "Asteroid", "Qizil mitti"], ans: 0, exp: "Pulsarlar o‘z o‘qi atrofida soniyasiga o‘nlab-yuzlab marta aylanuvchi neytron yulduzlardir." },
+    { sec: "Qo‘shaloq yulduzlar", q: "9. Yulduzlarning massasini bevosita aniqlashning eng ishonchli usuli qaysi tizimlarni kuzatishga asoslangan?", opts: ["Qo‘shaloq yulduzlar tizimini (Keplerning umumiylashtirilgan 3-qonuni orqali)", "Yakka yulduzlarni", "Kometalarni", "Sun’iy yo‘ldoshlarni"], ans: 0, exp: "Umumiy massa markazi atrofida aylanayotgan qo‘shaloq yulduzlar davri va masofasidan massalar topiladi." },
+    { sec: "Somon Yo‘li Galaktikasi", q: "10. Bizga eng yaqin yirik spiral galaktika (mahalliy guruh a’zosi, masofasi ~2.5 mln y.y.) qaysi?", opts: ["Andromeda tumanligi (M31)", "Katta Magellan buluti", "Orion tumanligi", "Krabsimon tumanlik"], ans: 0, exp: "Andromeda galaktikasi (M31) Somon Yo‘liga eng yaqin yirik spiral galaktikadir." },
+    { sec: "Somon Yo‘li Galaktikasi", q: "11. Somon Yo‘li Galaktikasining markazida qanday o‘ta massiv obyekt joylashgan?", opts: ["O‘ta massiv qora tuynuk (Sagittarius A*)", "Oddiy sayyora", "Kometa yadrosi", "Yakka oq mitti"], ans: 0, exp: "Galaktikamiz markazida massasi ~4 mln Quyosh massasiga teng Sagittarius A* qora tuynugi bor." },
+    { sec: "Galaktikalar", q: "12. Markazidan ulkan energiya ajralib chiqadigan, yulduzsimon ko‘rinuvchi eng olis va yorqin faol galaktika yadrolari nima deyiladi?", opts: ["Kvazarlar", "Pulsarlar", "Meteorlar", "Sefeidalar"], ans: 0, exp: "Kvazarlar Koinotning eng yorqin va eng uzoq obyektlari qatoriga kiradi." },
+    { sec: "Kosmologiya", q: "13. Galaktikalarning aylanish egri chiziqlari va gravitatsion linzalanish kuzatuvlari Koinotda ko‘rinmas qanday modda borligini ko‘rsatdi?", opts: ["Qorong‘i (yashirin) materiya", "Suv bug‘i", "Suyuq geliy", "Oddiy chang"], ans: 0, exp: "Ko‘rinadigan modda tortishish kuchi galaktikalarni ushlab turishga yetmagani uchun qorong‘i materiya mavjudligi aniqlangan." },
+    { sec: "Kosmologiya", q: "14. Koinotning tezlanish bilan kengayishiga sabab bo‘layotgan noma’lum energiya turi fanda nima deb nomlanadi?", opts: ["Qorong‘i energiya", "Kimyoviy energiya", "Yadro energiyasi", "Issiqlik energiyasi"], ans: 0, exp: "O‘ta yangi yulduzlarni kuzatish Koinot kengayishining tezlashayotganini (qorong‘i energiya ta’sirini) ko‘rsatdi." },
+    { sec: "Kosmologiya", q: "15. Zamonaviy kosmologik kuzatuvlarga ko‘ra Koinotning yoshi taxminan necha milliard yilga teng?", opts: ["≈ 13.8 milliard yil", "≈ 4.5 milliard yil", "≈ 1 million yil", "≈ 100 milliard yil"], ans: 0, exp: "Relikt nurlanish va Xabbl doimiysi o‘lchovlariga ko‘ra Koinot yoshi ~13.8 mlrd yil (Quyosh tizimi esa ~4.6 mlrd yil)." }
+  ];
+
+  let currentMode = 'A';
+  let userAnswersA = new Array(variantA.length).fill(null);
+  let userAnswersB = new Array(variantB.length).fill(null);
+  let gradedA = false;
+  let gradedB = false;
+
+  function getActiveQuestions() { return currentMode === 'B' ? variantB : variantA; }
+  function getActiveAnswers() { return currentMode === 'B' ? userAnswersB : userAnswersA; }
+  function isActiveGraded() { return currentMode === 'B' ? gradedB : gradedA; }
+  function setActiveGraded(val) {
+    if (currentMode === 'B') gradedB = val;
+    else gradedA = val;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tabA').classList.toggle('active', mode === 'A');
+    document.getElementById('tabB').classList.toggle('active', mode === 'B');
+    document.getElementById('tabW').classList.toggle('active', mode === 'W');
+
+    document.getElementById('testControls').classList.toggle('hidden', mode === 'W');
+    document.getElementById('testSection').classList.toggle('hidden', mode === 'W');
+    document.getElementById('writtenSection').classList.toggle('hidden', mode !== 'W');
+    document.getElementById('resultBox').style.display = 'none';
+
+    if (mode !== 'W') {
+      renderQuestions();
+      updateAnsweredPill();
+      if (isActiveGraded()) gradeExam();
+    }
+  }
+
+  function renderQuestions() {
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    const list = document.getElementById('questionsList');
+    list.innerHTML = '';
+
+    qs.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const top = document.createElement('div');
+      top.className = 'q-top';
+      top.innerHTML = `<span>${currentMode} Variant — ${item.sec}</span><span>Savol #${qIndex + 1}</span>`;
+
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.textContent = item.q;
+
+      const opts = document.createElement('div');
+      opts.className = 'opts';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      item.opts.forEach((opt, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = `${letters[oIndex]}) ${opt}`;
+        if (ansArr[qIndex] === oIndex) btn.classList.add('selected');
+        btn.onclick = () => {
+          if (isActiveGraded()) return;
+          ansArr[qIndex] = oIndex;
+          updateAnsweredPill();
+          Array.from(opts.children).forEach((c, idx) => {
+            c.classList.toggle('selected', idx === oIndex);
+          });
+        };
+        opts.appendChild(btn);
+      });
+
+      const exp = document.createElement('div');
+      exp.className = 'explain';
+      exp.id = `exp-${currentMode}-${qIndex}`;
+      exp.textContent = `Izoh: ${item.exp}`;
+
+      card.appendChild(top);
+      card.appendChild(qText);
+      card.appendChild(opts);
+      card.appendChild(exp);
+      list.appendChild(card);
+    });
+  }
+
+  function updateAnsweredPill() {
+    const ansArr = getActiveAnswers();
+    const count = ansArr.filter(x => x !== null).length;
+    document.getElementById('answeredPill').textContent = `Javoblar: ${count} / ${ansArr.length}`;
+  }
+
+  function gradeExam() {
+    setActiveGraded(true);
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    let correct = 0;
+    const cards = document.getElementById('questionsList').children;
+
+    qs.forEach((item, qIndex) => {
+      const opts = cards[qIndex].querySelectorAll('.opt-btn');
+      opts.forEach((btn, oIndex) => {
+        btn.classList.remove('selected', 'correct', 'wrong');
+        if (oIndex === item.ans) {
+          btn.classList.add('correct');
+        } else if (ansArr[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+      });
+      if (ansArr[qIndex] === item.ans) correct++;
+      document.getElementById(`exp-${currentMode}-${qIndex}`).style.display = 'block';
+    });
+
+    const pct = Math.round((correct / qs.length) * 100);
+    let grade = "2 (Qoniqarsiz)";
+    if (pct >= 86) grade = "5 (A'lo)";
+    else if (pct >= 71) grade = "4 (Yaxshi)";
+    else if (pct >= 55) grade = "3 (Qoniqarli)";
+
+    const name = document.getElementById('stName').value.trim() || "O‘quvchi";
+    const cls = document.getElementById('stClass').value.trim();
+    const dt = document.getElementById('stDate').value.trim();
+
+    document.getElementById('resTitle').textContent = `5-BSB Natijasi (${currentMode} Variant)`;
+    document.getElementById('resStudent').textContent = `O‘quvchi: ${name}${cls ? ' — ' + cls : ''}${dt ? ' | Sana: ' + dt : ''}`;
+    document.getElementById('resCorrect').textContent = `${correct} / ${qs.length}`;
+    document.getElementById('resPercent').textContent = `${pct}%`;
+    document.getElementById('resGrade').textContent = grade;
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetExam() {
+    setActiveGraded(false);
+    getActiveAnswers().fill(null);
+    updateAnsweredPill();
+    document.getElementById('resultBox').style.display = 'none';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleWrittenSol(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+
+  renderQuestions();
+  updateAnsweredPill();
+</script>
+</body>
+</html>
