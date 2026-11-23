@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>32-Mavzu (65–66-§§): Raketa strukturasi va KAga ta’sir etuvchi kuchlar | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.92);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .theory-container {
+      max-width: 1260px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      line-height: 1.7;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .theory-card h3 { color: var(--gold); font-size: 0.98rem; margin: 12px 0 6px; }
+    .theory-card p, .theory-card li { font-size: 0.92rem; color: #e2e8f0; margin-bottom: 9px; }
+    .theory-card ul { padding-left: 20px; margin-bottom: 10px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.88);
+      border-left: 4px solid var(--gold);
+      padding: 11px 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.91rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.26); padding: 9px 11px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.24); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(52, 211, 153, 0.38);
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin-top: 12px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.28);
+      color: #a7f3d0;
+      font-size: 0.89rem;
+    }
+
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 425px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1540px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.88);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.84);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.93rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.82);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.83rem; line-height: 1.56; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>32-MAVZU (65–66-§§). Raketa strukturasi va Uchish paytida KAga ta’sir etuvchi kuchlar</h1>
+    <p>11-sinf Astronomiya | II Qism: Kosmonavtika elementlari (141–142-betlar)</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">65-§ Raketa strukturasi & Massa</button>
+    <button class="tab-btn" onclick="setTab(2)">66-§ Parvoz kuchlari & Vektorlar</button>
+    <button class="tab-btn" onclick="setTab(3)">66-§ Aerodinamik qarshilik</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: KENGAYTIRILGAN NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+
+  <div class="theory-card">
+    <h2>1. Raketaning strukturasi va konstruktiv xarakteristikalari (65-§)</h2>
+    <p><strong>Raketa strukturasi</strong> — raketa korpusi, yoqilg‘i (oksidlovchi va yonilg‘i) baklari, reaktiv dvigatel va soplo tizimi, boshqaruv/telemetriya apparaturasi hamda foydali yuk (kosmik apparat)ning o‘zaro bog‘langan konstruktiv majmuasidir.</p>
+    <p>Raketaning umumiy boshlang‘ich massasi <strong>m₀</strong> uch asosiy qismga bo‘linadi: yoqilg‘i massasi (<strong>m_yoq</strong>), konstruksiya «quruq» massasi (<strong>m_k</strong>) va foydali yuk massasi (<strong>m_fy</strong>):</p>
+    <div class="math-banner">
+      m₀ = m_yoq + m_k + m_fy &nbsp;|&nbsp; Konstruktiv koeffitsiyent: s = m_k / (m_k + m_yoq) &nbsp;|&nbsp; Foydali yuk ulushi: μ = m_fy / m₀
+    </div>
+    <ul>
+      <li><strong>Konstruktiv koeffitsiyent (s):</strong> Konstruksiyaning «quruq» massasi bilan yoqilg‘i massasi yig‘indisiga nisbati; odatda 0.05 – 0.12 oralig‘ida bo‘ladi.</li>
+      <li><strong>Ko‘p bosqichlilik:</strong> Yoqilg‘isi tugagan bosqichlarni ajratib tashlash ortiqcha «quruq» massani tezlatmaslik imkonini beradi va kosmik tezliklarga erishishni ta’minlaydi.</li>
+    </ul>
+  </div>
+
+  <div class="theory-card">
+    <h2>2. Uchish paytida kosmik apparat (KA)ga ta’sir etuvchi kuchlar (66-§)</h2>
+    <p>Parvoz davomida raketa va kosmik apparatga tortish kuchi (<strong>F_tort</strong>), gravitatsiya tortishish kuchi (<strong>F_gr</strong>), atmosfera aerodinamik qarshilik kuchi (<strong>R_qar</strong>) hamda boshqaruv kuchlari ta’sir etadi:</p>
+    <div class="math-banner">
+      Aerodinamik qarshilik: R_qar = 0.5 · c_x · ρ(h) · v² · S_mid &nbsp;|&nbsp; O‘ta yuklanish: n = (F_tort − R_qar) / (m · g₀)
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Kuch / Parametr</th>
+          <th>Belgisi</th>
+          <th>Asosiy omillar</th>
+          <th>Yo‘nalishi / Ta’siri</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Tortish kuchi</strong></td><td>F_tort</td><td>ṁ, u, soplo bosimi</td><td>Parvoz yo‘nalishi bo‘yicha tezlatadi</td></tr>
+        <tr><td><strong>Gravitatsiya kuchi</strong></td><td>F_gr</td><td>m, balandlik h, sayyora massasi</td><td>Sayyora markazi tomon tortadi</td></tr>
+        <tr><td><strong>Aerodinamik qarshilik</strong></td><td>R_qar</td><td>c_x, havo zichligi ρ(h), v², S_mid</td><td>Tezlikka teskari yo‘nalishda tormozlaydi</td></tr>
+        <tr><td><strong>O‘ta yuklanish (peregruzka)</strong></td><td>n</td><td>F_tort, R_qar, massa m</td><td>Inersiya ta’sirini g₀ birliklarida ifodalaydi</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card">
+    <h2>3. 65–66-§§ bo‘yicha yechimli masalalar (4 ta daraja)</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Oson):</strong> Yoqilg‘i massasi <em>m_yoq = 180 t</em>, konstruksiya massasi <em>m_k = 20 t</em> bo‘lsa, konstruktiv koeffitsiyent (<em>s</em>) nechaga teng?
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechim</button>
+      <div id="sol1" class="problem-sol">
+        <strong>s = 20 / (20 + 180) = 20 / 200 = 0.10 (10%)</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (O‘rta):</strong> Boshlang‘ich massasi <em>m₀ = 500 t</em> raketa <em>m_fy = 15 t</em> foydali yuk olib chiqsa, foydali yuk ulushi (<em>μ</em>) necha foiz?
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechim</button>
+      <div id="sol2" class="problem-sol">
+        <strong>μ = 15 / 500 = 0.03 = 3%</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Murakkab):</strong> <em>v = 600 m/s</em>, <em>ρ = 0.40 kg/m³</em>, <em>S_mid = 10 m²</em>, <em>c_x = 0.25</em> bo‘lsa, aerodinamik qarshilik kuchini (<em>R_qar</em>) kN da toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechim</button>
+      <div id="sol3" class="problem-sol">
+        <strong>R_qar = 0.5 × 0.25 × 0.40 × 360 000 × 10 = 180 000 N = 180 kN</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>4-Masala (Olimpiada):</strong> Massasi <em>m = 100 t</em> raketaga <em>F_tort = 1500 kN</em> va <em>R_qar = 200 kN</em> ta’sir etsa (<em>g₀ = 10 m/s²</em>), o‘ta yuklanish koeffitsiyenti (<em>n</em>) va vertikal tezlanishni (<em>a</em>) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol4')">Yechim</button>
+      <div id="sol4" class="problem-sol">
+        <strong>n = (1500 − 200) / (100 × 10) = 1.3</strong>; <strong>a = (1.3 − 1) × 10 = 3.0 m/s²</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">65–66-§§: Raketa massa balansi va Parvoz kuchlari simulyatsiyasi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Kosmonavtika dinamikasi</div>
+    </div>
+    <canvas id="structCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1 -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Massa tarkibi (m₀ = 500 t)</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Yoqilg‘i ulushi:</span><strong id="fPctVal">87% (435 t)</strong></div>
+          <input type="range" id="fPctSl" min="75" max="92" step="1" value="87" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label"><span>Foydali yuk massasi m_fy:</span><strong id="fyVal">15 t</strong></div>
+          <input type="range" id="fySl" min="5" max="40" step="1" value="15" />
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>Konstruktiv ko‘rsatkichlar</h3>
+        <div class="formula-box">s = m_k / (m_k + m_yoq) &nbsp;|&nbsp; μ = m_fy / m₀</div>
+        <div class="telemetry">
+          <div class="t-row"><span>Konstruktiv koeffitsiyent s:</span><span class="t-val" id="sOut">0.10</span></div>
+          <div class="t-row"><span>Foydali yuk ulushi μ:</span><span class="t-val" id="muOut">3.0%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Parvoz kuchlari (66-§)</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Tortish kuchi F_tort:</span><strong id="tForceVal">6 000 kN</strong></div>
+          <input type="range" id="tForceSl" min="2000" max="10000" step="200" value="6000" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label"><span>Aerodinamik qarshilik R_qar:</span><strong id="aForceVal">800 kN</strong></div>
+          <input type="range" id="aForceSl" min="0" max="3000" step="100" value="800" />
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>O‘ta yuklanish (m = 400 t, g₀ = 10 m/s²)</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>O‘ta yuklanish n:</span><span class="t-val" id="nOut">1.30</span></div>
+          <div class="t-row"><span>Tezlanish a:</span><span class="t-val" id="accOut">3.0 m/s²</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Aerodinamik qarshilik modeli</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Tezlik v (m/s):</span><strong id="vAeroVal">600 m/s</strong></div>
+          <input type="range" id="vAeroSl" min="100" max="1500" step="50" value="600" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label"><span>Havo zichligi ρ (kg/m³):</span><strong id="rhoVal">0.40 kg/m³</strong></div>
+          <input type="range" id="rhoSl" min="0.05" max="1.20" step="0.05" value="0.40" />
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>R_qar = 0.5 · c_x · ρ · v² · S_mid (c_x = 0.25, S = 10 m²)</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Qarshilik kuchi R_qar:</span><span class="t-val" id="rAeroOut">180 kN</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TEST (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Bilimni sinash (65–66-§§)</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('structCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+  let tick = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.getElementById('theoryView').classList.toggle('hidden', idx !== 0);
+    document.getElementById('simView').classList.toggle('hidden', idx === 0);
+    if (idx > 0) {
+      resize();
+      document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+    }
+  }
+
+  function drawStructTab(w, h) {
+    const fPct = parseFloat(document.getElementById('fPctSl').value);
+    const fy = parseFloat(document.getElementById('fySl').value);
+    const m0 = 500;
+    const rem = m0 - fy;
+    const mYoq = rem * (fPct / 100);
+    const mK = rem - mYoq;
+    const s = mK / (mK + mYoq);
+    const mu = (fy / m0) * 100;
+
+    document.getElementById('fPctVal').textContent = `${fPct}% (${Math.round(mYoq)} t)`;
+    document.getElementById('fyVal').textContent = `${fy} t`;
+    document.getElementById('sOut').textContent = s.toFixed(3);
+    document.getElementById('muOut').textContent = `${mu.toFixed(1)}%`;
+
+    // Raketa tuzilma sxemasi
+    const rx = w * 0.5, baseY = h * 0.78;
+    const hYoq = (mYoq / m0) * 210;
+    const hK = Math.max(18, (mK / m0) * 210);
+    const hFy = Math.max(14, (fy / m0) * 210);
+
+    // Yoqilg'i qismi
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(rx - 28, baseY - hYoq, 56, hYoq);
+    // Konstruksiya qismi
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillRect(rx - 28, baseY - hYoq - hK, 56, hK);
+    // Foydali yuk
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath();
+    ctx.moveTo(rx - 28, baseY - hYoq - hK);
+    ctx.lineTo(rx, baseY - hYoq - hK - hFy - 18);
+    ctx.lineTo(rx + 28, baseY - hYoq - hK);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0'; ctx.font = '12px sans-serif';
+    ctx.fillText(`Foydali yuk: ${fy} t`, rx + 38, baseY - hYoq - hK - 10);
+    ctx.fillText(`Konstruksiya: ${mK.toFixed(1)} t`, rx + 38, baseY - hYoq - hK / 2);
+    ctx.fillText(`Yoqilg‘i: ${mYoq.toFixed(1)} t`, rx + 38, baseY - hYoq / 2);
+  }
+
+  function drawForcesTab(w, h) {
+    const ft = parseFloat(document.getElementById('tForceSl').value);
+    const ra = parseFloat(document.getElementById('aForceSl').value);
+    const m0 = 400, g0 = 10;
+    const n = (ft - ra) / (m0 * g0);
+    const acc = (n - 1) * g0;
+
+    document.getElementById('tForceVal').textContent = `${ft.toLocaleString()} kN`;
+    document.getElementById('aForceVal').textContent = `${ra.toLocaleString()} kN`;
+    document.getElementById('nOut').textContent = n.toFixed(2);
+    document.getElementById('accOut').textContent = `${acc.toFixed(1)} m/s²`;
+
+    const rx = w * 0.5, ry = h * 0.52;
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillRect(rx - 14, ry - 26, 28, 52);
+
+    // Tortish vektori (yuqoriga)
+    const fLen = Math.min(130, (ft / 10000) * 120);
+    ctx.strokeStyle = '#34d399'; ctx.lineWidth = 3.5;
+    ctx.beginPath(); ctx.moveTo(rx, ry - 26); ctx.lineTo(rx, ry - 26 - fLen); ctx.stroke();
+    ctx.fillStyle = '#34d399'; ctx.font = '12px sans-serif';
+    ctx.fillText(`F_tort = ${ft} kN`, rx + 12, ry - 30 - fLen);
+
+    // Qarshilik va og'irlik (pastga)
+    const dLen = Math.min(110, ((ra + 4000) / 10000) * 110);
+    ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(rx, ry + 26); ctx.lineTo(rx, ry + 26 + dLen); ctx.stroke();
+    ctx.fillStyle = '#fb7185';
+    ctx.fillText(`R_qar + P = ${ra + 4000} kN`, rx + 12, ry + 32 + dLen);
+  }
+
+  function drawAeroTab(w, h) {
+    const v = parseFloat(document.getElementById('vAeroSl').value);
+    const rho = parseFloat(document.getElementById('rhoSl').value);
+    const rKn = (0.5 * 0.25 * rho * v * v * 10) / 1000;
+
+    document.getElementById('vAeroVal').textContent = `${v} m/s`;
+    document.getElementById('rhoVal').textContent = `${rho.toFixed(2)} kg/m³`;
+    document.getElementById('rAeroOut').textContent = `${Math.round(rKn).toLocaleString()} kN`;
+
+    const padL = 65, padB = h - 50, padT = 65, padR = w - 40;
+    const gw = padR - padL, gh = padB - padT;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.5)';
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padB); ctx.lineTo(padR, padB); ctx.stroke();
+
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const vv = 100 + (i / 80) * 1400;
+      const rr = (0.5 * 0.25 * rho * vv * vv * 10) / 1000;
+      const x = padL + ((vv - 100) / 1400) * gw;
+      const y = padB - Math.min(0.95, rr / 2700) * gh;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    const gx = padL + ((v - 100) / 1400) * gw;
+    const gy = padB - Math.min(0.95, rKn / 2700) * gh;
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(gx, gy, 7, 0, Math.PI * 2); ctx.fill();
+  }
+
+  const quizQuestions = [
+    { q: "1. Raketaning boshlang‘ich massasi qanday qismlardan iborat?", opts: ["Yoqilg‘i, konstruksiya va foydali yuk", "Faqat dvigatel", "Faqat kosmik apparat"], ans: 0, exp: "m₀ = m_yoq + m_k + m_fy." },
+    { q: "2. Konstruktiv koeffitsiyent s qanday ifodalanadi?", opts: ["s = m_k / (m_k + m_yoq)", "s = m_yoq / v", "s = F / m"], ans: 0, exp: "Konstruksiya «quruq» massasining konstruksiya va yoqilg‘i yig‘indisiga nisbati." },
+    { q: "3. Ko‘p bosqichli raketalarning asosiy afzalligi nimada?", opts: ["Bo‘shagan bosqichlarni tashlab yuborib, yuqori tezlikka erishishda", "Og‘irlikni oshirishda", "Tezlikni kamaytirishda"], ans: 0, exp: "Ortiqcha massa ajratilgach, keyingi bosqich yuqoriroq tezlik oladi." },
+    { q: "4. Aerodinamik qarshilik kuchi qaysi kattalikka kvadratik bog‘liq?", opts: ["Tezlikka (R_qar ~ v²)", "Massaga", "Vaqtga"], ans: 0, exp: "R_qar = 0.5 · c_x · ρ · v² · S_mid." },
+    { q: "5. m_yoq = 180 t va m_k = 20 t bo‘lsa, s nechaga teng?", opts: ["0.10", "0.90", "0.50"], ans: 0, exp: "20 / 200 = 0.10." },
+    { q: "6. m₀ = 500 t va m_fy = 15 t bo‘lsa, foydali yuk ulushi necha foiz?", opts: ["3%", "30%", "15%"], ans: 0, exp: "15 / 500 = 0.03 = 3%." },
+    { q: "7. Parvoz paytida o‘ta yuklanish (n) nimani bildiradi?", opts: ["Inersiya kuchining g₀ birliklaridagi qiymatini", "Yulduzlar sonini", "Bosimni"], ans: 0, exp: "n = (F_tort − R_qar) / (m · g₀)." },
+    { q: "8. Havo zichligi ρ balandlik ortishi bilan qanday o‘zgaradi?", opts: ["Kamayadi", "Ortadi", "O‘zgarmaydi"], ans: 0, exp: "Yuqori qatlamlarda atmosfera siyraklashadi." },
+    { q: "9. Kosmik apparatning bosh qismi nima uchun obtekatel shaklda bo‘ladi?", opts: ["Aerodinamik qarshilik va qizishni kamaytirish uchun", "Og‘irlikni ko‘paytirish uchun", "Aylanishni to‘xtatish uchun"], ans: 0, exp: "Obtekatel shakl havo oqimini silliq o‘tkazadi." },
+    { q: "10. Foydali yuk ulushi μ nimaga teng?", opts: ["μ = m_fy / m₀", "μ = m₀ / m_fy", "μ = v / t"], ans: 0, exp: "Foydali yuk massasining boshlang‘ich massaga nisbati." }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Izoh: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) { qScore = 0; document.getElementById('qScore').textContent = `Natija: 0 / 10`; }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  function loop() {
+    tick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      if (activeTab === 1) drawStructTab(w, h);
+      else if (activeTab === 2) drawForcesTab(w, h);
+      else if (activeTab === 3) drawAeroTab(w, h);
+      else drawStructTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
