@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4-CHSB (A/B Variant + Yozma Masalalar) | 11-sinf Astronomiya</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.94);
+      --card: rgba(15, 23, 42, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 13px 18px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+
+    .mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover { filter: brightness(1.12); }
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .meta-card input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 17px 20px;
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(30, 41, 59, 0.82);
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .opt-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.14); }
+    .opt-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.18); }
+    .opt-btn.correct { border-color: var(--emerald); background: rgba(16, 185, 129, 0.25); color: #d1fae5; }
+    .opt-btn.wrong { border-color: var(--rose); background: rgba(244, 63, 94, 0.25); color: #ffe4e6; }
+
+    .explain {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      font-size: 0.84rem;
+      color: var(--emerald);
+      display: none;
+    }
+
+    .written-card {
+      background: var(--card);
+      border: 1px solid rgba(251, 191, 36, 0.32);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .written-card h3 { color: var(--gold); font-size: 0.98rem; margin-bottom: 8px; }
+    .written-card textarea {
+      width: 100%;
+      min-height: 76px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.86rem;
+      font-family: inherit;
+    }
+
+    .sol-box {
+      display: none;
+      margin-top: 10px;
+      padding: 11px 14px;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border-left: 3px solid var(--emerald);
+      font-size: 0.86rem;
+      color: #a7f3d0;
+    }
+
+    .result-box {
+      background: var(--panel);
+      border: 1px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: none;
+    }
+
+    .result-box h2 { color: var(--gold); font-size: 1.18rem; margin-bottom: 8px; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .score-item {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .score-item span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .score-item strong { font-size: 1.12rem; color: var(--emerald); }
+
+    .actions-bottom {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>4-CHSB NAZORAT ISHI — 11-SINF ASTRONOMIYA</h1>
+    <p>Kosmonavtika elementlari (33–40-mavzular, 67–76-§§) | A/B Variant + Yozma Masalalar</p>
+  </div>
+  <div class="mode-tabs">
+    <button class="tab-btn active" id="tabA" onclick="switchMode('A')">A Variant (20 savol)</button>
+    <button class="tab-btn" id="tabB" onclick="switchMode('B')">B Variant (20 savol)</button>
+    <button class="tab-btn" id="tabW" onclick="switchMode('W')">Yozma Masalalar (4 ta)</button>
+  </div>
+  <div class="status-bar" id="testControls">
+    <div class="pill" id="answeredPill">Javoblar: 0 / 20</div>
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="meta-card">
+    <div>
+      <label for="stName">O‘quvchining F.I.Sh.:</label>
+      <input type="text" id="stName" placeholder="Masalan: Karimov Azizbek" />
+    </div>
+    <div>
+      <label for="stClass">Sinf va maktab:</label>
+      <input type="text" id="stClass" placeholder="Masalan: 11-«A» sinf" />
+    </div>
+    <div>
+      <label for="stDate">Sana:</label>
+      <input type="text" id="stDate" value="2026-11-23" />
+    </div>
+  </div>
+
+  <div id="resultBox" class="result-box">
+    <h2 id="resTitle">4-CHSB Natijasi</h2>
+    <p id="resStudent" style="color: var(--muted); font-size: 0.88rem;"></p>
+    <div class="score-grid">
+      <div class="score-item"><span>To‘g‘ri javoblar</span><strong id="resCorrect">0 / 20</strong></div>
+      <div class="score-item"><span>Foiz ko‘rsatkichi</span><strong id="resPercent">0%</strong></div>
+      <div class="score-item"><span>Taxminiy baho</span><strong id="resGrade">—</strong></div>
+    </div>
+    <p style="font-size: 0.84rem; color: #cbd5e1;">Har bir savol ostida qisqacha izoh ko‘rsatildi. Xatolarni tahlil qilib, mavzularni mustahkamlashingiz mumkin.</p>
+  </div>
+
+  <!-- TEST BLOKI (A VA B VARIANT) -->
+  <div id="testSection">
+    <div id="questionsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+    <div class="actions-bottom">
+      <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+      <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+    </div>
+  </div>
+
+  <!-- YOZMA MASALALAR BLOKI -->
+  <div id="writtenSection" class="hidden" style="display:flex; flex-direction:column; gap:14px;">
+    <div class="written-card">
+      <h3>1-Yozma masala (33–34-mavzular — Kosmik tezlik va Ta’sir sferasi)</h3>
+      <p>Mars sirtida birinchi kosmik tezlik <em>v₁ = 3.55 km/s</em> ga teng. (a) Mars sirtidagi ikkinchi kosmik tezlikni (<em>v₂</em>) hisoblang; (b) Agar sayyoraning Quyoshdan masofasi <em>a_pl = 1.52 a.b.</em> va <em>(m_pl / M_☉)^0.4 ≈ 0.00253</em> bo‘lsa, ta’sir sferasi radiusi (<em>R_ts</em>) qanday fizik ma’noga ega?</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol1')">Yechimni ko‘rish</button>
+      <div id="wsol1" class="sol-box">
+        <strong>(a)</strong> v₂ = √2 · v₁ ≈ 1.414 × 3.55 ≈ <strong>5.02 km/s</strong>.<br>
+        <strong>(b)</strong> Ta’sir sferasi (R_ts) ichida sayyoraning markaziy tortishish kuchi Quyoshning g‘alayonlantiruvchi ta’siridan ustun bo‘ladi.
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>2-Yozma masala (35-mavzu — Orbita elementlari va Atmosfera evolyutsiyasi)</h3>
+      <p>Yer radiusi <em>R_⊕ = 6400 km</em>. Yo‘ldoshning perigey balandligi <em>h_p = 300 km</em>, apogey balandligi <em>h_a = 1300 km</em>. Orbitaning katta yarim o‘qini (<em>a</em>) va ekssentrisitetini (<em>e</em>) toping hamda atmosfera qarshiligi ta’sirida orbita shakli qanday o‘zgarishini tushuntiring.</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol2')">Yechimni ko‘rish</button>
+      <div id="wsol2" class="sol-box">
+        <strong>r_p = 6700 km</strong>, <strong>r_a = 7700 km</strong> ⇒ <strong>a = (6700 + 7700)/2 = 7200 km</strong>; <strong>e = (7700 − 6700)/(7700 + 6700) ≈ 0.069</strong>.<br>
+        Perigeyda tormozlanish tufayli apogey balandligi (<em>h_a</em>) tez kamayadi va orbita aylanalashadi (<em>e → 0</em>).
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>3-Yozma masala (36–37-mavzular — Tekislikni burish va Oyga parvoz)</h3>
+      <p>(a) Aylana orbitada <em>v = 7.5 km/s</em> tezlik bilan harakatlanayotgan yo‘ldosh orbita tekisligini <em>Δi = 6°</em> burchakka burish uchun zarur impulsni (<em>Δv_i</em>) hisoblang (<em>sin 3° ≈ 0.0523</em>).<br>
+      (b) Nima uchun kosmik apparat Oyga uchirilganda Oyning start paytidagi ko‘rinadigan o‘rniga emas, balki oldingi nuqtasiga yo‘naltiriladi?</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol3')">Yechimni ko‘rish</button>
+      <div id="wsol3" class="sol-box">
+        <strong>(a)</strong> Δv_i = 2 · v · sin(Δi / 2) = 2 × 7.5 × 0.0523 ≈ <strong>0.785 km/s = 785 m/s</strong>.<br>
+        <strong>(b)</strong> Parvoz davomida (~3–4 sutka) Oy o‘z orbitasi bo‘ylab siljigani uchun uchrashuv vaqtida Oy yangi nuqtada bo‘ladi.
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>4-Yozma masala (38–40-mavzular — Gomon parvozi, Geliosentrik tezlik va Yaqinlashish)</h3>
+      <p>Mars ta’sir sferasiga <em>v_∞ = 3.0 km/s</em> nisbiy tezlik bilan kirgan apparat perisentrda (<em>v₂,Mars = 5.0 km/s</em>) qanday giperbolik tezlikka (<em>v_p</em>) ega bo‘ladi? Agar perisentrda <em>Δv_torm = 2.0 km/s</em> tormozlanish impulsi berilsa, apparatning yangi tezligi nechaga teng bo‘ladi?</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol4')">Yechimni ko‘rish</button>
+      <div id="wsol4" class="sol-box">
+        <strong>v_p = √(5.0² + 3.0²) = √34 ≈ 5.83 km/s</strong>.<br>
+        Tormozlanishdan keyin: <strong>v_yangi = 5.83 − 2.0 = 3.83 km/s</strong> (parabolik tezlik 5.0 km/s dan kichik bo‘lgani uchun apparat Marsning yopiq orbitasiga o‘tadi).
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const variantA = [
+    { sec: "33-mavzu (67-§)", q: "1. Markaziy gravitatsiya maydonida jismning traektoriyasi qanday egri chiziq bo‘ladi?", opts: ["Konus kesimlari (aylana, ellips, parabola, giperbola)", "Faqat to‘g‘ri chiziq", "Sinusoida", "Spiralsimon kengayuvchi egri chiziq"], ans: 0, exp: "Tezlik va to‘liq energiyaga qarab traektoriya aylana, ellips, parabola yoki giperbola bo‘ladi." },
+    { sec: "33-mavzu (67-§)", q: "2. Yer sirti yaqinida birinchi (v₁) va ikkinchi (v₂) kosmik tezliklar taxminan nechaga teng?", opts: ["v₁ ≈ 7.91 km/s, v₂ ≈ 11.19 km/s", "v₁ ≈ 11.19 km/s, v₂ ≈ 16.65 km/s", "v₁ ≈ 3.55 km/s, v₂ ≈ 5.02 km/s", "v₁ ≈ 29.78 km/s, v₂ ≈ 42.12 km/s"], ans: 0, exp: "Yer sirti yaqinida v₁ ≈ 7.91 km/s va v₂ = √2·v₁ ≈ 11.19 km/s." },
+    { sec: "33-mavzu (67-§)", q: "3. Perigey r_p = 7000 km va apogey r_a = 13 000 km bo‘lgan elliptik orbitaning katta yarim o‘qi (a) va ekssentrisitetini (e) toping.", opts: ["a = 10 000 km, e = 0.30", "a = 20 000 km, e = 0.60", "a = 6 000 km, e = 0.25", "a = 10 000 km, e = 0.70"], ans: 0, exp: "a = (7000 + 13 000)/2 = 10 000 km; e = (13 000 − 7000)/(13 000 + 7000) = 0.30." },
+    { sec: "34-mavzu (68-§)", q: "4. Sayyora ta’sir sferasi (Laplas sferasi) radiusi qaysi formula bilan hisoblanadi?", opts: ["R_ts = a_pl · (m_pl / M_☉)^(2/5)", "R_ts = a_pl · (m_pl / M_☉)²", "R_ts = 2π · √(a³/GM)", "R_ts = √(2GM/r)"], ans: 0, exp: "R_ts = a_pl · (m_pl / M_☉)^(2/5); Yer uchun R_ts ≈ 925 000 km." },
+    { sec: "34-mavzu (68-§)", q: "5. «Yopishtirilgan konus kesimlari» (Patched Conics) usulida sayyoralararo parvoz nechta asosiy uchastkaga bo‘linadi?", opts: ["3 ta: geotsentrik, geliosentrik va planetotsentrik", "Faqat 1 ta: geliosentrik", "2 ta: start va qo‘nish", "4 ta: atmosfera, orbita, Oy, Quyosh"], ans: 0, exp: "Parvoz chiqish sferasi, sayyoralararo fazo va kirish sferasi uchastkalariga bo‘linadi." },
+    { sec: "34-mavzu (68-§)", q: "6. Quyosh tizimida qaysi sayyoraning ta’sir sferasi radiusi eng katta (≈ 48.2 mln km)?", opts: ["Yupiter", "Yer", "Mars", "Merkuriy"], ans: 0, exp: "Yupiter ham massasi (318 M_⊕), ham Quyoshdan masofasi (5.2 a.b.) katta bo‘lgani uchun R_ts ≈ 48.2 mln km." },
+    { sec: "35-mavzu (69-§)", q: "7. Orbita og‘ish burchagi i = 90° bo‘lgan sun’iy yo‘ldosh orbitasi qanday ataladi?", opts: ["Qutbiy orbita", "Ekvatorial orbita", "Geostatsionar orbita", "Teskari (retrograd) orbita"], ans: 0, exp: "i = 90° bo‘lganda yo‘ldosh Shimoliy va Janubiy qutblar ustidan uchib o‘tadi." },
+    { sec: "35-mavzu (69-§)", q: "8. Geostatsionar sun’iy yo‘ldosh (GEO) ning Yer sirtidan balandligi taxminan qancha?", opts: ["≈ 35 786 km", "≈ 400 km", "≈ 20 200 km", "≈ 384 400 km"], ans: 0, exp: "Ekvator tekisligida (i = 0°) davr T ≈ 23ˢ 56ᵐ 04ˢ ga mos balandlik ~35 786 km." },
+    { sec: "35-mavzu (70-§)", q: "9. Yer atmosferasining yuqori qatlamida tormozlanayotgan yo‘ldosh orbitasining evolyutsiyasi qanday kechadi?", opts: ["Perigeyda tormozlanish tufayli apogey pasayib, orbita aylanalashadi (e → 0)", "Apogey ko‘tarilib, orbita cho‘ziladi", "Yo‘ldoshning chiziqli tezligi kamayib, to‘xtab qoladi", "Atmosfera faqat apogeyda ta’sir qiladi"], ans: 0, exp: "Perigeyda tormozlanish apogey balandligini kamaytiradi; radius kichrayganda aylana tezlik ortadi." },
+    { sec: "36-mavzu (71-§)", q: "10. Orbita tekisligini Δi burchakka burish uchun zarur tezlik impulsi moduli qaysi formula bilan beriladi?", opts: ["Δv_i = 2·v·sin(Δi / 2)", "Δv_i = v·cos(Δi)", "Δv_i = 2·v·tg(Δi)", "Δv_i = v / Δi"], ans: 0, exp: "Teng tezlik moduli v da burilish impulsi Δv_i = 2v·sin(Δi/2)." },
+    { sec: "36-mavzu (71-§)", q: "11. Orbita tekisligini burish manyovrini qaysi nuqtada bajarish energiya jihatidan tejamliroq?", opts: ["Tezlik eng kichik bo‘lgan aposentrda (apogeyda)", "Tezlik eng katta bo‘lgan perisentrda (perigeyda)", "Barcha nuqtalarda bir xil", "Faqat ekvatorda"], ans: 0, exp: "Δv_i tezlik v ga proporsional bo‘lgani uchun tezlik kichik nuqtada impuls kamroq bo‘ladi." },
+    { sec: "36-mavzu (72-§)", q: "12. Yo‘ldoshni orbitadan tushirishda atmosferaga kirish burchagi juda yotiq (kichik) bo‘lsa, nima xavfi bor?", opts: ["Apparat atmosferadan sakrab qaytib (rikoshet bo‘lib) ketishi mumkin", "Tezlik birdan nolga tushadi", "Gravitatsiya kuchi yo‘qoladi", "Yo‘ldosh Oy orbitasiga chiqadi"], ans: 0, exp: "Juda yotiq kirishda apparat zich qatlamlarga kira olmay, atmosferadan sakrab qaytishi mumkin." },
+    { sec: "37-mavzu (73-§)", q: "13. Minimal energetik trayektoriya bo‘yicha Oyga parvoz odatda qancha davom etadi?", opts: ["≈ 3–4 sutka", "≈ 15 daqiqa", "≈ 27.3 sutka", "≈ 1 yil"], ans: 0, exp: "Ikkinchi kosmik tezlikka yaqin tezlikda uchishda parvoz ~3–4 sutka davom etadi." },
+    { sec: "37-mavzu (73-§)", q: "14. Oy sirtida birinchi (v₁,Oy) va ikkinchi (v₂,Oy) kosmik tezliklar taxminan nechaga teng?", opts: ["v₁,Oy ≈ 1.68 km/s, v₂,Oy ≈ 2.38 km/s", "v₁,Oy ≈ 7.91 km/s, v₂,Oy ≈ 11.19 km/s", "v₁,Oy ≈ 1.02 km/s, v₂,Oy ≈ 2.04 km/s", "v₁,Oy ≈ 4.50 km/s, v₂,Oy ≈ 6.36 km/s"], ans: 0, exp: "Oy massasi va radiusi kichikligi sababli v₁,Oy ≈ 1.68 km/s va v₂,Oy ≈ 2.38 km/s." },
+    { sec: "37-mavzu (73-§)", q: "15. Nima uchun KA Oyning start paytidagi ko‘rinadigan nuqtasiga emas, «oldingi» nuqtasiga yo‘naltiriladi?", opts: ["Parvoz davomida Oy o‘z orbitasi bo‘ylab siljigani uchun", "Oy qo‘zg‘almas bo‘lgani uchun", "Yer o‘z o‘qi atrofida aylanmagani uchun", "Yorug‘lik kechikishi tufayli"], ans: 0, exp: "Uchrashuv vaqtida Oy orbitaning boshqa nuqtasiga yetib boradi." },
+    { sec: "38-mavzu (74-§)", q: "16. Sayyoralarga minimal yoqilg‘i sarfi bilan uchish trayektoriyasi qanday nomlanadi?", opts: ["Gomon yarim ellipsi", "Parabolik trayektoriya", "Qutbiy orbita", "Geostatsionar orbita"], ans: 0, exp: "Bir uchi boshlang‘ich sayyora orbitasiga, ikkinchi uchi mo‘ljal sayyora orbitasiga urinuvchi ellips Gomon trayektoriyasidir." },
+    { sec: "38-mavzu (74-§)", q: "17. Yer sirtidan uchirilgan apparat Quyosh tizimini tark etishi uchun zarur uchinchi kosmik tezlik (v₃) qancha?", opts: ["≈ 16.65 km/s", "≈ 11.19 km/s", "≈ 7.91 km/s", "≈ 29.78 km/s"], ans: 0, exp: "Yerning orbital harakati yo‘nalishida uchirilganda uchinchi kosmik tezlik v₃ ≈ 16.65 km/s." },
+    { sec: "39-mavzu (75-§)", q: "18. Tashqi sayyoraga (masalan, Marsga) uchishda geliosentrik boshlang‘ich tezlik (V_gelio) qanday topiladi?", opts: ["V_gelio = V_⊕ + v_∞", "V_gelio = V_⊕ − v_∞", "V_gelio = √2 · V_⊕", "V_gelio = v_∞ − V_⊕"], ans: 0, exp: "KA Yerning orbital harakati yo‘nalishida chiqqani uchun tezliklar qo‘shiladi: V_gelio = V_⊕ + v_∞." },
+    { sec: "39-mavzu (75-§)", q: "19. Gravitatsion manyovr (perturbation assist) ning mohiyati nimada?", opts: ["Sayyora tortishish maydoni yordamida yoqilg‘isiz KA ning geliosentrik tezligini oshirish yoki kamaytirish", "Raketa dvigatelini doimiy yoqib turish", "Sayyora massasini kamaytirish", "Atmosferada tormozlanish"], ans: 0, exp: "Sayyora orbital harakati hisobiga tezlik vektori burilib, Quyoshga nisbatan tezlik o‘zgaradi." },
+    { sec: "40-mavzu (76-§)", q: "20. Planeta ta’sir sferasiga v_∞ nisbiy tezlik bilan kirgan apparatning perisentrdagi giperbolik tezligi (v_p) qaysi formula bilan topiladi?", opts: ["v_p = √(v₂,pl² + v_∞²)", "v_p = v₂,pl − v_∞", "v_p = v₂,pl · v_∞", "v_p = v_∞ / 2"], ans: 0, exp: "Planetotsentrik energiya saqlanish qonunidan v_p = √(v₂,pl² + v_∞²)." }
+  ];
+
+  const variantB = [
+    { sec: "33-mavzu (67-§)", q: "1. Ikkinchi kosmik tezlik (v₂) birinchi kosmik tezlikdan (v₁) necha marta katta?", opts: ["√2 (≈ 1.414) marta", "2 marta", "4 marta", "1/2 marta"], ans: 0, exp: "v₂ = √(2GM/r) = √2 · v₁." },
+    { sec: "33-mavzu (67-§)", q: "2. Elliptik orbitaning qaysi nuqtasida tezlik maksimal bo‘ladi?", opts: ["Perisentrda (perigeyda)", "Aposentrda (apogeyda)", "Barcha nuqtalarda bir xil", "Faqat ekvatorni kesish nuqtasida"], ans: 0, exp: "Markaziy jismga eng yaqin nuqtada potensial energiya eng kichik, kinetik energiya esa eng katta bo‘ladi." },
+    { sec: "33-mavzu (67-§)", q: "3. Vis-viva (energiya) tenglamasini ko‘rsating:", opts: ["v² = G·M · (2/r − 1/a)", "v = g · t", "F = G·M·m / r²", "T = 2π · √(l/g)"], ans: 0, exp: "Istalgan nuqtadagi tezlik kvadrati v² = μ(2/r − 1/a)." },
+    { sec: "34-mavzu (68-§)", q: "4. Yerning ta’sir sferasi radiusi taxminan nechaga teng?", opts: ["≈ 925 000 km", "≈ 6 371 km", "≈ 149 600 000 km", "≈ 384 400 km"], ans: 0, exp: "Yer uchun R_ts ≈ 925 000 km (≈ 0.0062 a.b.)." },
+    { sec: "34-mavzu (68-§)", q: "5. Sayyoralararo uchastkada (ta’sir sferalari tashqarisida) KA qaysi jism maydonida harakatlanadi deb olinadi?", opts: ["Quyosh tortishish maydonida", "Yer maydonida", "Oy maydonida", "Gravitatsiyasiz fazoda"], ans: 0, exp: "Ta’sir sferalari tashqarisida asosiy gravitatsion markaz — Quyosh." },
+    { sec: "34-mavzu (68-§)", q: "6. Yer ta’sir sferasidan chiqayotgan KA ning geotsentrik trayektoriyasi qanday shaklda bo‘ladi?", opts: ["Giperbola", "Aylana", "Yopiq ellips", "To‘g‘ri chiziq"], ans: 0, exp: "v₀ > v₂ bo‘lgani uchun chiqish trayektoriyasi giperbolikdir." },
+    { sec: "35-mavzu (69-§)", q: "7. Orbita og‘ish burchagi i = 0° bo‘lgan orbita qanday nomlanadi?", opts: ["Ekvatorial orbita", "Qutbiy orbita", "Teskari orbita", "Giperbolik orbita"], ans: 0, exp: "i = 0° bo‘lganda orbita tekisligi Yer ekvatori tekisligi bilan ustma-ust tushadi." },
+    { sec: "35-mavzu (69-§)", q: "8. Orbita og‘ish burchagi i = 51.6° bo‘lsa, yo‘ldosh qaysi geografik kengliklar orasida uchib o‘tadi?", opts: ["51.6° j.k. va 51.6° sh.k. orasida", "Faqat ekvatorda", "0° dan 90° gacha bir tomonda", "Faqat qutblarda"], ans: 0, exp: "Maksimal kenglik og‘ish burchagiga teng: φ_max = ±i." },
+    { sec: "35-mavzu (70-§)", q: "9. «Aerodinamik paradoks» ning mohiyati nimadan iborat?", opts: ["Atmosfera tormozlashi natijasida pastroq orbitaga tushgan yo‘ldoshning chiziqli tezligi ortadi", "Yo‘ldosh tezligi kamayib havoda muallaq qoladi", "Atmosfera gravitatsiyani kuchaytiradi", "Apogey balandligi ortadi"], ans: 0, exp: "Orbita radiusi kichrayganda aylana tezlik v = √(GM/r) ortib ketadi." },
+    { sec: "36-mavzu (71-§)", q: "10. Tezligi v = 7.5 km/s bo‘lgan yo‘ldosh tekisligini Δi = 6° ga burish impulsi (sin 3° ≈ 0.0523) qancha?", opts: ["≈ 0.785 km/s", "≈ 7.50 km/s", "≈ 0.39 km/s", "≈ 1.57 km/s"], ans: 0, exp: "Δv_i = 2 × 7.5 × 0.0523 ≈ 0.785 km/s." },
+    { sec: "36-mavzu (71-§)", q: "11. Komplanar manyovr deganda qanday manyovr tushuniladi?", opts: ["Tezlik impulsi orbita tekisligi ichida beriladigan manyovr", "Faqat Oyga uchish", "Orbitadan chiqish", "Teskari harakatga o‘tish"], ans: 0, exp: "Komplanar manyovr orbita tekisligini o‘zgartirmaydi." },
+    { sec: "36-mavzu (72-§)", q: "12. Sun’iy yo‘ldoshni orbitadan tushirish uchun qanday impuls beriladi?", opts: ["Harakatga teskari yo‘nalishda tormozlanish impulsi (−Δv)", "Faqat vertikal ko‘taruvchi impuls", "Harakat yo‘nalishida tezlatuvchi impuls", "Impuls berilmaydi"], ans: 0, exp: "Tormozlanish impulsi perigey balandligini atmosfera qatlamiga tushiradi." },
+    { sec: "37-mavzu (73-§)", q: "13. Yer va Oy orasidagi o‘rtacha masofa qancha?", opts: ["≈ 384 400 km", "≈ 149 600 000 km", "≈ 35 786 km", "≈ 66 000 km"], ans: 0, exp: "Yer – Oy o‘rtacha masofasi ~384 400 km." },
+    { sec: "37-mavzu (73-§)", q: "14. Oyning gravitatsion ta’sir sferasi radiusi taxminan qancha?", opts: ["≈ 66 000 km", "≈ 384 400 km", "≈ 1 737 km", "≈ 925 000 km"], ans: 0, exp: "Yer – Oy tizimida Oyning ta’sir sferasi ~66 000 km." },
+    { sec: "37-mavzu (73-§)", q: "15. KA ni Oy sun’iy yo‘ldoshiga aylantirish uchun ta’sir sferasida nima qilinadi?", opts: ["Tormozlanish impulsi (−Δv) beriladi", "Tezlik ikkinchi kosmik tezlikdan oshiriladi", "Dvigatel umuman ishlatilmaydi", "Yer orbitasiga qaytariladi"], ans: 0, exp: "Tormozlanish KA ni selenotsentrik orbitada ushlab qoladi." },
+    { sec: "38-mavzu (74-§)", q: "16. Gomon o‘tish ellipsining katta yarim o‘qi (a_o‘t) qanday topiladi?", opts: ["a_o‘t = (r₁ + r₂) / 2", "a_o‘t = r₂ − r₁", "a_o‘t = r₁ · r₂", "a_o‘t = 2 / (r₁ + r₂)"], ans: 0, exp: "Perigeliy r₁ va afeliy r₂ ning o‘rta arifmetigi." },
+    { sec: "38-mavzu (74-§)", q: "17. Ichki sayyoraga (masalan, Veneraga) uchishda KA Yer ta’sir sferasidan qaysi yo‘nalishda chiqadi?", opts: ["Yerning orbital harakatiga qarama-qarshi yo‘nalishda", "Yer harakati yo‘nalishida", "Shimoliy qutbga tik", "Quyosh markaziga to‘g‘ri"], ans: 0, exp: "Geliosentrik tezlikni kamaytirish uchun Yer harakatiga teskari chiqiladi." },
+    { sec: "39-mavzu (75-§)", q: "18. Yer orbitasi masofasida (1 a.b.) Quyosh maydonidan chiqish (parabolik) tezligi qancha?", opts: ["≈ 42.12 km/s", "≈ 11.19 km/s", "≈ 7.91 km/s", "≈ 16.65 km/s"], ans: 0, exp: "V_par,☉ = √2 · V_⊕ ≈ 1.414 × 29.78 ≈ 42.12 km/s." },
+    { sec: "39-mavzu (75-§)", q: "19. Ichki sayyoraga (Veneraga) uchishda geliosentrik boshlang‘ich tezlik qanday bo‘ladi?", opts: ["V_gelio = V_⊕ − v_∞", "V_gelio = V_⊕ + v_∞", "V_gelio = 42.12 km/s", "V_gelio = 0"], ans: 0, exp: "Quyoshga yaqinlashish uchun geliosentrik tezlik Yer tezligidan kichik bo‘ladi." },
+    { sec: "40-mavzu (76-§)", q: "20. Nishonlash masofasi (b) va gravitatsion fokuslash tufayli perisentr masofasi (r_p) qanday munosabatda bo‘ladi?", opts: ["r_p < b (kichikroq bo‘ladi)", "r_p > b (kattaroq bo‘ladi)", "Doimo r_p = b", "r_p = 0"], ans: 0, exp: "Planeta tortishishi apparatni o‘ziga og‘dirgani uchun r_p < b." }
+  ];
+
+  let currentMode = 'A';
+  let userAnswersA = new Array(variantA.length).fill(null);
+  let userAnswersB = new Array(variantB.length).fill(null);
+  let gradedA = false;
+  let gradedB = false;
+
+  function getActiveQuestions() { return currentMode === 'B' ? variantB : variantA; }
+  function getActiveAnswers() { return currentMode === 'B' ? userAnswersB : userAnswersA; }
+  function isActiveGraded() { return currentMode === 'B' ? gradedB : gradedA; }
+  function setActiveGraded(val) {
+    if (currentMode === 'B') gradedB = val;
+    else gradedA = val;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tabA').classList.toggle('active', mode === 'A');
+    document.getElementById('tabB').classList.toggle('active', mode === 'B');
+    document.getElementById('tabW').classList.toggle('active', mode === 'W');
+
+    document.getElementById('testControls').classList.toggle('hidden', mode === 'W');
+    document.getElementById('testSection').classList.toggle('hidden', mode === 'W');
+    document.getElementById('writtenSection').classList.toggle('hidden', mode !== 'W');
+    document.getElementById('resultBox').style.display = 'none';
+
+    if (mode !== 'W') {
+      renderQuestions();
+      updateAnsweredPill();
+      if (isActiveGraded()) gradeExam();
+    }
+  }
+
+  function renderQuestions() {
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    const list = document.getElementById('questionsList');
+    list.innerHTML = '';
+
+    qs.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const top = document.createElement('div');
+      top.className = 'q-top';
+      top.innerHTML = `<span>${currentMode} Variant — ${item.sec}</span><span>Savol #${qIndex + 1}</span>`;
+
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.textContent = item.q;
+
+      const opts = document.createElement('div');
+      opts.className = 'opts';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      item.opts.forEach((opt, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = `${letters[oIndex]}) ${opt}`;
+        if (ansArr[qIndex] === oIndex) btn.classList.add('selected');
+        btn.onclick = () => {
+          if (isActiveGraded()) return;
+          ansArr[qIndex] = oIndex;
+          updateAnsweredPill();
+          Array.from(opts.children).forEach((c, idx) => {
+            c.classList.toggle('selected', idx === oIndex);
+          });
+        };
+        opts.appendChild(btn);
+      });
+
+      const exp = document.createElement('div');
+      exp.className = 'explain';
+      exp.id = `exp-${currentMode}-${qIndex}`;
+      exp.textContent = `Izoh: ${item.exp}`;
+
+      card.appendChild(top);
+      card.appendChild(qText);
+      card.appendChild(opts);
+      card.appendChild(exp);
+      list.appendChild(card);
+    });
+  }
+
+  function updateAnsweredPill() {
+    const ansArr = getActiveAnswers();
+    const count = ansArr.filter(x => x !== null).length;
+    document.getElementById('answeredPill').textContent = `Javoblar: ${count} / ${ansArr.length}`;
+  }
+
+  function gradeExam() {
+    setActiveGraded(true);
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    let correct = 0;
+    const cards = document.getElementById('questionsList').children;
+
+    qs.forEach((item, qIndex) => {
+      const opts = cards[qIndex].querySelectorAll('.opt-btn');
+      opts.forEach((btn, oIndex) => {
+        btn.classList.remove('selected', 'correct', 'wrong');
+        if (oIndex === item.ans) {
+          btn.classList.add('correct');
+        } else if (ansArr[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+      });
+      if (ansArr[qIndex] === item.ans) correct++;
+      document.getElementById(`exp-${currentMode}-${qIndex}`).style.display = 'block';
+    });
+
+    const pct = Math.round((correct / qs.length) * 100);
+    let grade = "2 (Qoniqarsiz)";
+    if (pct >= 86) grade = "5 (A'lo)";
+    else if (pct >= 71) grade = "4 (Yaxshi)";
+    else if (pct >= 55) grade = "3 (Qoniqarli)";
+
+    const name = document.getElementById('stName').value.trim() || "O‘quvchi";
+    const cls = document.getElementById('stClass').value.trim();
+    const dt = document.getElementById('stDate').value.trim();
+
+    document.getElementById('resTitle').textContent = `4-CHSB Natijasi (${currentMode} Variant)`;
+    document.getElementById('resStudent').textContent = `O‘quvchi: ${name}${cls ? ' — ' + cls : ''}${dt ? ' | Sana: ' + dt : ''}`;
+    document.getElementById('resCorrect').textContent = `${correct} / ${qs.length}`;
+    document.getElementById('resPercent').textContent = `${pct}%`;
+    document.getElementById('resGrade').textContent = grade;
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetExam() {
+    setActiveGraded(false);
+    getActiveAnswers().fill(null);
+    updateAnsweredPill();
+    document.getElementById('resultBox').style.display = 'none';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleWrittenSol(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+
+  renderQuestions();
+  updateAnsweredPill();
+</script>
+</body>
+</html>
