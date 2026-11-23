@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2-CHSB (A/B Variant + Yozma Masalalar) | 11-sinf Astronomiya</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.94);
+      --card: rgba(15, 23, 42, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 13px 18px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+
+    .mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover { filter: brightness(1.12); }
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .meta-card input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 17px 20px;
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(30, 41, 59, 0.82);
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .opt-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.14); }
+    .opt-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.18); }
+    .opt-btn.correct { border-color: var(--emerald); background: rgba(16, 185, 129, 0.25); color: #d1fae5; }
+    .opt-btn.wrong { border-color: var(--rose); background: rgba(244, 63, 94, 0.25); color: #ffe4e6; }
+
+    .explain {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      font-size: 0.84rem;
+      color: var(--emerald);
+      display: none;
+    }
+
+    .written-card {
+      background: var(--card);
+      border: 1px solid rgba(251, 191, 36, 0.32);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .written-card h3 { color: var(--gold); font-size: 0.98rem; margin-bottom: 8px; }
+    .written-card textarea {
+      width: 100%;
+      min-height: 76px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.86rem;
+      font-family: inherit;
+    }
+
+    .sol-box {
+      display: none;
+      margin-top: 10px;
+      padding: 11px 14px;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border-left: 3px solid var(--emerald);
+      font-size: 0.86rem;
+      color: #a7f3d0;
+    }
+
+    .result-box {
+      background: var(--panel);
+      border: 1px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: none;
+    }
+
+    .result-box h2 { color: var(--gold); font-size: 1.18rem; margin-bottom: 8px; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .score-item {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .score-item span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .score-item strong { font-size: 1.12rem; color: var(--emerald); }
+
+    .actions-bottom {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>2-CHSB NAZORAT ISHI — 11-SINF ASTRONOMIYA</h1>
+    <p>Quyosh tizimi tuzilishi, Konfiguratsiyalar, Kepler qonunlari va Oy (2-chorak) | A/B Variant + Yozma Masalalar</p>
+  </div>
+  <div class="mode-tabs">
+    <button class="tab-btn active" id="tabA" onclick="switchMode('A')">A Variant (20 savol)</button>
+    <button class="tab-btn" id="tabB" onclick="switchMode('B')">B Variant (20 savol)</button>
+    <button class="tab-btn" id="tabW" onclick="switchMode('W')">Yozma Masalalar (4 ta)</button>
+  </div>
+  <div class="status-bar" id="testControls">
+    <div class="pill" id="answeredPill">Javoblar: 0 / 20</div>
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="meta-card">
+    <div>
+      <label for="stName">O‘quvchining F.I.Sh.:</label>
+      <input type="text" id="stName" placeholder="Masalan: Karimov Azizbek" />
+    </div>
+    <div>
+      <label for="stClass">Sinf va maktab:</label>
+      <input type="text" id="stClass" placeholder="Masalan: 11-«A» sinf" />
+    </div>
+    <div>
+      <label for="stDate">Sana:</label>
+      <input type="text" id="stDate" value="2026-11-23" />
+    </div>
+  </div>
+
+  <div id="resultBox" class="result-box">
+    <h2 id="resTitle">2-CHSB Natijasi</h2>
+    <p id="resStudent" style="color: var(--muted); font-size: 0.88rem;"></p>
+    <div class="score-grid">
+      <div class="score-item"><span>To‘g‘ri javoblar</span><strong id="resCorrect">0 / 20</strong></div>
+      <div class="score-item"><span>Foiz ko‘rsatkichi</span><strong id="resPercent">0%</strong></div>
+      <div class="score-item"><span>Taxminiy baho</span><strong id="resGrade">—</strong></div>
+    </div>
+    <p style="font-size: 0.84rem; color: #cbd5e1;">Har bir savol ostida qisqacha izoh ko‘rsatildi. Xatolarni tahlil qilib, mavzularni mustahkamlashingiz mumkin.</p>
+  </div>
+
+  <!-- TEST BLOKI (A VA B VARIANT) -->
+  <div id="testSection">
+    <div id="questionsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+    <div class="actions-bottom">
+      <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+      <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+    </div>
+  </div>
+
+  <!-- YOZMA MASALALAR BLOKI -->
+  <div id="writtenSection" class="hidden" style="display:flex; flex-direction:column; gap:14px;">
+    <div class="written-card">
+      <h3>1-Yozma masala (Planetalarning konfiguratsiyalari va sinodik davr)</h3>
+      <p>Marsning Quyosh atrofida siderik aylanish davri <em>T = 687 sutka</em>, Yerning siderik davri <em>T₀ = 365.25 sutka</em>. Marsning ketma-ket ikkita qarama-qarshi turishi orasidagi vaqtni (sinodik davri <em>S</em> ni) hisoblang va qarama-qarshi turish paytida Mars tunning qaysi vaqtida janubiy meridiandan o‘tishini (kulminatsiyasini) tushuntiring.</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol1')">Yechimni ko‘rish</button>
+      <div id="wsol1" class="sol-box">
+        <strong>Sinodik davr:</strong> 1/S = 1/T₀ − 1/T = 1/365.25 − 1/687 ⇒ S = (365.25 × 687) / (687 − 365.25) ≈ <strong>780 sutka</strong> (≈ 2 yil 50 kun).<br>
+        <strong>Kulminatsiya:</strong> Qarama-qarshi turishda sayyora Quyoshga 180° teskari yo‘nalishda bo‘lgani uchun u yarim tunda (soat 00:00 atrofida) kulminatsiya qiladi va tun bo‘yi ko‘rinadi.
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>2-Yozma masala (Keplerning uchinchi qonuni va Quyoshgacha masofa)</h3>
+      <p>Asteroid Quyosh atrofida katta yarim o‘qi <em>a = 4 a.b.</em> bo‘lgan ellips bo‘ylab aylanadi. Uning Quyosh atrofida aylanish davrini (<em>T</em>) yillarda hisoblang hamda perigeliysi <em>q = 1.5 a.b.</em> bo‘lsa, afeliy masofasi (<em>Q</em>) va ekssentrisitetini (<em>e</em>) toping.</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol2')">Yechimni ko‘rish</button>
+      <div id="wsol2" class="sol-box">
+        <strong>Davri:</strong> T² = a³ = 4³ = 64 ⇒ T = √64 = <strong>8 yil</strong>.<br>
+        <strong>Afeliy:</strong> q + Q = 2a = 8 a.b. ⇒ Q = 8 − 1.5 = <strong>6.5 a.b.</strong><br>
+        <strong>Ekssentrisitet:</strong> e = (Q − q) / (2a) = (6.5 − 1.5) / 8 = <strong>0.625</strong>.
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>3-Yozma masala (Yer – Oy tizimi: Siderik va Sinodik oylar)</h3>
+      <p>Oyning yulduzlarga nisbatan aylanish davri (siderik oy) <em>T_Oy ≈ 27.32 sutka</em>, ikkita bir xil Oy fazasi orasidagi vaqt (sinodik oy) esa <em>S_Oy ≈ 29.53 sutka</em>. Nima uchun sinodik oy siderik oydan taxminan 2.21 sutka uzunroq ekanini geometrik va fizik jihatdan izohlang.</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol3')">Yechimni ko‘rish</button>
+      <div id="wsol3" class="sol-box">
+        <strong>Sababi:</strong> 27.32 sutka ichida Yer ham Quyosh atrofida o‘z orbitasi bo‘ylab ~27° burchakka siljiydi. Oy avvalgi fazasini (masalan, yangi Oy — Yer, Oy va Quyoshning bir chiziqda turishini) takrorlashi uchun qo‘shimcha ~27° yo‘l bosishi kerak bo‘ladi, bunga esa yana <strong>~2.21 sutka</strong> vaqt ketadi.
+      </div>
+    </div>
+
+    <div class="written-card">
+      <h3>4-Yozma masala (Quyosh va Oy tutilishlari shartlari)</h3>
+      <p>Har bir yangi Oy va to‘lin Oy fazasida Quyosh yoki Oy tutilishi yuz bermasligining asosiy astronomik sababi nimada? To‘liq Quyosh tutilishining eng uzoq davomiyligi nima uchun 7.5 daqiqadan oshmasligini tushuntiring.</p>
+      <textarea placeholder="Yechimingizni bu yerga yozing..."></textarea>
+      <button class="btn secondary" style="margin-top:8px;" onclick="toggleWrittenSol('wsol4')">Yechimni ko‘rish</button>
+      <div id="wsol4" class="sol-box">
+        <strong>1) Sababi:</strong> Oy orbitasi tekisligi ekliptika tekisligiga o‘rtacha <strong>5°09′</strong> burchak ostida og‘gan. Tutilish faqat yangi Oy yoki to‘lin Oy <strong>Oy tugunlari</strong> yaqinida sodir bo‘lgandagina yuz beradi.<br>
+        <strong>2) Davomiylik:</strong> Oyning Yer sirtiga tushadigan soyasi diametri maksimal ~270 km bo‘lib, soya Yer bo‘ylab juda katta chiziqli tezlikda siljigani sababli bir nuqtada to‘liq faza 7.5 daqiqadan oshmaydi.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const variantA = [
+    { sec: "Olam tuzilishi", q: "1. Nikolay Kopernik yaratgan geliotsentrik ta’limotning asosiy g‘oyasi nimadan iborat?", opts: ["Olam markazida Quyosh turadi, Yer va boshqa sayyoralar uning atrofida aylanadi", "Olam markazida qo‘zg‘almas Yer turadi", "Yulduzlar Quyosh atrofida aylanadi", "Quyosh Yer atrofida bir sutkada aylanadi"], ans: 0, exp: "Kopernik (1543) Quyoshni tizim markaziga qo‘yib, Yerning sutkalik va yillik harakatini asoslab berdi." },
+    { sec: "Olam tuzilishi", q: "2. Jordano Bruno geliotsentrik ta’limotni qanday g‘oya bilan boyitdi?", opts: ["Koinot cheksiz va yulduzlarning har biri uzoqdagi Quyoshlardir", "Quyosh tizimi yagona yulduz tizimidir", "Sayyoralar billur sferalarga mahkamlangan", "Olamning markazi va chegarasi mavjud"], ans: 0, exp: "Jordano Bruno Koinotning cheksizligi va ko‘plab dunyolar mavjudligini ilgari surdi." },
+    { sec: "Konfiguratsiyalar", q: "3. Quyosh tizimida qaysi sayyoralar «ichki (quyi) sayyoralar» guruhiga kiradi?", opts: ["Merkuriy va Venera", "Mars va Yupiter", "Saturn va Uran", "Venera va Mars"], ans: 0, exp: "Orbitasi Yer orbitasining ichida joylashgan sayyoralar (Merkuriy va Venera) ichki sayyoralardir." },
+    { sec: "Konfiguratsiyalar", q: "4. Tashqi sayyoraning Yer bilan Quyoshga nisbatan bir tomonda va bir chiziqda turish konfiguratsiyasi nima deyiladi?", opts: ["Qarama-qarshi turish (oppozitsiya)", "Quyi birlashish", "Yuqori birlashish", "G‘arbiy kvadratura"], ans: 0, exp: "Qarama-qarshi turishda sayyora Yerga eng yaqin keladi va tun bo‘yi ko‘rinadi." },
+    { sec: "Konfiguratsiyalar", q: "5. Ichki sayyoralar (Merkuriy va Venera) uchun qaysi konfiguratsiya umuman kuzatilmaydi?", opts: ["Qarama-qarshi turish va kvadratura", "Quyi birlashish", "Yuqori birlashish", "Sharqiy va g‘arbiy elongatsiya"], ans: 0, exp: "Ichki sayyoralar Yer orbitasidan tashqariga chiqmagani uchun burchak masofasi 90° yoki 180° ga yeta olmaydi." },
+    { sec: "Konfiguratsiyalar", q: "6. Veneraning Quyoshdan maksimal burchak uzoqlashishi (maksimal elongatsiyasi) taxminan nechaga teng?", opts: ["≈ 48°", "≈ 28°", "≈ 90°", "≈ 180°"], ans: 0, exp: "Veneraning maksimal elongatsiyasi ~45°–48° (Merkuriyniki esa ~18°–28°)." },
+    { sec: "Sinodik davr", q: "7. Tashqi sayyoraning sinodik (S) va siderik (T) davrlari orasidagi bog‘lanish formulasini ko‘rsating (T₀ — Yerning davri):", opts: ["1/S = 1/T₀ − 1/T", "1/S = 1/T − 1/T₀", "1/S = 1/T₀ + 1/T", "S = T + T₀"], ans: 0, exp: "Yer tashqi sayyoradan tezroq burchak tezlikka ega bo‘lgani uchun 1/S = 1/T₀ − 1/T." },
+    { sec: "Sinodik davr", q: "8. Ichki sayyoraning sinodik (S) va siderik (T) davrlari orasidagi bog‘lanish formulasi qaysi?", opts: ["1/S = 1/T − 1/T₀", "1/S = 1/T₀ − 1/T", "1/S = 1/T + 1/T₀", "S = T₀ − T"], ans: 0, exp: "Ichki sayyora Yerdan tezroq aylangani uchun 1/S = 1/T − 1/T₀." },
+    { sec: "Kepler qonunlari", q: "9. Keplerning birinchi qonuniga ko‘ra har bir sayyora Quyosh atrofida qanday orbita bo‘ylab harakatlanadi?", opts: ["Fokuslaridan birida Quyosh joylashgan ellips bo‘ylab", "Markazida Quyosh turgan aniq aylana bo‘ylab", "Parabola bo‘ylab", "Sinusoida bo‘ylab"], ans: 0, exp: "Keplerning 1-qonuni: sayyoralar orbitalari ellipsdan iborat bo‘lib, fokuslaridan birida Quyosh joylashadi." },
+    { sec: "Kepler qonunlari", q: "10. Keplerning ikkinchi qonuniga ko‘ra sayyora radius-vektori teng vaqt oralig‘ida teng yuzalar chizadi. Bundan qanday xulosa kelib chiqadi?", opts: ["Sayyora perigeliyda eng tez, afeliyda esa eng sekin harakatlanadi", "Sayyoraning chiziqli tezligi doimiy o‘zgarmasdir", "Sayyora afeliyda eng tez harakatlanadi", "Orbitaning barcha nuqtalarida tezlik nolga teng"], ans: 0, exp: "Quyoshga yaqinlashganda (perigeliyda) chiziqli tezlik maksimal, uzoqlashganda (afeliyda) minimal bo‘ladi." },
+    { sec: "Kepler qonunlari", q: "11. Sayyoraning Quyoshga eng yaqin nuqtasi (q) va eng uzoq nuqtasi (Q) qanday nomlanadi?", opts: ["Perigeliy va afeliy", "Perigey va apogey", "Zenit va nadir", "Apogey va perigeliy"], ans: 0, exp: "Quyoshga nisbatan eng yaqin nuqta perigeliy, eng uzoq nuqta afeliy deyiladi." },
+    { sec: "Kepler qonunlari", q: "12. Keplerning uchinchi qonuniga ko‘ra ikki sayyoraning siderik davrlari kvadratlarining nisbati nimaga teng?", opts: ["Orbitalari katta yarim o‘qlari kublarining nisbatiga (T₁²/T₂² = a₁³/a₂³)", "Katta yarim o‘qlari nisbatiga (a₁/a₂)", "Massalari nisbatiga (m₁/m₂)", "Ekssentrisitetlari nisbatiga"], ans: 0, exp: "T₁² / T₂² = a₁³ / a₂³." },
+    { sec: "Kepler qonunlari", q: "13. Katta yarim o‘qi a = 9 a.b. bo‘lgan sayyoraning Quyosh atrofida aylanish davri necha yilga teng?", opts: ["27 yil", "9 yil", "81 yil", "3 yil"], ans: 0, exp: "T² = a³ = 9³ = 729 ⇒ T = √729 = 27 yil." },
+    { sec: "Butun olam tortishish", q: "14. Nyutonning butun olam tortishish qonunini umumiylashtirgan Keplerning 3-qonuni nimani aniqlashga imkon beradi?", opts: ["Osmon jismlarining (Quyosh, sayyoralar, qo‘shaloq yulduzlar) massalarini", "Yulduzlarning kimyoviy tarkibini", "Atmosfera bosimini", "Yorug‘lik tezligini"], ans: 0, exp: "M₁ + M₂ = 4π²a³ / (G·T²) formulasi orqali osmon jismlari massasi aniqlanadi." },
+    { sec: "Astronomik birlik", q: "15. 1 astronomik birlik (1 a.b.) nimaga teng va uning qiymati taxminan qancha?", opts: ["Yerning Quyoshdan o‘rtacha masofasi; ≈ 149.6 mln km", "Yerning Oydan o‘rtacha masofasi; ≈ 384 400 km", "Yorug‘lik bir yilda bosib o‘tadigan yo‘l; ≈ 9.46 trln km", "Yer ekvatori radiusi; ≈ 6378 km"], ans: 0, exp: "1 a.b. ≈ 149 597 870.7 km ≈ 1.496 × 10⁸ km." },
+    { sec: "Yer – Oy tizimi", q: "16. Oyning o‘z o‘qi atrofida aylanish davri Yer atrofida aylanish davriga (27.32 sutka) tengligi qanday hodisaga sabab bo‘ladi?", opts: ["Oyning Yerga doimo bir tomoni ko‘rinib turishiga", "Oyda atmosferaning paydo bo‘lishiga", "Oy tutilishining har kuni sodir bo‘lishiga", "Oy fazalarining yo‘qolishiga"], ans: 0, exp: "Sinxron aylanish tufayli Oy Yerga doimo bir yarim shari bilan qaraydi." },
+    { sec: "Yer – Oy tizimi", q: "17. Oy qaysi fazada bo‘lganda Quyosh tutilishi sodir bo‘lishi mumkin?", opts: ["Yangi Oy fazasida", "To‘lin Oy fazasida", "Birinchi chorakda", "Oxirgi chorakda"], ans: 0, exp: "Yangi Oy fazasida Oy Quyosh va Yer orasiga tushib, Quyosh diskini to‘sadi." },
+    { sec: "Yer – Oy tizimi", q: "18. Oy qaysi fazada bo‘lganda Oy tutilishi kuzatiladi?", opts: ["To‘lin Oy fazasida", "Yangi Oy fazasida", "Birinchi chorakda", "O‘roqsimon fazada"], ans: 0, exp: "To‘lin Oy fazasida Yer Quyosh va Oy orasiga tushib, Oy Yer soyasiga kiradi." },
+    { sec: "Tutilishlar", q: "19. Saros davri nima va u taxminan necha yilga teng?", opts: ["Quyosh va Oy tutilishlarining bir xil tartibda takrorlanish davri; ≈ 18 yil 11.3 kun", "Yerning Quyosh atrofida aylanish davri; 1 yil", "Oy fazalarining o‘zgarish davri; 29.53 kun", "Marsning sinodik davri; 780 kun"], ans: 0, exp: "1 Saros = 223 sinodik oy = 6585.32 sutka ≈ 18 yil 11.3 kun." },
+    { sec: "Tutilishlar", q: "20. To‘liq Oy tutilishi paytida Oy diski butunlay ko‘rinmay qolmasdan, qizg‘ish-mis rangda ko‘rinishining sababi nima?", opts: ["Yer atmosferasida singan va sochilgan qizil quyosh nurlarining Oyga tushishi", "Oyning o‘zidan qizil nur chiqarishi", "Oy sirtidagi vulqonlarning otilishi", "Yulduzlar nurlarining aks etishi"], ans: 0, exp: "Yer atmosferasi qisqa to‘lqinli ko‘k nurlarni sochib, uzun to‘lqinli qizil nurlarni Yer soyasi ichiga sindirib o‘tkazadi." }
+  ];
+
+  const variantB = [
+    { sec: "Olam tuzilishi", q: "1. Ptolemeyning geotsentrik tizimida sayyoralarning sirtmoqsimon ko‘rinma harakatini tushuntirish uchun qanday tushuncha kiritilgan?", opts: ["Epitsikl va deferent", "Ellips va fokus", "Parallaks va aberratsiya", "Pretsessiya va nutatsiya"], ans: 0, exp: "Ptolemey sayyoralarni deferent bo‘ylab harakatlanuvchi kichik aylana — epitsikllarda harakatlanadi deb tushuntirgan." },
+    { sec: "Olam tuzilishi", q: "2. Galiley teleskop yordamida kashf etgan qaysi hodisa geliotsentrik ta’limotning bevosita isboti bo‘ldi?", opts: ["Venera fazalarining to‘liq o‘zgarishi va Yupiterning 4 ta yo‘ldoshi", "Saturn halqalarining gazdan iboratligi", "Plutonning kashf etilishi", "Koinotning kengayishi"], ans: 0, exp: "Veneraning to‘liq faza o‘zgarishi uning Quyosh atrofida aylanishini isbotladi." },
+    { sec: "Konfiguratsiyalar", q: "3. Sayyoraning Quyoshdan sharqqa yoki g‘arbga tomon eng katta burchak uzoqlashishi nima deyiladi?", opts: ["Elongatsiya", "Kvadratura", "Oppozitsiya", "Kon’yunksiya (birlashish)"], ans: 0, exp: "Ichki sayyoralarning Quyoshdan maksimal burchak uzoqlashishi elongatsiya deyiladi." },
+    { sec: "Konfiguratsiyalar", q: "4. Tashqi sayyoraning Quyoshdan burchak masofasi 90° ga teng bo‘lgan konfiguratsiya nima deb ataladi?", opts: ["Kvadratura (sharqiy yoki g‘arbiy)", "Qarama-qarshi turish", "Birlashish", "Elongatsiya"], ans: 0, exp: "Quyosh – Yer – Sayyora burchagi 90° bo‘lganda kvadratura kuzatiladi." },
+    { sec: "Konfiguratsiyalar", q: "5. Ichki sayyora Yer bilan Quyoshning aniq orasidan o‘tayotgan konfiguratsiya nima deyiladi?", opts: ["Quyi birlashish", "Yuqori birlashish", "Qarama-qarshi turish", "G‘arbiy kvadratura"], ans: 0, exp: "Sayyora Yer va Quyosh orasida turganda quyi birlashish yuz beradi." },
+    { sec: "Konfiguratsiyalar", q: "6. Quyosh tizimidagi qaysi sayyoralar «tashqi sayyoralar» guruhiga kiradi?", opts: ["Mars, Yupiter, Saturn, Uran, Neptun", "Merkuriy, Venera, Yer", "Faqat Yupiter va Saturn", "Merkuriy va Venera"], ans: 0, exp: "Orbitasi Yer orbitasidan tashqarida joylashgan barcha sayyoralar tashqi sayyoralardir." },
+    { sec: "Sinodik davr", q: "7. Sayyoraning yulduzlarga nisbatan Quyosh atrofida bir marta to‘liq aylanib chiqish davri nima deyiladi?", opts: ["Siderik davr", "Sinodik davr", "Tropik yil", "Saros davri"], ans: 0, exp: "Yulduzlarga nisbatan haqiqiy aylanish davri siderik davrdir." },
+    { sec: "Sinodik davr", q: "8. Sayyora Quyoshdan qanchalik uzoqda joylashgan bo‘lsa, uning sinodik davri (S) nimaga yaqinlashadi?", opts: ["Yerning siderik davriga (1 yilga)", "Nolga", "Cheksizlikka", "27.3 sutkaga"], ans: 0, exp: "T → ∞ bo‘lganda 1/S = 1/T₀ − 1/T → 1/T₀, ya’ni S → 1 yil." },
+    { sec: "Kepler qonunlari", q: "9. Ellipsning cho‘ziqlik darajasini ifodalovchi kattalik — ekssentrisitet (e) qanday qiymatlarni oladi?", opts: ["0 ≤ e < 1", "e = 1", "e > 1", "e < 0"], ans: 0, exp: "Aylana uchun e = 0, ellips uchun 0 < e < 1." },
+    { sec: "Kepler qonunlari", q: "10. Perigeliy masofasi q = 0.6 a.b. va afeliy masofasi Q = 1.4 a.b. bo‘lgan orbitaning katta yarim o‘qini (a) toping.", opts: ["a = 1.0 a.b.", "a = 2.0 a.b.", "a = 0.8 a.b.", "a = 0.4 a.b."], ans: 0, exp: "a = (q + Q) / 2 = (0.6 + 1.4) / 2 = 1.0 a.b." },
+    { sec: "Kepler qonunlari", q: "11. Sayyoraning Quyosh atrofida aylanish davri T = 8 yil bo‘lsa, uning orbitasi katta yarim o‘qi (a) necha a.b. ga teng?", opts: ["4 a.b.", "8 a.b.", "64 a.b.", "2 a.b."], ans: 0, exp: "a³ = T² = 8² = 64 ⇒ a = ∛64 = 4 a.b." },
+    { sec: "Kepler qonunlari", q: "12. Kepler qonunlari qaysi astronomning ko‘p yillik aniq kuzatish ma’lumotlari asosida kashf etilgan?", opts: ["Tixo Brage", "Galileo Galiley", "Isaak Nyuton", "Edmond Galley"], ans: 0, exp: "Kepler ustozi Tixo Bragening Mars harakatiga oid o‘ta aniq kuzatuvlarini tahlil qilib qonunlarni ochgan." },
+    { sec: "Butun olam tortishish", q: "13. Ikkita jism orasidagi gravitatsion tortishish kuchi ular orasidagi masofa 3 marta ortganda qanday o‘zgaradi?", opts: ["9 marta kamayadi", "3 marta kamayadi", "9 marta ortadi", "O‘zgarmaydi"], ans: 0, exp: "F ~ 1/r² bo‘lgani uchun masofa 3 marta ortsa, kuch 3² = 9 marta kamayadi." },
+    { sec: "Astronomik birlik", q: "14. Quyosh gorizontal parallaksi (p₀ ≈ 8.794″) nimani o‘lchash uchun ishlatiladi?", opts: ["Yerdan Quyoshgacha bo‘lgan o‘rtacha masofani (1 a.b. ni)", "Quyosh temperaturasini", "Oyning massasini", "Galaktika diametrini"], ans: 0, exp: "a = R_⊕ / sin(p₀) formulasi orqali 1 astronomik birlik aniqlanadi." },
+    { sec: "Yer – Oy tizimi", q: "15. Oyning yulduzlarga nisbatan aylanish davri (siderik oy) nechaga teng?", opts: ["≈ 27.32 sutka", "≈ 29.53 sutka", "≈ 365.25 sutka", "≈ 24 soat"], ans: 0, exp: "Siderik oy 27.32 sutka, sinodik oy esa 29.53 sutka." },
+    { sec: "Yer – Oy tizimi", q: "16. Oy yuzasida qorong‘i tekisliklar «dengizlar» deb ataladi. Ular aslida nimadan iborat?", opts: ["Qotib qolgan qadimgi bazalt lava tekisliklaridan", "Suyuq suv havzalaridan", "Muz qatlamlaridan", "Zich bulutlardan"], ans: 0, exp: "Oy «dengizlari» suyuq suv emas, balki qotgan qorong‘i vulqon jinslaridir." },
+    { sec: "Yer – Oy tizimi", q: "17. Oy fazalarining almashinish ketma-ketligini to‘g‘ri ko‘rsating:", opts: ["Yangi Oy → Birinchi chorak → To‘lin Oy → Oxirgi chorak", "To‘lin Oy → Yangi Oy → Birinchi chorak → Oxirgi chorak", "Birinchi chorak → Yangi Oy → Oxirgi chorak → To‘lin Oy", "Yangi Oy → To‘lin Oy → Birinchi chorak → Oxirgi chorak"], ans: 0, exp: "Yangi Oydan so‘ng o‘suvchi yarim oy (1-chorak), to‘lin Oy va kamayuvchi yarim oy (oxirgi chorak) keladi." },
+    { sec: "Tutilishlar", q: "18. Halqasimon Quyosh tutilishi qachon kuzatiladi?", opts: ["Oy apogey yaqinida bo‘lib, uning ko‘rinma burchak o‘lchami Quyoshnikidan kichik bo‘lganda", "Oy perigey yaqinida bo‘lganda", "To‘lin Oy fazasida", "Faqat qutblarda"], ans: 0, exp: "Apogeyda Oy diski Quyosh diskini to‘liq yopa olmaydi va chetida yorqin halqa qoladi." },
+    { sec: "Tutilishlar", q: "19. Oy orbitasi tekisligi ekliptika tekisligiga qanday burchak ostida og‘gan?", opts: ["≈ 5°09′", "23°26′", "90°", "0°"], ans: 0, exp: "Oy orbitasi ekliptikaga 5°09′ og‘gani sababli har oyda tutilish bo‘lavermaydi." },
+    { sec: "Tutilishlar", q: "20. Yerning Oyga tushadigan soyasi Oy diametridan ancha katta bo‘lgani sababli to‘liq Oy tutilishi qanchagacha davom etishi mumkin?", opts: ["≈ 1 soat 40 daqiqagacha", "Ko‘pi bilan 7.5 daqiqa", "12 soat", "30 soniya"], ans: 0, exp: "Yer soyasi keng bo‘lgani uchun Oy undan o‘tishi ~100 daqiqagacha cho‘zilishi mumkin." }
+  ];
+
+  let currentMode = 'A';
+  let userAnswersA = new Array(variantA.length).fill(null);
+  let userAnswersB = new Array(variantB.length).fill(null);
+  let gradedA = false;
+  let gradedB = false;
+
+  function getActiveQuestions() { return currentMode === 'B' ? variantB : variantA; }
+  function getActiveAnswers() { return currentMode === 'B' ? userAnswersB : userAnswersA; }
+  function isActiveGraded() { return currentMode === 'B' ? gradedB : gradedA; }
+  function setActiveGraded(val) {
+    if (currentMode === 'B') gradedB = val;
+    else gradedA = val;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tabA').classList.toggle('active', mode === 'A');
+    document.getElementById('tabB').classList.toggle('active', mode === 'B');
+    document.getElementById('tabW').classList.toggle('active', mode === 'W');
+
+    document.getElementById('testControls').classList.toggle('hidden', mode === 'W');
+    document.getElementById('testSection').classList.toggle('hidden', mode === 'W');
+    document.getElementById('writtenSection').classList.toggle('hidden', mode !== 'W');
+    document.getElementById('resultBox').style.display = 'none';
+
+    if (mode !== 'W') {
+      renderQuestions();
+      updateAnsweredPill();
+      if (isActiveGraded()) gradeExam();
+    }
+  }
+
+  function renderQuestions() {
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    const list = document.getElementById('questionsList');
+    list.innerHTML = '';
+
+    qs.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const top = document.createElement('div');
+      top.className = 'q-top';
+      top.innerHTML = `<span>${currentMode} Variant — ${item.sec}</span><span>Savol #${qIndex + 1}</span>`;
+
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.textContent = item.q;
+
+      const opts = document.createElement('div');
+      opts.className = 'opts';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      item.opts.forEach((opt, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = `${letters[oIndex]}) ${opt}`;
+        if (ansArr[qIndex] === oIndex) btn.classList.add('selected');
+        btn.onclick = () => {
+          if (isActiveGraded()) return;
+          ansArr[qIndex] = oIndex;
+          updateAnsweredPill();
+          Array.from(opts.children).forEach((c, idx) => {
+            c.classList.toggle('selected', idx === oIndex);
+          });
+        };
+        opts.appendChild(btn);
+      });
+
+      const exp = document.createElement('div');
+      exp.className = 'explain';
+      exp.id = `exp-${currentMode}-${qIndex}`;
+      exp.textContent = `Izoh: ${item.exp}`;
+
+      card.appendChild(top);
+      card.appendChild(qText);
+      card.appendChild(opts);
+      card.appendChild(exp);
+      list.appendChild(card);
+    });
+  }
+
+  function updateAnsweredPill() {
+    const ansArr = getActiveAnswers();
+    const count = ansArr.filter(x => x !== null).length;
+    document.getElementById('answeredPill').textContent = `Javoblar: ${count} / ${ansArr.length}`;
+  }
+
+  function gradeExam() {
+    setActiveGraded(true);
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    let correct = 0;
+    const cards = document.getElementById('questionsList').children;
+
+    qs.forEach((item, qIndex) => {
+      const opts = cards[qIndex].querySelectorAll('.opt-btn');
+      opts.forEach((btn, oIndex) => {
+        btn.classList.remove('selected', 'correct', 'wrong');
+        if (oIndex === item.ans) {
+          btn.classList.add('correct');
+        } else if (ansArr[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+      });
+      if (ansArr[qIndex] === item.ans) correct++;
+      document.getElementById(`exp-${currentMode}-${qIndex}`).style.display = 'block';
+    });
+
+    const pct = Math.round((correct / qs.length) * 100);
+    let grade = "2 (Qoniqarsiz)";
+    if (pct >= 86) grade = "5 (A'lo)";
+    else if (pct >= 71) grade = "4 (Yaxshi)";
+    else if (pct >= 55) grade = "3 (Qoniqarli)";
+
+    const name = document.getElementById('stName').value.trim() || "O‘quvchi";
+    const cls = document.getElementById('stClass').value.trim();
+    const dt = document.getElementById('stDate').value.trim();
+
+    document.getElementById('resTitle').textContent = `2-CHSB Natijasi (${currentMode} Variant)`;
+    document.getElementById('resStudent').textContent = `O‘quvchi: ${name}${cls ? ' — ' + cls : ''}${dt ? ' | Sana: ' + dt : ''}`;
+    document.getElementById('resCorrect').textContent = `${correct} / ${qs.length}`;
+    document.getElementById('resPercent').textContent = `${pct}%`;
+    document.getElementById('resGrade').textContent = grade;
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetExam() {
+    setActiveGraded(false);
+    getActiveAnswers().fill(null);
+    updateAnsweredPill();
+    document.getElementById('resultBox').style.display = 'none';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleWrittenSol(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+
+  renderQuestions();
+  updateAnsweredPill();
+</script>
+</body>
+</html>
