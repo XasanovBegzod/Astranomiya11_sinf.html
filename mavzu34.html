@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>34-Mavzu (68-§): Ta’sir sferasi va KA trayektoriyalarini taxminiy hisoblash | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.93);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .theory-container {
+      max-width: 1280px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      line-height: 1.72;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .theory-card h3 { color: var(--gold); font-size: 0.98rem; margin: 14px 0 6px; }
+    .theory-card p, .theory-card li { font-size: 0.92rem; color: #e2e8f0; margin-bottom: 9px; }
+    .theory-card ul { padding-left: 22px; margin-bottom: 10px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.88);
+      border-left: 4px solid var(--gold);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.26); padding: 9px 11px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.24); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin-top: 12px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.28);
+      color: #a7f3d0;
+      font-size: 0.89rem;
+      line-height: 1.6;
+    }
+
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1540px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.88);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.93rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .ctrl-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      color: var(--text);
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 0.79rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+      flex: 1;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.24);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.84);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    .desc { font-size: 0.83rem; line-height: 1.58; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>34-MAVZU (68-§). Ta’sir sferasi va KA trayektoriyalarini taxminiy hisoblash</h1>
+    <p>11-sinf Astronomiya | II Qism: Kosmonavtika elementlari (148-bet)</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">1-Sim: Ta’sir sferasi R_ts</button>
+    <button class="tab-btn" onclick="setTab(2)">2-Sim: Patched Conics uchishi</button>
+    <button class="tab-btn" onclick="setTab(3)">3-Sim: Sayyoralar taqqoslanishi</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: KENGAYTIRILGAN NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+
+  <div class="theory-card">
+    <h2>1. Uch jism masalasi va Laplasning Ta’sir sferasi tushunchasi (68-§)</h2>
+    <p>Kosmik apparat (KA) sayyoralararo fazoda harakatlanganda unga bir vaqtning o‘zida <strong>Quyosh</strong>, uchib chiqilgan <strong>sayyora (Yer)</strong> va mo‘ljallangan <strong>sayyora</strong> tortishish kuchlari ta’sir ko‘rsatadi. Bu klassik <em>ko‘p jismli masala</em> bo‘lib, uning umumiy analitik yechimi mavjud emas. Shuning uchun kosmonavtikada <strong>ta’sir sferalari (yopishtirilgan konus kesimlari — Patched Conics)</strong> usulidan foydalaniladi.</p>
+    <p><strong>Ta’sir sferasi (Laplas sferasi)</strong> — sayyora atrofidagi shunday sferik mintaqaki, uning ichida sayyoraning markaziy tortishish kuchi Quyoshning g‘alayonlantiruvchi (tebranish beruvchi) ta’siridan ustun bo‘ladi, sfera tashqarisida esa asosiy tortishish markazi sifatida Quyosh qabul qilinadi.</p>
+    <div class="math-banner">
+      Ta’sir sferasi radiusi (Laplas–Tisseran formulasi): R_ts = a_pl · (m_pl / M_☉)^(2/5) = a_pl · (m_pl / M_☉)^0.4
+    </div>
+    <ul>
+      <li><strong>a_pl</strong> — sayyora orbitasining Quyosh atrofidagi katta yarim o‘qi (o‘rtacha masofasi);</li>
+      <li><strong>m_pl</strong> — sayyora massasi; <strong>M_☉ ≈ 1.989 × 10³⁰ kg</strong> — Quyosh massasi;</li>
+      <li><strong>Yer uchun:</strong> <em>a_⊕ = 1 a.b. ≈ 1.496 × 10⁸ km</em>, <em>m_⊕ / M_☉ ≈ 3.003 × 10⁻⁶</em> ⇒ <strong>R_ts(Yer) ≈ 925 000 km</strong> (≈ 0.0062 a.b., ya’ni Oy orbitasidan ~2.4 marta katta).</li>
+      <li><strong>Oy uchun (Yer – Oy tizimida):</strong> <em>R_ts(Oy) ≈ 66 000 km</em>.</li>
+    </ul>
+  </div>
+
+  <div class="theory-card">
+    <h2>2. KA trayektoriyalarini taxminiy hisoblash algoritmi (Patched Conics)</h2>
+    <p>Sayyoralararo parvoz trayektoriyasi uchta alohida ikki jism masalasi (konus kesimlari) ko‘rinishida bo‘laklab hisoblanadi va ta’sir sferalari chegarasida silliq «yopishtiriladi»:</p>
+    <ul>
+      <li><strong>1-bosqich (Geotsentrik uchastka — Yer ta’sir sferasi ichida, r &lt; 925 000 km):</strong> Faqat Yer tortishishi hisobga olinadi. KA Yer sirtidan <em>v₀ &gt; v₂</em> tezlik bilan start olib, <strong>geotsentrik giperbola</strong> bo‘ylab harakatlanadi va sfera chegarasiga <em>v_∞ = √(v₀² − v₂²)</em> qoldiq tezlik bilan chiqadi.</li>
+      <li><strong>2-bosqich (Geliosentrik uchastka — Sayyoralararo fazo):</strong> Yer va mo‘ljallangan sayyora tortishishi e’tibordan soqit qilinib, faqat Quyosh tortishishi hisobga olinadi. KA ning boshlang‘ich geliosentrik tezligi <em>V⃗_gelio = V⃗_⊕ + v⃗_∞</em> bo‘lib, u Quyosh atrofida <strong>ellips</strong> (masalan, Gomon yarim ellipsi) bo‘ylab uchadi.</li>
+      <li><strong>3-bosqich (Planetotsentrik uchastka — Mo‘ljallangan sayyora ta’sir sferasi ichida):</strong> Sayyora ta’sir sferasiga kirgach, faqat o‘sha sayyoraning tortishishi hisobga olinadi va KA <strong>giperbolik traektoriya</strong> bo‘ylab sayyoraga yaqinlashadi.</li>
+    </ul>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Osmon jismi</th>
+          <th>Quyoshdan masofa (a_pl)</th>
+          <th>Massa nisbati (m / M_☉)</th>
+          <th>Ta’sir sferasi radiusi (R_ts)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Merkuriy</strong></td><td>0.387 a.b. (57.9 mln km)</td><td>1.66 × 10⁻⁷</td><td>≈ 112 000 km</td></tr>
+        <tr><td><strong>Venera</strong></td><td>0.723 a.b. (108.2 mln km)</td><td>2.45 × 10⁻⁶</td><td>≈ 616 000 km</td></tr>
+        <tr><td><strong>Yer</strong></td><td>1.000 a.b. (149.6 mln km)</td><td>3.00 × 10⁻⁶</td><td>≈ 925 000 km</td></tr>
+        <tr><td><strong>Mars</strong></td><td>1.524 a.b. (227.9 mln km)</td><td>3.23 × 10⁻⁷</td><td>≈ 577 000 km</td></tr>
+        <tr><td><strong>Yupiter</strong></td><td>5.203 a.b. (778.5 mln km)</td><td>9.55 × 10⁻⁴</td><td>≈ 48 200 000 km (0.322 a.b.)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card">
+    <h2>3. 68-§ bo‘yicha 4 ta darajali yechimli masala</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Oson — Ta’sir sferasini taqqoslash):</strong> Nima uchun Mars massasi Venera massasidan qariyb 7.6 marta kichik bo‘lsa-da, ularning ta’sir sferalari radiuslari (<em>R_ts(Venera) ≈ 616 000 km</em> va <em>R_ts(Mars) ≈ 577 000 km</em>) bir-biriga juda yaqin?
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol1')">Yechim</button>
+      <div id="sol1" class="problem-sol">
+        <strong>Tahlil:</strong> R_ts = a_pl · (m_pl / M_☉)^(2/5). Mars Quyoshdan Veneraga qaraganda 1.524 / 0.723 ≈ <strong>2.11 marta uzoqroqda</strong> joylashgani uchun u yerda Quyoshning g‘alayonlantiruvchi ta’siri ancha kuchsiz, shu sababli <em>a_pl</em> ko‘paytmasi kichik massa ta’sirini qoplaydi.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (O‘rta — Yupiter ta’sir sferasi radiusini hisoblash):</strong> Yupiterning Quyoshdan o‘rtacha masofasi <em>a = 5.2 a.b.</em> (<em>7.78 × 10⁸ km</em>), massasi esa Quyosh massasining <em>1 / 1047</em> qismini tashkil etadi. Yupiter ta’sir sferasi radiusini (<em>R_ts</em>) million kilometrlarda hisoblang (<em>(1/1047)^0.4 ≈ 0.062</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol2')">Yechim</button>
+      <div id="sol2" class="problem-sol">
+        <strong>Formula:</strong> R_ts = a · (m / M_☉)^0.4.<br>
+        <strong>Hisoblash:</strong> R_ts = 778 mln km × 0.062 ≈ <strong>48.2 mln km</strong> (≈ 0.32 a.b.).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Murakkab — Noma’lum ekzosayyora ta’sir sferasi):</strong> Massasi Quyoshnikiga teng yulduz atrofida <em>a = 4.0 a.b.</em> masofada aylanayotgan sayyoraning massasi yulduz massasining <em>10⁻⁵</em> qismiga teng. Ushbu sayyora ta’sir sferasi radiusini astronomik birliklarda (a.b.) toping (<em>(10⁻⁵)^0.4 = 10⁻² = 0.01</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol3')">Yechim</button>
+      <div id="sol3" class="problem-sol">
+        <strong>R_ts = 4.0 a.b. × (10⁻⁵)^(2/5) = 4.0 × 10⁻² = 0.04 a.b.</strong> (≈ 6.0 mln km).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>4-Masala (Olimpiada — Geotsentrik va geliosentrik tezliklar ulanishi):</strong> Kosmik apparat Yerning ta’sir sferasi chegarasidan Yerning orbital harakati (<em>v_⊕ = 29.8 km/s</em>) yo‘nalishida <em>v_∞ = 3.2 km/s</em> tezlik bilan chiqdi. Apparatning geliosentrik boshlang‘ich tezligini (<em>V_gelio</em>) hamda Yer sirtidan start olish tezligini (<em>v₀</em>, <em>v₂ = 11.2 km/s</em>) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol4')">Yechim</button>
+      <div id="sol4" class="problem-sol">
+        <strong>1) Geliosentrik tezlik:</strong> V_gelio = v_⊕ + v_∞ = 29.8 + 3.2 = <strong>33.0 km/s</strong>.<br>
+        <strong>2) Start tezligi:</strong> v₀ = √(v₂² + v_∞²) = √(11.2² + 3.2²) = √(125.44 + 10.24) = √135.68 ≈ <strong>11.65 km/s</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">68-§: Laplas ta’sir sferasi va Patched Conics simulyatsiyasi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Ko‘p jismli approksimatsiya</div>
+    </div>
+    <canvas id="soiCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1 -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>1-Sim: Ta’sir sferasi R_ts = a · (m/M_☉)^0.4</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Quyoshdan masofa a_pl (a.b.):</span><strong id="aPlVal">1.00 a.b.</strong></div>
+          <input type="range" id="aPlSl" min="0.4" max="6.0" step="0.1" value="1.0" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label"><span>Sayyora massasi (Yer massasida):</span><strong id="mPlVal">1.0 M_⊕</strong></div>
+          <input type="range" id="mPlSl" min="0.1" max="320" step="1" value="1" />
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" onclick="setPresetSOI(1.0, 1)">Yer</button>
+          <button class="btn" onclick="setPresetSOI(1.52, 0.11)">Mars</button>
+          <button class="btn" onclick="setPresetSOI(5.2, 318)">Yupiter</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Hisoblangan natija</h3>
+        <div class="formula-box">R_ts = a_pl · (m_pl / M_☉)^(2/5)</div>
+        <div class="telemetry">
+          <div class="t-row"><span>Ta’sir sferasi R_ts (km):</span><span class="t-val" id="rtsKmOut">925 000 km</span></div>
+          <div class="t-row"><span>Ta’sir sferasi R_ts (a.b.):</span><span class="t-val" id="rtsAuOut">0.0062 a.b.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>2-Sim: Yopishtirilgan konus kesimlari (3 bosqich)</h3>
+        <p class="desc">Kosmik apparatning Yer ta’sir sferasidan chiqishi (1), Quyosh atrofida ellips bo‘ylab uchishi (2) va Mars ta’sir sferasiga kirishi (3) ko‘rsatilgan.</p>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Joriy parvoz bosqichi</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Faol gravitatsiya markazi:</span><span class="t-val" id="stageCenter">Yer (Geotsentrik)</span></div>
+          <div class="t-row"><span>Traektoriya turi:</span><span class="t-val" id="stageCurve">Giperbola</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>3-Sim: Quyosh tizimi sayyoralari ta’sir sferasi</h3>
+        <p class="desc">Merkuriy, Venera, Yer, Mars va Yupiter ta’sir sferasi radiuslarining (million km da) o‘zaro nisbati.</p>
+      </div>
+      <div class="card">
+        <h3>Asosiy xulosa</h3>
+        <p class="desc">Yupiter ham massasi (318 M_⊕), ham Quyoshdan uzoqligi (5.2 a.b.) katta bo‘lgani uchun uning ta’sir sferasi (~48.2 mln km) barcha ichki sayyoralarnikidan o‘nlab marta kattadir.</p>
+      </div>
+    </div>
+
+    <!-- TAB 4: TEST (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Bilimni sinash (68-§)</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="flex:none;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('soiCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+  let tick = 0;
+  let paused = false;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+  function togglePause() {
+    paused = !paused;
+    const b = document.getElementById('pauseBtn');
+    if (b) b.textContent = paused ? '▶ Davom' : '⏸ Pauza';
+  }
+  function resetSim() {
+    tick = 0;
+    paused = false;
+    const b = document.getElementById('pauseBtn');
+    if (b) b.textContent = '⏸ Pauza';
+  }
+  function setPresetSOI(a, m) {
+    document.getElementById('aPlSl').value = a;
+    document.getElementById('mPlSl').value = m;
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.getElementById('theoryView').classList.toggle('hidden', idx !== 0);
+    document.getElementById('simView').classList.toggle('hidden', idx === 0);
+    if (idx > 0) {
+      resize();
+      document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+    }
+  }
+
+  function drawSOITab(w, h) {
+    const aAu = parseFloat(document.getElementById('aPlSl').value);
+    const mEarth = parseFloat(document.getElementById('mPlSl').value);
+    const mRatio = mEarth * 3.003e-6;
+    const rAu = aAu * Math.pow(mRatio, 0.4);
+    const rKm = rAu * 1.496e8;
+
+    document.getElementById('aPlVal').textContent = `${aAu.toFixed(2)} a.b.`;
+    document.getElementById('mPlVal').textContent = `${mEarth} M_⊕`;
+    document.getElementById('rtsKmOut').textContent = `${Math.round(rKm).toLocaleString()} km`;
+    document.getElementById('rtsAuOut').textContent = `${rAu.toFixed(4)} a.b.`;
+
+    const sx = w * 0.22, cy = h * 0.52;
+    // Quyosh
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(sx, cy, 24, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a'; ctx.font = '12px sans-serif';
+    ctx.fillText('Quyosh', sx - 20, cy + 40);
+
+    // Sayyora o'rni
+    const px = sx + (aAu / 6.5) * (w * 0.65);
+    const soiPx = Math.max(18, Math.min(130, rAu * 340));
+
+    // Ta'sir sferasi doirasi
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.14)';
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+    ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.arc(px, cy, soiPx, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Sayyora
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(px, cy, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillText(`R_ts = ${(rKm / 1e6).toFixed(2)} mln km`, px - 48, cy - soiPx - 10);
+  }
+
+  function drawPatchedTab(w, h) {
+    const p1x = w * 0.20, p2x = w * 0.80, cy = h * 0.54;
+    const r1 = 68, r2 = 60;
+
+    // 1-sfera (Yer)
+    ctx.strokeStyle = '#38bdf8'; ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(p1x, cy, r1, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#38bdf8'; ctx.beginPath(); ctx.arc(p1x, cy, 12, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e2e8f0'; ctx.font = '12px sans-serif'; ctx.fillText('Yer ta’sir sferasi', p1x - 46, cy + r1 + 18);
+
+    // 2-sfera (Mars)
+    ctx.strokeStyle = '#fb7185'; ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(p2x, cy, r2, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#fb7185'; ctx.beginPath(); ctx.arc(p2x, cy, 10, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e2e8f0'; ctx.fillText('Mars ta’sir sferasi', p2x - 48, cy + r2 + 18);
+
+    // O'rta geliosentrik trayektoriya
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(p1x + 12, cy);
+    ctx.quadraticCurveTo(w * 0.5, cy - 110, p2x - 10, cy);
+    ctx.stroke();
+
+    // KA pozitsiyasi
+    const t = ((tick * 0.005) % 1);
+    const kx = (1 - t) * (1 - t) * (p1x + 12) + 2 * (1 - t) * t * (w * 0.5) + t * t * (p2x - 10);
+    const ky = (1 - t) * (1 - t) * cy + 2 * (1 - t) * t * (cy - 110) + t * t * cy;
+
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(kx, ky, 6, 0, Math.PI * 2); ctx.fill();
+
+    if (Math.hypot(kx - p1x, ky - cy) < r1) {
+      document.getElementById('stageCenter').textContent = "1-bosqich: Yer (Geotsentrik)";
+      document.getElementById('stageCurve').textContent = "Geotsentrik giperbola";
+    } else if (Math.hypot(kx - p2x, ky - cy) < r2) {
+      document.getElementById('stageCenter').textContent = "3-bosqich: Mars (Areotsentrik)";
+      document.getElementById('stageCurve').textContent = "Planetotsentrik giperbola";
+    } else {
+      document.getElementById('stageCenter').textContent = "2-bosqich: Quyosh (Geliosentrik)";
+      document.getElementById('stageCurve').textContent = "O‘tish ellipsi";
+    }
+  }
+
+  function drawCompareTab(w, h) {
+    const items = [
+      { name: "Merkuriy", val: 0.112, col: "#94a3b8" },
+      { name: "Venera", val: 0.616, col: "#fbbf24" },
+      { name: "Yer", val: 0.925, col: "#38bdf8" },
+      { name: "Mars", val: 0.577, col: "#fb7185" },
+      { name: "Yupiter (masshtab 1/10)", val: 4.82, col: "#34d399" }
+    ];
+    const baseY = h * 0.78;
+    items.forEach((it, idx) => {
+      const x = w * (0.14 + idx * 0.17);
+      const bh = (it.val / 5.2) * 230;
+      ctx.fillStyle = it.col;
+      ctx.fillRect(x, baseY - bh, 46, bh);
+      ctx.fillStyle = '#e2e8f0'; ctx.font = '11px sans-serif';
+      ctx.fillText(it.name, x - 6, baseY + 18);
+      const realVal = idx === 4 ? "48.2 mln km" : `${it.val} mln km`;
+      ctx.fillText(realVal, x - 8, baseY - bh - 8);
+    });
+  }
+
+  const quizQuestions = [
+    { q: "1. Sayyora ta’sir sferasi (Laplas sferasi) ichida qaysi jismning tortishishi ustun bo‘ladi?", opts: ["Sayyoraning markaziy tortishish kuchi", "Faqat Oyning tortishishi", "Gravitatsiya bo‘lmaydi"], ans: 0, exp: "Ta’sir sferasi ichida sayyora tortishishi Quyosh g‘alayonlaridan ustun bo‘ladi." },
+    { q: "2. Ta’sir sferasi radiusi formulasi qaysi javobda to‘g‘ri ko‘rsatilgan?", opts: ["R_ts = a_pl · (m_pl / M_☉)^(2/5)", "R_ts = m · g", "R_ts = v · t"], ans: 0, exp: "Laplas–Tisseran formulasi: R_ts = a_pl · (m_pl / M_☉)^0.4." },
+    { q: "3. Yer ta’sir sferasining radiusi taxminan nechaga teng?", opts: ["≈ 925 000 km", "≈ 6 400 km", "≈ 150 000 000 km"], ans: 0, exp: "Yer uchun R_ts ≈ 925 000 km (≈ 0.0062 a.b.)." },
+    { q: "4. «Patched Conics» (yopishtirilgan konus kesimlari) usulida parvoz nechta asosiy uchastkaga bo‘linadi?", opts: ["3 ta (geotsentrik, geliosentrik, planetotsentrik)", "Faqat 1 ta", "10 ta"], ans: 0, exp: "Chiqish sferasi, sayyoralararo fazo va kirish sferasi uchastkalariga bo‘linadi." },
+    { q: "5. Sayyoralararo uchastkada (ta’sir sferalari tashqarisida) KA qaysi jism maydonida harakatlanadi deb olinadi?", opts: ["Quyosh tortishish maydonida", "Yer maydonida", "Oy maydonida"], ans: 0, exp: "Sayyoralararo fazoda asosiy markaz — Quyosh." },
+    { q: "6. Yer ta’sir sferasidan chiqayotgan KA ning geotsentrik trayektoriyasi qanday shaklda bo‘ladi?", opts: ["Giperbola", "Aylana", "To‘g‘ri chiziq"], ans: 0, exp: "v₀ > v₂ bo‘lgani uchun chiqish trayektoriyasi giperbolikdir." },
+    { q: "7. Qaysi sayyoraning ta’sir sferasi Quyosh tizimida eng katta (~48.2 mln km)?", opts: ["Yupiter", "Merkuriy", "Mars"], ans: 0, exp: "Yupiter ham massasi, ham Quyoshdan masofasi katta bo‘lgani uchun R_ts ≈ 48.2 mln km." },
+    { q: "8. Oyning ta’sir sferasi radiusi taxminan nechaga teng?", opts: ["≈ 66 000 km", "≈ 925 000 km", "≈ 1 737 km"], ans: 0, exp: "Yer – Oy tizimida Oyning ta’sir sferasi ~66 000 km." },
+    { q: "9. Sayyora Quyoshdan 2 marta uzoqroqda joylashsa (massasi o‘zgarmasa), uning ta’sir sferasi radiusi qanday o‘zgaradi?", opts: ["2 marta ortadi", "2 marta kamayadi", "O‘zgarmaydi"], ans: 0, exp: "R_ts sayyoraning Quyoshdan masofasi a_pl ga to‘g‘ri proporsional." },
+    { q: "10. Yer harakati yo‘nalishida v_∞ = 3.2 km/s bilan chiqqan KA ning geliosentrik tezligi (v_⊕ = 29.8 km/s) qancha?", opts: ["33.0 km/s", "26.6 km/s", "11.2 km/s"], ans: 0, exp: "V_gelio = 29.8 + 3.2 = 33.0 km/s." }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Izoh: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) { qScore = 0; document.getElementById('qScore').textContent = `Natija: 0 / 10`; }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  function loop() {
+    if (!paused) tick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      if (activeTab === 1) drawSOITab(w, h);
+      else if (activeTab === 2) drawPatchedTab(w, h);
+      else if (activeTab === 3) drawCompareTab(w, h);
+      else drawSOITab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
