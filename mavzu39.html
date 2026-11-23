@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>39-Mavzu (75-§): Geliosentrik uchastkadagi harakat | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.93);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .theory-container {
+      max-width: 1280px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      line-height: 1.72;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .theory-card h3 { color: var(--gold); font-size: 0.98rem; margin: 14px 0 6px; }
+    .theory-card p, .theory-card li { font-size: 0.92rem; color: #e2e8f0; margin-bottom: 9px; }
+    .theory-card ul { padding-left: 22px; margin-bottom: 10px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.88);
+      border-left: 4px solid var(--gold);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.26); padding: 9px 11px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.24); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin-top: 12px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.28);
+      color: #a7f3d0;
+      font-size: 0.89rem;
+      line-height: 1.6;
+    }
+
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1540px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.88);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.93rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .ctrl-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      color: var(--text);
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 0.79rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+      flex: 1;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.24);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.84);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    .desc { font-size: 0.83rem; line-height: 1.58; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>39-MAVZU (75-§). Geliosentrik uchastkadagi harakat</h1>
+    <p>11-sinf Astronomiya | II Qism: Kosmonavtika elementlari (162-bet)</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">1-Sim: Geliosentrik tezlik va Orbita</button>
+    <button class="tab-btn" onclick="setTab(2)">2-Sim: Uchrashuv burchagi ψ₀</button>
+    <button class="tab-btn" onclick="setTab(3)">3-Sim: Gravitatsion manyovr</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: KENGAYTIRILGAN NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+
+  <div class="theory-card">
+    <h2>1. Geliosentrik bosqichning fizikasi va tezliklarni qo‘shish (75-§)</h2>
+    <p>Kosmik apparat (KA) Yerning ta’sir sferasidan (<em>R_ts ≈ 925 000 km</em>) tashqariga chiqqach, Yer va mo‘ljallangan sayyoraning gravitatsion ta’siri Quyosh tortishish kuchiga nisbatan nihoyatda kichik bo‘lib qoladi. Shu sababli <strong>geliosentrik uchastkada</strong> KA faqat Quyosh tortishish maydonida Kepler qonunlari bo‘yicha harakatlanuvchi sun’iy sayyora sifatida qaraladi.</p>
+    <div class="math-banner">
+      V⃗_gelio = V⃗_⊕ + v⃗_∞ &nbsp;|&nbsp; V_⊕ ≈ 29.78 km/s &nbsp;|&nbsp; V_par,☉ = √2 · V_⊕ ≈ 42.12 km/s<br>
+      1 / a = 2 / r₁ − V_gelio² / μ_☉ &nbsp;|&nbsp; ψ₀ = 180° − 360° · (t_parvoz / T_pl)
+    </div>
+    <ul>
+      <li><strong>Tashqi sayyoraga uchish:</strong> <em>v⃗_∞</em> vektori Yer harakati <em>V⃗_⊕</em> yo‘nalishida bo‘lgani uchun <em>V_gelio = V_⊕ + v_∞</em> (masalan, Mars uchun <em>V_gelio ≈ 29.78 + 2.94 = 32.72 km/s</em>).</li>
+      <li><strong>Ichki sayyoraga uchish:</strong> <em>v⃗_∞</em> vektori <em>V⃗_⊕</em> ga qarama-qarshi yo‘nalgani uchun <em>V_gelio = V_⊕ − v_∞</em> (masalan, Venera uchun <em>V_gelio ≈ 29.78 − 2.50 = 27.28 km/s</em>).</li>
+      <li><strong>Quyosh tizimidan chiqish:</strong> Agar <em>V_gelio ≥ 42.12 km/s</em> bo‘lsa, KA parabola yoki giperbola bo‘ylab Quyosh tizimini abadiy tark etadi («Voyajer-1/2», «Pioner-10/11»).</li>
+    </ul>
+  </div>
+
+  <div class="theory-card">
+    <h2>2. Sayyora bilan uchrashuv sharti va Gravitatsion manyovr</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Parvoz yo‘nalishi</th>
+          <th>Parvoz vaqti t</th>
+          <th>Sayyora davri T_pl</th>
+          <th>Start konfiguratsiya burchagi ψ₀</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Yerdan Marsga</strong></td><td>≈ 259 sutka</td><td>687.0 sutka</td><td><strong>+44.3°</strong> (Mars Yerdan 44.3° oldinda)</td></tr>
+        <tr><td><strong>Yerdan Veneraga</strong></td><td>≈ 146 sutka</td><td>224.7 sutka</td><td><strong>−53.9°</strong> (Venera Yerdan 53.9° orqada)</td></tr>
+        <tr><td><strong>Yerdan Yupiterga</strong></td><td>≈ 997 sutka (2.73 yil)</td><td>4332.6 sutka</td><td><strong>+97.2°</strong> (Yupiter Yerdan 97.2° oldinda)</td></tr>
+      </tbody>
+    </table>
+    <p class="desc"><strong>Gravitatsion manyovr (perturbation assist):</strong> Apparat ulkan sayyora (masalan, Yupiter yoki Venera) ta’sir sferasidan uchib o‘tayotganda sayyoraga nisbatan tezlik moduli o‘zgarmaydi, biroq harakat yo‘nalishi buriladi. Natijada Quyoshga nisbatan tezlik (<em>V⃗_gelio = V⃗_pl + v⃗_∞</em>) bir tomchi ham yoqilg‘i sarflamasdan keskin oshishi yoki kamayishi mumkin.</p>
+  </div>
+
+  <div class="theory-card">
+    <h2>3. 75-§ bo‘yicha 4 ta darajali yechimli masala</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Oson — Marsga start burchagi):</strong> <em>T_Mars = 687 sutka</em>, Gomon parvozi vaqti <em>t = 259 sutka</em> bo‘lsa, start paytidagi konfiguratsiya burchagini (<em>ψ₀</em>) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol1')">Yechim</button>
+      <div id="sol1" class="problem-sol">
+        <strong>Δφ = 360° × (259 / 687) ≈ 135.7° ⇒ ψ₀ = 180° − 135.7° = +44.3°</strong> (Mars Yerdan 44.3° oldinda).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (O‘rta — Veneraga start burchagi):</strong> <em>T_Ven = 224.7 sutka</em>, parvoz vaqti <em>t = 146 sutka</em> bo‘lsa, Veneraning start paytidagi burchak holatini (<em>ψ₀</em>) aniqlang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol2')">Yechim</button>
+      <div id="sol2" class="problem-sol">
+        <strong>Δφ = 360° × (146 / 224.7) ≈ 233.9° ⇒ ψ₀ = 180° − 233.9° = −53.9°</strong> (Venera Yerdan 53.9° orqada).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Murakkab — Geliosentrik katta yarim o‘q):</strong> Yer harakati yo‘nalishida <em>v_∞ = 5.0 km/s</em> tezlik bilan chiqqan KA ning geliosentrik orbitasi katta yarim o‘qini (<em>a</em>) toping (<em>V_⊕ = 29.8 km/s</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol3')">Yechim</button>
+      <div id="sol3" class="problem-sol">
+        <strong>V_gelio = 29.8 + 5.0 = 34.8 km/s; 1/a = 2 − (34.8/29.8)² = 0.6363 ⇒ a ≈ 1.57 a.b.</strong>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>4-Masala (Olimpiada — Mars ta’sir sferasiga kirish tezligi):</strong> <em>r₂ = 1.524 a.b.</em>, <em>a_o‘t = 1.262 a.b.</em>, <em>V_Mars = 24.13 km/s</em>, <em>V_⊕ = 29.78 km/s</em>. Afeliydagi tezlik <em>V₂</em> va Marsga nisbiy kirish tezligi <em>v_∞,2</em> ni hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol4')">Yechim</button>
+      <div id="sol4" class="problem-sol">
+        <strong>V₂ = 29.78 × √(2/1.524 − 1/1.262) ≈ 21.47 km/s; v_∞,2 = 24.13 − 21.47 = 2.66 km/s</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">75-§: Geliosentrik uchastkadagi harakat simulyatsiyasi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Jonli Canvas</div>
+    </div>
+    <canvas id="helioCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1 -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>1-Sim: Geliosentrik tezlik V_gelio = V_⊕ ± v_∞</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Chiqish tezligi v_∞ (−5 dan +14 km/s):</span><strong id="vInfHelVal">+2.94 km/s</strong></div>
+          <input type="range" id="vInfHelSl" min="-5.0" max="14.0" step="0.2" value="2.94" />
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn1" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Geliosentrik orbita ko‘rsatkichlari</h3>
+        <div class="formula-box">V_par,☉ = 42.12 km/s &nbsp;|&nbsp; 1/a = 2 − (V_gelio/V_⊕)²</div>
+        <div class="telemetry">
+          <div class="t-row"><span>Geliosentrik tezlik V_gelio:</span><span class="t-val" id="vGelOut">32.72 km/s</span></div>
+          <div class="t-row"><span>Katta yarim o‘q (a):</span><span class="t-val" id="aGelOut">1.26 a.b.</span></div>
+          <div class="t-row"><span>Orbita turi:</span><span class="t-val" id="typeGelOut">Elliptik (Tashqi)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>2-Sim: Uchrashuv burchagi ψ₀ (Mars vs Venera)</h3>
+        <div class="ctrl-row">
+          <button class="btn active" id="btnM2" onclick="setM2('mars')">Mars (ψ₀ = +44.3°)</button>
+          <button class="btn" id="btnV2" onclick="setM2('venus')">Venera (ψ₀ = −53.9°)</button>
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn2" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Konfiguratsiya tahlili</h3>
+        <p class="desc" id="confDesc">Mars orbitasi Yerdan tashqarida bo‘lgani uchun uning burchak tezligi kichikroq; start paytida Mars Yerdan 44.3° oldinda turishi shart.</p>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>3-Sim: Gravitatsion manyovr (Perturbation Assist)</h3>
+        <p class="desc">KA harakatlanayotgan sayyora (masalan, Yupiter) ortidan uchib o‘tganda sayyoraning tortishish maydoni tezlik vektorini burib, Quyoshga nisbatan tezlikni yoqilg‘isiz oshiradi.</p>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn3" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TEST (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Bilimni sinash (75-§)</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="flex:none;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('helioCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+  let m2Target = 'mars';
+  let tick = 0;
+  let paused = false;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+  function togglePause() {
+    paused = !paused;
+    ['pauseBtn1', 'pauseBtn2', 'pauseBtn3'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.textContent = paused ? '▶ Davom' : '⏸ Pauza';
+    });
+  }
+  function resetSim() {
+    tick = 0;
+    paused = false;
+    ['pauseBtn1', 'pauseBtn2', 'pauseBtn3'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.textContent = '⏸ Pauza';
+    });
+  }
+
+  function setM2(t) {
+    m2Target = t;
+    document.getElementById('btnM2').classList.toggle('active', t === 'mars');
+    document.getElementById('btnV2').classList.toggle('active', t === 'venus');
+    document.getElementById('confDesc').textContent = t === 'mars'
+      ? "Mars orbitasi Yerdan tashqarida bo‘lgani uchun uning burchak tezligi kichikroq; start paytida Mars Yerdan 44.3° oldinda turishi shart."
+      : "Venera orbitasi Yerdan ichkarida bo‘lgani uchun tezroq aylanadi; start paytida Venera Yerdan 53.9° orqada bo‘lishi kerak.";
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.getElementById('theoryView').classList.toggle('hidden', idx !== 0);
+    document.getElementById('simView').classList.toggle('hidden', idx === 0);
+    if (idx > 0) {
+      resize();
+      document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+    }
+  }
+
+  function drawHelioVelTab(w, h) {
+    const vInf = parseFloat(document.getElementById('vInfHelSl').value);
+    const vEarth = 29.78;
+    const vGel = vEarth + vInf;
+    const invA = 2 - Math.pow(vGel / vEarth, 2);
+
+    document.getElementById('vInfHelVal').textContent = `${vInf >= 0 ? '+' : ''}${vInf.toFixed(2)} km/s`;
+    document.getElementById('vGelOut').textContent = `${vGel.toFixed(2)} km/s`;
+
+    let aText = "∞ (Parabola)", typeText = "Parabolik qochish", col = "#fbbf24";
+    if (invA > 0.02) {
+      const a = 1 / invA;
+      aText = `${a.toFixed(2)} a.b.`;
+      typeText = vInf >= 0 ? "Elliptik (Tashqi)" : "Elliptik (Ichki)";
+      col = vInf >= 0 ? "#38bdf8" : "#34d399";
+    } else if (invA < -0.02) {
+      aText = `${(1 / invA).toFixed(2)} a.b.`;
+      typeText = "Giperbola (Quyosh tizimidan chiqish)";
+      col = "#fb7185";
+    }
+    document.getElementById('aGelOut').textContent = aText;
+    document.getElementById('typeGelOut').textContent = typeText;
+
+    const cx = w * 0.42, cy = h * 0.52;
+    // Quyosh
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx, cy, 20, 0, Math.PI * 2); ctx.fill();
+
+    // Yer orbitasi (r = 95px)
+    const r1 = 95;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, r1, 0, Math.PI * 2); ctx.stroke();
+
+    if (invA > 0.05) {
+      const a = Math.min(2.6, 1 / invA);
+      const r2 = Math.max(45, Math.min(240, (2 * a - 1) * r1));
+      const aPx = (r1 + r2) / 2;
+      const cPx = Math.abs(r2 - r1) / 2;
+      const bPx = Math.sqrt(Math.max(400, aPx * aPx - cPx * cPx));
+      const ellCx = r2 >= r1 ? cx + cPx : cx - cPx;
+
+      ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.ellipse(ellCx, cy, aPx, bPx, 0, 0, Math.PI * 2); ctx.stroke();
+
+      const ang = tick * 0.025;
+      ctx.fillStyle = '#34d399';
+      ctx.beginPath(); ctx.arc(ellCx - aPx * Math.cos(ang), cy + bPx * Math.sin(ang), 6, 0, Math.PI * 2); ctx.fill();
+    } else {
+      // Ochiq giperbola/parabola
+      ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - r1, cy);
+      ctx.quadraticCurveTo(cx - r1, cy - 150, cx + 240, cy - 220);
+      ctx.stroke();
+
+      const t = (tick * 0.012) % 1;
+      const kx = (1 - t) * (1 - t) * (cx - r1) + 2 * (1 - t) * t * (cx - r1) + t * t * (cx + 240);
+      const ky = (1 - t) * (1 - t) * cy + 2 * (1 - t) * t * (cy - 150) + t * t * (cy - 220);
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(kx, ky, 6, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  function drawRendezvousTab(w, h) {
+    const cx = w * 0.5, cy = h * 0.52;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx, cy, 18, 0, Math.PI * 2); ctx.fill();
+
+    const rE = 110;
+    const rP = m2Target === 'mars' ? 168 : 78;
+    const psi0 = m2Target === 'mars' ? (44.3 * Math.PI) / 180 : (-53.9 * Math.PI) / 180;
+
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+    ctx.beginPath(); ctx.arc(cx, cy, rE, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.strokeStyle = m2Target === 'mars' ? 'rgba(251, 113, 133, 0.4)' : 'rgba(52, 211, 153, 0.4)';
+    ctx.beginPath(); ctx.arc(cx, cy, rP, 0, Math.PI * 2); ctx.stroke();
+
+    const prog = (tick * 0.006) % 1;
+    const angE = -prog * Math.PI;
+    const angP = -psi0 - prog * (m2Target === 'mars' ? 2.37 : 4.08);
+
+    // Yer
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(cx + rE * Math.cos(angE), cy + rE * Math.sin(angE), 7, 0, Math.PI * 2); ctx.fill();
+
+    // Sayyora
+    ctx.fillStyle = m2Target === 'mars' ? '#fb7185' : '#34d399';
+    ctx.beginPath(); ctx.arc(cx + rP * Math.cos(angP), cy + rP * Math.sin(angP), 8, 0, Math.PI * 2); ctx.fill();
+
+    // KA
+    const rK = rE + (rP - rE) * prog;
+    const angK = -prog * Math.PI;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx + rK * Math.cos(angK), cy + rK * Math.sin(angK), 5.5, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function drawGravityAssistTab(w, h) {
+    const cy = h * 0.55;
+    const px = w * 0.25 + ((tick * 1.4) % (w * 0.5));
+    // Yupiter
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(px, cy, 18, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fef08a'; ctx.font = '12px sans-serif';
+    ctx.fillText('Sayyora (V_pl →)', px - 42, cy + 36);
+
+    // KA trayektoriyasi
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.2, h * 0.85);
+    ctx.quadraticCurveTo(px + 42, cy - 28, w * 0.85, h * 0.2);
+    ctx.stroke();
+
+    const t = ((tick * 1.4) % (w * 0.5)) / (w * 0.5);
+    const kx = (1 - t) * (1 - t) * (w * 0.2) + 2 * (1 - t) * t * (px + 42) + t * t * (w * 0.85);
+    const ky = (1 - t) * (1 - t) * (h * 0.85) + 2 * (1 - t) * t * (cy - 28) + t * t * (h * 0.2);
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(kx, ky, 6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  const quizQuestions = [
+    { q: "1. Geliosentrik uchastkada kosmik apparatga asosan qaysi jismning tortishish kuchi ta’sir qiladi?", opts: ["Quyoshning", "Oyning", "Yer atmosferasining"], ans: 0, exp: "Yer ta’sir sferasidan chiqqach, KA Quyoshning markaziy tortishish maydonida harakatlanadi." },
+    { q: "2. Yer orbitasi masofasida (1 a.b.) Quyosh maydonidan chiqish (parabolik) tezligi qancha?", opts: ["≈ 42.12 km/s", "≈ 11.19 km/s", "≈ 7.91 km/s"], ans: 0, exp: "V_par,☉ = √2 · V_⊕ ≈ 1.414 × 29.78 ≈ 42.12 km/s." },
+    { q: "3. Tashqi sayyoraga (masalan, Marsga) uchishda geliosentrik boshlang‘ich tezlik qanday topiladi?", opts: ["V_gelio = V_⊕ + v_∞", "V_gelio = V_⊕ − v_∞", "V_gelio = 0"], ans: 0, exp: "KA Yerning orbital harakati yo‘nalishida chiqqani uchun tezliklar qo‘shiladi." },
+    { q: "4. Gomon trayektoriyasi bo‘ylab Marsga start paytida Mars Yerdan qanday burchak holatida bo‘lishi kerak?", opts: ["≈ 44.3° oldinda", "≈ 180° qarama-qarshi", "Aynan bir chiziqda (0°)"], ans: 0, exp: "259 sutkada Mars 135.7° yuradi, shuning uchun 180° − 135.7° = 44.3° oldinda turishi kerak." },
+    { q: "5. Gravitatsion manyovrning asosiy afzalligi nimada?", opts: ["Yoqilg‘i sarflamasdan KA ning geliosentrik tezligini oshirish yoki kamaytirish", "Atmosferani yo‘qotish", "Gravitatsiyani o‘chirish"], ans: 0, exp: "Sayyora orbital harakati hisobiga KA qo‘shimcha impuls oladi." },
+    { q: "6. Ichki sayyoraga (Veneraga) uchishda geliosentrik boshlang‘ich tezlik qanday bo‘ladi?", opts: ["V_gelio = V_⊕ − v_∞", "V_gelio = V_⊕ + v_∞", "V_gelio = 42.12 km/s"], ans: 0, exp: "Quyoshga yaqinlashish uchun geliosentrik tezlik Yer tezligidan kichik bo‘lishi lozim." },
+    { q: "7. V_gelio > 42.12 km/s bo‘lganda KA Quyosh atrofida qanday trayektoriya chizadi?", opts: ["Giperbola (Quyosh tizimidan chiqib ketadi)", "Aylana", "Yopiq ellips"], ans: 0, exp: "To‘liq geliosentrik energiya musbat bo‘lib, ochiq giperbola hosil bo‘ladi." },
+    { q: "8. Veneraga Gomon parvozida start paytida Venera Yerdan qanday burchak holatida turadi?", opts: ["≈ 53.9° orqada", "≈ 90° oldinda", "180° da"], ans: 0, exp: "Venera Yerdan tezroq harakatlangani uchun startda 53.9° orqada bo‘ladi." },
+    { q: "9. Gomon ellipsining afeliyida (tashqi sayyora orbitasida) KA tezligi sayyora tezligiga nisbatan qanday?", opts: ["Kichikroq (sayyora KA ga yetib oladi)", "Kattaroq", "Teng"], ans: 0, exp: "Ellips afeliyidagi tezlik shu masofadagi aylana (sayyora) tezligidan kichik." },
+    { q: "10. «Voyajer-1» va «Voyajer-2» apparatlari tashqi sayyoralarga uchishda qaysi usuldan foydalangan?", opts: ["Ko‘p bosqichli gravitatsion manyovrlardan", "Faqat quyosh yelkanidan", "To‘g‘ri chiziqli parvozdan"], ans: 0, exp: "Yupiter va Saturn gravitatsion manyovrlari yordamida Quyosh tizimidan chiqish tezligiga erishilgan." }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Izoh: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) { qScore = 0; document.getElementById('qScore').textContent = `Natija: 0 / 10`; }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  function loop() {
+    if (!paused) tick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      if (activeTab === 1) drawHelioVelTab(w, h);
+      else if (activeTab === 2) drawRendezvousTab(w, h);
+      else if (activeTab === 3) drawGravityAssistTab(w, h);
+      else drawHelioVelTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
