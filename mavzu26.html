@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>26-Mavzu (58-§): Yulduzlararo muhit: gaz va chang tumanliklari, kosmik nurlar | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.9);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1240px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      line-height: 1.65;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.13rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .theory-card p, .theory-card li { font-size: 0.9rem; color: #e2e8f0; margin-bottom: 8px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.85);
+      border-left: 4px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.83rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.24); padding: 8px 10px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.22); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      color: #a7f3d0;
+      font-size: 0.88rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 405px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.92rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 7px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.78);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.82rem; line-height: 1.52; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>26-MAVZU (58-§). Yulduzlararo muhit: gaz va chang tumanliklari, kosmik nurlar</h1>
+    <p>11-sinf Astronomiya | VI Bob: Koinotning tuzilishi va evolyutsiyasi</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">58-§ Tumanliklar laboratoriyasi</button>
+    <button class="tab-btn" onclick="setTab(2)">58-§ Yulduzlararo yutilish (A_V)</button>
+    <button class="tab-btn" onclick="setTab(3)">58-§ Kosmik nurlar & 21 sm</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: TO'LIQ NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+  <div class="theory-card">
+    <h2>58-§. Yulduzlararo muhit: gaz va chang tumanliklari, kosmik nurlar</h2>
+    <p>Galaktikamizdagi yulduzlar orasidagi fazo o‘ta siyrak <strong>yulduzlararo muhit</strong> bilan to‘lgan (Galaktika barion moddasining ~10–15% i). Uning massasiga ko‘ra <strong>~99% i gaz</strong> (70% vodorod, 28% geliy, 2% og‘ir elementlar) va <strong>~1% i mikroskopik chang</strong> zarrachalaridan (0.01–1 mkm) iborat.</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tumanlik turi</th>
+          <th>Fizik tabiati va nurlanish mexanizmi</th>
+          <th>Harorati</th>
+          <th>Mashhur namunalari</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Emissiya (H II) tumanliklari</strong></td><td>Issiq O/B yulduzlar UB nuri gazni ionlashtiradi; rekombinatsiyada qizil Hα (656.3 nm) nurlanadi</td><td>~8 000 – 10 000 K</td><td>Orion tumanligi (M42), Laguna (M8)</td></tr>
+        <tr><td><strong>Qaytuvchi (refleksion) tumanliklar</strong></td><td>Chang zarrachalari qo‘shni yulduz nurini sochadi (ko‘k nurlar kuchliroq sochiladi)</td><td>~100 K</td><td>Hulkar (Pleyadalar, M45) tumanligi</td></tr>
+        <tr><td><strong>Qorong‘i (yutuvchi) tumanliklar</strong></td><td>Zich sovuq chang buluti orqasidagi yulduzlarning ko‘rinma nurini to‘sib qo‘yadi</td><td>10 – 20 K</td><td>Ot boshi tumanligi, Ko‘mir qopchasi</td></tr>
+        <tr><td><strong>Sayyora / O‘ta yangi qoldiqlari</strong></td><td>Yulduz qobiqlarining kengayishi va zarba to‘lqini nurlanishi</td><td>10⁴ – 10⁶ K</td><td>Halqa tumanligi (M57), Qisqichbaqa (M1)</td></tr>
+      </tbody>
+    </table>
+    <div class="math-banner">
+      Yutilishli masofa moduli: m − M = 5 lg r − 5 + A_V &nbsp;|&nbsp; Neytral vodorod radiochizig‘i: λ = 21.1 sm (ν = 1420.4 MGs)
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>58-§. Hisoblash masalalari va yechimlar bazasi</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Yulduzlararo yutilishni hisobga olib masofani topish):</strong> Yulduzning mutlaq yulduz kattaligi <em>M = −2.0^m</em>, ko‘rinma yulduz kattaligi <em>m = +11.5^m</em>, yulduzlararo yutilish esa <em>A_V = 3.5^m</em>. Yulduzgacha haqiqiy masofani (r) parseklarda toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        1) <strong>5 lg r − 5 = m − M − A_V = 11.5 − (−2.0) − 3.5 = 10.0</strong>.<br>
+        2) <strong>5 lg r = 15.0 ⇒ lg r = 3.0 ⇒ r = 1 000 pk (1 kpk)</strong>. (Yutilish hisobga olinmasa 5 012 pk deb xato topilar edi).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (Molekulyar gaz buluti massasi):</strong> Radiusi <em>R = 5 pk</em> bo‘lgan sferik bulutda H₂ molekulalari konsentratsiyasi <em>n = 200 sm⁻³</em> (<em>2.0 × 10⁸ m⁻³</em>), <em>m_H₂ = 3.34 × 10⁻²⁷ kg</em>. Bulut massasini Quyosh massasi birliklarida hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>V = (4/3)π (1.543 × 10¹⁷ m)³ ≈ 1.539 × 10⁵² m³ ⇒ M = n · m_H₂ · V ≈ 1.03 × 10³⁴ kg ≈ 5 170 M☉</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (λ = 21.1 sm radiochizig‘i chastotasi):</strong> Neytral vodorod atomi chiqaradigan <em>λ = 21.1 sm</em> (<em>0.211 m</em>) radionurlanish chastotasini (ν) MGs larda hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>ν = c / λ = (3.00 × 10⁸ m/s) / 0.211 m ≈ 1.422 × 10⁹ Gs ≈ 1420.4 MGs</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">58-§: Gaz va chang tumanliklarining nurlanish va yutish mexanizmlari</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">99% gaz (H, He) | 1% chang</div>
+    </div>
+    <canvas id="ismCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 58-§ TUMANLIKLAR LABORATORIYASI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Tumanlik sinfini tanlang</h3>
+        <div class="btn-grid" id="nebBtns">
+          <button class="btn active" onclick="setNebType('em', this)">Emissiya H II (Orion M42)</button>
+          <button class="btn" onclick="setNebType('ref', this)">Qaytuvchi (Hulkar M45)</button>
+          <button class="btn" onclick="setNebType('dark', this)">Qorong‘i (Ot boshi)</button>
+          <button class="btn" onclick="setNebType('snr', this)">O‘ta yangi qoldig‘i (M1)</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Fizik ko‘rsatkichlar va Spektral xossa</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Tumanlik harorati (T):</span><span class="t-val" id="nebTempOut">~9 500 K</span></div>
+          <div class="t-row"><span>Dominant rangi va to‘lqini:</span><span class="t-val" id="nebColOut">Qizil (Hα = 656.3 nm)</span></div>
+          <div class="t-row"><span>Energiya manbai:</span><span class="t-val" id="nebSrcOut">Issiq O/B yulduz UB nuri</span></div>
+        </div>
+        <p class="desc" id="nebDescOut" style="margin-top:8px;">
+          Emissiya tumanliklarida issiq yulduzlarning ultrabinafsha kvantlari vodorod atomlarini ionlashtiradi; elektronlar protonlar bilan qayta birikkanda yorqin qizil nur sochiladi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 58-§ YULDUZLARARO YUTILISH -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Masofa va Yulduzlararo chang yutilishi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Haqiqiy masofa (r, pk):</span>
+            <strong id="extRVal">1 000 pk (1.0 kpk)</strong>
+          </div>
+          <input type="range" id="extRSl" min="200" max="3000" step="50" value="1000" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Solishtirma yutilish (a₀, mag/kpk):</span>
+            <strong id="extAVal">1.80 mag/kpk</strong>
+          </div>
+          <input type="range" id="extASl" min="0.0" max="3.0" step="0.1" value="1.8" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Masofa moduli va Yutilish xatosi tahlili</h3>
+        <div class="formula-box">
+          m = M + 5 lg r − 5 + A_V &nbsp;|&nbsp; A_V = a₀ · r(kpk)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Mutlaq yulduz kattaligi (M):</span><span class="t-val">−2.00^m</span></div>
+          <div class="t-row"><span>Jami yulduzlararo yutilish (A_V):</span><span class="t-val" id="extAvOut">1.80^m</span></div>
+          <div class="t-row"><span>Kuzatiladigan ko‘rinma kattalik (m):</span><span class="t-val" id="extMOut">+9.80^m</span></div>
+          <div class="t-row"><span>Yutilishsiz hisoblangan xato masofa:</span><span class="t-val" id="extErrOut" style="color:#fb7185;">2 291 pk</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 58-§ KOSMIK NURLAR & 21 SM CHIZIQ -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Kosmik nurlar va Neytral vodorod (21 sm)</h3>
+        <div class="btn-grid" id="crBtns">
+          <button class="btn active" onclick="setCrMode('shower', this)">Keng atmosfera jalasi</button>
+          <button class="btn" onclick="setCrMode('h21', this)">Vodorod λ = 21.1 sm chizig‘i</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Fizik mexanizm va Kuzatuv ahamiyati</h3>
+        <div class="telemetry">
+          <div class="t-row"><span>Birlamchi kosmik nurlar tarkibi:</span><span class="t-val">90% proton, 9% α-zarra</span></div>
+          <div class="t-row"><span>Kashf etilgan yili va olimi:</span><span class="t-val">1912-yil, Viktor Gess</span></div>
+          <div class="t-row"><span>H I radiochizig‘i chastotasi:</span><span class="t-val">1420.4 MGs (λ = 21.1 sm)</span></div>
+        </div>
+        <p class="desc" id="crDescOut" style="margin-top:8px;">
+          Yuqori energiyali birlamchi kosmik zarra Yer atmosferasidagi azot va kislorod yadrolari bilan to‘qnashib, pionlar, myuonlar va elektron-foton kaskadini hosil qiladi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('ismCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function highlightBtn(containerId, btnEl) {
+    if (!btnEl) return;
+    document.querySelectorAll(`#${containerId} .btn`).forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "58-§: Gaz va chang tumanliklari — Emissiya, Qaytuvchi, Qorong‘i va O‘ta yangi qoldiqlari",
+      "58-§: Yulduzlararo yutilish (A_V) va yorug‘likning chang bulutida qizarishi",
+      "58-§: Kosmik nurlar (keng atmosfera jalasi) va Neytral vodorod (λ = 21.1 sm) radionurlanishi",
+      "Bilimlarni tekshirish: 26-Mavzu (58-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "99% gaz + 1% chang",
+      "m − M = 5 lg r − 5 + A_V",
+      "ν = 1420.4 MGs | V. Gess (1912)",
+      "Nazariya va hisoblash"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: 58-§ TUMANLIKLAR LABORATORIYASI ====================
+  let nebType = 'em';
+  let animTick = 0;
+
+  function setNebType(t, btn) {
+    nebType = t;
+    highlightBtn('nebBtns', btn);
+    const info = {
+      em: {
+        temp: "~9 500 K",
+        col: "Qizil (Hα = 656.3 nm)",
+        src: "Issiq O/B yulduz UB nuri",
+        desc: "Emissiya tumanliklarida issiq yulduzlarning ultrabinafsha kvantlari vodorod atomlarini ionlashtiradi; elektronlar protonlar bilan qayta birikkanda yorqin qizil nur sochiladi."
+      },
+      ref: {
+        temp: "~100 K",
+        col: "Ko‘k (qisqa to‘lqinlar sochilishi)",
+        src: "B/A yulduz nurining changdan qaytishi",
+        desc: "Qaytuvchi tumanliklarda chang zarrachalari qo‘shni yulduz nurini sochadi; ko‘k nurlar qizil nurlarga qaraganda kuchliroq sochilgani uchun tumanlik ko‘k ko‘rinadi."
+      },
+      dark: {
+        temp: "10 – 20 K",
+        col: "Qora (optik yutilish, IQ nurlanish)",
+        src: "Zich molekulyar gaz va chang buluti",
+        desc: "Qorong‘i tumanliklar (Ot boshi, Ko‘mir qopchasi) orqasidagi yulduzlarning ko‘rinma yorug‘ligini to‘sib qo‘yadi; ularning ichida yangi yulduzlar tug‘iladi."
+      },
+      snr: {
+        temp: "10⁵ – 10⁶ K",
+        col: "Ko‘p spektrli (rentgen, radio, optik)",
+        src: "O‘ta yangi yulduz portlashi zarba to‘lqini",
+        desc: "O‘ta yangi yulduz portlashidan so‘ng 10 000–20 000 km/s tezlikda kengayayotgan gaz qobig‘i (masalan, Qisqichbaqasimon tumanlik)."
+      }
+    };
+    const d = info[t];
+    document.getElementById('nebTempOut').textContent = d.temp;
+    document.getElementById('nebColOut').textContent = d.col;
+    document.getElementById('nebSrcOut').textContent = d.src;
+    document.getElementById('nebDescOut').textContent = d.desc;
+  }
+
+  function drawNebulaTab(w, h) {
+    const cx = w * 0.5, cy = h * 0.52;
+    const pulse = 1 + 0.03 * Math.sin(animTick * 0.04);
+
+    if (nebType === 'em') {
+      const g = ctx.createRadialGradient(cx, cy, 10, cx, cy, 165 * pulse);
+      g.addColorStop(0, 'rgba(254, 202, 202, 0.9)');
+      g.addColorStop(0.35, 'rgba(244, 63, 94, 0.55)');
+      g.addColorStop(0.75, 'rgba(190, 18, 60, 0.18)');
+      g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, 165 * pulse, 0, Math.PI * 2); ctx.fill();
+
+      // Markaziy O/B yulduzlar (Trapezium)
+      [[-8, -5], [9, -4], [0, 8], [-4, 4]].forEach(([dx, dy]) => {
+        ctx.fillStyle = '#93c5fd';
+        ctx.beginPath(); ctx.arc(cx + dx, cy + dy, 3.2, 0, Math.PI * 2); ctx.fill();
+      });
+    } else if (nebType === 'ref') {
+      const g = ctx.createRadialGradient(cx, cy, 8, cx, cy, 155 * pulse);
+      g.addColorStop(0, 'rgba(224, 242, 254, 0.95)');
+      g.addColorStop(0.4, 'rgba(56, 189, 248, 0.45)');
+      g.addColorStop(0.8, 'rgba(2, 132, 199, 0.14)');
+      g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, 155 * pulse, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = '#e0f2fe';
+      ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI * 2); ctx.fill();
+    } else if (nebType === 'dark') {
+      // Orqa fondagi yulduzlar maydoni
+      for (let i = 0; i < 85; i++) {
+        const sx = ((i * 73) % (w - 40)) + 20;
+        const sy = ((i * 41) % (h - 60)) + 30;
+        ctx.fillStyle = i % 3 === 0 ? '#fde68a' : '#cbd5e1';
+        ctx.beginPath(); ctx.arc(sx, sy, 1.5, 0, Math.PI * 2); ctx.fill();
+      }
+      // Qorong'i chang buluti silueti
+      ctx.fillStyle = '#03060f';
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 115, 62, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.25)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    } else {
+      // O'ta yangi qoldig'i tolalari
+      for (let k = 0; k < 14; k++) {
+        const a = (k / 14) * Math.PI * 2 + animTick * 0.005;
+        ctx.strokeStyle = k % 2 === 0 ? 'rgba(56, 189, 248, 0.55)' : 'rgba(251, 113, 133, 0.55)';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, 125 * pulse, 75 * pulse, a, 0, Math.PI * 1.4);
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath(); ctx.arc(cx, cy, 4.5, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  // ==================== TAB 2: 58-§ YULDUZLARARO YUTILISH ====================
+  function drawExtinctionTab(w, h) {
+    const rPk = parseFloat(document.getElementById('extRSl').value);
+    const a0 = parseFloat(document.getElementById('extASl').value);
+    const Mabs = -2.0;
+    const Av = a0 * (rPk / 1000.0);
+    const mApp = Mabs + 5 * Math.log10(rPk) - 5 + Av;
+    const rWrong = Math.pow(10, (mApp - Mabs + 5) / 5);
+
+    document.getElementById('extRVal').textContent = `${rPk} pk (${(rPk / 1000).toFixed(2)} kpk)`;
+    document.getElementById('extAVal').textContent = `${a0.toFixed(1)} mag/kpk`;
+    document.getElementById('extAvOut').textContent = `${Av.toFixed(2)}^m`;
+    document.getElementById('extMOut').textContent = `+${mApp.toFixed(2)}^m`;
+    document.getElementById('extErrOut').textContent = `${Math.round(rWrong).toLocaleString()} pk`;
+
+    const earthX = w * 0.14, cy = h * 0.52;
+    const starX = earthX + (rPk / 3000) * (w * 0.72);
+
+    // Chang buluti qatlami
+    const cloudAlpha = Math.min(0.75, 0.15 + Av * 0.12);
+    ctx.fillStyle = `rgba(120, 53, 15, ${cloudAlpha})`;
+    ctx.fillRect((earthX + starX) * 0.5 - 45, cy - 85, 90, 170);
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.35)';
+    ctx.strokeRect((earthX + starX) * 0.5 - 45, cy - 85, 90, 170);
+
+    // Yorug'lik nuri (ko'kdan qizilga o'tishi)
+    const beam = ctx.createLinearGradient(starX, cy, earthX, cy);
+    beam.addColorStop(0, '#93c5fd');
+    beam.addColorStop(0.5, '#fde047');
+    beam.addColorStop(1, Av > 1.5 ? '#f87171' : '#fef08a');
+    ctx.strokeStyle = beam;
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(starX, cy); ctx.lineTo(earthX, cy); ctx.stroke();
+
+    // Yer va Yulduz
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(earthX, cy, 11, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = '11px sans-serif'; ctx.fillText('Yer', earthX - 10, cy + 25);
+
+    ctx.fillStyle = '#93c5fd';
+    ctx.beginPath(); ctx.arc(starX, cy, 13, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e0f2fe'; ctx.fillText(`Yulduz (r = ${rPk} pk)`, starX - 35, cy - 20);
+  }
+
+  // ==================== TAB 3: 58-§ KOSMIK NURLAR & 21 SM CHIZIQ ====================
+  let crMode = 'shower';
+
+  function setCrMode(m, btn) {
+    crMode = m;
+    highlightBtn('crBtns', btn);
+    document.getElementById('crDescOut').textContent = m === 'shower'
+      ? "Yuqori energiyali birlamchi kosmik zarra Yer atmosferasidagi azot va kislorod yadrolari bilan to‘qnashib, pionlar, myuonlar va elektron-foton kaskadini hosil qiladi."
+      : "Sovuq neytral vodorod atomida proton va elektron spinlari parallel holatdan antiparallel holatga o‘tganda λ = 21.1 sm (1420.4 MGs) to‘lqin uzunlikli radiofoton nurlanadi.";
+  }
+
+  function drawCrTab(w, h) {
+    if (crMode === 'shower') {
+      const topX = w * 0.5, topY = h * 0.16;
+      // Atmosfera qatlami
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.08)';
+      ctx.fillRect(40, h * 0.30, w - 80, h * 0.55);
+
+      // Birlamchi proton
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(topX, topY); ctx.lineTo(topX, h * 0.34); ctx.stroke();
+      ctx.fillStyle = '#fbbf24'; ctx.font = '11px sans-serif';
+      ctx.fillText('Birlamchi kosmik proton (E ~ 10¹⁵ eV)', topX + 10, topY + 18);
+
+      // Keng atmosfera jalasi shoxlanishi
+      const branches = [-140, -85, -35, 25, 75, 135];
+      branches.forEach((dx, idx) => {
+        ctx.strokeStyle = idx % 2 === 0 ? '#38bdf8' : '#34d399';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(topX, h * 0.34);
+        ctx.lineTo(topX + dx * 0.5, h * 0.58);
+        ctx.lineTo(topX + dx, h * 0.84);
+        ctx.stroke();
+      });
+      ctx.fillStyle = '#a7f3d0';
+      ctx.fillText('Ikkilamchi zarralar jalasi (myuonlar, elektronlar, γ-kvantlar)', topX - 155, h * 0.89);
+    } else {
+      // Vodorod atomi spin o'zgarishi (21.1 sm)
+      const cx = w * 0.34, cy = h * 0.52;
+      const flip = Math.sin(animTick * 0.05) > 0;
+
+      // Proton
+      ctx.fillStyle = '#fb7185';
+      ctx.beginPath(); ctx.arc(cx, cy, 18, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 12px sans-serif'; ctx.fillText('p⁺ ↑', cx - 12, cy + 4);
+
+      // Elektron orbitasi va spini
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+      ctx.beginPath(); ctx.arc(cx, cy, 58, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath(); ctx.arc(cx + 58, cy, 9, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#e0f2fe';
+      ctx.fillText(flip ? 'e⁻ ↑ (parallel)' : 'e⁻ ↓ (antiparallel)', cx + 74, cy + 4);
+
+      // 21.1 sm radioto'lqin
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      for (let i = 0; i <= 120; i++) {
+        const wx = cx + 115 + i * 2.1;
+        const wy = cy + 45 + Math.sin(i * 0.22 - animTick * 0.12) * 14;
+        if (i === 0) ctx.moveTo(wx, wy);
+        else ctx.lineTo(wx, wy);
+      }
+      ctx.stroke();
+      ctx.fillStyle = '#fef08a';
+      ctx.fillText('Radionurlanish: λ = 21.1 sm (ν = 1420.4 MGs)', cx + 115, cy + 22);
+    }
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Yulduzlararo muhitning massasiga ko‘ra necha foizini gaz va necha foizini chang tashkil etadi?",
+      opts: ["50% gaz va 50% chang", "~99% gaz va ~1% chang", "~10% gaz va ~90% chang"],
+      ans: 1,
+      exp: "Yulduzlararo moddaning ~99% i vodorod va geliy gazidan, atigi ~1% i esa mikroskopik chang zarrachalaridan iborat."
+    },
+    {
+      q: "2. Orion tumanligi (M42) kabi emissiya (H II) tumanliklari nima sababdan yorqin qizil rangda nurlanadi?",
+      opts: ["Issiq O/B yulduzlar UB nuri vodorodni ionlashtirib, rekombinatsiyada Hα (656.3 nm) chizig‘i nurlangani uchun", "Chang zarralari quyosh nurini qaytargani uchun", "Tumanlik ichida yong‘in bo‘layotgani uchun"],
+      ans: 0,
+      exp: "Ionlashgan vodorod atomlari qayta elektron biriktirganda qizil Hα spektral chizig‘ida kuchli nurlanadi."
+    },
+    {
+      q: "3. Hulkar (Pleyadalar, M45) yulduzlari atrofidagi qaytuvchi (refleksion) tumanliklar nima uchun ko‘k rangda ko‘rinadi?",
+      opts: ["Chang zarrachalari qisqa to‘lqinli ko‘k nurlarni qizil nurlarga qaraganda kuchliroq sochgani uchun", "U yerda harorat 1 million kelvin bo‘lgani uchun", "Faqat geliy gazidan iborat bo‘lgani uchun"],
+      ans: 0,
+      exp: "Reyley va Mi sochilish qonunlariga ko‘ra mayda chang zarrachalari ko‘k yorug‘likni kuchliroq sochadi."
+    },
+    {
+      q: "4. «Ot boshi» va «Ko‘mir qopchasi» qanday tumanliklar sinfiga kiradi?",
+      opts: ["Sayyora tumanliklari", "Qorong‘i (yutuvchi) tumanliklar", "O‘ta yangi qoldiqlari"],
+      ans: 1,
+      exp: "Zich sovuq chang va molekulyar gaz bulutlari orqasidagi yulduzlar nurini to‘sib, qora siluet hosil qiladi."
+    },
+    {
+      q: "5. Yulduzdan kelayotgan yorug‘lik yulduzlararo chang bulutidan o‘tganda qanday ikkita hodisa kuzatiladi?",
+      opts: ["Yorug‘lik kuchayadi va ko‘karadi", "Yulduzlararo yutilish (xiralashish) va yulduzlararo qizarish", "Yulduz massasi ortadi"],
+      ans: 1,
+      exp: "Chang yorug‘lik oqimini susaytiradi (A_V yutilish) va ko‘k nurlarni ko‘proq yutgani uchun yulduzni qizg‘ish ko‘rsatadi."
+    },
+    {
+      q: "6. Yulduzlararo yutilishni (A_V) hisobga olmagan astronom yulduzgacha bo‘lgan masofani qanday aniqlaydi?",
+      opts: ["Haqiqiy masofadan katta (uzoqroq) deb xato topadi", "Haqiqiy masofadan kichik deb topadi", "Hech qanday xato bo‘lmaydi"],
+      ans: 0,
+      exp: "Chang yulduzni xiralashtirgani sababli (m ortadi), uni haqiqiy o‘rnidan ancha uzoqda deb o‘ylashga olib keladi."
+    },
+    {
+      q: "7. Somon Yo‘lining spiral tarmoqlari xaritasi sovuq neytral vodorodning (H I) qaysi to‘lqin uzunlikdagi radionurlanishi orqali tuzilgan?",
+      opts: ["λ = 21.1 sm (ν = 1420.4 MGs)", "λ = 10 metr", "λ = 500 nm"],
+      ans: 0,
+      exp: "21.1 sm li radioto‘lqinlar yulduzlararo chang bulutlaridan yutilmasdan o‘tib, Galaktikaning eng chekka qismlarini ko‘rish imkonini beradi."
+    },
+    {
+      q: "8. Kosmik nurlarning asosiy tarkibini (taxminan 90% ini) qanday zarrachalar tashkil etadi?",
+      opts: ["Neytronlar", "Yuqori energiyali protonlar (vodorod yadrolari)", "Pozitronlar"],
+      ans: 1,
+      exp: "Birlamchi kosmik nurlarning ~90% i protonlar, ~9% i geliy yadrolari (α-zarralar) dan iborat."
+    },
+    {
+      q: "9. Kosmik nurlarni 1912-yilda havo sharida balandlikka ko‘tarilib kim kashf etgan?",
+      opts: ["Edvin Xabbl", "Viktor Gess", "Iogann Kepler"],
+      ans: 1,
+      exp: "Avstriyalik fizik Viktor Gess 5 km balandlikka ko‘tarilib, ionlashish tezligi ortishini o‘lchab kosmik nurlarni kashf etgan."
+    },
+    {
+      q: "10. Yulduzning M = −2.0^m, m = +11.5^m va yulduzlararo yutilish A_V = 3.5^m bo‘lsa, uning haqiqiy masofasi necha parsek?",
+      opts: ["1 000 pk", "5 012 pk", "100 pk"],
+      ans: 0,
+      exp: "5 lg r − 5 = 11.5 − (−2.0) − 3.5 = 10.0 ⇒ lg r = 3.0 ⇒ r = 1 000 pk."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    animTick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawNebulaTab(w, h);
+      else if (activeTab === 2) drawExtinctionTab(w, h);
+      else if (activeTab === 3) drawCrTab(w, h);
+      else drawNebulaTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
+
