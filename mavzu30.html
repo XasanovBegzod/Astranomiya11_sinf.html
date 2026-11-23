@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30-Mavzu (63-§): Koinotda hayot va aql-idrok (Astrobiologiya va SETI) | 11-sinf Astronomiya</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.92);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 78%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.01rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.81rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* KENGAYTIRILGAN NAZARIYA REJIMI */
+    .theory-container {
+      max-width: 1260px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      line-height: 1.7;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .theory-card h3 {
+      color: var(--gold);
+      font-size: 0.98rem;
+      margin: 12px 0 6px;
+    }
+
+    .theory-card p, .theory-card li { font-size: 0.92rem; color: #e2e8f0; margin-bottom: 9px; }
+    .theory-card ul { padding-left: 20px; margin-bottom: 10px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.88);
+      border-left: 4px solid var(--gold);
+      padding: 11px 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.91rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.26); padding: 9px 11px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.24); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(52, 211, 153, 0.38);
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin-top: 12px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.28);
+      color: #a7f3d0;
+      font-size: 0.89rem;
+    }
+
+    /* SIMULYATSIYA REJIMI */
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 425px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1540px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.88);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.84);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.93rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      padding: 7px 7px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.82);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .desc { font-size: 0.83rem; line-height: 1.56; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>30-MAVZU (63-§). Koinotda hayot va aql-idrok (Astrobiologiya, Ekzosayyoralar va SETI)</h1>
+    <p>11-sinf Astronomiya | VI Bob: Koinotning tuzilishi va evolyutsiyasi (Kengaytirilgan nazariya va simulyatsiya)</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">63-§ Yashash zonasi (Habitable Zone)</button>
+    <button class="tab-btn" onclick="setTab(2)">63-§ Ekzosayyora tranziti & Spektr</button>
+    <button class="tab-btn" onclick="setTab(3)">63-§ Dreyk tenglamasi & SETI</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: KENGAYTIRILGAN NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+
+  <!-- 1-KARTOCHKA: ASTROBIOLOGIYA VA KIMYOVIY ASOSLAR -->
+  <div class="theory-card">
+    <h2>1. Astrobiologiya fani va Koinotda hayotning kimyoviy-fizik shartlari</h2>
+    <p><strong>Astrobiologiya (ekzobiologiya)</strong> — Koinotda hayotning paydo bo‘lishi, tarqalishi, evolyutsiyasi va kelajagini astronomiya, astrofizika, biokimyo va geologiya usullari yordamida tadqiq etuvchi fan sohasi. Zamonaviy spektral kuzatuvlar shuni ko‘rsatadiki, Koinotning barcha burchaklarida kimyoviy elementlar va fizik qonunlar bir xil.</p>
+    <p>Tirik organizmlar asosini tashkil etuvchi biogen elementlar — <strong>uglerod (C), vodorod (H), kislorod (O), azot (N), fosfor (P) va oltingugurt (S)</strong> Koinotda eng keng tarqalgan elementlar qatoriga kiradi. Yulduzlararo molekulyar gaz-chang bulutlarida hamda Yerga tushgan uglerodli xondrit meteoritlarida 300 dan ortiq organik birikmalar, jumladan aminokislotalar (glitsin) va nuklein kislotalar asoslari aniqlangan.</p>
+    <h3>Yashash zonasi (Habitable Zone — «Oltin sochlar» mintaqasi)</h3>
+    <p>Hayotning bizga ma’lum shakli uchun eng muhim erituvchi muhit <strong>suyuq suv (H₂O)</strong> hisoblanadi. Yulduz atrofida sayyora sirtidagi harorat 0°C dan 100°C gacha oraliqda saqlanib, suyuq suv mavjud bo‘la oladigan halqasimon soha <strong>yulduzning yashash zonasi</strong> deb ataladi:</p>
+    <div class="math-banner">
+      Yashash zonasi radiusi: r_HZ ≈ r_☉ · √(L / L_☉) &nbsp;&nbsp;|&nbsp;&nbsp; Quyosh tizimida: r_HZ ≈ 0.95 – 1.37 a.b.
+    </div>
+    <ul>
+      <li><strong>Issiq F va A sinf yulduzlari:</strong> Yorqinligi katta bo‘lgani uchun yashash zonasi yulduzdan ancha uzoqda joylashadi, biroq bu yulduzlarning umri qisqa (bir necha yuz mln yil) bo‘lgani sababli murakkab hayot rivojlanishiga vaqt yetmasligi mumkin.</li>
+      <li><strong>Sovuq M sinf qizil mittilar:</strong> Yashash zonasi yulduzga juda yaqin (0.05–0.25 a.b.) bo‘ladi; bu esa sayyoraning to‘lqin kuchlari tufayli bir tomoni bilan yulduzga qarab qotib qolishiga (sinxron aylanish) va kuchli rentgen chaqnashlariga duchor bo‘lishiga olib keladi.</li>
+      <li><strong>G sinf (Quyosh tipidagi) yulduzlar:</strong> Uzoq barqaror umr (~10 mlrd yil) va mo‘tadil nurlanish tufayli murakkab biosfera shakllanishi uchun eng qulay muhit yaratadi.</li>
+    </ul>
+  </div>
+
+  <!-- 2-KARTOCHKA: EKZOSAYYORALAR VA QUYOSH TIZIMI OBYEKTLARI -->
+  <div class="theory-card">
+    <h2>2. Ekzosayyoralarni kashf etish usullari va Quyosh tizimidagi istiqbolli obyektlar</h2>
+    <p>1995-yilda shveysariyalik astronomlar Mishel Mayor va Didye Keloz Quyoshga o‘xshash <em>51 Pegasi</em> yulduzi atrofida birinchi ekzosayyorani kashf etdilar (2019-yilgi Nobel mukofoti). Bugungi kunga kelib <strong>Kepler</strong>, <strong>TESS</strong> va <strong>James Webb</strong> kosmik teleskoplari yordamida 5 700 dan ortiq ekzosayyora tasdiqlangan.</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Kuzatuv usuli / Obyekt</th>
+          <th>Fizik mexanizmi va formulasi</th>
+          <th>Qaysi parametr aniqlanadi?</th>
+          <th>Amaliy misollar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Tranzit (o‘tish) usuli</strong></td><td>Sayyora yulduz diski oldidan o‘tganda yorug‘lik oqimi pasayadi: ΔF / F = (R_p / R_*)²</td><td>Sayyora radiusi (R_p) va orbital davri (T)</td><td>TRAPPIST-1 tizimi (7 ta yer tipidagi sayyora)</td></tr>
+        <tr><td><strong>Nuriy tezliklar (Doppler) usuli</strong></td><td>Sayyora tortishishi yulduzni umumiy massa markazi atrofida tebrantiradi</td><td>Sayyora minimal massasi (M_p sin i)</td><td>51 Pegasi b, Proxima Centauri b</td></tr>
+        <tr><td><strong>Transmissiya spektroskopiyasi</strong></td><td>Yulduz nuri sayyora atmosferasidan o‘tganda biomarkerlar (H₂O, CO₂, CH₄, O₃) yutiladi</td><td>Atmosfera kimyoviy tarkibi</td><td>K2-18 b, WASP-39 b (JWST)</td></tr>
+        <tr><td><strong>Quyosh tizimidagi muzli yo‘ldoshlar</strong></td><td>Sayyora gravitatsion to‘lqin isishi muz qobig‘i ostida suyuq okeanni saqlaydi</td><td>Yerosti okeanlari va geyzerlar</td><td>Yevropa (Yupiter), Enselad va Titan (Saturn)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3-KARTOCHKA: DREYKEN TENGLAMASI, FERMI PARADOKSI VA SETI -->
+  <div class="theory-card">
+    <h2>3. Dreyk tenglamasi, Fermi paradoksi va SETI / METI dasturlari</h2>
+    <p>1961-yilda amerikalik radioastronom <strong>Frenk Dreyk</strong> Galaktikamiz (Somon Yo‘li) da hozirgi vaqtda biz bilan radioaloqaga kirisha oladigan rivojlangan texnologik sivilizatsiyalar sonini ($N$) baholovchi formulani taklif etdi:</p>
+    <div class="math-banner">
+      N = R_* · f_p · n_e · f_l · f_i · f_c · L
+    </div>
+    <ul>
+      <li><strong>R_*</strong> — Galaktikada yiliga tug‘iladigan yulduzlar soni (~1.5–3 yulduz/yil); <strong>f_p</strong> — sayyorali yulduzlar ulushi (~0.8–1.0);</li>
+      <li><strong>n_e</strong> — har bir tizimdagi yashash zonasida joylashgan sayyoralar o‘rtacha soni (~0.2–0.5);</li>
+      <li><strong>f_l</strong> — qulay sharoitli sayyorada hayot paydo bo‘lish ehtimoli; <strong>f_i</strong> — hayotning aql-idrokli shaklga o‘tish ulushi;</li>
+      <li><strong>f_c</strong> — kosmosga radiosignallar yubora oladigan texnologik darajaga yetish ulushi;</li>
+      <li><strong>L</strong> — sivilizatsiyaning faol radioaloqa davri davomiyligi (yillarda).</li>
+    </ul>
+    <p><strong>SETI (Search for Extraterrestrial Intelligence):</strong> Yerdan tashqaridagi sivilizatsiyalarning sun’iy radiosignallarini qidirish dasturi. Buning uchun neytral vodorodning <strong>λ = 21.1 sm (1420.4 MGs)</strong> va gidroksil OH radikalining <strong>18 sm (1667 MGs)</strong> radiochiziqlari orasidagi tabiiy kosmik shovqinlar eng kam bo‘lgan <strong>«Suv tuynugi»</strong> diapazoni tanlangan.</p>
+    <p><strong>Fermi paradoksi (Enriko Fermi, 1950):</strong> «Agar Koinotda milliardlab yulduzlar va ko‘plab yashashga yaroqli sayyoralar mavjud bo‘lsa, nega o‘zga sivilizatsiyalar hozirgacha o‘zlarini namoyon qilmagan?» Bu paradoksga yulduzlararo ulkan masofalar, sivilizatsiya umri <em>L</em> ning cheklanganligi («Buyuk filtr» gipotezasi) va kuzatuv texnologiyalarimizning hali yosh ekanligi bilan izoh beriladi.</p>
+  </div>
+
+  <!-- 4-KARTOCHKA: 4 TA YECHIMLI MASALALAR BAZASI -->
+  <div class="theory-card">
+    <h2>4. 63-§ bo‘yicha bosqichma-bosqich yechimli masalalar (4 ta daraja)</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Oson — Qizil mitti yulduz yashash zonasi):</strong> Yulduzning yorqinligi Quyosh yorqinligidan <em>L = 0.04 L_☉</em> ga teng. Quyosh tizimidagi yashash zonasining o‘rta radiusi <em>r_☉ = 1.0 a.b.</em> bo‘lsa, ushbu yulduzning yashash zonasi radiusini (r_HZ) toping.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol1')">Yechimni ko‘rish / yopish</button>
+      <div id="sol1" class="problem-sol">
+        <strong>Berilgan:</strong> L = 0.04 L_☉; r_☉ = 1.0 a.b.<br>
+        <strong>Formula:</strong> r_HZ = r_☉ · √(L / L_☉)<br>
+        <strong>Hisoblash:</strong> r_HZ = 1.0 · √0.04 = 1.0 × 0.20 = <strong>0.20 a.b.</strong> (yulduzga juda yaqin).
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (O‘rta — Tranzit usulida ekzosayyora radiusi):</strong> Radiusi Quyoshnikiga teng yulduz (<em>R_* = 7.0 × 10⁵ km</em>) oldidan ekzosayyora o‘tganda yorug‘lik oqimi <em>ΔF / F = 0.01%</em> (<em>1.0 × 10⁻⁴</em>) ga kamaydi. Ekzosayyora radiusini (R_p) km va Yer radiusi (<em>R_⊕ = 6 400 km</em>) birliklarida hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol2')">Yechimni ko‘rish / yopish</button>
+      <div id="sol2" class="problem-sol">
+        <strong>Formula:</strong> ΔF / F = (R_p / R_*)² ⇒ R_p = R_* · √(ΔF / F)<br>
+        <strong>Hisoblash:</strong> R_p = (7.0 × 10⁵ km) × √(10⁻⁴) = 7.0 × 10⁵ × 0.01 = <strong>7 000 km ≈ 1.09 R_⊕</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Murakkab — Dreyk tenglamasi):</strong> Galaktikamizda <em>R_* = 2 yulduz/yil</em>, <em>f_p = 0.8</em>, <em>n_e = 0.25</em>, <em>f_l = 0.5</em>, <em>f_i = 0.1</em>, <em>f_c = 0.2</em> va <em>L = 10 000 yil</em> bo‘lsa, aloqaga tayyor sivilizatsiyalar sonini (N) hisoblang.
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol3')">Yechimni ko‘rish / yopish</button>
+      <div id="sol3" class="problem-sol">
+        <strong>Hisoblash:</strong> N = 2 × 0.8 × 0.25 × 0.5 × 0.1 × 0.2 × 10 000 = 0.004 × 10 000 = <strong>40 ta sivilizatsiya</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>4-Masala (Olimpiada — Yulduzlararo radioaloqa kutish vaqti):</strong> Bizdan <em>r = 12.5 pk</em> masofadagi yulduz tizimiga radiosignal yuborildi. Javob signalini Yerdagi radioteleskoplar necha yildan keyin qabul qiladilar? (<em>1 pk ≈ 3.26 y.y.</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px;" onclick="toggleSol('sol4')">Yechimni ko‘rish / yopish</button>
+      <div id="sol4" class="problem-sol">
+        <strong>1-qadam:</strong> Masofa yorug‘lik yilida: r = 12.5 × 3.26 = 40.75 y.y.<br>
+        <strong>2-qadam:</strong> Signal borib-qaytish vaqti: t = 2 × 40.75 = <strong>81.5 yil</strong>.
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== 1..4-TAB: BOYITILGAN INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">63-§: Yulduz atrofidagi Yashash zonasi (Habitable Zone) va Sayyora orbitasi</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">r_HZ = r_☉ · √(L / L_☉)</div>
+    </div>
+    <canvas id="astroBioCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1: 63-§ YASHASH ZONASI -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>Yulduz sinfi va Sayyora orbitasi</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Yulduz yorqinligi (L / L_☉):</span>
+            <strong id="hzLVal">1.00 L_☉ (Quyosh tipi G2)</strong>
+          </div>
+          <input type="range" id="hzLSl" min="0.04" max="4.0" step="0.04" value="1.00" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Sayyora orbitasi radiusi (r, a.b.):</span>
+            <strong id="hzRVal">1.00 a.b.</strong>
+          </div>
+          <input type="range" id="hzRSl" min="0.10" max="2.50" step="0.05" value="1.00" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Astrobiologik holat va Nazariy tahlil</h3>
+        <div class="formula-box">
+          r_ichki = 0.95·√(L/L_☉) &nbsp;|&nbsp; r_tashqi = 1.37·√(L/L_☉)
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Yashash zonasi chegaralari:</span><span class="t-val" id="hzBoundsOut">0.95 – 1.37 a.b.</span></div>
+          <div class="t-row"><span>Sayyora sirtidagi suv holati:</span><span class="t-val" id="hzStateOut">Suyuq suv (Qulay zona!)</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          Yulduz yorqinligi ortganda (masalan, F sinf yulduzlarida) yashash zonasi tashqariga siljiydi; qizil mitti (M sinf) yulduzlarda esa yulduzga juda yaqin joylashadi.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 2: 63-§ EKZOSAYYORA TRANZITI -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>Tranzit usuli (Kepler / TESS) parametrlari</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Ekzosayyora radiusi (R_p / R_⊕):</span>
+            <strong id="trRpVal">1.0 R_⊕ (Yer o‘lchami)</strong>
+          </div>
+          <input type="range" id="trRpSl" min="0.5" max="11.0" step="0.5" value="1.0" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Yorug‘lik egri chizig‘i va Tranzit chuqurligi</h3>
+        <div class="formula-box">
+          ΔF / F = (R_p / R_*)² &nbsp;|&nbsp; R_☉ ≈ 109 R_⊕
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Yorqinlik pasayishi (ΔF / F):</span><span class="t-val" id="trDepthOut">0.0084%</span></div>
+          <div class="t-row"><span>Sayyora tipi tasnifi:</span><span class="t-val" id="trTypeOut">Toshli (Yer tipidagi)</span></div>
+        </div>
+        <p class="desc" style="margin-top:8px;">
+          Yupiter o‘lchamidagi gaz giganti (11 R_⊕) yulduz yorqinligini ~1% ga pasaytirsa, Yer o‘lchamidagi sayyora atigi 0.0084% ga pasaytiradi — shuning uchun kosmik teleskoplar zarur.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: 63-§ DREYKEN TENGLAMASI & SETI -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>Dreyk tenglamasi va Aloqa vaqti</h3>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Sivilizatsiya faol umri L (yil):</span>
+            <strong id="drLVal">10 000 yil</strong>
+          </div>
+          <input type="range" id="drLSl" min="500" max="100000" step="500" value="10000" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label">
+            <span>Qo‘shni sivilizatsiyagacha masofa (pk):</span>
+            <strong id="drDistVal">12.5 pk (40.8 y.y.)</strong>
+          </div>
+          <input type="range" id="drDistSl" min="2" max="100" step="0.5" value="12.5" />
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>SETI Radioaloqa va Fermi paradoksi tahlili</h3>
+        <div class="formula-box">
+          N = R_*·f_p·n_e·f_l·f_i·f_c·L &nbsp;|&nbsp; t_javob = 2·r / c
+        </div>
+        <div class="telemetry">
+          <div class="t-row"><span>Galaktikadagi sivilizatsiyalar (N):</span><span class="t-val" id="drNOut">40 ta</span></div>
+          <div class="t-row"><span>Signal borib-qaytish vaqti (2r/c):</span><span class="t-val" id="drTimeOut">81.5 yil</span></div>
+          <div class="t-row"><span>SETI chastota diapazoni:</span><span class="t-val">1420.4 MGs («Suv tuynugi»)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BILIMNI SINASH (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Nazorat masalalari va test</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="padding:6px 14px;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('astroBioCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+  let tick = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const theoryView = document.getElementById('theoryView');
+    const simView = document.getElementById('simView');
+
+    if (idx === 0) {
+      theoryView.classList.remove('hidden');
+      simView.classList.add('hidden');
+      return;
+    } else {
+      theoryView.classList.add('hidden');
+      simView.classList.remove('hidden');
+      resize();
+    }
+
+    document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+
+    const leftLabels = [
+      "",
+      "63-§: Yulduz atrofidagi Yashash zonasi (Habitable Zone) — Suyuq suv sharti",
+      "63-§: Ekzosayyora tranziti (Kepler / TESS) va Yorug‘lik egri chizig‘i",
+      "63-§: Dreyk tenglamasi va SETI (λ = 21.1 sm «Suv tuynugi») radioaloqasi",
+      "Bilimlarni tekshirish: 30-Mavzu (63-§) bo‘yicha 10 ta masala"
+    ];
+    const rightLabels = [
+      "",
+      "r_HZ = r_☉ · √(L / L_☉)",
+      "ΔF / F = (R_p / R_*)²",
+      "N = R_*·f_p·n_e·f_l·f_i·f_c·L",
+      "Astrobiologiya va SETI"
+    ];
+    document.getElementById('hudLeft').textContent = leftLabels[idx];
+    document.getElementById('hudRight').textContent = rightLabels[idx];
+  }
+
+  // ==================== TAB 1: YASHASH ZONASI ====================
+  function drawHzTab(w, h) {
+    const L = parseFloat(document.getElementById('hzLSl').value);
+    const rPl = parseFloat(document.getElementById('hzRSl').value);
+    const sq = Math.sqrt(L);
+    const rIn = 0.95 * sq;
+    const rOut = 1.37 * sq;
+
+    document.getElementById('hzLVal').textContent = `${L.toFixed(2)} L_☉`;
+    document.getElementById('hzRVal').textContent = `${rPl.toFixed(2)} a.b.`;
+    document.getElementById('hzBoundsOut').textContent = `${rIn.toFixed(2)} – ${rOut.toFixed(2)} a.b.`;
+
+    let stateTxt = "Suyuq suv (Qulay yashash zonasi!)";
+    let stateCol = "#34d399";
+    if (rPl < rIn) { stateTxt = "Haddan tashqari issiq (Suv bug‘lanib ketgan)"; stateCol = "#fb7185"; }
+    else if (rPl > rOut) { stateTxt = "Haddan tashqari sovuq (Abadiy muzlik)"; stateCol = "#38bdf8"; }
+
+    const elSt = document.getElementById('hzStateOut');
+    elSt.textContent = stateTxt;
+    elSt.style.color = stateCol;
+
+    const cx = w * 0.5, cy = h * 0.52;
+    const pxPerAu = Math.min(w, h) * 0.16;
+
+    // Yashash zonasi halqasi
+    const rInPx = Math.min(230, rIn * pxPerAu);
+    const rOutPx = Math.min(255, rOut * pxPerAu);
+    ctx.fillStyle = 'rgba(52, 211, 153, 0.22)';
+    ctx.beginPath();
+    ctx.arc(cx, cy, rOutPx, 0, Math.PI * 2);
+    ctx.arc(cx, cy, rInPx, 0, Math.PI * 2, true);
+    ctx.fill();
+
+    // Markaziy yulduz
+    const starR = 14 + Math.min(18, L * 4);
+    const starCol = L < 0.3 ? '#f87171' : (L > 1.8 ? '#e0f2fe' : '#facc15');
+    ctx.fillStyle = starCol;
+    ctx.beginPath(); ctx.arc(cx, cy, starR, 0, Math.PI * 2); ctx.fill();
+
+    // Sayyora orbitasi va sayyora
+    const rPlPx = Math.min(245, rPl * pxPerAu);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, rPlPx, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    const ang = tick * 0.015 / Math.sqrt(rPl);
+    const px = cx + Math.cos(ang) * rPlPx;
+    const py = cy + Math.sin(ang) * rPlPx;
+    ctx.fillStyle = stateCol;
+    ctx.beginPath(); ctx.arc(px, py, 7.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = '11px sans-serif';
+    ctx.fillText(`Sayyora (${rPl.toFixed(2)} a.b.)`, px + 11, py + 4);
+  }
+
+  // ==================== TAB 2: EKZOSAYYORA TRANZITI ====================
+  function drawTransitTab(w, h) {
+    const rpEarth = parseFloat(document.getElementById('trRpSl').value);
+    const ratio = rpEarth / 109.0;
+    const depthPct = ratio * ratio * 100.0;
+
+    document.getElementById('trRpVal').textContent = `${rpEarth.toFixed(1)} R_⊕`;
+    document.getElementById('trDepthOut').textContent = `${depthPct.toFixed(4)}%`;
+    document.getElementById('trTypeOut').textContent = rpEarth <= 1.8 ? "Toshli (Yer tipidagi)" : (rpEarth <= 4.0 ? "Mini-Neptun" : "Gaz giganti (Yupiter tipi)");
+
+    const cx = w * 0.5, starY = h * 0.32, starR = 54;
+    // Yulduz diski
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx, starY, starR, 0, Math.PI * 2); ctx.fill();
+
+    // Harakatlanayotgan ekzosayyora
+    const phase = ((tick * 1.4) % 320) - 160;
+    const plX = cx + phase;
+    const plR = Math.max(4, (rpEarth / 11.0) * 16);
+    const isTransit = Math.abs(phase) < starR;
+
+    ctx.fillStyle = '#020617';
+    ctx.beginPath(); ctx.arc(plX, starY, plR, 0, Math.PI * 2); ctx.fill();
+
+    // Yorug'lik egri chizig'i (pastki qism)
+    const gx = w * 0.16, gy = h * 0.65, gw = w * 0.68, gh = 95;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx, gy + gh); ctx.lineTo(gx + gw, gy + gh); ctx.stroke();
+
+    const dropPx = Math.min(gh * 0.75, (rpEarth / 11.0) * 65);
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(gx, gy + 15);
+    ctx.lineTo(gx + gw * 0.33, gy + 15);
+    ctx.lineTo(gx + gw * 0.37, gy + 15 + dropPx);
+    ctx.lineTo(gx + gw * 0.63, gy + 15 + dropPx);
+    ctx.lineTo(gx + gw * 0.67, gy + 15);
+    ctx.lineTo(gx + gw, gy + 15);
+    ctx.stroke();
+
+    const curX = gx + ((phase + 160) / 320) * gw;
+    const curY = isTransit ? (gy + 15 + dropPx) : (gy + 15);
+    ctx.fillStyle = '#fb7185';
+    ctx.beginPath(); ctx.arc(curX, curY, 5.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e2e8f0'; ctx.font = '11px sans-serif';
+    ctx.fillText(`Yulduz yorqinligi egri chizig‘i (ΔF/F = ${depthPct.toFixed(4)}%)`, gx, gy - 8);
+  }
+
+  // ==================== TAB 3: DREYKEN TENGLAMASI & SETI ====================
+  function drawSetiTab(w, h) {
+    const L = parseFloat(document.getElementById('drLSl').value);
+    const distPk = parseFloat(document.getElementById('drDistSl').value);
+    const distLy = distPk * 3.26;
+    const roundTrip = distLy * 2.0;
+    const N = Math.max(1, Math.round(0.004 * L));
+
+    document.getElementById('drLVal').textContent = `${L.toLocaleString()} yil`;
+    document.getElementById('drDistVal').textContent = `${distPk.toFixed(1)} pk (${distLy.toFixed(1)} y.y.)`;
+    document.getElementById('drNOut').textContent = `${N} ta sivilizatsiya`;
+    document.getElementById('drTimeOut').textContent = `${roundTrip.toFixed(1)} yil`;
+
+    const x1 = w * 0.20, x2 = w * 0.80, cy = h * 0.52;
+
+    // Yer va Ekzosayyora
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath(); ctx.arc(x1, cy, 14, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = '12px sans-serif'; ctx.fillText('Yer (SETI)', x1 - 26, cy + 30);
+
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(x2, cy, 14, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText(`Ekzosayyora (${distPk.toFixed(1)} pk)`, x2 - 48, cy + 30);
+
+    // Radioto'lqin halqalari
+    const prog = (tick * 0.015) % 1;
+    const waveX = x1 + prog * (x2 - x1);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(waveX, cy, 18, -0.5, 0.5); ctx.stroke();
+    ctx.fillStyle = '#fde047';
+    ctx.fillText(`λ = 21.1 sm (1420.4 MGs) | Javob vaqti: ${roundTrip.toFixed(1)} yil`, (x1 + x2) * 0.5 - 125, cy - 35);
+  }
+
+  // ==================== TAB 4: BILIMNI SINASH (10 SAVOL) ====================
+  const quizQuestions = [
+    {
+      q: "1. Yulduz atrofidagi «yashash zonasi» (Habitable Zone) qanday asosiy fizik shart bilan belgilanadi?",
+      opts: ["Sayyora sirtida suyuq suvning barqaror mavjud bo‘lish harorati", "Sayyorada oltin konlari ko‘pligi", "Sayyora yulduzga juda yaqin bo‘lishi"],
+      ans: 0,
+      exp: "Yashash zonasi — sayyora sirtidagi harorat suyuq suv mavjud bo‘lishi uchun qulay bo‘lgan halqasimon sohadir."
+    },
+    {
+      q: "2. Yulduzlararo molekulyar bulutlar va meteoritlarda aniqlangan tirik organizmlar asosini tashkil etuvchi biogen elementlar qaysilar?",
+      opts: ["C, H, O, N, P, S", "Au, Ag, Pt, Hg", "He, Ne, Ar, Kr"],
+      ans: 0,
+      exp: "Uglerod, vodorod, kislorod, azot, fosfor va oltingugurt (CHNOPS) barcha organik molekulalarning asosidir."
+    },
+    {
+      q: "3. Ekzosayyorani tranzit (o‘tish) usulida kuzatganda yulduz yorqinligining pasayish chuqurligi (ΔF/F) nimani aniqlashga imkon beradi?",
+      opts: ["Ekzosayyora radiusini (R_p)", "Sayyora rangini", "Yulduz yoshini"],
+      ans: 0,
+      exp: "Tranzit chuqurligi ΔF/F = (R_p / R_*)² bo‘lgani uchun yulduz radiusi ma’lum bo‘lsa, sayyora radiusi topiladi."
+    },
+    {
+      q: "4. Quyosh tizimidagi qaysi yo‘ldoshlarning qalin muz qobig‘i ostida suyuq suvli okeanlar mavjudligi aniqlangan?",
+      opts: ["Yevropa (Yupiter) va Enselad (Saturn)", "Fobos va Deymos", "Oy"],
+      ans: 0,
+      exp: "Gravitatsion to‘lqin isishi tufayli Yevropa va Enselad muz qobig‘i ostida suyuq okeanlar mavjud."
+    },
+    {
+      q: "5. Galaktikamizda aloqaga tayyor texnologik sivilizatsiyalar sonini baholovchi formula kimning nomi bilan ataladi?",
+      opts: ["Dreyk tenglamasi (Frenk Dreyk, 1961)", "Kepler qonuni", "Vin qonuni"],
+      ans: 0,
+      exp: "Frenk Dreyk N = R_* · f_p · n_e · f_l · f_i · f_c · L tenglamasini taklif etgan."
+    },
+    {
+      q: "6. SETI dasturida yulduzlararo radioaloqa uchun «Suv tuynugi» deb ataladigan qaysi chastota diapazoni eng qulay hisoblanadi?",
+      opts: ["1420.4 MGs (H, λ = 21.1 sm) va 1667 MGs (OH) oralig‘i", "100 Gs diapazoni", "50 MGs FM diapazoni"],
+      ans: 0,
+      exp: "Bu oraliqda tabiiy galaktik radio-shovqinlar minimal bo‘lib, suv tarkibiy qismlari (H va OH) chiziqlari joylashgan."
+    },
+    {
+      q: "7. Koinotda milliardlab yulduzlar bo‘lishiga qaramay, nega hanuzgacha o‘zga sivilizatsiyalar izi topilmaganligi haqidagi ilmiy muammo nima deb ataladi?",
+      opts: ["Fermi paradoksi", "Olbers paradoksi", "Egizaklar paradoksi"],
+      ans: 0,
+      exp: "Enriko Fermi (1950) tomonidan qo‘yilgan bu savol Fermi paradoksi deb yuritiladi."
+    },
+    {
+      q: "8. Yulduz yorqinligi L = 0.04 L_☉ bo‘lsa, uning yashash zonasi o‘rta radiusi nechaga teng (r_☉ = 1.0 a.b.)?",
+      opts: ["0.20 a.b.", "0.04 a.b.", "5.0 a.b."],
+      ans: 0,
+      exp: "r_HZ = 1.0 · √0.04 = 0.20 a.b."
+    },
+    {
+      q: "9. James Webb kosmik teleskopi ekzosayyoralar atmosferasidagi suv bug‘i, CO₂ va metan kabi gazlarni qaysi usul bilan aniqlaydi?",
+      opts: ["Transmissiya spektroskopiyasi orqali", "Radar to‘lqinlari yuborib", "Teleskopni sayyoraga qo‘ndirib"],
+      ans: 0,
+      exp: "Tranzit paytida yulduz yorug‘ligi sayyora atmosferasidan o‘tganda gazlarning yutilish spektral chiziqlari qayd etiladi."
+    },
+    {
+      q: "10. Bizdan 12.5 pk (40.75 y.y.) masofadagi yulduzga yuborilgan radiosignalning javobi Yerga kamida necha yildan keyin yetib keladi?",
+      opts: ["81.5 yil", "40.75 yil", "12.5 yil"],
+      ans: 0,
+      exp: "Signal borishi uchun 40.75 yil va qaytishi uchun 40.75 yil — jami 81.5 yil ketadi."
+    }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Yechim: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) {
+      qScore = 0;
+      document.getElementById('qScore').textContent = `Natija: 0 / 10`;
+    }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  // ==================== ASOSIY SIKL ====================
+  function loop() {
+    tick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      if (activeTab === 1) drawHzTab(w, h);
+      else if (activeTab === 2) drawTransitTab(w, h);
+      else if (activeTab === 3) drawSetiTab(w, h);
+      else drawHzTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
