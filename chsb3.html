@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-Sinf Astronomiya | 3-CHSB (60 ball) — Yakuniy Nazorat va Simulyatsiya</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.93);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 48px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand h1 { font-size: 1.04rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .hud-badges { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .container {
+      max-width: 1220px;
+      margin: 20px auto;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .review-banner {
+      background: var(--panel);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      border-radius: 14px;
+      padding: 18px 22px;
+      line-height: 1.65;
+    }
+
+    .review-banner h2 { font-size: 1.02rem; color: var(--violet); margin-bottom: 8px; }
+    .review-banner p { font-size: 0.88rem; color: #e2e8f0; margin-bottom: 6px; }
+
+    .task-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    @media (max-width: 920px) { .task-card { grid-template-columns: 1fr; } }
+
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+    }
+
+    .task-title { font-size: 1.02rem; font-weight: 700; color: var(--accent); }
+    .task-pts {
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid var(--accent);
+      color: #e0f2fe;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .q-block { margin-bottom: 12px; font-size: 0.89rem; line-height: 1.55; color: #e2e8f0; }
+
+    select, input[type="number"] {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 7px;
+      font-size: 0.84rem;
+      margin-top: 5px;
+      outline: none;
+    }
+
+    select { max-width: 100%; width: 100%; }
+    select:focus, input:focus { border-color: var(--accent); }
+
+    .sim-box {
+      background: #02050c;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    canvas { width: 100%; height: 230px; display: block; border-radius: 8px; }
+
+    .sim-ctrl {
+      width: 100%;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    input[type="range"] { flex: 1; accent-color: var(--accent); cursor: pointer; }
+
+    .submit-bar {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 12px 26px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+      transition: 0.2s;
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.08); }
+
+    .btn-sec {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .feedback {
+      margin-top: 8px;
+      font-size: 0.83rem;
+      padding: 8px 10px;
+      border-radius: 7px;
+      background: rgba(2, 6, 23, 0.82);
+      border-left: 3px solid var(--gold);
+      color: #fde68a;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .result-modal {
+      background: rgba(13, 21, 38, 0.96);
+      border: 2px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 24px;
+      text-align: center;
+      display: none;
+    }
+
+    .result-modal h2 { color: var(--emerald); font-size: 1.35rem; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>11-SINF ASTRONOMIYA | 3-CHSB (Chorak summativ baholash)</h1>
+    <p>58–63-§§: Yulduzlararo muhit, Galaktikalar, Kvazarlar, Xabbl qonuni, Katta portlash va SETI</p>
+  </div>
+  <div class="hud-badges">
+    <div class="pill" id="timerBox">⏱ Vaqt: 45:00</div>
+    <div class="pill" id="liveScorePill" style="color:#34d399;">Maksimal ball: 60 ball</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- NATIJA PANELI -->
+  <div id="resultBox" class="result-modal">
+    <h2 id="finalScoreTitle">3-CHSB Yakuniy natija: 0 / 60 ball (0%)</h2>
+    <p id="finalGradeDesc" style="color:#cbd5e1; font-size:0.92rem;"></p>
+  </div>
+
+  <!-- QISQA NAZARIY ESLATMA -->
+  <section class="review-banner">
+    <h2>3-CHSB Tayanch nazariy formulalar va tushunchalar (58–63-§§)</h2>
+    <p><strong>58-§:</strong> Yulduzlararo muhit ~99% gaz va ~1% chang; neytral vodorod chizig‘i <strong>λ = 21.1 sm (1420.4 MGs)</strong>; yutilishli masofa moduli <strong>m − M = 5 lg r − 5 + A_V</strong>.</p>
+    <p><strong>59–61-§§:</strong> E. Xabbl (1923–1929) M31 sefeidlari va Xabbl qonuni <strong>v = H₀ · r</strong> (<em>H₀ ≈ 70 km/(s·Mpk)</em>, <em>t_H = 1/H₀ ≈ 14 mlrd yil</em>); faol galaktik yadrolar va kvazarlar energiyasi markazdagi o‘ta massiv qora o‘raga akkretsiya hisobiga hosil bo‘ladi.</p>
+    <p><strong>62–63-§§:</strong> Katta portlash (~13.8 mlrd yil), relikt nurlanish <strong>T₀ = 2.725 K</strong> (Penzias va Vilson, 1965), birlamchi nukleosintez (~75% H, ~25% He), Koinot tarkibi (~68% qorong‘i energiya, ~27% qorong‘i materiya, ~5% barion modda), yashash zonasi <strong>r_HZ = r_☉·√(L/L_☉)</strong> va Dreyk tenglamasi.</p>
+  </section>
+
+  <!-- ==================== 1-TOPSHIRIQ (10 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">1-topshiriq. Yulduzlararo muhit (58-§)</span>
+        <span class="task-pts">10 ball (3 + 4 + 3)</span>
+      </div>
+      <div class="q-block">
+        <strong>1)</strong> Yulduzlararo muhit massasining qanday qismi gaz va qanday qismi changdan iborat? <em>(3 ball)</em>
+        <select id="q1_1">
+          <option value="">— Tanlang —</option>
+          <option value="ok">~99% gaz va ~1% chang</option>
+          <option value="no1">~50% gaz va ~50% chang</option>
+          <option value="no2">~1% gaz va ~99% chang</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> Emissiya (H II) va qaytuvchi (refleksion) tumanliklarning farqi nimada? <em>(4 ball)</em>
+        <select id="q1_2">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Emissiya — ionlashgan gazning o‘z nurlanishi (qizil Hα); Qaytuvchi — changning yulduz nurini sochishi (ko‘k)</option>
+          <option value="no1">Ikkalasi ham faqat qora dog‘ ko‘rinishida bo‘ladi</option>
+          <option value="no2">Farqi yo‘q</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>3)</strong> Neytral vodorodning <strong>λ = 21.1 sm</strong> radiochizig‘i nima uchun muhim? <em>(3 ball)</em>
+        <select id="q1_3">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Chang bulutlaridan yutilmasdan o‘tib, Galaktika tuzilishini o‘rganishga yordam beradi</option>
+          <option value="no1">Faqat Quyosh sirtidagi dog‘larni ko‘rsatadi</option>
+          <option value="no2">Oy kraterlarini o‘lchaydi</option>
+        </select>
+      </div>
+      <div class="feedback" id="fb1"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c1"></canvas>
+      <div class="sim-ctrl">
+        <span>H II Emissiya tumanligi va 21.1 sm to‘lqin</span>
+        <span style="color:#fbbf24;">1420.4 MGs</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 2-TOPSHIRIQ (12 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">2-topshiriq. Galaktikalar va Kvazarlar (59–60-§§)</span>
+        <span class="task-pts">12 ball (4 + 5 + 3)</span>
+      </div>
+      <div class="q-block">
+        <strong>1)</strong> 1923–1924-yillarda Edvin Xabbl Andromeda (M31) sefeidlari orqali nimani isbotladi? <em>(4 ball)</em>
+        <select id="q2_1">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Andromeda Somon Yo‘li tashqarisidagi mustaqil galaktika ekanligini</option>
+          <option value="no1">Yulduzlar harakatlanmasligini</option>
+          <option value="no2">Quyosh tizimida 20 ta sayyora borligini</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> Xabbl tasnifidagi <strong>E, S, SB, S0, Irr</strong> galaktikalar qatoriga mos ta’rifni tanlang: <em>(5 ball)</em>
+        <select id="q2_2">
+          <option value="">— Tanlang —</option>
+          <option value="ok">E — elliptik, S — spiral, SB — to‘siqli spiral, S0 — linzasimon, Irr — noto‘g‘ri shaklli</option>
+          <option value="no1">Barchasi faqat sharsimon yulduz to‘dalari</option>
+          <option value="no2">Faqat sayyoralar tizimi</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>3)</strong> Kvazarlar va faol yadroli galaktikalarning ulkan energiya manbai nima? <em>(3 ball)</em>
+        <select id="q2_3">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Markazdagi o‘ta massiv qora o‘raga modda akkretsiyasi (tushishi)</option>
+          <option value="no1">Oddiy quyosh shamoli</option>
+          <option value="no2">Oy tutilishi</option>
+        </select>
+      </div>
+      <div class="feedback" id="fb2"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c2"></canvas>
+      <div class="sim-ctrl">
+        <span>Spiral galaktika va markaziy faol yadro</span>
+        <span style="color:#38bdf8;">M31 / AGN</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3-TOPSHIRIQ (12 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">3-topshiriq. Koinotning kengayishi va Xabbl qonuni (61-§)</span>
+        <span class="task-pts">12 ball (4 + 4 + 4)</span>
+      </div>
+      <div class="q-block">
+        <strong>1)</strong> Xabbl qonuni (<strong>v = H₀ · r</strong>) va fazoning kengayishi haqida to‘g‘ri fikrni tanlang: <em>(4 ball)</em>
+        <select id="q3_1">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Fazo izotrop kengayadi, yagona markazi yo‘q, uzoq galaktikalar tezroq uzoqlashadi</option>
+          <option value="no1">Galaktikalar faqat markazga qarab siqilmoqda</option>
+          <option value="no2">Tezlik masofaga bog‘liq emas</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> Agar <em>v = 21 000 km/s</em> va <em>H₀ = 70 km/(s·Mpk)</em> bo‘lsa, galaktikagacha masofa (<em>r = v / H₀</em>) necha Mpk? <em>(4 ball)</em>
+        <input type="number" id="q3_2" step="1" placeholder="Mpk" style="width:110px; margin-left:6px;" /> Mpk
+      </div>
+      <div class="q-block">
+        <strong>3)</strong> Xabbl vaqti (<strong>t_H = 1 / H₀</strong>) nimani ifodalaydi? <em>(4 ball)</em>
+        <select id="q3_3">
+          <option value="">— Tanlang —</option>
+          <option value="ok">O‘zgarmas kengayish tezligi modelida Koinotning taxminiy yoshini (~14 mlrd yil)</option>
+          <option value="no1">Yerning o‘z o‘qi atrofida aylanish davrini</option>
+          <option value="no2">Yorug‘likning Quyoshdan Yerga kelish vaqtini</option>
+        </select>
+      </div>
+      <div class="feedback" id="fb3"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c3"></canvas>
+      <div class="sim-ctrl">
+        <span>Masofa (r): <strong id="hLbl" style="color:#fbbf24;">300 Mpk (v = 21 000 km/s)</strong></span>
+        <input type="range" id="hSl" min="50" max="450" step="10" value="300" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4-TOPSHIRIQ (14 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">4-topshiriq. Katta portlash nazariyasi (62-§)</span>
+        <span class="task-pts">14 ball (6 + 4 + 4)</span>
+      </div>
+      <div class="q-block">
+        <strong>1)</strong> Katta portlash nazariyasining asosiy dalillari va ko‘rsatkichlari: <em>(6 ball)</em>
+        <select id="q4_1">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Xabbl kengayishi, relikt nurlanish (T₀ = 2.725 K), birlamchi nukleosintez (~75% H, ~25% He)</option>
+          <option value="no1">Faqat Oy tutilishlari va kometa dumlari</option>
+          <option value="no2">Koinotning yoshi 10 000 yil ekanligi</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> Rekombinatsiya davrida (<em>t ≈ 380 000 yil</em>, <em>T ≈ 3000 K</em>) nima yuz berdi? <em>(4 ball)</em>
+        <select id="q4_2">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Neytral atomlar hosil bo‘lib, fotonlar moddadan ajralib chiqdi</option>
+          <option value="no1">Yadro sintezi boshlandi</option>
+          <option value="no2">Barcha galaktikalar yo‘qoldi</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>3)</strong> Zamonaviy kosmologiyada Koinot tarkibi (qorong‘i energiya / qorong‘i materiya / barion modda): <em>(4 ball)</em>
+        <select id="q4_3">
+          <option value="">— Tanlang —</option>
+          <option value="ok">~68% qorong‘i energiya, ~27% qorong‘i materiya, ~5% barion modda</option>
+          <option value="no1">100% temir va kremniy</option>
+          <option value="no2">~68% barion modda, ~5% qorong‘i energiya</option>
+        </select>
+      </div>
+      <div class="feedback" id="fb4"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c4"></canvas>
+      <div class="sim-ctrl">
+        <span>Koinot energiya-massa balansi</span>
+        <span style="color:#a78bfa;">68% • 27% • 5%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5-TOPSHIRIQ (12 BALL) ==================== -->
+  <section class="task-card">
+    <div>
+      <div class="task-header">
+        <span class="task-title">5-topshiriq. Koinotda hayot, Yashash zonasi va SETI (63-§)</span>
+        <span class="task-pts">12 ball (4 + 4 + 4)</span>
+      </div>
+      <div class="q-block">
+        <strong>1)</strong> Yulduz yorqinligi <em>L = 0.25 L_☉</em> bo‘lsa, yashash zonasi radiusi (<em>r_HZ = √(L/L_☉)</em> a.b.) nechaga teng? <em>(4 ball)</em>
+        <input type="number" id="q5_1" step="0.05" placeholder="a.b." style="width:110px; margin-left:6px;" /> a.b.
+      </div>
+      <div class="q-block">
+        <strong>2)</strong> Tranzit usulida <strong>ΔF / F = (R_p / R_*)²</strong> ifodasi nimani anglatadi? <em>(4 ball)</em>
+        <select id="q5_2">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Sayyora yulduz oldidan o‘tganda yorug‘lik oqimining nisbiy kamayishini</option>
+          <option value="no1">Yulduzning aylanish tezligini</option>
+          <option value="no2">Galaktikaning massasini</option>
+        </select>
+      </div>
+      <div class="q-block">
+        <strong>3)</strong> Dreyk tenglamasi va SETI dasturining asosiy vazifasi nima? <em>(4 ball)</em>
+        <select id="q5_3">
+          <option value="">— Tanlang —</option>
+          <option value="ok">Aloqaga tayyor sivilizatsiyalar sonini baholash va sun’iy kosmik signallarni qidirish</option>
+          <option value="no1">Faqat ob-havo bashorat qilish</option>
+          <option value="no2">Sunt’iy yo‘ldoshlarni uchirish qoidasi</option>
+        </select>
+      </div>
+      <div class="feedback" id="fb5"></div>
+    </div>
+
+    <div class="sim-box">
+      <canvas id="c5"></canvas>
+      <div class="sim-ctrl">
+        <span>Yulduz yorqinligi (L/L_☉): <strong id="hzLbl" style="color:#34d399;">0.25 L_☉ (r_HZ = 0.50 a.b.)</strong></span>
+        <input type="range" id="hzSl" min="0.04" max="2.25" step="0.01" value="0.25" />
+      </div>
+    </div>
+  </section>
+
+  <!-- YAKUNLASH TUGMALARI -->
+  <div class="submit-bar">
+    <button class="btn-primary" onclick="gradeCHSB3()">✅ 3-CHSB ni yakunlash va Ballni hisoblash</button>
+    <button class="btn-sec" onclick="resetCHSB3()">🔄 Qayta ishlash</button>
+  </div>
+
+</div>
+
+<script>
+  let secLeft = 45 * 60;
+  setInterval(() => {
+    if (secLeft > 0) {
+      secLeft--;
+      const m = String(Math.floor(secLeft / 60)).padStart(2, '0');
+      const s = String(secLeft % 60).padStart(2, '0');
+      document.getElementById('timerBox').textContent = `⏱ Vaqt: ${m}:${s}`;
+    }
+  }, 1000);
+
+  let tick = 0;
+
+  function setupCanvas(id) {
+    const c = document.getElementById(id);
+    const rect = c.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    if (c.width !== Math.round(rect.width * dpr)) {
+      c.width = Math.round(rect.width * dpr);
+      c.height = Math.round(rect.height * dpr);
+    }
+    const ctx = c.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: rect.width, h: rect.height };
+  }
+
+  // 1-CANVAS: Tumanlik va 21.1 sm to'lqin
+  function drawC1() {
+    const { ctx, w, h } = setupCanvas('c1');
+    ctx.clearRect(0, 0, w, h);
+    const cx = w * 0.35, cy = h * 0.52;
+    const g = ctx.createRadialGradient(cx, cy, 8, cx, cy, 78);
+    g.addColorStop(0, 'rgba(254, 202, 202, 0.85)');
+    g.addColorStop(0.5, 'rgba(244, 63, 94, 0.45)');
+    g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, 78, 0, Math.PI * 2); ctx.fill();
+
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 0; i <= 90; i++) {
+      const x = w * 0.56 + i * 1.4;
+      const y = cy + Math.sin(i * 0.25 - tick * 0.1) * 14;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = '#fef08a'; ctx.font = '11px sans-serif';
+    ctx.fillText('λ = 21.1 sm radiochiziq', w * 0.56, cy - 22);
+  }
+
+  // 2-CANVAS: Spiral galaktika va faol yadro
+  function drawC2() {
+    const { ctx, w, h } = setupCanvas('c2');
+    ctx.clearRect(0, 0, w, h);
+    const cx = w * 0.5, cy = h * 0.52;
+    for (let arm = 0; arm < 2; arm++) {
+      ctx.strokeStyle = arm === 0 ? 'rgba(56, 189, 248, 0.65)' : 'rgba(167, 139, 250, 0.55)';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      for (let t = 0.15; t <= 1; t += 0.04) {
+        const rr = t * 88;
+        const th = arm * Math.PI + t * 4.2 + tick * 0.012;
+        const x = cx + Math.cos(th) * rr;
+        const y = cy + Math.sin(th) * rr * 0.65;
+        if (t <= 0.16) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    ctx.fillStyle = '#fef08a';
+    ctx.beginPath(); ctx.arc(cx, cy, 11, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // 3-CANVAS: Xabbl qonuni grafigi
+  function drawC3() {
+    const { ctx, w, h } = setupCanvas('c3');
+    ctx.clearRect(0, 0, w, h);
+    const r = parseFloat(document.getElementById('hSl').value);
+    const v = 70 * r;
+    document.getElementById('hLbl').textContent = `${r} Mpk (v = ${v.toLocaleString()} km/s)`;
+
+    const padL = 55, padB = h - 38, padT = 32, padR = w - 25;
+    const gw = padR - padL, gh = padB - padT;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.5)';
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padB); ctx.lineTo(padR, padB); ctx.stroke();
+
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(padL, padB); ctx.lineTo(padL + gw, padB - gh * 0.9); ctx.stroke();
+
+    const gx = padL + (r / 450) * gw;
+    const gy = padB - (v / (70 * 500)) * gh;
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(gx, gy, 6.5, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // 4-CANVAS: Koinot tarkibi (68 / 27 / 5)
+  function drawC4() {
+    const { ctx, w, h } = setupCanvas('c4');
+    ctx.clearRect(0, 0, w, h);
+    const cx = w * 0.34, cy = h * 0.52, r = 68;
+    const slices = [
+      { label: "Qorong‘i energiya 68%", pct: 0.68, col: "#a78bfa" },
+      { label: "Qorong‘i materiya 27%", pct: 0.27, col: "#38bdf8" },
+      { label: "Barion modda 5%", pct: 0.05, col: "#fbbf24" }
+    ];
+    let st = -Math.PI / 2;
+    slices.forEach((s, i) => {
+      const ang = s.pct * Math.PI * 2;
+      ctx.fillStyle = s.col;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, st, st + ang); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#e2e8f0'; ctx.font = '11px sans-serif';
+      ctx.fillText(s.label, w * 0.54, h * 0.34 + i * 28);
+      st += ang;
+    });
+  }
+
+  // 5-CANVAS: Yashash zonasi
+  function drawC5() {
+    const { ctx, w, h } = setupCanvas('c5');
+    ctx.clearRect(0, 0, w, h);
+    const L = parseFloat(document.getElementById('hzSl').value);
+    const rHz = Math.sqrt(L);
+    document.getElementById('hzLbl').textContent = `${L.toFixed(2)} L_☉ (r_HZ = ${rHz.toFixed(2)} a.b.)`;
+
+    const cx = w * 0.5, cy = h * 0.52;
+    const rPx = Math.min(86, Math.max(18, rHz * 48));
+    ctx.strokeStyle = 'rgba(52, 211, 153, 0.45)'; ctx.lineWidth = 8;
+    ctx.beginPath(); ctx.arc(cx, cy, rPx, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(cx, cy, 12, 0, Math.PI * 2); ctx.fill();
+
+    const a = tick * 0.02;
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(cx + Math.cos(a) * rPx, cy + Math.sin(a) * rPx, 5.5, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function loop() {
+    tick++;
+    drawC1(); drawC2(); drawC3(); drawC4(); drawC5();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  function showFb(id, html, ok) {
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    el.style.borderLeftColor = ok ? '#34d399' : '#fb7185';
+    el.style.color = ok ? '#a7f3d0' : '#fecdd3';
+    el.innerHTML = html;
+  }
+
+  function gradeCHSB3() {
+    let total = 0;
+
+    // 1-topshiriq (10 ball)
+    let s1 = 0;
+    if (document.getElementById('q1_1').value === 'ok') s1 += 3;
+    if (document.getElementById('q1_2').value === 'ok') s1 += 4;
+    if (document.getElementById('q1_3').value === 'ok') s1 += 3;
+    total += s1;
+    showFb('fb1', `Ball: <strong>${s1} / 10</strong>. ~99% gaz / ~1% chang; emissiya vs qaytuvchi; λ = 21.1 sm.`, s1 === 10);
+
+    // 2-topshiriq (12 ball)
+    let s2 = 0;
+    if (document.getElementById('q2_1').value === 'ok') s2 += 4;
+    if (document.getElementById('q2_2').value === 'ok') s2 += 5;
+    if (document.getElementById('q2_3').value === 'ok') s2 += 3;
+    total += s2;
+    showFb('fb2', `Ball: <strong>${s2} / 12</strong>. Xabbl (M31); E/S/SB/S0/Irr; qora o‘raga akkretsiya.`, s2 === 12);
+
+    // 3-topshiriq (12 ball)
+    let s3 = 0;
+    if (document.getElementById('q3_1').value === 'ok') s3 += 4;
+    const v32 = parseFloat(document.getElementById('q3_2').value);
+    if (!isNaN(v32) && Math.abs(v32 - 300) <= 3) s3 += 4;
+    if (document.getElementById('q3_3').value === 'ok') s3 += 4;
+    total += s3;
+    showFb('fb3', `Ball: <strong>${s3} / 12</strong>. r = 21 000 / 70 = <strong>300 Mpk</strong>; t_H = 1/H₀.`, s3 === 12);
+
+    // 4-topshiriq (14 ball)
+    let s4 = 0;
+    if (document.getElementById('q4_1').value === 'ok') s4 += 6;
+    if (document.getElementById('q4_2').value === 'ok') s4 += 4;
+    if (document.getElementById('q4_3').value === 'ok') s4 += 4;
+    total += s4;
+    showFb('fb4', `Ball: <strong>${s4} / 14</strong>. T₀ = 2.725 K; rekombinatsiya; 68% / 27% / 5%.`, s4 === 14);
+
+    // 5-topshiriq (12 ball)
+    let s5 = 0;
+    const v51 = parseFloat(document.getElementById('q5_1').value);
+    if (!isNaN(v51) && Math.abs(v51 - 0.50) <= 0.03) s5 += 4;
+    if (document.getElementById('q5_2').value === 'ok') s5 += 4;
+    if (document.getElementById('q5_3').value === 'ok') s5 += 4;
+    total += s5;
+    showFb('fb5', `Ball: <strong>${s5} / 12</strong>. r_HZ = √0.25 = <strong>0.50 a.b.</strong>; tranzit va SETI.`, s5 === 12);
+
+    const pct = Math.round((total / 60) * 100);
+    const box = document.getElementById('resultBox');
+    box.style.display = 'block';
+    document.getElementById('finalScoreTitle').textContent = `3-CHSB Yakuniy natija: ${total} / 60 ball (${pct}%)`;
+    document.getElementById('liveScorePill').textContent = `Ball: ${total} / 60`;
+
+    let grade = "Qoniqarsiz — 58–63-§§ mavzularini qayta takrorlang.";
+    if (pct >= 86) grade = "A’lo (5 baho)! 3-chorak astronomiya mavzularini chuqur va aniq o‘zlashtirgansiz.";
+    else if (pct >= 71) grade = "Yaxshi (4 baho)! Asosiy qonuniyat va formulalarni yaxshi bilasiz.";
+    else if (pct >= 56) grade = "Qoniqarli (3 baho). Hisoblash va nazariy ta’riflarni mustahkamlang.";
+    document.getElementById('finalGradeDesc').textContent = grade;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetCHSB3() {
+    document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
+    document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+    document.getElementById('resultBox').style.display = 'none';
+    document.getElementById('liveScorePill').textContent = 'Maksimal ball: 60 ball';
+  }
+</script>
+</body>
+</html>
