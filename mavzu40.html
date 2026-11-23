@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>40-Mavzu (76-§): Kosmik apparatlarning planeta tomon yaqinlashishi | 11-sinf</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.93);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --violet: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 14px 22px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .theory-container {
+      max-width: 1280px;
+      width: 100%;
+      margin: 18px auto;
+      padding: 0 16px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .theory-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      line-height: 1.72;
+    }
+
+    .theory-card h2 {
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .theory-card h3 { color: var(--gold); font-size: 0.98rem; margin: 14px 0 6px; }
+    .theory-card p, .theory-card li { font-size: 0.92rem; color: #e2e8f0; margin-bottom: 9px; }
+    .theory-card ul { padding-left: 22px; margin-bottom: 10px; }
+
+    .math-banner {
+      background: rgba(2, 6, 23, 0.88);
+      border-left: 4px solid var(--gold);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fef08a;
+      margin: 10px 0;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+    .data-table th, .data-table td { border: 1px solid rgba(148, 163, 184, 0.26); padding: 9px 11px; text-align: left; }
+    .data-table th { background: rgba(2, 132, 199, 0.24); color: var(--accent); }
+
+    .problem-box {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin-top: 12px;
+    }
+
+    .problem-sol {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.28);
+      color: #a7f3d0;
+      font-size: 0.89rem;
+      line-height: 1.6;
+    }
+
+    main.sim-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1540px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) { main.sim-layout { grid-template-columns: 1fr; } }
+
+    .viewport {
+      position: relative;
+      background: #02050c;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 45px rgba(2, 132, 199, 0.08);
+    }
+
+    canvas { width: 100%; height: 100%; display: block; flex: 1; }
+
+    .hud-top {
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(5, 9, 20, 0.88);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      backdrop-filter: blur(12px);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) { .sidebar { max-height: none; } }
+
+    .card {
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .card h3 {
+      font-size: 0.93rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-box { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .slider-label strong { color: var(--gold); }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .ctrl-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      color: var(--text);
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 0.79rem;
+      cursor: pointer;
+      transition: 0.18s;
+      text-align: center;
+      flex: 1;
+    }
+
+    .btn:hover, .btn.active {
+      background: rgba(56, 189, 248, 0.24);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .telemetry { display: flex; flex-direction: column; gap: 6px; }
+    .t-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding-bottom: 5px; border-bottom: 1px dashed rgba(148, 163, 184, 0.16); }
+    .t-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-val { font-weight: 700; color: var(--emerald); }
+
+    .formula-box {
+      background: rgba(2, 6, 23, 0.84);
+      border-left: 3px solid var(--gold);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #fde68a;
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    .desc { font-size: 0.83rem; line-height: 1.58; color: #cbd5e1; }
+
+    .quiz-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 11px; margin-top: 7px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 7px; color: var(--text); font-size: 0.82rem; cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); }
+    .quiz-opt.wrong { background: rgba(244, 63, 94, 0.25); border-color: var(--rose); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>40-MAVZU (76-§). Kosmik apparatlarning planeta tomon yaqinlashishi</h1>
+    <p>11-sinf Astronomiya | II Qism: Kosmonavtika elementlari (164-bet)</p>
+  </div>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="setTab(0)">📖 To‘liq Nazariya va Masalalar</button>
+    <button class="tab-btn" onclick="setTab(1)">1-Sim: Nishonlash masofasi b</button>
+    <button class="tab-btn" onclick="setTab(2)">2-Sim: Orbitaga o‘tish (−Δv)</button>
+    <button class="tab-btn" onclick="setTab(3)">3-Sim: Perisentr tezligi v_p(r_p)</button>
+    <button class="tab-btn" onclick="setTab(4)">Sinov (10 savol)</button>
+  </nav>
+</header>
+
+<!-- ==================== 0-TAB: KENGAYTIRILGAN NAZARIYA VA MASALALAR ==================== -->
+<section id="theoryView" class="theory-container">
+
+  <div class="theory-card">
+    <h2>1. Planeta ta’sir sferasiga kirish va giperbolik yaqinlashish (76-§)</h2>
+    <p>Kosmik apparat (KA) geliosentrik uchastka oxirida mo‘ljallangan planetaning <strong>ta’sir sferasiga</strong> (<em>R_ts</em>) yetib kelganda, Quyoshning g‘alayonlantiruvchi ta’siri e’tibordan soqit qilinadi va KA faqat planetaning markaziy tortishish maydonida harakatlanuvchi jism sifatida qaraladi.</p>
+    <ul>
+      <li><strong>Planetotsentrik kirish tezligi (<em>v_∞</em>):</strong> Ta’sir sferasi chegarasida KA ning planetaga nisbatan tezligi uning geliosentrik tezligi (<em>V⃗_KA</em>) va planetaning orbital tezligi (<em>V⃗_pl</em>) ayirmasiga teng: <em>v⃗_∞ = V⃗_KA − V⃗_pl</em>.</li>
+      <li><strong>Giperbolik traektoriya:</strong> Sfera chegarasida KA musbat to‘liq planetotsentrik energiyaga (<em>E = m·v_∞² / 2 &gt; 0</em>) ega bo‘lgani uchun planeta atrofida <strong>giperbola</strong> bo‘ylab yaqinlashadi.</li>
+      <li><strong>Nishonlash masofasi (<em>b</em>) va Gravitatsion fokuslash:</strong> Sfera chegarasidagi boshlang‘ich tezlik vektori chizig‘idan planeta markazigacha bo‘lgan perpendikulyar masofa <strong>nishonlash masofasi (<em>b</em>)</strong> deyiladi. Planeta tortishish kuchi apparatni o‘ziga og‘dirgani (gravitatsion fokuslagani) sababli perisentrdagi eng yaqin masofa (<em>r_p</em>) har doim nishonlash masofasidan kichik bo‘ladi (<em>r_p &lt; b</em>).</li>
+    </ul>
+    <div class="math-banner">
+      Perisentrdagi giperbolik tezlik: v_p = √(v₂,pl² + v_∞²) &nbsp;|&nbsp; v₂,pl = √(2 · G · M_pl / r_p)<br>
+      Impuls momenti va energiya saqlanishidan nishonlash masofasi: b = r_p · √(1 + v₂,pl² / v_∞²) = r_p · (v_p / v_∞)
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>2. Yaqinlashish rejimlarining turlari va Sun’iy yo‘ldosh orbitasiga o‘tish</h2>
+    <p>Nishonlash masofasi (<em>b</em>) va perisentrdagi tormozlanish impulsiga (<em>−Δv</em>) qarab planeta yaqinidagi uchish uchta asosiy ssenariy bo‘yicha kechadi:</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Yaqinlashish rejimi</th>
+          <th>Shart (r_p va Δv)</th>
+          <th>Traektoriya va natija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Uchib o‘tish (Flyby)</strong></td><td>r_p &gt; R_pl, tormozlanish yo‘q (Δv = 0)</td><td>KA giperbola bo‘ylab yaqinlashib, planetani suratga oladi va ta’sir sferasidan chiqib ketadi («Mariner», «Voyajer», «New Horizons»).</td></tr>
+        <tr><td><strong>2. Planeta sun’iy yo‘ldoshiga aylanish</strong></td><td>r_p &gt; R_pl, perisentrda tormozlanish (−Δv)</td><td>Perisentrda v_p tezlikni parabolik tezlikdan (v₂,pl) kichikroq qiymatgacha kamaytirib, yopiq ellips yoki aylana orbitaga o‘tiladi.</td></tr>
+        <tr><td><strong>3. Planeta sirtiga qo‘nish / tushish</strong></td><td>r_p ≤ R_pl (yoki atmosferaga kirish)</td><td>Aerodinamik tormozlanish, issiqlik qalqoni, parashyut va qo‘nish dvigatellari yordamida planeta yuzasiga qo‘nish («Venera», «Viking», «Curiosity»).</td></tr>
+      </tbody>
+    </table>
+    <div class="math-banner">
+      Aylana orbitaga o‘tish tormozlanish impulsi: Δv_torm = v_p − v₁,pl = √(v₂,pl² + v_∞²) − √(G · M_pl / r_p)
+    </div>
+  </div>
+
+  <div class="theory-card">
+    <h2>3. 76-§ bo‘yicha 4 ta darajali yechimli masala</h2>
+
+    <div class="problem-box">
+      <strong>1-Masala (Oson — Mars perisentridagi giperbolik tezlik):</strong> Mars ta’sir sferasiga <em>v_∞ = 3.0 km/s</em> nisbiy tezlik bilan kirgan kosmik apparat Mars sirti yaqinidagi perisentrga (<em>v₂,Mars = 5.0 km/s</em>) yetib keldi. Apparatning perisentrdagi maksimal tezligini (<em>v_p</em>) hisoblang (<em>√34 ≈ 5.83</em>).
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol1')">Yechim</button>
+      <div id="sol1" class="problem-sol">
+        <strong>Berilgan:</strong> v_∞ = 3.0 km/s, v₂,Mars = 5.0 km/s.<br>
+        <strong>Formula:</strong> v_p = √(v₂,Mars² + v_∞²).<br>
+        <strong>Hisoblash:</strong> v_p = √(5.0² + 3.0²) = √(25 + 9) = √34 ≈ <strong>5.83 km/s</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>2-Masala (O‘rta — Nishonlash masofasini hisoblash):</strong> Oldingi masaladagi apparat Mars markazidan <em>r_p = 3600 km</em> masofadagi perisentrdan o‘tishi uchun uning ta’sir sferasi chegarasidagi nishonlash masofasi (<em>b</em>) qancha bo‘lishi kerak (<em>v_p = 5.83 km/s</em>, <em>v_∞ = 3.0 km/s</em>)?
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol2')">Yechim</button>
+      <div id="sol2" class="problem-sol">
+        <strong>Impuls momenti saqlanishidan:</strong> b · v_∞ = r_p · v_p.<br>
+        <strong>Hisoblash:</strong> b = r_p · (v_p / v_∞) = 3600 km × (5.83 / 3.0) ≈ <strong>7000 km</strong>.<br>
+        <strong>Fizik xulosa:</strong> Gravitatsion fokuslash tufayli nishonlash masofasi (7000 km) Mars radiusidan (~3390 km) ikki baravar katta bo‘lsa ham, apparat Mars sirtidan atigi ~210 km balandlikda o‘tadi!
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>3-Masala (Murakkab — Mars sun’iy yo‘ldoshi orbitasiga o‘tish impulsi):</strong> Perisentrda birinchi kosmik tezlik <em>v₁,Mars = 3.50 km/s</em>, ikkinchi kosmik tezlik <em>v₂,Mars = 4.95 km/s</em>. Agar apparat <em>v_∞ = 2.66 km/s</em> bilan kelib, shu perisentrda aylana orbitaga o‘tmoqchi bo‘lsa, dvigatel qanday tormozlanish impulsi (<em>Δv_torm</em>) berishi kerak?
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol3')">Yechim</button>
+      <div id="sol3" class="problem-sol">
+        <strong>1) Perisentrdagi kelish tezligi:</strong> v_p = √(4.95² + 2.66²) = √(24.50 + 7.08) = √31.58 ≈ <strong>5.62 km/s</strong>.<br>
+        <strong>2) Aylana orbitaga o‘tish impulsi:</strong> Δv_torm = v_p − v₁,Mars = 5.62 − 3.50 = <strong>2.12 km/s</strong>.
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <strong>4-Masala (Olimpiada — Planeta sirtiga tushish uchun maksimal nishonlash masofasi):</strong> Radiusi <em>R</em>, ikkinchi kosmik tezligi <em>v₂</em> bo‘lgan atmosferasiz planetaga uzoqdan <em>v_∞ = v₂ / 2</em> tezlik bilan yaqinlashayotgan meteorit yoki apparat planeta sirtiga tegib ketishi (to‘qnashishi) uchun nishonlash masofasi (<em>b</em>) ko‘pi bilan nechaga teng bo‘lishi mumkin?
+      <button class="btn" style="margin-left:10px; padding:4px 10px; flex:none;" onclick="toggleSol('sol4')">Yechim</button>
+      <div id="sol4" class="problem-sol">
+        <strong>Chegaraviy shart:</strong> r_p = R.<br>
+        <strong>Formula:</strong> b_max = R · √(1 + v₂² / v_∞²) = R · √(1 + v₂² / (v₂/2)²) = R · √(1 + 4) = <strong>R · √5 ≈ 2.236 R</strong>.<br>
+        <strong>Natija:</strong> Planeta tortishishi uning samarali to‘qnashuv kesimini (π·b_max²) geometrik kesimidan (π·R²) 5 marta oshiradi!
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1..4-TAB: INTERAKTIV LABORATORIYA ==================== -->
+<main id="simView" class="sim-layout hidden">
+  <div class="viewport">
+    <div class="hud-top">
+      <div class="badge" id="hudLeft">76-§: Planeta tomon giperbolik yaqinlashish va Orbitaga tushish</div>
+      <div class="badge" id="hudRight" style="color:#38bdf8;">Jonli Canvas</div>
+    </div>
+    <canvas id="appCanvas"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- TAB 1 -->
+    <div id="panel-1" class="tab-content">
+      <div class="card">
+        <h3>1-Sim: Nishonlash masofasi (b) va Gravitatsion fokuslash</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Nishonlash masofasi b (R_pl da):</span><strong id="bVal">2.20 R_pl</strong></div>
+          <input type="range" id="bSl" min="0.8" max="4.0" step="0.1" value="2.2" />
+        </div>
+        <div class="slider-box">
+          <div class="slider-label"><span>Kirish tezligi v_∞:</span><strong id="vInfAppVal">3.0 km/s</strong></div>
+          <input type="range" id="vInfAppSl" min="1.5" max="6.0" step="0.5" value="3.0" />
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn1" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Yaqinlashish parametrlari (v₂,pl = 5.0 km/s)</h3>
+        <div class="formula-box">b = r_p · √(1 + v₂² / v_∞²)</div>
+        <div class="telemetry">
+          <div class="t-row"><span>Perisentr masofasi r_p:</span><span class="t-val" id="rpAppOut">1.13 R_pl</span></div>
+          <div class="t-row"><span>Perisentr tezligi v_p:</span><span class="t-val" id="vpAppOut">5.83 km/s</span></div>
+          <div class="t-row"><span>Holat:</span><span class="t-val" id="flyStateOut">Xavfsiz uchib o‘tish</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div id="panel-2" class="tab-content hidden">
+      <div class="card">
+        <h3>2-Sim: Perisentrda tormozlanish (−Δv) va Orbitaga o‘tish</h3>
+        <div class="slider-box">
+          <div class="slider-label"><span>Tormozlanish impulsi Δv_torm:</span><strong id="dvBrakeVal">1.80 km/s</strong></div>
+          <input type="range" id="dvBrakeSl" min="0.0" max="2.5" step="0.1" value="1.8" />
+        </div>
+        <div class="ctrl-row">
+          <button class="btn" id="pauseBtn2" onclick="togglePause()">⏸ Pauza</button>
+          <button class="btn" onclick="resetSim()">↺ Qayta</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Tormozlanishdan keyingi orbita</h3>
+        <div class="formula-box">v_yangi = v_p − Δv_torm (v_p = 5.83 km/s)</div>
+        <div class="telemetry">
+          <div class="t-row"><span>Yangi tezlik v_yangi:</span><span class="t-val" id="vNewOut">4.03 km/s</span></div>
+          <div class="t-row"><span>Yangi traektoriya:</span><span class="t-val" id="newOrbOut">Elliptik sun’iy yo‘ldosh!</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div id="panel-3" class="tab-content hidden">
+      <div class="card">
+        <h3>3-Sim: Perisentr tezligi v_p va Nishonlash masofasi</h3>
+        <p class="desc">Planeta markaziga qanchalik yaqin (r_p kichik) o‘tilsa, ikkinchi kosmik tezlik v₂(r_p) shunchalik katta bo‘lib, perisentrdagi giperbolik tezlik v_p keskin ortadi.</p>
+      </div>
+    </div>
+
+    <!-- TAB 4: TEST (10 SAVOL) -->
+    <div id="panel-4" class="tab-content hidden">
+      <div class="card">
+        <h3>
+          <span>Bilimni sinash (76-§)</span>
+          <span id="qProg" style="color:var(--gold);">1 / 10</span>
+        </h3>
+        <p class="desc" id="qText" style="font-weight:600; color:#fff; margin-bottom:8px;"></p>
+        <div id="qOpts"></div>
+        <p class="desc" id="qExplain" style="margin-top:10px; color:var(--emerald); font-size:0.8rem;"></p>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.84rem; font-weight:700; color:var(--gold);" id="qScore">Natija: 0 / 10</span>
+          <button class="btn" style="flex:none;" onclick="nextQuiz()">Keyingi savol →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  const canvas = document.getElementById('appCanvas');
+  const ctx = canvas.getContext('2d');
+  let activeTab = 0;
+  let tick = 0;
+  let paused = false;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function toggleSol(id) { document.getElementById(id).classList.toggle('hidden'); }
+  function togglePause() {
+    paused = !paused;
+    ['pauseBtn1', 'pauseBtn2'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.textContent = paused ? '▶ Davom' : '⏸ Pauza';
+    });
+  }
+  function resetSim() {
+    tick = 0;
+    paused = false;
+    ['pauseBtn1', 'pauseBtn2'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.textContent = '⏸ Pauza';
+    });
+  }
+
+  function setTab(idx) {
+    activeTab = idx;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.getElementById('theoryView').classList.toggle('hidden', idx !== 0);
+    document.getElementById('simView').classList.toggle('hidden', idx === 0);
+    if (idx > 0) {
+      resize();
+      document.querySelectorAll('.tab-content').forEach((p, i) => p.classList.toggle('hidden', (i + 1) !== idx));
+    }
+  }
+
+  function drawImpactTab(w, h) {
+    const bRatio = parseFloat(document.getElementById('bSl').value);
+    const vInf = parseFloat(document.getElementById('vInfAppSl').value);
+    const v2 = 5.0;
+    const focusFactor = Math.sqrt(1 + (v2 * v2) / (vInf * vInf));
+    const rpRatio = bRatio / focusFactor;
+    const vp = Math.sqrt(v2 * v2 + vInf * vInf);
+
+    document.getElementById('bVal').textContent = `${bRatio.toFixed(2)} R_pl`;
+    document.getElementById('vInfAppVal').textContent = `${vInf.toFixed(1)} km/s`;
+    document.getElementById('rpAppOut').textContent = `${rpRatio.toFixed(2)} R_pl`;
+    document.getElementById('vpAppOut').textContent = `${vp.toFixed(2)} km/s`;
+    document.getElementById('flyStateOut').textContent = rpRatio <= 1.0 ? "Sirtga urilish / Kirish!" : "Xavfsiz uchib o‘tish";
+
+    const px = w * 0.56, py = h * 0.54;
+    const rPl = 38;
+
+    // Planeta
+    ctx.fillStyle = '#fb7185';
+    ctx.beginPath(); ctx.arc(px, py, rPl, 0, Math.PI * 2); ctx.fill();
+
+    // Nishonlash chizig'i b
+    const bPx = bRatio * rPl;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(w * 0.08, py - bPx); ctx.lineTo(px, py - bPx); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#94a3b8'; ctx.font = '11px sans-serif';
+    ctx.fillText(`Nishonlash masofasi b = ${bRatio.toFixed(1)} R_pl`, w * 0.1, py - bPx - 8);
+
+    // Giperbolik traektoriya
+    const rpPx = rpRatio * rPl;
+    ctx.strokeStyle = rpRatio <= 1.0 ? '#ef4444' : '#38bdf8';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.08, py - bPx);
+    ctx.quadraticCurveTo(px - rpPx * 0.4, py - rpPx, px + 160, py + (rpRatio <= 1.0 ? 0 : 120));
+    ctx.stroke();
+
+    const t = (tick * 0.012) % 1;
+    const kx = (1 - t) * (1 - t) * (w * 0.08) + 2 * (1 - t) * t * (px - rpPx * 0.4) + t * t * (px + 160);
+    const ky = (1 - t) * (1 - t) * (py - bPx) + 2 * (1 - t) * t * (py - rpPx) + t * t * (py + (rpRatio <= 1.0 ? 0 : 120));
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(kx, ky, 6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function drawCaptureTab(w, h) {
+    const dv = parseFloat(document.getElementById('dvBrakeSl').value);
+    const vp = 5.83;
+    const vNew = vp - dv;
+    document.getElementById('dvBrakeVal').textContent = `${dv.toFixed(2)} km/s`;
+    document.getElementById('vNewOut').textContent = `${vNew.toFixed(2)} km/s`;
+
+    let orbTxt = "Giperbola (Uchib ketadi)";
+    if (vNew <= 3.55) orbTxt = "Aylana orbitaga o‘tdi!";
+    else if (vNew < 5.0) orbTxt = "Elliptik sun’iy yo‘ldosh!";
+    document.getElementById('newOrbOut').textContent = orbTxt;
+
+    const cx = w * 0.5, cy = h * 0.52;
+    ctx.fillStyle = '#fb7185';
+    ctx.beginPath(); ctx.arc(cx, cy, 34, 0, Math.PI * 2); ctx.fill();
+
+    if (vNew < 5.0) {
+      const aPx = vNew <= 3.55 ? 68 : 115;
+      const bPx = vNew <= 3.55 ? 68 : 82;
+      ctx.strokeStyle = '#34d399'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.ellipse(cx + (aPx - 68), cy, aPx, bPx, 0, 0, Math.PI * 2); ctx.stroke();
+
+      const ang = tick * 0.035;
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(cx + (aPx - 68) + aPx * Math.cos(ang), cy + bPx * Math.sin(ang), 6, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - 210, cy - 90);
+      ctx.quadraticCurveTo(cx, cy - 68, cx + 210, cy + 40);
+      ctx.stroke();
+
+      const t = (tick * 0.012) % 1;
+      const kx = (1 - t) * (1 - t) * (cx - 210) + 2 * (1 - t) * t * cx + t * t * (cx + 210);
+      const ky = (1 - t) * (1 - t) * (cy - 90) + 2 * (1 - t) * t * (cy - 68) + t * t * (cy + 40);
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(kx, ky, 6, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  function drawVpGraph(w, h) {
+    const padL = 65, padB = h - 50, padT = 65, padR = w - 40;
+    const gw = padR - padL, gh = padB - padT;
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.5)';
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padB); ctx.lineTo(padR, padB); ctx.stroke();
+
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let i = 0; i <= 50; i++) {
+      const rp = 1.0 + (i / 50) * 4.0;
+      const v2 = 5.0 / Math.sqrt(rp);
+      const vp = Math.sqrt(v2 * v2 + 9.0);
+      const x = padL + (i / 50) * gw;
+      const y = padB - ((vp - 3) / 4) * gh;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  const quizQuestions = [
+    { q: "1. Kosmik apparat planeta ta’sir sferasiga kirganda unga asosan qaysi jismning tortishishi ta’sir qiladi?", opts: ["Planeta tortishish maydoni", "Faqat Oy tortishishi", "Gravitatsiya ta’sir qilmaydi"], ans: 0, exp: "Ta’sir sferasi ichida planeta gravitatsiyasi asosiy markaziy kuch bo‘ladi." },
+    { q: "2. Tormozlanish dvigateli ishlatilmasa, KA planeta yaqinidan qanday traektoriya bo‘ylab uchib o‘tadi?", opts: ["Giperbola bo‘ylab", "Aylana bo‘ylab", "Yopiq ellips bo‘ylab"], ans: 0, exp: "Sfera chegarasida E > 0 bo‘lgani uchun traektoriya giperbolikdir." },
+    { q: "3. Nishonlash masofasi (b) nima?", opts: ["Boshlang‘ich tezlik vektori chizig‘idan planeta markazigacha bo‘lgan perpendikulyar masofa", "Planeta diametri", "Quyoshgacha masofa"], ans: 0, exp: "Ta’sir sferasiga kirishdagi kirish chizig‘ining planeta markazidan siljish masofasi." },
+    { q: "4. Gravitatsion fokuslash tufayli perisentr masofasi (r_p) nishonlash masofasidan (b) qanday farq qiladi?", opts: ["r_p < b (kichikroq bo‘ladi)", "r_p > b (kattaroq bo‘ladi)", "Doimo r_p = b"], ans: 0, exp: "Planeta tortishishi apparatni o‘ziga og‘dirgani uchun eng yaqin masofa r_p < b." },
+    { q: "5. Perisentrdagi giperbolik tezlik (v_p) qaysi formula bilan topiladi?", opts: ["v_p = √(v₂,pl² + v_∞²)", "v_p = v₂,pl − v_∞", "v_p = 0"], ans: 0, exp: "Planetotsentrik energiya saqlanish qonunidan v_p² = v₂,pl² + v_∞²." },
+    { q: "6. KA ni planeta sun’iy yo‘ldoshiga aylantirish uchun perisentrda qanday manyovr bajariladi?", opts: ["Tormozlanish impulsi (−Δv) beriladi", "Tezlik oshiriladi", "Hech narsa qilinmaydi"], ans: 0, exp: "Tezlikni v₂,pl dan kichikroq qiymatgacha pasaytirish yopiq orbitaga o‘tkazadi." },
+    { q: "7. v₂,Mars = 5.0 km/s va v_∞ = 3.0 km/s bo‘lsa, perisentr tezligi v_p nechaga teng?", opts: ["≈ 5.83 km/s", "8.00 km/s", "2.00 km/s"], ans: 0, exp: "v_p = √(5² + 3²) = √34 ≈ 5.83 km/s." },
+    { q: "8. Impuls momenti saqlanishiga ko‘ra nishonlash masofasi b ning formulasi qaysi?", opts: ["b = r_p · (v_p / v_∞)", "b = r_p · (v_∞ / v_p)", "b = r_p + v_p"], ans: 0, exp: "b · v_∞ = r_p · v_p munosabatidan b = r_p · (v_p / v_∞)." },
+    { q: "9. Planeta atmosferasiga ega bo‘lsa (masalan, Mars yoki Venera), yumshoq qo‘nishda nimalardan foydalaniladi?", opts: ["Aerodinamik tormozlanish, issiqlik qalqoni va parashyutdan", "Faqat quyosh yelkanidan", "Magnit maydondan"], ans: 0, exp: "Atmosfera qarshiligi tezlikni so‘ndirishga yordam beradi." },
+    { q: "10. Agar perisentr masofasi planeta radiusidan kichik bo‘lsa (r_p ≤ R_pl), nima yuz beradi?", opts: ["Apparat planeta sirti (yoki atmosferasi) bilan to‘qnashadi", "Apparat cheksizlikka uchib ketadi", "Geostatsionar orbitaga chiqadi"], ans: 0, exp: "Traektoriya planeta yuzasini kesib o‘tadi." }
+  ];
+
+  let qIdx = 0, qScore = 0, qLocked = false;
+  function renderQuiz() {
+    qLocked = false;
+    const item = quizQuestions[qIdx];
+    document.getElementById('qProg').textContent = `${qIdx + 1} / ${quizQuestions.length}`;
+    document.getElementById('qText').textContent = item.q;
+    document.getElementById('qExplain').textContent = '';
+    const box = document.getElementById('qOpts');
+    box.innerHTML = '';
+    item.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if (qLocked) return;
+        qLocked = true;
+        if (idx === item.ans) {
+          btn.classList.add('correct');
+          qScore++;
+          document.getElementById('qScore').textContent = `Natija: ${qScore} / 10`;
+        } else {
+          btn.classList.add('wrong');
+          box.children[item.ans].classList.add('correct');
+        }
+        document.getElementById('qExplain').textContent = "Izoh: " + item.exp;
+      };
+      box.appendChild(btn);
+    });
+  }
+  function nextQuiz() {
+    qIdx = (qIdx + 1) % quizQuestions.length;
+    if (qIdx === 0) { qScore = 0; document.getElementById('qScore').textContent = `Natija: 0 / 10`; }
+    renderQuiz();
+  }
+  renderQuiz();
+
+  function loop() {
+    if (!paused) tick++;
+    if (activeTab > 0) {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      if (activeTab === 1) drawImpactTab(w, h);
+      else if (activeTab === 2) drawCaptureTab(w, h);
+      else if (activeTab === 3) drawVpGraph(w, h);
+      else drawImpactTab(w, h);
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
