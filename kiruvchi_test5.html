@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5-Bob Kiruvchi Test | 11-sinf Astronomiya — Yulduzlar</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.94);
+      --card: rgba(15, 23, 42, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 13px 18px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+
+    .mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover { filter: brightness(1.12); }
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .meta-card input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 17px 20px;
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(30, 41, 59, 0.82);
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .opt-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.14); }
+    .opt-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.18); }
+    .opt-btn.correct { border-color: var(--emerald); background: rgba(16, 185, 129, 0.25); color: #d1fae5; }
+    .opt-btn.wrong { border-color: var(--rose); background: rgba(244, 63, 94, 0.25); color: #ffe4e6; }
+
+    .explain {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      font-size: 0.84rem;
+      color: var(--emerald);
+      display: none;
+    }
+
+    .result-box {
+      background: var(--panel);
+      border: 1px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: none;
+    }
+
+    .result-box h2 { color: var(--gold); font-size: 1.18rem; margin-bottom: 8px; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .score-item {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .score-item span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .score-item strong { font-size: 1.12rem; color: var(--emerald); }
+
+    .actions-bottom {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>5-BOB KIRUVCHI TEST — 11-SINF ASTRONOMIYA</h1>
+    <p>Yulduzlar fizikasi va evolyutsiyasi (46–55-§§ oldidan tayanch bilimlar) | A/B Variant (20 savoldan)</p>
+  </div>
+  <div class="mode-tabs">
+    <button class="tab-btn active" id="tabA" onclick="switchMode('A')">A Variant (20 savol)</button>
+    <button class="tab-btn" id="tabB" onclick="switchMode('B')">B Variant (20 savol)</button>
+  </div>
+  <div class="status-bar">
+    <div class="pill" id="answeredPill">Javoblar: 0 / 20</div>
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="meta-card">
+    <div>
+      <label for="stName">O‘quvchining F.I.Sh.:</label>
+      <input type="text" id="stName" placeholder="Masalan: Karimov Azizbek" />
+    </div>
+    <div>
+      <label for="stClass">Sinf va maktab:</label>
+      <input type="text" id="stClass" placeholder="Masalan: 11-«A» sinf" />
+    </div>
+    <div>
+      <label for="stDate">Sana:</label>
+      <input type="text" id="stDate" value="2026-11-26" />
+    </div>
+  </div>
+
+  <div id="resultBox" class="result-box">
+    <h2 id="resTitle">5-Bob Kiruvchi Test Natijasi</h2>
+    <p id="resStudent" style="color: var(--muted); font-size: 0.88rem;"></p>
+    <div class="score-grid">
+      <div class="score-item"><span>To‘g‘ri javoblar</span><strong id="resCorrect">0 / 20</strong></div>
+      <div class="score-item"><span>Foiz ko‘rsatkichi</span><strong id="resPercent">0%</strong></div>
+      <div class="score-item"><span>Tayyorgarlik darajasi</span><strong id="resGrade">—</strong></div>
+    </div>
+    <p id="resAdvice" style="font-size: 0.86rem; color: #cbd5e1;"></p>
+  </div>
+
+  <div id="questionsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+
+  <div class="actions-bottom">
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</div>
+
+<script>
+  const variantA = [
+    { sec: "Geometriya: Parallaks", q: "1. Biror obyektga ikki xil nuqtadan qaralganda uning uzoq fon (yulduzlar) ga nisbatan ko‘rinma siljish burchagi nima deb ataladi?", opts: ["Parallaks", "Dispersiya", "Refraksiya", "Difraksiya"], ans: 0, exp: "Ko‘zimizni navbatma-navbat yumib-ochganda barmog‘imizning fonga nisbatan siljishi parallaksning eng sodda misolidir." },
+    { sec: "Geometriya: Uchburchak", q: "2. To‘g‘ri burchakli uchburchakda asos (bazis) uzunligi o‘zgarmas bo‘lsa, obyekt bizdan uzoqlashgan sari parallaktik burchak qanday o‘zgaradi?", opts: ["Kamayadi (kichiklashadi)", "Ortadi", "O‘zgarmaydi", "90° ga teng bo‘ladi"], ans: 0, exp: "Obyekt qanchalik uzoqda bo‘lsa, unga yo‘nalgan chiziqlar orasidagi burchak shunchalik kichik bo‘ladi." },
+    { sec: "Matematika: Logarifm", q: "3. O‘nli logarifm lg(100) nimaga teng?", opts: ["2", "10", "100", "0.5"], ans: 0, exp: "10² = 100 bo‘lgani uchun lg(100) = 2." },
+    { sec: "Matematika: Logarifm", q: "4. Agar lg(r) = 3 bo‘lsa, r soni nechaga teng?", opts: ["1 000", "30", "300", "3"], ans: 0, exp: "lg(r) = 3 ⇒ r = 10³ = 1000." },
+    { sec: "Fizika: Yorqinlik va masofa", q: "5. Bir xil quvvatli ikkita lampadan biri ikkinchisiga qaraganda 3 marta uzoqda joylashgan. Uzoqroq lampaning yoritganligi necha marta kichik?", opts: ["9 marta", "3 marta", "6 marta", "27 marta"], ans: 0, exp: "Yoritganlik masofa kvadratiga teskari proporsional (E ~ 1/r²): 3² = 9 marta kichik." },
+    { sec: "Fizika: Sfera yuzasi", q: "6. Radiusi R bo‘lgan sharning (sferaning) sirt yuzasi formulasi qaysi?", opts: ["S = 4πR²", "S = πR²", "S = 2πR", "S = (4/3)πR³"], ans: 0, exp: "Sfera yuzasi S = 4πR², shar hajmi esa V = (4/3)πR³." },
+    { sec: "Fizika: Issiqlik nurlanishi", q: "7. Qizdirilgan jismning temperaturasi (T) ortgan sari uning rangi qaysi ketma-ketlikda o‘zgaradi?", opts: ["To‘q qizil → sariq → oq → zangori-ko‘k", "Ko‘k → yashil → qizil → qora", "Oq → qizil → jigarrang", "Rangi umuman o‘zgarmaydi"], ans: 0, exp: "Temperatura ko‘tarilgan sari maksimal nurlanish qisqa to‘lqinlar (ko‘k) tomon siljiydi." },
+    { sec: "Fizika: Issiqlik nurlanishi", q: "8. Mutlaq qora jismning birlik yuzasidan chiqayotgan nurlanish quvvati uning mutlaq temperaturasining (T) nechanchi darajasiga proporsional (Stefan–Bolsman qonuni)?", opts: ["To‘rtinchi darajasiga (T⁴)", "Birinchi darajasiga (T)", "Kvadratiga (T²)", "Kubiga (T³)"], ans: 0, exp: "Stefan–Bolsman qonuni: ε = σ · T⁴." },
+    { sec: "Fizika: Spektr", q: "9. Yulduzlar spektridagi qorong‘u yutilish chiziqlari nimani aniqlash imkonini beradi?", opts: ["Yulduz atmosferasining kimyoviy tarkibi va temperaturasini", "Yulduzning nomini", "Yulduzning massasini bevosita tarozida o‘lchashni", "Teleskopning narxini"], ans: 0, exp: "Har bir element va ionlanish darajasi o‘ziga xos spektral chiziqlar hosil qiladi." },
+    { sec: "Fizika: Doppler effekti", q: "10. Yulduz bizdan uzoqlashayotgan bo‘lsa, uning spektridagi chiziqlar qaysi tomonga siljiydi?", opts: ["Uzunroq to‘lqinlar (qizil) tomonga", "Qisqaroq to‘lqinlar (binafsha) tomonga", "Siljimaydi", "Nolga aylanadi"], ans: 0, exp: "Uzoqlashayotgan manbadan kelayotgan to‘lqin uzunligi uzayadi (qizilga siljish)." },
+    { sec: "Fizika: Gravitatsiya va bosim", q: "11. Yulduzning milliardlab yil davomida o‘z og‘irligi ostida siqilib ketmasdan barqaror turishini qaysi ikki kuchning muvozanati ta’minlaydi?", opts: ["Ichkariga tortuvchi gravitatsiya kuchi va tashqariga itaruvchi ichki gaz/nurlanish bosimi", "Magnit kuchi va ishqalanish kuchi", "Quyosh shamoli va atmosfera bosimi", "Faqat markazdan qochma kuch"], ans: 0, exp: "Gidrostatik muvozanat yulduz barqarorligining asosiy shartidir." },
+    { sec: "Fizika: Yadro energiyasi", q: "12. Quyosh va asosiy yulduzlar hayotining eng uzun bosqichida yadroda qanday reaksiya kechadi?", opts: ["Vodorodning geliyga aylanish termoyadro sintezi", "Temirning vodorodga parchalanishi", "Suvning bug‘lanishi", "Ko‘mirning yonishi"], ans: 0, exp: "Vodorod yoqilg‘isining geliyga aylanishi yulduz energiyasining asosiy manbaidir." },
+    { sec: "Fizika: Aylanish va impuls momenti", q: "13. Aylanayotgan jismning radiusi keskin kichiklashganda (impuls momenti saqlanish qonuniga ko‘ra), uning aylanish burchak tezligi qanday o‘zgaradi?", opts: ["Keskin ortadi (juda tez aylana boshlaydi)", "Kamayadi", "To‘xtaydi", "O‘zgarmaydi"], ans: 0, exp: "Qo‘llarini yig‘gan figurali uchuvchi kabi, siqilgan yulduz yadrosi (pulsar) juda tez aylanadi." },
+    { sec: "Fizika: Zichlik", q: "14. Agar Quyosh massasiga teng massa diametri atigi ~20 km bo‘lgan sharga siqilsa, uning zichligi qanday bo‘ladi?", opts: ["Atom yadrosi zichligiga yaqin o‘ta ulkan zichlik", "Havo zichligidan kichik", "Suv zichligiga teng", "Nolga teng"], ans: 0, exp: "Neytron yulduzlar moddasi nihoyatda yuqori zichlikka ega bo‘ladi." },
+    { sec: "Tayanch astronomiya", q: "15. Ko‘rinma yulduz kattaligi (m) kichikroq (masalan, 1ᵐ) bo‘lgan yulduz kattaroq (masalan, 5ᵐ) bo‘lgan yulduzga nisbatan qanday ko‘rinadi?", opts: ["Ancha yorqinroq (ravshanroq)", "Ancha xiraroq", "Bir xil ravshanlikda", "Umuman ko‘rinmaydi"], ans: 0, exp: "Qadimgi shkala bo‘yicha yulduz kattaligi soni qanchalik kichik (yoki manfiy) bo‘lsa, yulduz shunchalik yorqin bo‘ladi." },
+    { sec: "Amaliy hisob", q: "16. Agar A yulduzning yoritganligi B yulduznikidan 100 marta katta bo‘lsa, bu ikki yulduzning ko‘rinma yulduz kattaliklari farqi nechaga teng (Pogson formulasi: 1 daraja ≈ 2.512 marta; 2.512⁵ ≈ 100)?", opts: ["5 yulduz kattaligiga (5ᵐ)", "100 yulduz kattaligiga", "2 yulduz kattaligiga", "10 yulduz kattaligiga"], ans: 0, exp: "Har 5ᵐ farq ravshanlikning aniq 100 marta farq qilishini bildiradi." },
+    { sec: "Amaliy hisob", q: "17. Agar yulduzning radiusi Quyosh radiusidan 2 marta katta, lekin sirt temperaturasi Quyoshniki bilan bir xil bo‘lsa, uning yorqinligi (L ~ R²·T⁴) Quyoshnikidan necha marta katta?", opts: ["4 marta", "2 marta", "8 marta", "16 marta"], ans: 0, exp: "T o‘zgarmas bo‘lganda L ~ R² ⇒ 2² = 4 marta katta." },
+    { sec: "Amaliy vaziyat", q: "18. Osmonda yonma-yon (bir-biriga yaqin burchak masofada) ko‘ringan ikki yulduz har doim ham haqiqatda bir-biriga yaqinmi?", opts: ["Yo‘q, biri yaqin, ikkinchisi esa undan yuzlab marta uzoqda (bir nur yo‘nalishida) joylashgan bo‘lishi mumkin", "Ha, ular doimo bir-biriga tegib turadi", "Ha, barcha yulduzlar bir xil masofada", "Yo‘q, ular sayyora hisoblanadi"], ans: 0, exp: "Bu optik qo‘shaloq yulduzlar bilan fizik bog‘langan qo‘shaloq yulduzlarni farqlash uchun muhim tushuncha." },
+    { sec: "Tayanch mantiq", q: "19. Nima sababdan massasi Quyoshnikidan 15–20 marta katta bo‘lgan yulduzlar Quyoshga qaraganda ancha qisqa umr ko‘radi?", opts: ["Yadrosidagi bosim va temperatura o‘ta yuqori bo‘lgani uchun yadro yoqilg‘isini nihoyatda tez sarflab tugatadi", "Ularda vodorod umuman yo‘qligi uchun", "Ular juda sovuq bo‘lgani uchun", "Ular harakatlanmagani uchun"], ans: 0, exp: "Massiv yulduzlar yoqilg‘i zaxirasi ko‘p bo‘lsa-da, energiya sarfi (yorqinligi) minglab marta katta bo‘ladi." },
+    { sec: "Tayanch mantiq", q: "20. Yulduzlar haqidagi barcha ma’lumotlarni (masofa, temperatura, massa, tarkib) olimlar asosan nima orqali oladi?", opts: ["Ulardan kelayotgan elektromagnit nurlanishni (yorug‘lik va spektrni) tahlil qilish orqali", "Yulduzlarga kosmik kema qo‘ndirib namuna olish orqali", "Faqat oddiy ko‘z bilan rangini taxmin qilish orqali", "Yulduzlardan keladigan tovushlarni eshitish orqali"], ans: 0, exp: "Yulduzlarga uchib borish imkonsiz bo‘lgani uchun nurlanish tahlili yagona axborot manbaidir." }
+  ];
+
+  const variantB = [
+    { sec: "Geometriya: Parallaks", q: "1. Yerning Quyosh atrofida 6 oy ichida diametral qarama-qarshi nuqtalarga o‘tishi natijasida yulduzning fonga nisbatan ko‘rinma siljishi nimani o‘lchashga asos bo‘ladi?", opts: ["Yulduzning yillik parallaksi va ungacha bo‘lgan masofani", "Yerning massasini", "Oyning temperaturasini", "Quyoshning aylanish davrini"], ans: 0, exp: "Yer orbitasi radiusi (1 a.b.) bazis vazifasini bajarib, yaqin yulduzlargacha masofani aniqlash imkonini beradi." },
+    { sec: "Geometriya: Uchburchak", q: "2. A yulduzning yillik parallaksi 0.5″, B yulduzniki esa 0.1″. Qaysi yulduz Yerga yaqinroq joylashgan?", opts: ["A yulduz (5 marta yaqinroq)", "B yulduz (5 marta yaqinroq)", "Ikkalasining masofasi teng", "Aniqlab bo‘lmaydi"], ans: 0, exp: "Parallaks qanchalik katta bo‘lsa, yulduz shunchalik yaqin bo‘ladi (0.5 / 0.1 = 5 marta)." },
+    { sec: "Matematika: Logarifm", q: "3. O‘nli logarifm lg(10) nimaga teng?", opts: ["1", "0", "10", "100"], ans: 0, exp: "10¹ = 10 bo‘lgani uchun lg(10) = 1." },
+    { sec: "Matematika: Logarifm", q: "4. O‘nli logarifm lg(1) nimaga teng?", opts: ["0", "1", "10", "−1"], ans: 0, exp: "10⁰ = 1 bo‘lgani uchun lg(1) = 0." },
+    { sec: "Fizika: Yorqinlik va masofa", q: "5. Bir xil yorqinlikdagi ikkita yulduzdan biri ikkinchisidan 2 marta yaqinroq bo‘lsa, yaqinroq yulduz necha marta ravshanroq ko‘rinadi?", opts: ["4 marta", "2 marta", "8 marta", "16 marta"], ans: 0, exp: "Ravshanlik masofa kvadratiga teskari proporsional: 2² = 4 marta." },
+    { sec: "Fizika: Sfera yuzasi", q: "6. Agar sharning radiusi (R) 3 marta orttirilsa, uning sirt yuzasi (S = 4πR²) necha marta ortadi?", opts: ["9 marta", "3 marta", "6 marta", "27 marta"], ans: 0, exp: "S ~ R² bo‘lgani uchun 3² = 9 marta ortadi." },
+    { sec: "Fizika: Issiqlik nurlanishi", q: "7. Sirt temperaturasi ~3 000 K bo‘lgan yulduz va ~25 000 K bo‘lgan yulduz qaysi ranglarda ko‘rinadi?", opts: ["3 000 K — qizil, 25 000 K — ko‘k-oqish", "3 000 K — ko‘k, 25 000 K — qizil", "Ikkalasi ham yashil", "Ikkalasi ham qora"], ans: 0, exp: "Sovuqroq yulduzlar qizg‘ish, o‘ta qaynoq yulduzlar esa ko‘kimtir rangda nurlanadi." },
+    { sec: "Fizika: Issiqlik nurlanishi", q: "8. Stefan–Bolsman qonuniga ko‘ra, jismning sirt temperaturasi (T) 2 marta ortsa, uning birlik yuzasidan nurlanish quvvati (ε = σT⁴) necha marta ortadi?", opts: ["16 marta", "4 marta", "8 marta", "2 marta"], ans: 0, exp: "2⁴ = 2 × 2 × 2 × 2 = 16 marta." },
+    { sec: "Fizika: Spektr", q: "9. Yulduzlar spektridagi chiziqlar qaysi turdagi spektrga misol bo‘ladi?", opts: ["Uzluksiz fonda qorong‘u yutilish chiziqlari (Fraungofer chiziqlari)", "Faqat bitta rangli chiziq", "Tovush spektri", "Magnit maydon chiziqlari"], ans: 0, exp: "Yulduzning ichki qatlamlari uzluksiz spektr beradi, tashqi sovuqroq atmosferasi esa ma’lum chiziqlarni yutadi." },
+    { sec: "Fizika: Doppler effekti", q: "10. Yulduz kuzatuvchiga yaqinlashayotgan bo‘lsa, uning spektridagi chiziqlar qaysi tomonga siljiydi?", opts: ["Qisqaroq to‘lqinlar (binafsha/ko‘k) tomonga", "Uzunroq to‘lqinlar (qizil) tomonga", "Siljimaydi", "Infraqizil sohaga"], ans: 0, exp: "Yaqinlashayotgan manba to‘lqin uzunligi qisqaradi (binafshaga siljish)." },
+    { sec: "Fizika: Gravitatsiya va bosim", q: "11. Yulduz markazida termoyadro yoqilg‘isi tugaganda va ichki bosim pasayganda gravitatsiya kuchi qanday ta’sir ko‘rsatadi?", opts: ["Yulduz yadrosini ichkariga tomon kuchli siqadi (gravitatsion kollaps)", "Yulduzni sovutib muzlatadi", "Gravitatsiya yo‘qoladi", "Yulduz kvadrat shaklga kiradi"], ans: 0, exp: "Ichki bosim kamayganda tortishish kuchi ustun kelib yadroni siqadi." },
+    { sec: "Fizika: Yadro energiyasi", q: "12. Vodorod zaxirasi tugagandan so‘ng massiv yulduzlarning yadrosida temperatura yanada ko‘tarilganda qanday jarayon boshlanadi?", opts: ["Geliy va undan og‘irroq elementlar (uglerod, kislorod va h.k.) sintezi", "Suv hosil bo‘lishi", "Oddiy yonish", "Hech qanday jarayon bo‘lmaydi"], ans: 0, exp: "Yuqori bosim va temperaturada og‘irroq yadrolarning termoyadro sintezi ketma-ket boshlanadi." },
+    { sec: "Fizika: Aylanish va impuls momenti", q: "13. Qaysi fizik saqlanish qonuni siqilayotgan yulduz yadrosining juda katta tezlikda aylanishini tushuntiradi?", opts: ["Impuls momentining saqlanish qonuni (L = I · ω = const)", "Arximed qonuni", "Om qonuni", "Boyl–Mariott qonuni"], ans: 0, exp: "Inersiya momenti I ~ R² kamayganda burchak tezlik ω mutanosib ravishda ortadi." },
+    { sec: "Fizika: Zichlik", q: "14. Oq mitti yulduzning o‘lchami taxminan qaysi osmon jismi o‘lchamiga yaqin bo‘ladi (massasi esa Quyosh massasiga yaqin)?", opts: ["Yer sayyorasi o‘lchamiga", "Somon Yo‘li Galaktikasi o‘lchamiga", "Atom o‘lchamiga", "1 metrga"], ans: 0, exp: "Quyosh massasidek modda Yer o‘lchamidagi hajmga siqilgani uchun oq mitti nihoyatda zich bo‘ladi." },
+    { sec: "Tayanch astronomiya", q: "15. Quyidagi yulduz kattaliklaridan qaysi biri eng yorqin osmon jismiga tegishli?", opts: ["−1.5ᵐ (Sirius)", "+1.0ᵐ", "+4.5ᵐ", "+6.0ᵐ"], ans: 0, exp: "Manfiy yulduz kattaligi musbat kattaliklardan ancha yorqinroq obyektlarni bildiradi." },
+    { sec: "Amaliy hisob", q: "16. Agar A yulduzning ko‘rinma kattaligi 1ᵐ, B yulduzniki esa 6ᵐ bo‘lsa, A yulduz B yulduzdan necha marta yorqinroq ko‘rinadi?", opts: ["100 marta", "5 marta", "6 marta", "10 marta"], ans: 0, exp: "6ᵐ − 1ᵐ = 5ᵐ farq ⇒ ravshanlik 100 marta katta." },
+    { sec: "Amaliy hisob", q: "17. Agar ikki yulduzning radiusi bir xil, lekin birinchisining sirt temperaturasi ikkinchisinikidan 2 marta yuqori bo‘lsa, uning yorqinligi (L ~ R²·T⁴) necha marta katta?", opts: ["16 marta", "2 marta", "4 marta", "8 marta"], ans: 0, exp: "R o‘zgarmas bo‘lganda L ~ T⁴ ⇒ 2⁴ = 16 marta." },
+    { sec: "Amaliy vaziyat", q: "18. Umumiy massa markazi atrofida aylanayotgan ikkita yulduzdan iborat tizimni kuzatish astronomlarga yulduzlarning qaysi muhim parametrini aniq hisoblashga yordam beradi?", opts: ["Yulduzlarning massasini (Keplerning umumiylashtirilgan 3-qonuni orqali)", "Yulduzlarning nomini", "Yerning atmosfera bosimini", "Oyning fazasini"], ans: 0, exp: "Qo‘shaloq yulduzlar orbital davri va masofasi orqali ularning massalari topiladi." },
+    { sec: "Tayanch mantiq", q: "19. Nima sababdan tundagi osmonda ko‘rinadigan yulduzlarning rangi turlicha (oqish, ko‘kimtir, sarg‘ish, qizg‘ish) bo‘ladi?", opts: ["Ularning fotosfera (sirt) temperaturalari turlicha bo‘lgani uchun", "Teleskop oynalari rangli bo‘lgani uchun", "Yulduzlar rangli chiroqlar yoqqani uchun", "Ularning barchasi sayyora bo‘lgani uchun"], ans: 0, exp: "Yulduz rangi uning sirt temperaturasining bevosita ko‘rsatkichidir." },
+    { sec: "Tayanch mantiq", q: "20. Yulduzning ko‘rinma ravshanligi katta bo‘lsa-da, uning haqiqiy (mutlaq) yorqinligi unchalik katta bo‘lmasligi mumkinmi?", opts: ["Ha, agar u Yerga juda yaqin joylashgan bo‘lsa", "Yo‘q, ko‘rinma ravshanlik doimo haqiqiy yorqinlikka teng", "Faqat qishda shunday bo‘ladi", "Faqat quyosh tutilishida shunday bo‘ladi"], ans: 0, exp: "Yaqin joylashgan xira lampa uzoqdagi kuchli projektor dan yorqinroq ko‘rinishi mumkin." }
+  ];
+
+  let currentMode = 'A';
+  let userAnswersA = new Array(variantA.length).fill(null);
+  let userAnswersB = new Array(variantB.length).fill(null);
+  let gradedA = false;
+  let gradedB = false;
+
+  function getActiveQuestions() { return currentMode === 'B' ? variantB : variantA; }
+  function getActiveAnswers() { return currentMode === 'B' ? userAnswersB : userAnswersA; }
+  function isActiveGraded() { return currentMode === 'B' ? gradedB : gradedA; }
+  function setActiveGraded(val) {
+    if (currentMode === 'B') gradedB = val;
+    else gradedA = val;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tabA').classList.toggle('active', mode === 'A');
+    document.getElementById('tabB').classList.toggle('active', mode === 'B');
+    document.getElementById('resultBox').style.display = 'none';
+
+    renderQuestions();
+    updateAnsweredPill();
+    if (isActiveGraded()) gradeExam();
+  }
+
+  function renderQuestions() {
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    const list = document.getElementById('questionsList');
+    list.innerHTML = '';
+
+    qs.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const top = document.createElement('div');
+      top.className = 'q-top';
+      top.innerHTML = `<span>${currentMode} Variant — ${item.sec}</span><span>Savol #${qIndex + 1}</span>`;
+
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.textContent = item.q;
+
+      const opts = document.createElement('div');
+      opts.className = 'opts';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      item.opts.forEach((opt, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = `${letters[oIndex]}) ${opt}`;
+        if (ansArr[qIndex] === oIndex) btn.classList.add('selected');
+        btn.onclick = () => {
+          if (isActiveGraded()) return;
+          ansArr[qIndex] = oIndex;
+          updateAnsweredPill();
+          Array.from(opts.children).forEach((c, idx) => {
+            c.classList.toggle('selected', idx === oIndex);
+          });
+        };
+        opts.appendChild(btn);
+      });
+
+      const exp = document.createElement('div');
+      exp.className = 'explain';
+      exp.id = `exp-${currentMode}-${qIndex}`;
+      exp.textContent = `Izoh: ${item.exp}`;
+
+      card.appendChild(top);
+      card.appendChild(qText);
+      card.appendChild(opts);
+      card.appendChild(exp);
+      list.appendChild(card);
+    });
+  }
+
+  function updateAnsweredPill() {
+    const ansArr = getActiveAnswers();
+    const count = ansArr.filter(x => x !== null).length;
+    document.getElementById('answeredPill').textContent = `Javoblar: ${count} / ${ansArr.length}`;
+  }
+
+  function gradeExam() {
+    setActiveGraded(true);
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    let correct = 0;
+    const cards = document.getElementById('questionsList').children;
+
+    qs.forEach((item, qIndex) => {
+      const opts = cards[qIndex].querySelectorAll('.opt-btn');
+      opts.forEach((btn, oIndex) => {
+        btn.classList.remove('selected', 'correct', 'wrong');
+        if (oIndex === item.ans) {
+          btn.classList.add('correct');
+        } else if (ansArr[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+      });
+      if (ansArr[qIndex] === item.ans) correct++;
+      document.getElementById(`exp-${currentMode}-${qIndex}`).style.display = 'block';
+    });
+
+    const pct = Math.round((correct / qs.length) * 100);
+    let level = "Boshlang‘ich (Tayanch mavzularni takrorlash zarur)";
+    let advice = "Tavsiya: Parallaks tushunchasi, o‘nli logarifm (lg), masofa kvadratiga teskari proporsionallik (1/r²), Stefan–Bolsman qonuni (T⁴) va Doppler siljishini takrorlang.";
+    if (pct >= 86) {
+      level = "Yuqori (5 — A'lo)";
+      advice = "Ajoyib tayyorgarlik! 5-bob (Yulduzlar fizikasi va evolyutsiyasi) mavzularini o‘zlashtirishga to‘liq tayyorsiz.";
+    } else if (pct >= 71) {
+      level = "Yaxshi (4 — Yaxshi)";
+      advice = "Yaxshi natija! Xato tushgan savollarning izohini ko‘rib, yulduzlar kattaligi va Gershprung–Rassel diagrammasi mavzulariga bemalol o‘ting.";
+    } else if (pct >= 55) {
+      level = "O‘rta (3 — Qoniqarli)";
+      advice = "O‘rta daraja. Logarifm va yulduz yorqinligi/temperaturasi bog‘liqliklariga oid misollarni mustahkamlab oling.";
+    }
+
+    const name = document.getElementById('stName').value.trim() || "O‘quvchi";
+    const cls = document.getElementById('stClass').value.trim();
+    const dt = document.getElementById('stDate').value.trim();
+
+    document.getElementById('resTitle').textContent = `5-Bob Kiruvchi Test Natijasi (${currentMode} Variant)`;
+    document.getElementById('resStudent').textContent = `O‘quvchi: ${name}${cls ? ' — ' + cls : ''}${dt ? ' | Sana: ' + dt : ''}`;
+    document.getElementById('resCorrect').textContent = `${correct} / ${qs.length}`;
+    document.getElementById('resPercent').textContent = `${pct}%`;
+    document.getElementById('resGrade').textContent = level;
+    document.getElementById('resAdvice').textContent = advice;
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetExam() {
+    setActiveGraded(false);
+    getActiveAnswers().fill(null);
+    updateAnsweredPill();
+    document.getElementById('resultBox').style.display = 'none';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderQuestions();
+  updateAnsweredPill();
+</script>
+</body>
+</html>
