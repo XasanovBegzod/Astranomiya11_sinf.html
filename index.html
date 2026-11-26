@@ -12,6 +12,7 @@
       --accent: #38bdf8;
       --accent-glow: rgba(56, 189, 248, 0.28);
       --emerald: #34d399;
+      --purple: #c084fc;
       --gold: #fbbf24;
       --rose: #fb7185;
       --text-main: #f8fafc;
@@ -115,7 +116,7 @@
 
     /* Qidiruv va bo'lim tugmalari */
     .controls {
-      max-width: 720px;
+      max-width: 820px;
       margin: 0 auto 26px auto;
     }
 
@@ -205,6 +206,11 @@
       background: rgba(10, 42, 36, 0.74);
     }
 
+    .card.card-video {
+      border-color: rgba(192, 132, 252, 0.4);
+      background: rgba(34, 18, 56, 0.74);
+    }
+
     .card.card-bsb {
       border-color: rgba(251, 191, 36, 0.38);
       background: rgba(42, 30, 12, 0.74);
@@ -232,6 +238,12 @@
       background: rgba(52, 211, 153, 0.16);
       color: var(--emerald);
       border-color: rgba(52, 211, 153, 0.42);
+    }
+
+    .badge.video {
+      background: rgba(192, 132, 252, 0.16);
+      color: var(--purple);
+      border-color: rgba(192, 132, 252, 0.42);
     }
 
     .badge.bsb {
@@ -271,6 +283,7 @@
     }
 
     .card.card-kiruvchi .card-footer { color: var(--emerald); }
+    .card.card-video .card-footer { color: var(--purple); }
     .card.card-bsb .card-footer { color: var(--gold); }
     .card.card-chsb .card-footer { color: var(--rose); }
 
@@ -296,7 +309,7 @@
     <header>
       <span class="eyebrow">✦ Interaktiv elektron darslik</span>
       <h1>11-sinf Astronomiya</h1>
-      <p>40 ta mavzu, kiruvchi diagnostik testlar, bob va choraklik nazorat ishlari to‘plami</p>
+      <p>40 ta mavzu, 3 daqiqalik video-slaydlar, kiruvchi testlar, BSB va CHSB to‘plami</p>
     </header>
 
     <div class="controls">
@@ -304,8 +317,9 @@
         <input type="text" id="searchInput" placeholder="Mavzu nomi, paragraf yoki raqamini yozing...">
       </div>
       <div class="filter-tabs">
-        <button class="filter-btn active" data-filter="all">Barchasi (56)</button>
+        <button class="filter-btn active" data-filter="all">Barchasi (96)</button>
         <button class="filter-btn" data-filter="mavzu">Mavzular (40)</button>
+        <button class="filter-btn" data-filter="video">Video dars (40)</button>
         <button class="filter-btn" data-filter="kiruvchi">Kiruvchi test (7)</button>
         <button class="filter-btn" data-filter="bsb">BSB (5)</button>
         <button class="filter-btn" data-filter="chsb">CHSB (4)</button>
@@ -317,7 +331,7 @@
   </div>
 
   <script>
-    const mavzular = [
+    const asosiyRoyxat = [
       { id: "1-Kiruvchi", nomi: "1-bob oldidan kiruvchi (diagnostik) test", paragraf: "I bob. Amaliy astronomiya asoslari (1–17-§§)", fayl: "kiruvchi_test1.html", tur: "kiruvchi" },
       { id: 1, nomi: "1-§. Astronomiya nimani o‘rganadi? Uning rivojlanish tarixi va boshqa fanlar bilan aloqasi", paragraf: "Kirish", fayl: "mavzu1.html", tur: "mavzu" },
       { id: 2, nomi: "2-§. Yoritgichlarning sutkalik ko‘rinma harakatlari. Yulduz turkumlari", paragraf: "3-§. Fuko mayatnigi • 4-§. Osmon sferasi • 5-§. Ekliptika", fayl: "mavzu2.html", tur: "mavzu" },
@@ -382,6 +396,21 @@
       { id: "4-CHSB", nomi: "4-choraklik summativ baholash (4-CHSB)", paragraf: "4-chorak va yillik yakuniy nazorat ishi", fayl: "chsb4.html", tur: "chsb" }
     ];
 
+    // Har bir mavzudan keyin avtomatik ravishda uning video-slayd kartochkasini yaratish
+    const mavzular = [];
+    asosiyRoyxat.forEach(item => {
+      mavzular.push(item);
+      if (item.tur === "mavzu") {
+        mavzular.push({
+          id: `${item.id}-Video`,
+          nomi: `🎬 Video dars: ${item.nomi}`,
+          paragraf: `3 daqiqalik animatsiyali video-slayd (${item.paragraf})`,
+          fayl: `video${item.id}.html`,
+          tur: "video"
+        });
+      }
+    });
+
     const grid = document.getElementById("topicsGrid");
     const searchInput = document.getElementById("searchInput");
     const emptyMsg = document.getElementById("emptyMsg");
@@ -414,11 +443,17 @@
 
         let yorliq = `${item.id}-mavzu`;
         let badgeClass = "badge";
+        let footerText = "Ochish";
 
         if (item.tur === "kiruvchi") {
           yorliq = item.id;
           badgeClass = "badge kiruvchi";
           card.classList.add("card-kiruvchi");
+        } else if (item.tur === "video") {
+          yorliq = item.id;
+          badgeClass = "badge video";
+          card.classList.add("card-video");
+          footerText = "Videoni ko‘rish";
         } else if (item.tur === "bsb") {
           yorliq = item.id;
           badgeClass = "badge bsb";
@@ -436,7 +471,7 @@
             <p class="card-sub">${item.paragraf}</p>
           </div>
           <div class="card-footer">
-            <span>Ochish</span>
+            <span>${footerText}</span>
             <span>&rarr;</span>
           </div>
         `;
