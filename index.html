@@ -11,6 +11,7 @@
       --card-hover: rgba(24, 38, 74, 0.92);
       --accent: #38bdf8;
       --accent-glow: rgba(56, 189, 248, 0.28);
+      --emerald: #34d399;
       --gold: #fbbf24;
       --rose: #fb7185;
       --text-main: #f8fafc;
@@ -114,7 +115,7 @@
 
     /* Qidiruv va bo'lim tugmalari */
     .controls {
-      max-width: 640px;
+      max-width: 720px;
       margin: 0 auto 26px auto;
     }
 
@@ -199,6 +200,11 @@
       box-shadow: 0 12px 28px rgba(2, 132, 199, 0.25);
     }
 
+    .card.card-kiruvchi {
+      border-color: rgba(52, 211, 153, 0.4);
+      background: rgba(10, 42, 36, 0.74);
+    }
+
     .card.card-bsb {
       border-color: rgba(251, 191, 36, 0.38);
       background: rgba(42, 30, 12, 0.74);
@@ -220,6 +226,12 @@
       border-radius: 8px;
       margin-bottom: 10px;
       width: fit-content;
+    }
+
+    .badge.kiruvchi {
+      background: rgba(52, 211, 153, 0.16);
+      color: var(--emerald);
+      border-color: rgba(52, 211, 153, 0.42);
     }
 
     .badge.bsb {
@@ -258,6 +270,7 @@
       border-top: 1px solid rgba(148, 163, 184, 0.14);
     }
 
+    .card.card-kiruvchi .card-footer { color: var(--emerald); }
     .card.card-bsb .card-footer { color: var(--gold); }
     .card.card-chsb .card-footer { color: var(--rose); }
 
@@ -283,7 +296,7 @@
     <header>
       <span class="eyebrow">✦ Interaktiv elektron darslik</span>
       <h1>11-sinf Astronomiya</h1>
-      <p>40 ta mavzu, bob va choraklik nazorat ishlari to‘plami</p>
+      <p>40 ta mavzu, kiruvchi diagnostik testlar, bob va choraklik nazorat ishlari to‘plami</p>
     </header>
 
     <div class="controls">
@@ -291,8 +304,9 @@
         <input type="text" id="searchInput" placeholder="Mavzu nomi, paragraf yoki raqamini yozing...">
       </div>
       <div class="filter-tabs">
-        <button class="filter-btn active" data-filter="all">Barchasi (49)</button>
+        <button class="filter-btn active" data-filter="all">Barchasi (56)</button>
         <button class="filter-btn" data-filter="mavzu">Mavzular (40)</button>
+        <button class="filter-btn" data-filter="kiruvchi">Kiruvchi test (7)</button>
         <button class="filter-btn" data-filter="bsb">BSB (5)</button>
         <button class="filter-btn" data-filter="chsb">CHSB (4)</button>
       </div>
@@ -304,6 +318,7 @@
 
   <script>
     const mavzular = [
+      { id: "1-Kiruvchi", nomi: "1-bob oldidan kiruvchi (diagnostik) test", paragraf: "I bob. Amaliy astronomiya asoslari (1–17-§§)", fayl: "kiruvchi_test1.html", tur: "kiruvchi" },
       { id: 1, nomi: "1-§. Astronomiya nimani o‘rganadi? Uning rivojlanish tarixi va boshqa fanlar bilan aloqasi", paragraf: "Kirish", fayl: "mavzu1.html", tur: "mavzu" },
       { id: 2, nomi: "2-§. Yoritgichlarning sutkalik ko‘rinma harakatlari. Yulduz turkumlari", paragraf: "3-§. Fuko mayatnigi • 4-§. Osmon sferasi • 5-§. Ekliptika", fayl: "mavzu2.html", tur: "mavzu" },
       { id: 3, nomi: "6-§. Osmon koordinatalari", paragraf: "7-§. Yulduzlarning xaritalari • 8-§. Ko‘rinma yulduz kattaliklari", fayl: "mavzu3.html", tur: "mavzu" },
@@ -311,14 +326,20 @@
       { id: 5, nomi: "13-§. Vaqtni o‘lchashning asoslari", paragraf: "14-§. Kalendarlar", fayl: "mavzu5.html", tur: "mavzu" },
       { id: 6, nomi: "15-§. Oyning harakati, fazalari va davrlari", paragraf: "16-§. Oy va Quyosh hijriy kalendarlari • 17-§. Quyosh va Oy tutilishlari", fayl: "mavzu6.html", tur: "mavzu" },
       { id: "1-BSB", nomi: "Bob yuzasidan summativ baholash (1-BSB)", paragraf: "I bob. Amaliy astronomiya asoslari", fayl: "bsb1.html", tur: "bsb" },
+
+      { id: "2-Kiruvchi", nomi: "2-bob oldidan kiruvchi (diagnostik) test", paragraf: "II bob. Quyosh sistemasining tuzilishi (18–27-§§)", fayl: "kiruvchi_test2.html", tur: "kiruvchi" },
       { id: 7, nomi: "18-§. Quyosh sistemasining tuzilishi", paragraf: "19-§. Masshtab va a’zolar • 20-§. Konfiguratsiyalar • 21-§. Aylanish davrlari", fayl: "mavzu7.html", tur: "mavzu" },
       { id: 8, nomi: "22-§. Sutkalik va sutkalik-gorizontal parallaks. Quyosh sistemasi jismlarigacha masofalar", paragraf: "23-§. Quyosh sistemasi jismlarining radiuslarini aniqlash", fayl: "mavzu8.html", tur: "mavzu" },
       { id: 9, nomi: "24-§. Astronomiyada uzunlik o‘lchov birliklari. Kepler qonunlari", paragraf: "25-§. Kepler qonunlari • 26-§. Osmon jismlarining massalarini hisoblash", fayl: "mavzu9.html", tur: "mavzu" },
       { id: "1-CHSB", nomi: "1-choraklik summativ baholash (1-CHSB)", paragraf: "1-chorak yakuniy nazorat ishi", fayl: "chsb1.html", tur: "chsb" },
       { id: 10, nomi: "27-§. Ikki jism masalasi. Kosmik tezliklar", paragraf: "II bob yakuni", fayl: "mavzu10.html", tur: "mavzu" },
+
+      { id: "3-Kiruvchi", nomi: "3-bob oldidan kiruvchi (diagnostik) test", paragraf: "III bob. Astrofizik tekshirish metodlari (28–33-§§)", fayl: "kiruvchi_test3.html", tur: "kiruvchi" },
       { id: 11, nomi: "28-§. Osmonni elektromagnit to‘lqinli nurlarda o‘rganish – keng to‘lqinli astronomiya", paragraf: "29–31-§. Optik va radioteleskoplar • 32-§. Ulug‘bek rasadxonasi", fayl: "mavzu11.html", tur: "mavzu" },
       { id: 12, nomi: "33-§. Nurlanish qonunlari va osmon jismlarining fizik tabiatlarini spektral o‘rganish", paragraf: "III bob. Astrofizika", fayl: "mavzu12.html", tur: "mavzu" },
       { id: "2-BSB", nomi: "Bob yuzasidan summativ baholash (2-BSB)", paragraf: "II–III boblar yuzasidan nazorat ishi", fayl: "bsb2.html", tur: "bsb" },
+
+      { id: "4-Kiruvchi", nomi: "4-bob oldidan kiruvchi (diagnostik) test", paragraf: "IV bob. Quyosh sistemasi jismlarining fizik tabiati (34–45-§§)", fayl: "kiruvchi_test4.html", tur: "kiruvchi" },
       { id: 13, nomi: "34-§. Quyosh eng yaqin yulduz. Quyosh haqida umumiy ma’lumot", paragraf: "35-§. Quyosh fotosferasi va dog‘lari", fayl: "mavzu13.html", tur: "mavzu" },
       { id: 14, nomi: "36-§. Quyosh xromosferasi va toji", paragraf: "37-§. Quyosh energiyasining manbai • 38-§. Quyosh faolligi", fayl: "mavzu14.html", tur: "mavzu" },
       { id: 15, nomi: "39-§. Yer rusumidagi planetalar. Merkuriy va Venera", paragraf: "40-§. Yer va uning tabiiy yo‘ldoshi Oy. Mars", fayl: "mavzu15.html", tur: "mavzu" },
@@ -328,12 +349,16 @@
       { id: 18, nomi: "43-§. Kometalar («dumli yulduzlar»)", paragraf: "44-§. Meteorlar («uchar yulduzlar») va meteoritlar", fayl: "mavzu18.html", tur: "mavzu" },
       { id: 19, nomi: "45-§. Quyosh sistemasining kelib chiqishi haqida hozirgi zamon qarashlari", paragraf: "IV bob yakuni", fayl: "mavzu19.html", tur: "mavzu" },
       { id: "3-BSB", nomi: "Bob yuzasidan summativ baholash (3-BSB)", paragraf: "IV bob. Quyosh sistemasi jismlarining fizik tabiati", fayl: "bsb3.html", tur: "bsb" },
+
+      { id: "5-Kiruvchi", nomi: "5-bob oldidan kiruvchi (diagnostik) test", paragraf: "V bob. Yulduzlar (46–55-§§)", fayl: "kiruvchi_test5.html", tur: "kiruvchi" },
       { id: 20, nomi: "46-§. Yillik parallaks, yulduzlarning masofalarini aniqlash", paragraf: "47-§. Yulduz o‘lchamlari • 48-§. Yulduzlarning rangi va temperaturasi", fayl: "mavzu20.html", tur: "mavzu" },
       { id: 21, nomi: "49-§. Yulduzning absolyut kattaligi va uning yorqinligi bilan bog‘liqligi", paragraf: "50-§. Spektral sinflar • 51-§. Spektr-yorqinlik diagrammasi", fayl: "mavzu21.html", tur: "mavzu" },
       { id: 22, nomi: "52-§. Fizik qo‘shaloq yulduzlar va ularning turlari", paragraf: "53-§. Yulduzlarning massalarini hisoblash", fayl: "mavzu22.html", tur: "mavzu" },
       { id: 23, nomi: "54-§. Fizik o‘zgaruvchi yulduzlar: sefeidlar, yangi va o‘ta yangilar", paragraf: "V bob. Yulduzlar", fayl: "mavzu23.html", tur: "mavzu" },
       { id: 24, nomi: "55-§. Yulduzlar evolyutsiyasi. Neytron yulduzlar va «qora o‘ralar»", paragraf: "V bob yakuni", fayl: "mavzu24.html", tur: "mavzu" },
       { id: "4-BSB", nomi: "Bob yuzasidan summativ baholash (4-BSB)", paragraf: "V bob. Yulduzlar", fayl: "bsb4.html", tur: "bsb" },
+
+      { id: "6-Kiruvchi", nomi: "6-bob oldidan kiruvchi (diagnostik) test", paragraf: "VI bob. Koinotning tuzilishi va evolyutsiyasi (56–62-§§)", fayl: "kiruvchi_test6.html", tur: "kiruvchi" },
       { id: 25, nomi: "56-§. Galaktikamizning tuzilishi, tarkibi va aylanishi", paragraf: "57-§. Yulduzlarning sharsimon va sochma to‘dalari", fayl: "mavzu25.html", tur: "mavzu" },
       { id: 26, nomi: "58-§. Diffuz va chang tumanliklar", paragraf: "VI bob. Koinot tuzilishi", fayl: "mavzu26.html", tur: "mavzu" },
       { id: "3-CHSB", nomi: "3-choraklik summativ baholash (3-CHSB)", paragraf: "3-chorak yakuniy nazorat ishi", fayl: "chsb3.html", tur: "chsb" },
@@ -341,6 +366,8 @@
       { id: 28, nomi: "61-§. Koinotning kengayishi. Habbl qonuni", paragraf: "VI bob. Koinot evolyutsiyasi", fayl: "mavzu28.html", tur: "mavzu" },
       { id: 29, nomi: "62-§. Galaktikalarning Koinotda taqsimlanishi", paragraf: "I qism yakuni", fayl: "mavzu29.html", tur: "mavzu" },
       { id: "5-BSB", nomi: "Bob yuzasidan summativ baholash (5-BSB)", paragraf: "VI bob. Koinotning tuzilishi va evolutsiyasi", fayl: "bsb5.html", tur: "bsb" },
+
+      { id: "7-Kiruvchi", nomi: "Kosmonavtika bo‘limi oldidan kiruvchi (diagnostik) test", paragraf: "II qism. Kosmonavtika elementlari (63–76-§§)", fayl: "kiruvchi_test7.html", tur: "kiruvchi" },
       { id: 30, nomi: "63-§. Kosmonavtika predmeti va uning boshqa fanlar bilan aloqasi", paragraf: "II qism. Kosmonavtika elementlari", fayl: "mavzu30.html", tur: "mavzu" },
       { id: 31, nomi: "64-§. Raketa harakati qonunlari. Raketaning tortish kuchi", paragraf: "Kosmonavtika asoslari", fayl: "mavzu31.html", tur: "mavzu" },
       { id: 32, nomi: "65-§. Raketaning strukturasi va konstruktiv xarakteristikasi", paragraf: "66-§. Uchish paytida kosmik apparat (KA)ga ta’sir etuvchi kuchlar", fayl: "mavzu32.html", tur: "mavzu" },
@@ -388,7 +415,11 @@
         let yorliq = `${item.id}-mavzu`;
         let badgeClass = "badge";
 
-        if (item.tur === "bsb") {
+        if (item.tur === "kiruvchi") {
+          yorliq = item.id;
+          badgeClass = "badge kiruvchi";
+          card.classList.add("card-kiruvchi");
+        } else if (item.tur === "bsb") {
           yorliq = item.id;
           badgeClass = "badge bsb";
           card.classList.add("card-bsb");
