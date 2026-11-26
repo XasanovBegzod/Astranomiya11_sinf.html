@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1-Bob Kiruvchi Test | 11-sinf Astronomiya — Amaliy astronomiya asoslari</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.94);
+      --card: rgba(15, 23, 42, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 13px 18px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+
+    .mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover { filter: brightness(1.12); }
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .meta-card input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 17px 20px;
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(30, 41, 59, 0.82);
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .opt-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.14); }
+    .opt-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.18); }
+    .opt-btn.correct { border-color: var(--emerald); background: rgba(16, 185, 129, 0.25); color: #d1fae5; }
+    .opt-btn.wrong { border-color: var(--rose); background: rgba(244, 63, 94, 0.25); color: #ffe4e6; }
+
+    .explain {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      font-size: 0.84rem;
+      color: var(--emerald);
+      display: none;
+    }
+
+    .result-box {
+      background: var(--panel);
+      border: 1px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: none;
+    }
+
+    .result-box h2 { color: var(--gold); font-size: 1.18rem; margin-bottom: 8px; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .score-item {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .score-item span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .score-item strong { font-size: 1.12rem; color: var(--emerald); }
+
+    .actions-bottom {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>1-BOB KIRUVCHI TEST — 11-SINF ASTRONOMIYA</h1>
+    <p>Amaliy astronomiya asoslari (1–17-§§ oldidan tayanch bilimlar) | A/B Variant (20 savoldan)</p>
+  </div>
+  <div class="mode-tabs">
+    <button class="tab-btn active" id="tabA" onclick="switchMode('A')">A Variant (20 savol)</button>
+    <button class="tab-btn" id="tabB" onclick="switchMode('B')">B Variant (20 savol)</button>
+  </div>
+  <div class="status-bar">
+    <div class="pill" id="answeredPill">Javoblar: 0 / 20</div>
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="meta-card">
+    <div>
+      <label for="stName">O‘quvchining F.I.Sh.:</label>
+      <input type="text" id="stName" placeholder="Masalan: Karimov Azizbek" />
+    </div>
+    <div>
+      <label for="stClass">Sinf va maktab:</label>
+      <input type="text" id="stClass" placeholder="Masalan: 11-«A» sinf" />
+    </div>
+    <div>
+      <label for="stDate">Sana:</label>
+      <input type="text" id="stDate" value="2026-11-26" />
+    </div>
+  </div>
+
+  <div id="resultBox" class="result-box">
+    <h2 id="resTitle">1-Bob Kiruvchi Test Natijasi</h2>
+    <p id="resStudent" style="color: var(--muted); font-size: 0.88rem;"></p>
+    <div class="score-grid">
+      <div class="score-item"><span>To‘g‘ri javoblar</span><strong id="resCorrect">0 / 20</strong></div>
+      <div class="score-item"><span>Foiz ko‘rsatkichi</span><strong id="resPercent">0%</strong></div>
+      <div class="score-item"><span>Tayyorgarlik darajasi</span><strong id="resGrade">—</strong></div>
+    </div>
+    <p id="resAdvice" style="font-size: 0.86rem; color: #cbd5e1;"></p>
+  </div>
+
+  <div id="questionsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+
+  <div class="actions-bottom">
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</div>
+
+<script>
+  const variantA = [
+    { sec: "Tayanch tushuncha", q: "1. «Astronomiya» so‘zi qadimgi yunoncha qaysi so‘zlardan olingan va qanday ma’noni bildiradi?", opts: ["«Astron» (yulduz) va «nomos» (qonun) — yulduzlar qonuni", "«Geo» (Yer) va «metriya» (o‘lchash) — Yer o‘lchovi", "«Kosmos» (tartib) va «logiya» (fan) — olam haqidagi fan", "«Foto» (yorug‘lik) va «grafiya» (yozuv) — yorug‘lik yozuvi"], ans: 0, exp: "Astronomiya yulduz va osmon jismlarining joylashuvi, harakati va tabiatini o‘rganuvchi fandir." },
+    { sec: "Geografik koordinata", q: "2. Yer yuzidagi nuqtaning ekvatordan shimol yoki janub tomon burchak masofasi nima deyiladi?", opts: ["Geografik kenglik", "Geografik uzunlik", "Balandlik", "Azimut"], ans: 0, exp: "Geografik kenglik ekvatordan 0° dan 90° gacha o‘lchanadi." },
+    { sec: "Geografik koordinata", q: "3. Boshlang‘ich (0°) meridian qaysi shahar yaqinidan o‘tadi?", opts: ["Grinvich (London)", "Toshkent", "Rim", "Tokio"], ans: 0, exp: "Xalqaro nol meridian Grinvichdan o‘tadi; undan sharqqa va g‘arbga geografik uzunlik hisoblanadi." },
+    { sec: "Burchak o‘lchovlari", q: "4. To‘liq aylana 360° ga teng. 1 gradus (°) necha yoy daqiqaga (′) teng?", opts: ["60′ (oltmish yoy daqiqa)", "100′", "3600′", "24′"], ans: 0, exp: "1° = 60′, va 1′ = 60″ (shuning uchun 1° = 3600″)." },
+    { sec: "Burchak o‘lchovlari", q: "5. 1 yoy daqiqa (1′) va 1 yoy soniya (1″) orasidagi to‘g‘ri munosabatni ko‘rsating:", opts: ["1′ = 60″", "1″ = 60′", "1′ = 100″", "1° = 60″"], ans: 0, exp: "Burchak o‘lchovida 1 gradus = 60 yoy daqiqa, 1 yoy daqiqa = 60 yoy soniya." },
+    { sec: "Yer aylanishi", q: "6. Yer o‘z o‘qi atrofida qaysi yo‘nalishda aylanadi?", opts: ["G‘arbdan sharqqa tomon", "Sharqdan g‘arbga tomon", "Shimoldan janubga tomon", "Faqat qishda aylanadi"], ans: 0, exp: "G‘arbdan sharqqa aylanish tufayli osmon yoritgichlari sharqda ko‘tarilib, g‘arbda botgandek ko‘rinadi." },
+    { sec: "Yer aylanishi", q: "7. Fuko mayatnigining tebranish tekisligi yer yuziga nisbatan burilishi nimani isbotlaydi?", opts: ["Yerning o‘z o‘qi atrofida aylanishini", "Yerning Quyoshdan uzoqlashishini", "Oyning fazalarini", "Yorug‘likning qaytishini"], ans: 0, exp: "Leon Fuko (1851) tajribasi Yerning o‘z o‘qi atrofida aylanishining bevosita mexanik dalilidir." },
+    { sec: "Yil harakati", q: "8. Yerning Quyosh atrofida bir marta to‘liq aylanish davri taxminan qancha?", opts: ["≈ 365.25 sutka (1 yil)", "24 soat", "27.3 sutka", "12 soat"], ans: 0, exp: "Yer Quyosh atrofida ~365.25 sutkada bir marta to‘liq aylanadi." },
+    { sec: "Yil harakati", q: "9. Yerda yil fasllarining almashinishiga asosiy sabab nima?", opts: ["Yer aylanish o‘qining orbita tekisligiga og‘ganligi", "Quyoshning kechasi o‘chib qolishi", "Oyning har oyda kattalashishi", "Yerning faqat ekvatorda isishi"], ans: 0, exp: "O‘q og‘maligi tufayli yil davomida quyosh nurlari tushish balandligi va kunduz uzunligi o‘zgaradi." },
+    { sec: "Vaqt va graduslar", q: "10. Yer 1 soatda o‘z o‘qi atrofida necha gradus burchakka buriladi?", opts: ["15°", "10°", "30°", "45°"], ans: 0, exp: "360° / 24 soat = 15°/soat." },
+    { sec: "Vaqt va graduslar", q: "11. Agar ikki nuqtaning geografik uzunligi farqi 30° bo‘lsa, ularning mahalliy vaqti farqi qancha?", opts: ["2 soat", "1 soat", "30 daqiqa", "4 soat"], ans: 0, exp: "30° / 15° = 2 soat." },
+    { sec: "Vaqt mintaqalari", q: "12. O‘zbekiston (Toshkent) qaysi vaqt mintaqasida joylashgan?", opts: ["UTC+5", "UTC+0", "UTC−5", "UTC+12"], ans: 0, exp: "Toshkent vaqti Grinvichdan 5 soat oldinda (UTC+5)." },
+    { sec: "Kalendar", q: "13. Oddiy yilda 365 kun, kabisa yilida esa necha kun bo‘ladi?", opts: ["366 kun (fevralda 29 kun)", "365 kun (fevralda 30 kun)", "360 kun", "354 kun"], ans: 0, exp: "Har 4 yilda (ba’zi istisnolarni hisobga olgan holda) kabisa yilida fevral 29 kun bo‘ladi." },
+    { sec: "Kalendar", q: "14. Oyning bir fazasidan xuddi o‘sha fazasiga qadar o‘tgan vaqt (sinodik oy) taxminan necha sutka?", opts: ["≈ 29.5 sutka", "≈ 7 sutka", "≈ 365 sutka", "≈ 1 sutka"], ans: 0, exp: "Ikkita bir xil Oy fazasi orasidagi o‘rtacha vaqt ~29.53 sutka." },
+    { sec: "Oy harakati", q: "15. Oyning o‘z o‘qi atrofida aylanish davri Yer atrofida aylanish davriga tengligi natijasida nima sodir bo‘ladi?", opts: ["Oydan Yerga asosan faqat bir tomoni ko‘rinadi", "Oy yulduzga aylanadi", "Oyda kun va tun bo‘lmaydi", "Oy tutilishi har hafta bo‘ladi"], ans: 0, exp: "Sinxron aylanish sababli Oyning qarama-qarshi tomoni Yerdan to‘g‘ridan-to‘g‘ri ko‘rinmaydi." },
+    { sec: "Tutilishlar", q: "16. Quyosh tutilishi paytida Oy qaysi ikki jism orasida joylashadi?", opts: ["Quyosh va Yer orasida", "Yer va Mars orasida", "Quyosh va Venera orasida", "Yulduzlar va Yer orasida"], ans: 0, exp: "Quyosh tutilishida Oy Quyosh nurlarini Yerning ma’lum qismiga to‘sib qo‘yadi." },
+    { sec: "Tutilishlar", q: "17. Oy tutilishi paytida qaysi jism Oyga soya soladi?", opts: ["Yer", "Merkuriy", "Yupiter", "Venera"], ans: 0, exp: "Yer Quyosh va Oy orasiga tushganda Oy Yer soyasiga kiradi." },
+    { sec: "Amaliy hisob", q: "18. Agar biror yoritgichning balandligi 0° bo‘lsa, u osmonning qayerida joylashgan bo‘ladi?", opts: ["Haqiqiy ufq chizig‘ida", "Qoq tepada (zenitda)", "Qoq pastda (nadirda)", "Faqat janubda"], ans: 0, exp: "Balandlik ufq chizig‘idan yuqoriga qarab o‘lchanadi: ufqda 0°, zenitda 90°." },
+    { sec: "Amaliy vaziyat", q: "19. Shahar sharoitida ko‘cha chiroqlari yorug‘ligi tufayli osmondagi xira yulduzlarning ko‘rinmay qolishi nima bilan bog‘liq?", opts: ["Yorug‘lik ifloslanishi (osmon fonining yorqinlashishi) bilan", "Yulduzlarning kunduzi so‘nishi bilan", "Teleskoplarning ishlamasligi bilan", "Yerning aylanmasligi bilan"], ans: 0, exp: "Osmon foni yorug‘ bo‘lsa, xira yulduzlar kontrasti kamayib ko‘rinmay qoladi." },
+    { sec: "Fanlar aloqasi", q: "20. Amaliy astronomiyada burchak, vaqt va koordinatalarni aniqlashda qaysi fanlar asosiy tayanch bo‘ladi?", opts: ["Matematika, fizika va geografiya", "Kimyo va botanika", "Tarix va adabiyot", "Biologiya va anatomiya"], ans: 0, exp: "Astronomik o‘lchovlar va hisoblar geometriya/trigonometriya, fizika va geografiya qonuniyatlariga tayanadi." }
+  ];
+
+  const variantB = [
+    { sec: "Tayanch tushuncha", q: "1. Astronomiya fani nimani o‘rganish bilan shug‘ullanadi?", opts: ["Osmon jismlari (sayyoralar, yulduzlar, galaktikalar, Koinot)ning tuzilishi, harakati va rivojlanishini", "Faqat Yer osti boyliklarini", "Faqat tirik organizmlarni", "Faqat ichki yonuv dvigatellarini"], ans: 0, exp: "Astronomiya osmon jismlari va umuman Koinot haqidagi tabiiy fandir." },
+    { sec: "Geografik koordinata", q: "2. Yer yuzidagi nuqtaning boshlang‘ich meridiandan sharq yoki g‘arb tomon burchak masofasi nima deyiladi?", opts: ["Geografik uzunlik", "Geografik kenglik", "Zenit masofasi", "Ekvator"], ans: 0, exp: "Geografik uzunlik 0° meridianidan sharqqa yoki g‘arbga 0° dan 180° gacha o‘lchanadi." },
+    { sec: "Geografik koordinata", q: "3. Geografik kengligi 0° ga teng bo‘lgan eng katta parallel aylana qanday nomlanadi?", opts: ["Ekvator", "Tropik", "Qutb doirasi", "Meridian"], ans: 0, exp: "Ekvator Yerni Shimoliy va Janubiy yarim sharlarga ajratadi (kengligi 0°)." },
+    { sec: "Burchak o‘lchovlari", q: "4. 2 gradus (2°) burchak necha yoy daqiqaga (′) teng?", opts: ["120′", "60′", "200′", "30′"], ans: 0, exp: "1° = 60′ bo‘lgani uchun 2° = 2 × 60′ = 120′." },
+    { sec: "Burchak o‘lchovlari", q: "5. 1 gradus (1°) necha yoy soniyaga (″) teng?", opts: ["3600″", "60″", "600″", "1800″"], ans: 0, exp: "1° = 60′ va 1′ = 60″ ⇒ 1° = 60 × 60″ = 3600″." },
+    { sec: "Yer aylanishi", q: "6. Yerning o‘z o‘qi atrofida aylanishi tufayli osmon jismlari qanday ko‘rinma harakat qiladi?", opts: ["Sharqdan ko‘tarilib, g‘arb tomon siljib botayotgandek", "G‘arbdan ko‘tarilib, sharqda botayotgandek", "Faqat yuqoridan pastga tushayotgandek", "Umuman siljimayotgandek"], ans: 0, exp: "Yer g‘arbdan sharqqa aylangani uchun osmon jismlari sharqdan g‘arbga tomon ko‘rinma harakat qiladi." },
+    { sec: "Yer aylanishi", q: "7. Fuko mayatnigi ekvatorda (0° kenglikda) tebranganda uning tebranish tekisligi yer sirtiga nisbatan qanday o‘zgaradi?", opts: ["Burilmaydi (0°)", "Eng tez buriladi", "Har 6 soatda 90° buriladi", "Faqat g‘arbga buriladi"], ans: 0, exp: "Ekvatorda vertikal o‘q atrofida aylanish tashkil etuvchisi nolga teng bo‘ladi." },
+    { sec: "Yil harakati", q: "8. Yerning Quyosh atrofida aylanish yo‘li (orbitasi) qanday shaklga yaqin?", opts: ["Aylanaga yaqin ellipsga", "Kvadratga", "To‘g‘ri chiziqqa", "Uchburchakka"], ans: 0, exp: "Yer orbitasi ekssentrisiteti kichik (~0.0167) bo‘lgan ellipsdir." },
+    { sec: "Yil harakati", q: "9. Shimoliy yarim sharda qish faslida kunduzlar qisqa, tunlar uzun bo‘lishining sababi nima?", opts: ["Quyosh nurlari yotiqroq tushishi va quyoshning ufq ustida pastroq ko‘tarilishi", "Yerning tezligi nolga tushishi", "Oyning Quyoshni to‘sib qo‘yishi", "Yulduzlarning ko‘rinmasligi"], ans: 0, exp: "Qishda Shimoliy yarim shar Quyoshdan og‘gan holatda bo‘ladi." },
+    { sec: "Vaqt va graduslar", q: "10. Yer o‘z o‘qi atrofida 1° burchakka burilishi uchun qancha vaqt ketadi?", opts: ["4 daqiqa", "1 daqiqa", "15 daqiqa", "60 daqiqa"], ans: 0, exp: "24 soat = 1440 daqiqa; 1440 / 360 = 4 daqiqa/gradus." },
+    { sec: "Vaqt va graduslar", q: "11. Agar ikki nuqtaning mahalliy vaqti farqi 3 soat bo‘lsa, ularning geografik uzunligi farqi qancha?", opts: ["45°", "15°", "30°", "90°"], ans: 0, exp: "3 soat × 15°/soat = 45°." },
+    { sec: "Vaqt mintaqalari", q: "12. Toshkentda mahalliy vaqt (UTC+5) soat 12:00 bo‘lsa, Grinvichda (UTC+0) soat nechchi bo‘ladi?", opts: ["07:00", "17:00", "12:00", "02:00"], ans: 0, exp: "Grinvich Toshkentdan 5 soat ortda: 12:00 − 5 soat = 07:00." },
+    { sec: "Kalendar", q: "13. Quyidagi yillardan qaysi biri 4 ga bo‘linadigan kabisa yiliga misol bo‘ladi?", opts: ["2024-yil", "2023-yil", "2025-yil", "2026-yil"], ans: 0, exp: "2024 soni 4 ga qoldiqsiz bo‘linadi (fevralda 29 kun bo‘lgan)." },
+    { sec: "Kalendar", q: "14. Oyning 29.5 sutkalik fazalar almashinish davri qadimdan qanday vaqt o‘lchovi bilan bog‘langan?", opts: ["Kalendar oyi (oy taqvimi) bilan", "Sutka bilan", "Asr bilan", "Soniyalar bilan"], ans: 0, exp: "Oy fazalarining davriyligi dastlabki oy kalendarlariga asos bo‘lgan." },
+    { sec: "Oy harakati", q: "15. Oyning o‘zidan yorug‘lik chiqarmasligini nimadan bilish mumkin?", opts: ["Oyning yoritilgan qismi shakli o‘zgarib (fazalar hosil qilib) turishidan", "Oyning doimo dumaloq ko‘rinishidan", "Oyning faqat tushda ko‘rinishidan", "Oyning issiqlik chiqarmasligidan"], ans: 0, exp: "Oy Quyosh nurini qaytaradi, shuning uchun biz uning faqat yoritilgan qismini ko‘ramiz." },
+    { sec: "Tutilishlar", q: "16. Quyosh tutilishi Yerning hamma joyida bir vaqtda ko‘rinadimi?", opts: ["Yo‘q, faqat Oy soyasi yoki yarim soyasi tushgan hududlarda ko‘rinadi", "Ha, butun Yer sharida bir xil ko‘rinadi", "Faqat ekvatorda ko‘rinadi", "Faqat kechasi ko‘rinadi"], ans: 0, exp: "Oy soyasi Yer sirtida nisbatan kichik sohani qamrab oladi." },
+    { sec: "Tutilishlar", q: "17. Oy tutilishi qaysi sutka vaqtida kuzatilishi mumkin?", opts: ["Faqat kechasi (Oy ufq ustida ko‘ringan vaqtda)", "Faqat tush payti soat 12:00 da", "Faqat yozda", "Faqat ertalab soat 06:00 da"], ans: 0, exp: "Oy tutilishini ko‘rish uchun Oy o‘sha joyda ufqdan yuqorida (tungi osmonda) bo‘lishi kerak." },
+    { sec: "Amaliy hisob", q: "18. Kuzatuvchining qoq tepasidagi (ufqqa 90° burchak ostidagi) osmon nuqtasi qanday ataladi?", opts: ["Zenit", "Nadir", "Apogey", "Perigey"], ans: 0, exp: "Kuzatuvchi boshining ustidagi eng yuqori nuqta — zenit, unga qarama-qarshi pastki nuqta — nadir." },
+    { sec: "Amaliy vaziyat", q: "19. Yulduzlarni kuzatish uchun rasadxonalar nima sababdan tog‘li, quruq va shahar yorug‘ligidan uzoq joylarga quriladi?", opts: ["Atmosfera beqarorligi, bulutlilik va yorug‘lik ifloslanishini kamaytirish uchun", "Gravitatsiyani kamaytirish uchun", "Quyoshga yaqinlashish uchun", "Havo bosimini oshirish uchun"], ans: 0, exp: "Baland va toza havoli joylarda tasvir tiniqroq bo‘ladi va fon yorug‘ligi kamayadi." },
+    { sec: "Fanlar aloqasi", q: "20. Vaqt o‘lchash va aniq navigatsiyaning rivojlanishi uchun astronomiya nima bilan chambarchas bog‘liq?", opts: ["Yerning aylanishi va osmon jismlari harakatini kuzatish bilan", "Faqat kimyoviy reaksiyalar bilan", "Faqat o‘simliklar o‘sishi bilan", "Faqat tovush tezligi bilan"], ans: 0, exp: "Qadimdan aniq vaqt va koordinatalar osmon jismlari harakati asosida belgilangan." }
+  ];
+
+  let currentMode = 'A';
+  let userAnswersA = new Array(variantA.length).fill(null);
+  let userAnswersB = new Array(variantB.length).fill(null);
+  let gradedA = false;
+  let gradedB = false;
+
+  function getActiveQuestions() { return currentMode === 'B' ? variantB : variantA; }
+  function getActiveAnswers() { return currentMode === 'B' ? userAnswersB : userAnswersA; }
+  function isActiveGraded() { return currentMode === 'B' ? gradedB : gradedA; }
+  function setActiveGraded(val) {
+    if (currentMode === 'B') gradedB = val;
+    else gradedA = val;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tabA').classList.toggle('active', mode === 'A');
+    document.getElementById('tabB').classList.toggle('active', mode === 'B');
+    document.getElementById('resultBox').style.display = 'none';
+
+    renderQuestions();
+    updateAnsweredPill();
+    if (isActiveGraded()) gradeExam();
+  }
+
+  function renderQuestions() {
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    const list = document.getElementById('questionsList');
+    list.innerHTML = '';
+
+    qs.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const top = document.createElement('div');
+      top.className = 'q-top';
+      top.innerHTML = `<span>${currentMode} Variant — ${item.sec}</span><span>Savol #${qIndex + 1}</span>`;
+
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.textContent = item.q;
+
+      const opts = document.createElement('div');
+      opts.className = 'opts';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      item.opts.forEach((opt, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = `${letters[oIndex]}) ${opt}`;
+        if (ansArr[qIndex] === oIndex) btn.classList.add('selected');
+        btn.onclick = () => {
+          if (isActiveGraded()) return;
+          ansArr[qIndex] = oIndex;
+          updateAnsweredPill();
+          Array.from(opts.children).forEach((c, idx) => {
+            c.classList.toggle('selected', idx === oIndex);
+          });
+        };
+        opts.appendChild(btn);
+      });
+
+      const exp = document.createElement('div');
+      exp.className = 'explain';
+      exp.id = `exp-${currentMode}-${qIndex}`;
+      exp.textContent = `Izoh: ${item.exp}`;
+
+      card.appendChild(top);
+      card.appendChild(qText);
+      card.appendChild(opts);
+      card.appendChild(exp);
+      list.appendChild(card);
+    });
+  }
+
+  function updateAnsweredPill() {
+    const ansArr = getActiveAnswers();
+    const count = ansArr.filter(x => x !== null).length;
+    document.getElementById('answeredPill').textContent = `Javoblar: ${count} / ${ansArr.length}`;
+  }
+
+  function gradeExam() {
+    setActiveGraded(true);
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    let correct = 0;
+    const cards = document.getElementById('questionsList').children;
+
+    qs.forEach((item, qIndex) => {
+      const opts = cards[qIndex].querySelectorAll('.opt-btn');
+      opts.forEach((btn, oIndex) => {
+        btn.classList.remove('selected', 'correct', 'wrong');
+        if (oIndex === item.ans) {
+          btn.classList.add('correct');
+        } else if (ansArr[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+      });
+      if (ansArr[qIndex] === item.ans) correct++;
+      document.getElementById(`exp-${currentMode}-${qIndex}`).style.display = 'block';
+    });
+
+    const pct = Math.round((correct / qs.length) * 100);
+    let level = "Boshlang‘ich (Tayanch mavzularni takrorlash zarur)";
+    let advice = "Tavsiya: Geografik kenglik/uzunlik, burchak birliklari (° / ′ / ″), vaqt mintaqalari (15° = 1 soat) va Yer/Oy harakatlarini takrorlang.";
+    if (pct >= 86) {
+      level = "Yuqori (5 — A'lo)";
+      advice = "Ajoyib tayyorgarlik! 1-bob (Amaliy astronomiya asoslari) mavzularini o‘zlashtirishga to‘liq tayyorsiz.";
+    } else if (pct >= 71) {
+      level = "Yaxshi (4 — Yaxshi)";
+      advice = "Yaxshi natija! Xato tushgan savollarning izohini ko‘rib, 1-bob darslariga bemalol o‘ting.";
+    } else if (pct >= 55) {
+      level = "O‘rta (3 — Qoniqarli)";
+      advice = "O‘rta daraja. Vaqt-gradus hisoblari va tutilish/fasllar sabablarini mustahkamlab oling.";
+    }
+
+    const name = document.getElementById('stName').value.trim() || "O‘quvchi";
+    const cls = document.getElementById('stClass').value.trim();
+    const dt = document.getElementById('stDate').value.trim();
+
+    document.getElementById('resTitle').textContent = `1-Bob Kiruvchi Test Natijasi (${currentMode} Variant)`;
+    document.getElementById('resStudent').textContent = `O‘quvchi: ${name}${cls ? ' — ' + cls : ''}${dt ? ' | Sana: ' + dt : ''}`;
+    document.getElementById('resCorrect').textContent = `${correct} / ${qs.length}`;
+    document.getElementById('resPercent').textContent = `${pct}%`;
+    document.getElementById('resGrade').textContent = level;
+    document.getElementById('resAdvice').textContent = advice;
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetExam() {
+    setActiveGraded(false);
+    getActiveAnswers().fill(null);
+    updateAnsweredPill();
+    document.getElementById('resultBox').style.display = 'none';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderQuestions();
+  updateAnsweredPill();
+</script>
+</body>
+</html>
