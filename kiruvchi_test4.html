@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4-Bob Kiruvchi Test | 11-sinf Astronomiya — Quyosh sistemasi jismlarining fizik tabiati</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.94);
+      --card: rgba(15, 23, 42, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 13px 18px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+
+    .mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover { filter: brightness(1.12); }
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .meta-card input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 17px 20px;
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(30, 41, 59, 0.82);
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .opt-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.14); }
+    .opt-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.18); }
+    .opt-btn.correct { border-color: var(--emerald); background: rgba(16, 185, 129, 0.25); color: #d1fae5; }
+    .opt-btn.wrong { border-color: var(--rose); background: rgba(244, 63, 94, 0.25); color: #ffe4e6; }
+
+    .explain {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      font-size: 0.84rem;
+      color: var(--emerald);
+      display: none;
+    }
+
+    .result-box {
+      background: var(--panel);
+      border: 1px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: none;
+    }
+
+    .result-box h2 { color: var(--gold); font-size: 1.18rem; margin-bottom: 8px; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .score-item {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .score-item span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .score-item strong { font-size: 1.12rem; color: var(--emerald); }
+
+    .actions-bottom {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>4-BOB KIRUVCHI TEST — 11-SINF ASTRONOMIYA</h1>
+    <p>Quyosh sistemasi jismlarining fizik tabiati (34–45-§§ oldidan tayanch bilimlar) | A/B Variant (20 savoldan)</p>
+  </div>
+  <div class="mode-tabs">
+    <button class="tab-btn active" id="tabA" onclick="switchMode('A')">A Variant (20 savol)</button>
+    <button class="tab-btn" id="tabB" onclick="switchMode('B')">B Variant (20 savol)</button>
+  </div>
+  <div class="status-bar">
+    <div class="pill" id="answeredPill">Javoblar: 0 / 20</div>
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="meta-card">
+    <div>
+      <label for="stName">O‘quvchining F.I.Sh.:</label>
+      <input type="text" id="stName" placeholder="Masalan: Karimov Azizbek" />
+    </div>
+    <div>
+      <label for="stClass">Sinf va maktab:</label>
+      <input type="text" id="stClass" placeholder="Masalan: 11-«A» sinf" />
+    </div>
+    <div>
+      <label for="stDate">Sana:</label>
+      <input type="text" id="stDate" value="2026-11-26" />
+    </div>
+  </div>
+
+  <div id="resultBox" class="result-box">
+    <h2 id="resTitle">4-Bob Kiruvchi Test Natijasi</h2>
+    <p id="resStudent" style="color: var(--muted); font-size: 0.88rem;"></p>
+    <div class="score-grid">
+      <div class="score-item"><span>To‘g‘ri javoblar</span><strong id="resCorrect">0 / 20</strong></div>
+      <div class="score-item"><span>Foiz ko‘rsatkichi</span><strong id="resPercent">0%</strong></div>
+      <div class="score-item"><span>Tayyorgarlik darajasi</span><strong id="resGrade">—</strong></div>
+    </div>
+    <p id="resAdvice" style="font-size: 0.86rem; color: #cbd5e1;"></p>
+  </div>
+
+  <div id="questionsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+
+  <div class="actions-bottom">
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</div>
+
+<script>
+  const variantA = [
+    { sec: "Fizika: Agregat holatlar", q: "1. Moddaning to‘rtinchi agregat holati — musbat ionlar va erkin elektronlardan tashkil topgan ionlashgan gaz qanday ataladi?", opts: ["Plazma", "Suyuq kristal", "Amorf qattiq jism", "Suv bug‘i"], ans: 0, exp: "Juda yuqori temperaturada gaz atomlari elektronlarini yo‘qotib plazmaga aylanadi (Quyosh plazma sharidir)." },
+    { sec: "Fizika: Issiqlik uzatish", q: "2. Kosmik bo‘shliq (vakuum) orqali Quyoshdan Yerga issiqlik energiyasi qaysi usul bilan yetib keladi?", opts: ["Nurlanish (elektromagnit to‘lqinlar) orqali", "Issiqlik o‘tkazuvchanlik orqali", "Havo oqimi (konveksiya) orqali", "Tovush to‘lqinlari orqali"], ans: 0, exp: "Vakuumda modda zarralari yo‘qligi sababli issiqlik faqat nurlanish orqali uzatiladi." },
+    { sec: "Fizika: Issiqlik uzatish", q: "3. Suyuqlik yoki gazning qizigan pastki qatlamlari yuqoriga ko‘tarilib, sovuq qatlamlari pastga tushishi natijasida issiqlik almashinuvi nima deyiladi?", opts: ["Konveksiya", "Difraksiya", "Refraksiya", "Polyarizatsiya"], ans: 0, exp: "Konveksiya yulduzlar va sayyoralar atmosferasida energiya tashishning muhim mexanizmidir." },
+    { sec: "Fizika: Yadro fizikasi", q: "4. Yengil atom yadrolarining (masalan, vodorod izotoplarining) o‘ta yuqori temperaturada birikib og‘irroq yadro (geliy) hosil qilishi qanday reaksiya?", opts: ["Termoyadro sintezi reaksiyasi", "Kimyoviy oksidlanish reaksiyasi", "Elektroliz", "Mexanik ishqalanish"], ans: 0, exp: "Yulduzlar qa’rida energiya manbai aynan termoyadro sintezidir." },
+    { sec: "Fizika: E = mc²", q: "5. Eynshteynning massa va energiya ekvivalentligi formulasiga ko‘ra (E = m·c²), kichik massa kamayishi (massa defekti) nimaga aylanadi?", opts: ["Juda katta miqdordagi energiyaga", "Sovuq havoga", "Magnit kompasga", "Nolga"], ans: 0, exp: "c² juda katta son (9 × 10¹⁶ m²/s²) bo‘lgani uchun ozgina massa defekti ulkan energiya beradi." },
+    { sec: "Fizika: Magnit maydon", q: "6. Yerning magnit maydoni kosmosdan kelayotgan zaryadlangan zarralar oqimidan bizni qanday himoya qiladi?", opts: ["Zaryadlangan zarralarni Lorens kuchi bilan chetga burib, qutblar tomon yo‘naltiradi", "Yorug‘likni butunlay to‘sib qo‘yadi", "Gravitatsiyani yo‘qotadi", "Suvni muzlatadi"], ans: 0, exp: "Magnit maydon zaryadlangan zarralar trayektoriyasini egrilantirib, qutb yog‘dularini ham hosil qiladi." },
+    { sec: "Fizika: Temperatura shkalasi", q: "7. Mutlaq temperatura shkalasi (Kelvin) bo‘yicha 0 °C (muzning erish temperaturasi) taxminan necha Kelvinga teng?", opts: ["≈ 273 K", "0 K", "100 K", "−273 K"], ans: 0, exp: "T(K) = t(°C) + 273.15 ⇒ 0 °C ≈ 273 K." },
+    { sec: "Fizika: Temperatura shkalasi", q: "8. Agar sayyora sirtida temperatura T = 300 K bo‘lsa, bu Selsiy shkalasida taxminan necha gradusga teng?", opts: ["≈ +27 °C", "≈ +300 °C", "≈ −27 °C", "≈ +573 °C"], ans: 0, exp: "t(°C) = 300 − 273 = +27 °C." },
+    { sec: "Kimyo va Atmosfera", q: "9. Yer atmosferasida hajm jihatidan eng ko‘p uchraydigan ikkita gaz qaysilar?", opts: ["Azot (~78%) va Kislorod (~21%)", "Karbonat angidrid va Vodorod", "Geliy va Metan", "Ozon va Argon"], ans: 0, exp: "Yer atmosferasi asosan azot va kisloroddan tashkil topgan." },
+    { sec: "Kimyo va Atmosfera", q: "10. Atmosferadagi karbonat angidrid (CO₂) va suv bug‘ining sirtdan qaytayotgan infraqizil issiqlik nurlarini ushlab qolishi nima deyiladi?", opts: ["Issiqxona (parnik) effekti", "Fotoeffekt", "Doppler effekti", "Tovush aks-sadosi"], ans: 0, exp: "Issiqxona effekti Venerada sirt temperaturasining ~465 °C gacha ko‘tarilishiga sabab bo‘lgan." },
+    { sec: "Fizika: Zichlik", q: "11. Jismning o‘rtacha zichligi (ρ = m / V) formulasiga ko‘ra, hajmi bir xil bo‘lgan ikki sayyoradan qaysi birining zichligi katta?", opts: ["Massasi kattaroq bo‘lgan sayyoraning", "Massasi kichikroq bo‘lgan sayyoraning", "Ikkalasining zichligi bir xil", "Zichlik massaga bog‘liq emas"], ans: 0, exp: "V o‘zgarmas bo‘lganda ρ massaga to‘g‘ri proporsional." },
+    { sec: "Sayyoralar taqqoslanishi", q: "12. Yer guruhi sayyoralari (Merkuriy, Venera, Yer, Mars) ning umumiy fizik xususiyati qaysi?", opts: ["Qattiq tosh-metall sirtga va nisbatan yuqori o‘rtacha zichlikka ega", "Faqat vodorod va geliydan iborat gaz sharlari", "Ularning barchasida katta halqalar bor", "Quyoshdan eng uzoqda joylashgan"], ans: 0, exp: "Ichki sayyoralar zich jinslar va metall yadrodan tuzilgan." },
+    { sec: "Sayyoralar taqqoslanishi", q: "13. Gigant sayyoralar (Yupiter, Saturn, Uran, Neptun) ning Yer guruhi sayyoralaridan asosiy fizik farqi nimada?", opts: ["O‘lchami va massasi juda katta, lekin o‘rtacha zichligi ancha kichik (asosan gaz va muzdan iborat)", "Ular Quyoshga Merkuriydan ham yaqin", "Ularning tabiiy yo‘ldoshlari yo‘q", "Ularning sirti faqat temirdan iborat"], ans: 0, exp: "Masalan, Saturnning o‘rtacha zichligi suv zichligidan ham kichik (~0.69 g/sm³)." },
+    { sec: "Fizika: Qochish tezligi", q: "14. Sayyora atmosferani uzoq vaqt ushlab turishi uchun gaz molekulalarining issiqlik harakat tezligi nimadan ancha kichik bo‘lishi kerak?", opts: ["Sayyoraning ikkinchi kosmik (parabolik) tezligidan", "Tovush tezligidan", "Shamol tezligidan", "1 m/s dan"], ans: 0, exp: "Agar molekulalar tezligi qochish tezligiga yaqin bo‘lsa, gaz kosmosga tarqalib ketadi (Oy va Merkuriyda shunday bo‘lgan)." },
+    { sec: "Kichik jismlar", q: "15. Asteroid va kometaning asosiy tarkibiy farqi nimada?", opts: ["Asteroidlar asosan tosh va metallardan, kometalar esa muz, chang va muzlagan gazlardan iborat", "Asteroidlar yulduz, kometalar esa sayyora", "Kometalar faqat Yer ichida bo‘ladi", "Hech qanday farqi yo‘q"], ans: 0, exp: "Kometa Quyoshga yaqinlashganda muzlari bug‘lanib, gaz-changli «dum» hosil qiladi." },
+    { sec: "Kichik jismlar", q: "16. Kosmosdan Yer atmosferasiga katta tezlikda kirib, havo bilan ishqalanishdan qizib yonib ketuvchi mayda zarra qanday hodisa hosil qiladi?", opts: ["Meteor («uchar yulduz»)", "Quyosh tutilishi", "Qutb yog‘dusi", "Zilzila"], ans: 0, exp: "Atmosferada yonib ketadigan chaqnash meteor, yergacha yetib tushgan tosh/temir bo‘lagi esa meteorit deyiladi." },
+    { sec: "Amaliy hisob", q: "17. Yerdan Quyoshgacha masofa 1 a.b. ≈ 150 mln km, yorug‘lik tezligi esa 300 000 km/s. Quyosh nuri Yerga necha soniyada yetib keladi?", opts: ["500 s (8 daqiqa 20 soniya)", "50 s", "5 000 s", "15 s"], ans: 0, exp: "t = 150 000 000 / 300 000 = 500 soniya." },
+    { sec: "Amaliy hisob", q: "18. Agar bir sayyora Quyoshdan Yerga qaraganda 2 marta uzoqda (r = 2 a.b.) joylashgan bo‘lsa, uning 1 m² yuzasiga tushadigan Quyosh nuri energiyasi Yerdagidan necha marta kam bo‘ladi?", opts: ["4 marta kam", "2 marta kam", "8 marta kam", "O‘zgarmaydi"], ans: 0, exp: "Nurlanish oqimi masofa kvadratiga teskari proporsional (I ~ 1/r²): 2² = 4 marta kam." },
+    { sec: "Amaliy vaziyat", q: "19. Kometaning «dumi» Quyosh atrofidan o‘tayotganda har doim qaysi tomonga yo‘nalgan bo‘ladi?", opts: ["Quyoshdan teskari tomonga (Quyosh nuri bosimi va Quyosh shamoli ta’sirida)", "Kometaning harakat yo‘nalishi bo‘ylab oldinga", "Har doim Yerga qarab", "Faqat shimolga qarab"], ans: 0, exp: "Quyosh shamoli va yorug‘lik bosimi gaz va chang zarralarini Quyoshdan uzoqlashtiradi." },
+    { sec: "Tayanch mantiq", q: "20. Nima sababdan Yupiter Quyosh tizimidagi barcha sayyoralar orasida eng kuchli magnit maydonga ega?", opts: ["Katta hajmdagi o‘tkazuvchan suyuq metall vodorod qatlami va o‘z o‘qi atrofida juda tez (~10 soatda) aylanishi tufayli", "U Quyoshga eng yaqin bo‘lgani uchun", "Uning sirti muz bilan qoplangani uchun", "Uning yo‘ldoshlari yo‘qligi uchun"], ans: 0, exp: "Dinamo-effekt uchun ichki o‘tkazuvchan suyuqlik harakati va tez aylanish zarur." }
+  ];
+
+  const variantB = [
+    { sec: "Fizika: Agregat holatlar", q: "1. Quyosh va boshqa yulduzlarni tashkil etuvchi modda asosan qaysi agregat holatda bo‘ladi?", opts: ["Plazma holatida", "Qattiq muz holatida", "Suyuq suv holatida", "Neytral sovuq gaz holatida"], ans: 0, exp: "Yulduzlardagi yuqori temperatura moddani to‘liq yoki qisman ionlashgan plazma holatida ushlab turadi." },
+    { sec: "Fizika: Issiqlik uzatish", q: "2. Yulduzning yadrosida ajralgan energiya uning sirtiga chiqquncha qaysi ikki asosiy mexanizm orqali uzatiladi?", opts: ["Nurlanish (radiatsion) va konveksiya orqali", "Faqat tovush to‘lqinlari orqali", "Faqat magnit tortishish orqali", "Elektr simlari orqali"], ans: 0, exp: "Quyosh ichida energiya avval nurlanish zonasi, keyin konvektiv zona orqali sirtga ko‘tariladi." },
+    { sec: "Fizika: Issiqlik uzatish", q: "3. Qaynoq plazma oqimlarining yuqoriga ko‘tarilib sovishi va pastga tushishi natijasida Quyosh sirtida kuzatiladigan donador ko‘rinish qaysi jarayon natijasi?", opts: ["Konveksiya", "Yorug‘lik sinishi", "Interferensiya", "Radioaktiv yemirilish"], ans: 0, exp: "Konveksiya hujayralari fotosferada granulyatsiya manzarasini hosil qiladi." },
+    { sec: "Fizika: Yadro fizikasi", q: "4. Quyosh qa’rida vodorod yadrolari birikishidan qaysi kimyoviy element yadrosi hosil bo‘ladi?", opts: ["Geliy", "Temir", "Uran", "Oltin"], ans: 0, exp: "4 ta vodorod yadrosi (proton) ketma-ket reaksiyalar natijasida 1 ta geliy yadrosini hosil qiladi." },
+    { sec: "Fizika: E = mc²", q: "5. Termoyadro reaksiyasida hosil bo‘lgan geliy yadrosining massasi dastlabki 4 ta proton massalari yig‘indisidan biroz kichik bo‘lishi nima deb ataladi?", opts: ["Massa defekti", "Gravitatsiya doimiysi", "Inersiya momenti", "Dispersiya"], ans: 0, exp: "Yo‘qolgan massa Δm = ΔE / c² ko‘rinishida energiyaga aylanadi." },
+    { sec: "Fizika: Magnit maydon", q: "6. Quyoshdan chiqayotgan zaryadlangan zarralar oqimi Yerning magnit qutblari yaqinida atmosfera gazlari bilan to‘qnashganda qanday hodisa kuzatiladi?", opts: ["Qutb yog‘dusi", "Quyosh tutilishi", "Kamalak", "Tuman"], ans: 0, exp: "Zaryadlangan zarralar atmosferaning yuqori qatlamlaridagi kislorod va azot atomlarini nurlantiradi." },
+    { sec: "Fizika: Temperatura shkalasi", q: "7. Mutlaq nol temperatura (0 K) Selsiy shkalasida taxminan nechaga teng?", opts: ["≈ −273 °C", "0 °C", "+273 °C", "−100 °C"], ans: 0, exp: "0 K = −273.15 °C — tabiatdagi eng past nazariy temperatura." },
+    { sec: "Fizika: Temperatura shkalasi", q: "8. Agar Quyosh fotosferasining sirt temperaturasi t ≈ 5500 °C bo‘lsa, u Kelvin shkalasida taxminan necha Kelvinga teng?", opts: ["≈ 5 773 K (≈ 5 800 K)", "≈ 5 227 K", "≈ 550 K", "≈ 273 K"], ans: 0, exp: "T(K) = 5500 + 273 = 5773 K." },
+    { sec: "Kimyo va Atmosfera", q: "9. Venera va Mars atmosferalarining asosiy qismini qaysi gaz tashkil etadi?", opts: ["Karbonat angidrid (CO₂)", "Kislorod (O₂)", "Vodorod (H₂)", "Azot (N₂)"], ans: 0, exp: "Venera (~96%) va Mars (~95%) atmosferalari asosan karbonat angidriddan iborat." },
+    { sec: "Kimyo va Atmosfera", q: "10. Nima sababdan Merkuriy Quyoshga Veneradan yaqin bo‘lsa ham, uning tungi tomoni −180 °C gacha sovib ketadi?", opts: ["Merkuriyda issiqlikni ushlab turuvchi va taqsimlovchi atmosfera deyarli yo‘qligi uchun", "Merkuriy Quyosh atrofida aylanmagani uchun", "Merkuriy suv bilan qoplangani uchun", "Merkuriyda yadro reaksiyasi bo‘lgani uchun"], ans: 0, exp: "Atmosfera yo‘qligi sababli kun va tun temperaturalari orasida keskin farq yuzaga keladi." },
+    { sec: "Fizika: Zichlik", q: "11. Massasi m = 600 kg, hajmi V = 0.2 m³ bo‘lgan kosmik jism bo‘lagining o‘rtacha zichligi (ρ = m / V) qancha?", opts: ["3 000 kg/m³ (3 g/sm³)", "120 kg/m³", "600 kg/m³", "300 kg/m³"], ans: 0, exp: "ρ = 600 / 0.2 = 3000 kg/m³ = 3 g/sm³ (tosh jinslariga xos zichlik)." },
+    { sec: "Sayyoralar taqqoslanishi", q: "12. Quyosh tizimidagi sayyoralar orasida o‘rtacha zichligi eng katta (≈ 5.51 g/sm³) bo‘lgan sayyora qaysi?", opts: ["Yer", "Saturn", "Yupiter", "Uran"], ans: 0, exp: "Yer temir-nikel yadrosi va zich mantiyasi tufayli Quyosh tizimidagi eng zich sayyoradir." },
+    { sec: "Sayyoralar taqqoslanishi", q: "13. Qaysi gigant sayyoraning o‘rtacha zichligi suvnikidan (1 g/sm³) ham kichik?", opts: ["Saturn", "Yer", "Mars", "Merkuriy"], ans: 0, exp: "Saturnning o‘rtacha zichligi ~0.69 g/sm³ ga teng." },
+    { sec: "Fizika: Qochish tezligi", q: "14. Oyda atmosfera yo‘qligining asosiy fizik sababi nimada?", opts: ["Oyning massasi va tortishish kuchi kichik bo‘lgani uchun gaz molekulalari kosmosga uchib ketgan", "Oy Quyoshdan juda uzoqda joylashgani uchun", "Oyda hech qachon gaz bo‘lmagani uchun", "Oy juda tez aylangani uchun"], ans: 0, exp: "Oyda ikkinchi kosmik tezlik atigi ~2.38 km/s bo‘lib, yengil gazlarni ushlab qolishga yetmaydi." },
+    { sec: "Kichik jismlar", q: "15. Asteroidlarning aksariyat qismi qaysi ikki sayyora orbitalari orasida to‘plangan?", opts: ["Mars va Yupiter", "Venera va Yer", "Saturn va Uran", "Merkuriy va Venera"], ans: 0, exp: "Asosiy asteroidlar kamari Mars va Yupiter orbitalari orasida joylashgan." },
+    { sec: "Kichik jismlar", q: "16. Kosmosdan kelib, Yer atmosferasidan o‘tib Yer yuzasiga tushgan osmon jismi bo‘lagi nima deb ataladi?", opts: ["Meteorit", "Kometa", "Pulsar", "Kvazar"], ans: 0, exp: "Yer sirtiga yetib kelgan qattiq kosmik jism meteorit deyiladi." },
+    { sec: "Amaliy hisob", q: "17. Yupiter Quyoshdan o‘rtacha ~5.2 a.b. masofada joylashgan. Quyosh nuri Yupiterga taxminan necha daqiqada yetib boradi (1 a.b. = 8.33 daqiqa)?", opts: ["≈ 43 daqiqa", "≈ 8.3 daqiqa", "≈ 1.6 daqiqa", "≈ 120 daqiqa"], ans: 0, exp: "t ≈ 5.2 × 8.33 ≈ 43.3 daqiqa." },
+    { sec: "Amaliy hisob", q: "18. Agar bir sayyora Quyoshdan Yerga qaraganda 3 marta uzoqda (r = 3 a.b.) bo‘lsa, uning birlik yuzasiga tushadigan Quyosh nurlanish quvvati Yerdagidan necha marta kam bo‘ladi?", opts: ["9 marta kam", "3 marta kam", "6 marta kam", "27 marta kam"], ans: 0, exp: "I ~ 1 / r² bo‘lgani uchun 3² = 9 marta kam." },
+    { sec: "Amaliy vaziyat", q: "19. Nima sababdan meteor oqimlari (yulduzlar yomg‘iri) har yili ma’lum sanalarda takrorlanadi?", opts: ["Yer o‘z orbitasi bo‘ylab harakatlanib, kometalar qoldirgan chang-zarra izini kesib o‘tgani uchun", "Yulduzlar har yili yerga tushgani uchun", "Oy parchalanib ketgani uchun", "Quyosh dog‘lari yerga tushgani uchun"], ans: 0, exp: "Kometalar orbitasi bo‘ylab qolgan mayda zarralar iziga Yer har yili bir xil vaqtda kiradi." },
+    { sec: "Tayanch mantiq", q: "20. Nima sababdan sayyoralar va yulduzlarni o‘rganishda ularning ichki tuzilishi haqida to‘g‘ridan-to‘g‘ri burg‘ulashsiz ham xulosa chiqarish mumkin?", opts: ["Massa, o‘lcham, o‘rtacha zichlik, magnit maydon va sirt spektrini fizik qonunlar asosida tahlil qilish orqali", "Faqat teleskop rangini o‘zgartirish orqali", "Oyga qarab taxmin qilish orqali", "Ichki tuzilish haqida umuman ma’lumot olib bo‘lmaydi"], ans: 0, exp: "O‘rtacha zichlik va gravitatsiya maydoni ichki qatlamlar (yadro, mantiya, qobiq) tarkibini modellashtirish imkonini beradi." }
+  ];
+
+  let currentMode = 'A';
+  let userAnswersA = new Array(variantA.length).fill(null);
+  let userAnswersB = new Array(variantB.length).fill(null);
+  let gradedA = false;
+  let gradedB = false;
+
+  function getActiveQuestions() { return currentMode === 'B' ? variantB : variantA; }
+  function getActiveAnswers() { return currentMode === 'B' ? userAnswersB : userAnswersA; }
+  function isActiveGraded() { return currentMode === 'B' ? gradedB : gradedA; }
+  function setActiveGraded(val) {
+    if (currentMode === 'B') gradedB = val;
+    else gradedA = val;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tabA').classList.toggle('active', mode === 'A');
+    document.getElementById('tabB').classList.toggle('active', mode === 'B');
+    document.getElementById('resultBox').style.display = 'none';
+
+    renderQuestions();
+    updateAnsweredPill();
+    if (isActiveGraded()) gradeExam();
+  }
+
+  function renderQuestions() {
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    const list = document.getElementById('questionsList');
+    list.innerHTML = '';
+
+    qs.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const top = document.createElement('div');
+      top.className = 'q-top';
+      top.innerHTML = `<span>${currentMode} Variant — ${item.sec}</span><span>Savol #${qIndex + 1}</span>`;
+
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.textContent = item.q;
+
+      const opts = document.createElement('div');
+      opts.className = 'opts';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      item.opts.forEach((opt, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = `${letters[oIndex]}) ${opt}`;
+        if (ansArr[qIndex] === oIndex) btn.classList.add('selected');
+        btn.onclick = () => {
+          if (isActiveGraded()) return;
+          ansArr[qIndex] = oIndex;
+          updateAnsweredPill();
+          Array.from(opts.children).forEach((c, idx) => {
+            c.classList.toggle('selected', idx === oIndex);
+          });
+        };
+        opts.appendChild(btn);
+      });
+
+      const exp = document.createElement('div');
+      exp.className = 'explain';
+      exp.id = `exp-${currentMode}-${qIndex}`;
+      exp.textContent = `Izoh: ${item.exp}`;
+
+      card.appendChild(top);
+      card.appendChild(qText);
+      card.appendChild(opts);
+      card.appendChild(exp);
+      list.appendChild(card);
+    });
+  }
+
+  function updateAnsweredPill() {
+    const ansArr = getActiveAnswers();
+    const count = ansArr.filter(x => x !== null).length;
+    document.getElementById('answeredPill').textContent = `Javoblar: ${count} / ${ansArr.length}`;
+  }
+
+  function gradeExam() {
+    setActiveGraded(true);
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    let correct = 0;
+    const cards = document.getElementById('questionsList').children;
+
+    qs.forEach((item, qIndex) => {
+      const opts = cards[qIndex].querySelectorAll('.opt-btn');
+      opts.forEach((btn, oIndex) => {
+        btn.classList.remove('selected', 'correct', 'wrong');
+        if (oIndex === item.ans) {
+          btn.classList.add('correct');
+        } else if (ansArr[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+      });
+      if (ansArr[qIndex] === item.ans) correct++;
+      document.getElementById(`exp-${currentMode}-${qIndex}`).style.display = 'block';
+    });
+
+    const pct = Math.round((correct / qs.length) * 100);
+    let level = "Boshlang‘ich (Tayanch mavzularni takrorlash zarur)";
+    let advice = "Tavsiya: Plazma holati, issiqlik uzatish (nurlanish/konveksiya), termoyadro reaksiyasi, Kelvin shkalasi, zichlik (ρ = m/V) va issiqxona effekti tushunchalarini takrorlang.";
+    if (pct >= 86) {
+      level = "Yuqori (5 — A'lo)";
+      advice = "Ajoyib tayyorgarlik! 4-bob (Quyosh sistemasi jismlarining fizik tabiati) mavzularini o‘zlashtirishga to‘liq tayyorsiz.";
+    } else if (pct >= 71) {
+      level = "Yaxshi (4 — Yaxshi)";
+      advice = "Yaxshi natija! Xato tushgan savollarning izohini ko‘rib, Quyosh va sayyoralar fizikasi mavzulariga bemalol o‘ting.";
+    } else if (pct >= 55) {
+      level = "O‘rta (3 — Qoniqarli)";
+      advice = "O‘rta daraja. Temperatura shkalalari (K ↔ °C), zichlik va masofa kvadratiga teskari proporsionallik (1/r²) misollarini mustahkamlab oling.";
+    }
+
+    const name = document.getElementById('stName').value.trim() || "O‘quvchi";
+    const cls = document.getElementById('stClass').value.trim();
+    const dt = document.getElementById('stDate').value.trim();
+
+    document.getElementById('resTitle').textContent = `4-Bob Kiruvchi Test Natijasi (${currentMode} Variant)`;
+    document.getElementById('resStudent').textContent = `O‘quvchi: ${name}${cls ? ' — ' + cls : ''}${dt ? ' | Sana: ' + dt : ''}`;
+    document.getElementById('resCorrect').textContent = `${correct} / ${qs.length}`;
+    document.getElementById('resPercent').textContent = `${pct}%`;
+    document.getElementById('resGrade').textContent = level;
+    document.getElementById('resAdvice').textContent = advice;
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetExam() {
+    setActiveGraded(false);
+    getActiveAnswers().fill(null);
+    updateAnsweredPill();
+    document.getElementById('resultBox').style.display = 'none';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderQuestions();
+  updateAnsweredPill();
+</script>
+</body>
+</html>
+
