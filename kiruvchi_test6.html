@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6-Bob Kiruvchi Test | 11-sinf Astronomiya — Koinotning tuzilishi va evolyutsiyasi</title>
+  <style>
+    :root {
+      --bg: #050914;
+      --panel: rgba(13, 21, 38, 0.94);
+      --card: rgba(15, 23, 42, 0.88);
+      --border: rgba(56, 189, 248, 0.28);
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #0f1c38 0%, var(--bg) 80%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 13px 18px;
+      background: rgba(5, 9, 20, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 { font-size: 1.02rem; color: var(--accent); font-weight: 700; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+
+    .mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-color: #7dd3fc;
+      color: #fff;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border: 1px solid #7dd3fc;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover { filter: brightness(1.12); }
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .meta-card input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 17px 20px;
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(30, 41, 59, 0.82);
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.16s;
+    }
+
+    .opt-btn:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.14); }
+    .opt-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.18); }
+    .opt-btn.correct { border-color: var(--emerald); background: rgba(16, 185, 129, 0.25); color: #d1fae5; }
+    .opt-btn.wrong { border-color: var(--rose); background: rgba(244, 63, 94, 0.25); color: #ffe4e6; }
+
+    .explain {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      font-size: 0.84rem;
+      color: var(--emerald);
+      display: none;
+    }
+
+    .result-box {
+      background: var(--panel);
+      border: 1px solid var(--emerald);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: none;
+    }
+
+    .result-box h2 { color: var(--gold); font-size: 1.18rem; margin-bottom: 8px; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .score-item {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .score-item span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .score-item strong { font-size: 1.12rem; color: var(--emerald); }
+
+    .actions-bottom {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>6-BOB KIRUVCHI TEST — 11-SINF ASTRONOMIYA</h1>
+    <p>Koinotning tuzilishi va evolyutsiyasi (56–62-§§ oldidan tayanch bilimlar) | A/B Variant (20 savoldan)</p>
+  </div>
+  <div class="mode-tabs">
+    <button class="tab-btn active" id="tabA" onclick="switchMode('A')">A Variant (20 savol)</button>
+    <button class="tab-btn" id="tabB" onclick="switchMode('B')">B Variant (20 savol)</button>
+  </div>
+  <div class="status-bar">
+    <div class="pill" id="answeredPill">Javoblar: 0 / 20</div>
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="meta-card">
+    <div>
+      <label for="stName">O‘quvchining F.I.Sh.:</label>
+      <input type="text" id="stName" placeholder="Masalan: Karimov Azizbek" />
+    </div>
+    <div>
+      <label for="stClass">Sinf va maktab:</label>
+      <input type="text" id="stClass" placeholder="Masalan: 11-«A» sinf" />
+    </div>
+    <div>
+      <label for="stDate">Sana:</label>
+      <input type="text" id="stDate" value="2026-11-26" />
+    </div>
+  </div>
+
+  <div id="resultBox" class="result-box">
+    <h2 id="resTitle">6-Bob Kiruvchi Test Natijasi</h2>
+    <p id="resStudent" style="color: var(--muted); font-size: 0.88rem;"></p>
+    <div class="score-grid">
+      <div class="score-item"><span>To‘g‘ri javoblar</span><strong id="resCorrect">0 / 20</strong></div>
+      <div class="score-item"><span>Foiz ko‘rsatkichi</span><strong id="resPercent">0%</strong></div>
+      <div class="score-item"><span>Tayyorgarlik darajasi</span><strong id="resGrade">—</strong></div>
+    </div>
+    <p id="resAdvice" style="font-size: 0.86rem; color: #cbd5e1;"></p>
+  </div>
+
+  <div id="questionsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+
+  <div class="actions-bottom">
+    <button class="btn" onclick="gradeExam()">Yakunlash va baholash</button>
+    <button class="btn secondary" onclick="resetExam()">Qayta boshlash</button>
+  </div>
+</div>
+
+<script>
+  const variantA = [
+    { sec: "Tayanch astronomiya", q: "1. Quyosh, milliardlab boshqa yulduzlar, yulduz to‘dalari va yulduzlararo gaz-chang bulutlarini birlashtiruvchi ulkan gravitatsion tizim nima deb ataladi?", opts: ["Galaktika (Somon Yo‘li Galaktikasi)", "Quyosh sistemasi", "Yulduz turkumi", "Kometalar buluti"], ans: 0, exp: "Galaktika — gravitatsiya kuchi bilan bog‘langan milliardlab yulduzlar va yulduzlararo muhit tizimidir." },
+    { sec: "Tayanch astronomiya", q: "2. Tungi osmonda oqish tasma shaklida ko‘rinadigan «Somon Yo‘li» aslida nima?", opts: ["Bizning Galaktikamiz diskidagi milliardlab olis yulduzlarning qo‘shilib ko‘rinadigan nuri", "Yer atmosferasidagi baland bulutlar", "Quyosh shamolining izi", "Sayyoralar halqasi"], ans: 0, exp: "Biz Galaktika diski ichida joylashganimiz uchun uning tekisligi bo‘ylab qaralganda ko‘plab yulduzlar yorug‘ tasma bo‘lib ko‘rinadi." },
+    { sec: "Masofa birliklari", q: "3. 1 parsek (1 pk) taxminan necha yorug‘lik yiliga (y.y.) teng?", opts: ["≈ 3.26 y.y.", "≈ 10 y.y.", "≈ 300 000 y.y.", "≈ 1 a.b."], ans: 0, exp: "1 pk ≈ 3.26 yorug‘lik yili ≈ 3.086 × 10¹³ km." },
+    { sec: "Masofa birliklari", q: "4. 1 kiloparsek (1 kpk) va 1 megaparsek (1 Mpk) necha parsekka teng?", opts: ["1 kpk = 10³ pk (1 000 pk), 1 Mpk = 10⁶ pk (1 000 000 pk)", "1 kpk = 100 pk, 1 Mpk = 10 000 pk", "1 kpk = 10⁶ pk, 1 Mpk = 10⁹ pk", "1 kpk = 10 pk, 1 Mpk = 100 pk"], ans: 0, exp: "«Kilo-» = 10³ (ming), «Mega-» = 10⁶ (million) ko‘paytuvchini bildiradi." },
+    { sec: "Optika va Kuzatuv", q: "5. Galaktikalargacha masofani o‘lchashda ishlatiladigan «standart sham» (masalan, Sefeida o‘zgaruvchan yulduzlari) qaysi prinsipga asoslanadi?", opts: ["Haqiqiy yorqinligi ma’lum bo‘lgan obyektning ko‘rinma ravshanligini o‘lchab masofani hisoblashga", "Yulduzning rangini o‘zgartirishga", "Yulduzning og‘irligini tarozida o‘lchashga", "Teleskop fokusini nolga tenglashtirishga"], ans: 0, exp: "Ko‘rinma yoritganlik E = L / (4πr²) bo‘lgani uchun L va E ma’lum bo‘lsa, masofa r topiladi." },
+    { sec: "Fizika: Doppler effekti", q: "6. Yorug‘lik manbai kuzatuvchidan uzoqlashayotganda spektr chiziqlarining to‘lqin uzunligi (λ) qanday o‘zgaradi?", opts: ["Uzayadi (Δλ = λ − λ₀ > 0 — qizilga siljish)", "Qisqaradi (binafshaga siljish)", "O‘zgarmaydi", "Nolga teng bo‘ladi"], ans: 0, exp: "Doppler effektiga ko‘ra uzoqlashayotgan manba to‘lqin uzunligi ortadi." },
+    { sec: "Fizika: Doppler effekti", q: "7. Kichik tezliklarda (v ≪ c) spektr chizig‘ining nisbiy siljishi (z = Δλ / λ₀) manbaning uzoqlashish tezligi (v) bilan qanday bog‘langan?", opts: ["v ≈ c · z = c · (Δλ / λ₀)", "v ≈ c / z", "v ≈ z / c", "v ≈ c + z"], ans: 0, exp: "Nisbiy siljish z = Δλ / λ₀ = v / c ⇒ v = c · z." },
+    { sec: "Fizika: Aylanish va Tortishish", q: "8. Markaziy massa atrofida aylana orbita bo‘ylab harakatlanayotgan yulduzning orbital tezligi (v) va orbitaning radiusi (R) ortgan sari markaziy massa (M) qanday baholanadi?", opts: ["M = v² · R / G", "M = G / (v² · R)", "M = v · R · G", "M = R / v²"], ans: 0, exp: "G·M·m / R² = m·v² / R tengligidan M = v²·R / G kelib chiqadi (qorong‘i materiyani kashf etishda shu formula ishlatilgan)." },
+    { sec: "Fizika: Yulduzlararo muhit", q: "9. Yulduzlararo kosmik chang bulutlari orqali o‘tayotgan olis yulduzlar nuri qanday o‘zgaradi?", opts: ["Yutilish va sochilish tufayli xiralashadi hamda qizg‘ishroq tus oladi", "Yorqinligi 100 marta ortadi", "Ko‘k rangga aylanib kuchayadi", "Hech qanday o‘zgarish bo‘lmaydi"], ans: 0, exp: "Chang zarralari qisqa to‘lqinli (ko‘k) nurlarni ko‘proq sochib yuboradi (xuddi quyosh botishidagi qizarish kabi)." },
+    { sec: "Fizika: Issiqlik va Nurlanish", q: "10. Juda siyrak gaz buluti yaqinidagi qaynoq yulduzlarning ultrabinafsha nurlari ta’sirida ionlashib nurlana boshlasa, u qanday tumanlik hosil qiladi?", opts: ["Yorug‘ (emissiya) diffuz tumanlik", "Qora tuynuk", "Sayyora", "Asteroid kamari"], ans: 0, exp: "Ionlashgan vodorod bulutlari (masalan, Orion tumanligi) yorqin nurlanadi." },
+    { sec: "Matematika: To‘g‘ri proporsionallik", q: "11. Agar ikki kattalik v = H · r ko‘rinishida to‘g‘ri proporsional bo‘lsa, masofa (r) 4 marta ortganda tezlik (v) qanday o‘zgaradi?", opts: ["4 marta ortadi", "4 marta kamayadi", "16 marta ortadi", "O‘zgarmaydi"], ans: 0, exp: "To‘g‘ri proporsional bog‘lanishda bir kattalik necha marta ortsa, ikkinchisi ham shuncha marta ortadi." },
+    { sec: "Matematika: Vaqt va Tezlik", q: "12. O‘zgarmas v tezlik bilan r masofaga uzoqlashgan obyektning boshlang‘ich nuqtadan ajralib chiqqanidan beri o‘tgan taxminiy vaqti qaysi formula bilan baholanadi?", opts: ["t = r / v", "t = v · r", "t = v / r", "t = r + v"], ans: 0, exp: "Tekis harakatda vaqt t = s / v (Xabbl vaqti t ≈ 1 / H₀ shu prinsipga asoslanadi)." },
+    { sec: "Fizika: Gravitatsion linza", q: "13. Eynshteynning umumiy nisbiylik nazariyasiga ko‘ra, ulkan massali galaktikalar to‘dasi yonidan o‘tayotgan olis kvazar nuri qanday harakatlanadi?", opts: ["Gravitatsiya maydonida egrilanadi (gravitatsion linzalanish hodisasi)", "To‘g‘ri chiziqdan mutlaqo og‘maydi", "Orqaga qaytib ketadi", "Tovush to‘lqiniga aylanadi"], ans: 0, exp: "Katta massa fazoni egrilantirib, orqadagi obyekt nurini linza kabi fokuslaydi yoki ko‘paytirib ko‘rsatadi." },
+    { sec: "Fizika: Mikroto‘lqinli nurlanish", q: "14. Elektromagnit to‘lqinlar shkalasida mikroto‘lqinli nurlanish qaysi ikki diapazon orasida joylashgan?", opts: ["Infraqizil nurlar va radioto‘lqinlar orasida", "Rentgen va gamma nurlar orasida", "Ultrabinafsha va ko‘rinadigan yorug‘lik orasida", "Gamma va ko‘rinadigan nurlar orasida"], ans: 0, exp: "Koinotning relikt nurlanishi kengayish tufayli sovib, aynan mikroto‘lqinli diapazonga o‘tgan." },
+    { sec: "Tayanch mantiq: Vaqtga nazar", q: "15. Bizdan 10 million yorug‘lik yili uzoqlikda joylashgan galaktikani teleskopda kuzatganimizda, biz uning qaysi davrdagi holatini ko‘ramiz?", opts: ["10 million yil avvalgi holatini (yorug‘lik bizgacha 10 mln yil yo‘l bosgani uchun)", "10 million yil kelajakdagi holatini", "Ayni shu soniyadagi holatini", "1 yil avvalgi holatini"], ans: 0, exp: "Yorug‘lik tezligi chekli bo‘lgani sababli uzoq kosmosga qarash — o‘tmishga nazar tashlash demakdir." },
+    { sec: "Amaliy hisob", q: "16. Agar bir galaktika bizdan 50 Mpk, ikkinchisi esa 150 Mpk masofada bo‘lsa, Xabbl qonuniga (v = H₀·r) ko‘ra ikkinchi galaktikaning uzoqlashish tezligi birinchisinikidan necha marta katta?", opts: ["3 marta katta", "9 marta katta", "3 marta kichik", "100 marta katta"], ans: 0, exp: "150 / 50 = 3 marta uzoqroq ⇒ tezligi ham 3 marta katta." },
+    { sec: "Amaliy hisob", q: "17. Spektr chizig‘ining laboratoriya to‘lqin uzunligi λ₀ = 500 nm, kuzatilgan to‘lqin uzunligi esa λ = 505 nm. Qizilga siljish parametri z = (λ − λ₀) / λ₀ nechaga teng?", opts: ["0.01 (1%)", "0.1 (10%)", "5", "505"], ans: 0, exp: "z = (505 − 500) / 500 = 5 / 500 = 0.01." },
+    { sec: "Amaliy hisob", q: "18. Oldingi masaladagi z = 0.01 siljish uchun galaktikaning uzoqlashish tezligi (v = c · z, bu yerda c = 300 000 km/s) qancha?", opts: ["3 000 km/s", "30 000 km/s", "300 km/s", "30 km/s"], ans: 0, exp: "v = 300 000 × 0.01 = 3 000 km/s." },
+    { sec: "Amaliy vaziyat", q: "19. Nima sababdan Koinotning barcha yo‘nalishlarida galaktikalar bizdan uzoqlashayotgandek ko‘rinsa ham, Yer Koinotning «markazi» hisoblanmaydi?", opts: ["Fazoning o‘zi barcha nuqtalarda bir tekis kengayayotgani uchun (puflanayotgan shar sirtidagi nuqtalar kabi)", "Galaktikalar Yerdan qo‘rqib qochayotgani uchun", "Yer koinotning yagona harakatsiz nuqtasi bo‘lgani uchun", "Teleskoplar faqat bir tomonga qaraganligi uchun"], ans: 0, exp: "Bir jinsli va izotrop kengayishda har qanday galaktikadan qaralganda boshqa barcha galaktikalar uzoqlashayotgandek ko‘rinadi." },
+    { sec: "Tayanch mantiq", q: "20. Galaktikalarning tashqi chetlaridagi yulduzlar nazariy hisob-kitobdagidan ancha tez aylanayotganining kuzatilishi astronomlarni qanday xulosaga olib keldi?", opts: ["Galaktikalarda ko‘rinmaydigan, lekin kuchli gravitatsiya hosil qiluvchi «qorong‘i materiya» mavjudligiga", "Gravitatsiya qonuni umuman ishlamasligiga", "Yulduzlarning massasi nolga tengligiga", "Galaktikalar aylanmasligiga"], ans: 0, exp: "Ko‘rinadigan yulduzlar va gaz massasi bu yulduzlarni orbitada ushlab qolishga yetmas edi." }
+  ];
+
+  const variantB = [
+    { sec: "Tayanch astronomiya", q: "1. Kosmosda yakka holda emas, balki tortishish kuchi ta’sirida o‘nlab, yuzlab va minglab galaktikalardan iborat guruhlar hosil qiluvchi tuzilmalar nima deyiladi?", opts: ["Galaktikalar to‘dalari (klasterlar)", "Quyosh dog‘lari", "Asteroid kamari", "Sayyora halqalari"], ans: 0, exp: "Galaktikalar Koinotda guruhlar, to‘dalar va o‘ta to‘dalar ko‘rinishida taqsimlangan." },
+    { sec: "Tayanch astronomiya", q: "2. Somon Yo‘li Galaktikamizning umumiy shakli qaysi turdagi galaktikalarga mansub?", opts: ["Spiral galaktika", "Mutlaq shar shaklidagi yulduz", "Kometa dumi", "Kub shaklidagi tuzilma"], ans: 0, exp: "Somon Yo‘li markaziy qabariq (balj) va spiral yenglarga ega yirik spiral galaktikadir." },
+    { sec: "Masofa birliklari", q: "3. 10 parsek masofa taxminan necha yorug‘lik yiliga teng?", opts: ["≈ 32.6 y.y.", "≈ 3.26 y.y.", "≈ 326 y.y.", "≈ 10 y.y."], ans: 0, exp: "1 pk ≈ 3.26 y.y. ⇒ 10 pk ≈ 32.6 yorug‘lik yili." },
+    { sec: "Masofa birliklari", q: "4. 2 megaparsek (2 Mpk) masofa necha kiloparsekka (kpk) teng?", opts: ["2 000 kpk", "200 kpk", "20 kpk", "20 000 kpk"], ans: 0, exp: "1 Mpk = 1000 kpk ⇒ 2 Mpk = 2000 kpk." },
+    { sec: "Optika va Kuzatuv", q: "5. Ikkita bir xil yorqinlikdagi o‘ta yangi yulduz (Ia tipidagi supernova) dan biri ikkinchisiga qaraganda 100 marta xiraroq ko‘rinsa, u bizdan necha marta uzoqda portlagan?", opts: ["10 marta uzoqda", "100 marta uzoqda", "50 marta uzoqda", "1 000 marta uzoqda"], ans: 0, exp: "Ravshanlik masofa kvadratiga teskari proporsional: √100 = 10 marta uzoqroq." },
+    { sec: "Fizika: Doppler effekti", q: "6. Yorug‘lik manbai kuzatuvchiga yaqinlashayotganda spektr chiziqlarining to‘lqin uzunligi (λ) qanday o‘zgaradi?", opts: ["Qisqaradi (binafshaga siljish)", "Uzayadi (qizilga siljish)", "O‘zgarmaydi", "Cheksiz ortadi"], ans: 0, exp: "Yaqinlashayotgan manba to‘lqinlari siqilib, to‘lqin uzunligi kichiklashadi." },
+    { sec: "Fizika: Doppler effekti", q: "7. Andromeda galaktikasi (M31) spektrida chiziqlarning kichik binafshaga siljishi kuzatilishi nimani anglatadi?", opts: ["Andromeda galaktikasi Somon Yo‘li Galaktikasiga yaqinlashayotganini", "Andromeda galaktikasi bizdan yorug‘lik tezligida uzoqlashayotganini", "Andromeda galaktikasi Quyosh atrofida aylanayotganini", "Andromeda galaktikasida yulduzlar yo‘qligini"], ans: 0, exp: "Mahalliy guruh ichida o‘zaro gravitatsiya tufayli M31 bizning Galaktikamiz tomon harakatlanmoqda." },
+    { sec: "Fizika: Aylanish va Tortishish", q: "8. Yulduzlarning Galaktika markazi atrofida aylanishini qaysi fundamental kuch ta’minlaydi?", opts: ["Gravitatsiya (butun olam tortishish) kuchi", "Elektrostatik itarilish kuchi", "Atmosfera bosimi", "Ishqalanish kuchi"], ans: 0, exp: "Katta kosmik masshtablarda asosiy boshqaruvchi kuch — gravitatsiyadir." },
+    { sec: "Fizika: Yulduzlararo muhit", q: "9. Yulduzlararo muhit asosan qaysi ikki kimyoviy element gazlaridan va oz miqdordagi chang zarralaridan tashkil topgan?", opts: ["Vodorod va Geliy", "Temir va Oltin", "Kislorod va Oltingugurt", "Uran va Qo‘rg‘oshin"], ans: 0, exp: "Koinotdagi oddiy (barion) moddaning asosiy qismi vodorod (~75%) va geliy (~24%) dan iborat." },
+    { sec: "Fizika: Issiqlik va Nurlanish", q: "10. Orqadagi yorug‘ gaz buluti yoki yulduzlar nurini to‘sib, qora siluet shaklida ko‘rinadigan sovuq gaz-chang buluti nima deb ataladi?", opts: ["Qorong‘u (yutuvchi) tumanlik", "Kvazar", "Pulsar", "Oq mitti"], ans: 0, exp: "Zich sovuq chang bulutlari (masalan, Ot boshi tumanligi) orqadagi nurni yutib qora bo‘lib ko‘rinadi." },
+    { sec: "Matematika: To‘g‘ri proporsionallik", q: "11. Xabbl qonuni v = H₀ · r bo‘yicha r = v / H₀. Agar tezlik v = 7 000 km/s va H₀ = 70 km/(s·Mpk) bo‘lsa, masofa r nechaga teng?", opts: ["100 Mpk", "10 Mpk", "1 000 Mpk", "490 000 Mpk"], ans: 0, exp: "r = 7 000 / 70 = 100 Mpk." },
+    { sec: "Matematika: Vaqt va Tezlik", q: "12. Koinotning kengayish tezligini ifodalovchi Xabbl doimiysi (H₀) ning o‘lchov birligi qanday ko‘rinishda yoziladi?", opts: ["km / (s · Mpk)", "kg / m³", "m / s²", "N · m"], ans: 0, exp: "Har 1 megaparsek masofaga to‘g‘ri keluvchi uzoqlashish tezligi o‘sishi km/(s·Mpk) da o‘lchanadi." },
+    { sec: "Fizika: Gravitatsion linza", q: "13. Gravitatsion linzalanish kuzatuvlari astronomlarga qanday muhim imkoniyat beradi?", opts: ["Ko‘rinmas qorong‘i materiya massasini o‘lchash va juda uzoq galaktikalarni kuchaytirib ko‘rish imkonini", "Quyosh temperaturasini pasaytirish imkonini", "Sayyoralar sonini kamaytirish imkonini", "Yerning aylanishini to‘xtatish imkonini"], ans: 0, exp: "Yorug‘likning egrilanish burchagi oraliqdagi barcha (ko‘rinadigan va yashirin) massaga bog‘liq." },
+    { sec: "Fizika: Mikroto‘lqinli nurlanish", q: "14. Kosmik relikt nurlanishning hozirgi temperaturasi taxminan ~2.7 K ekani Koinot o‘tmishi haqida nimani bildiradi?", opts: ["Koinot o‘tmishda o‘ta issiq va o‘ta zich bo‘lganini, kengayish davomida esa sovib borganini", "Koinot har doim o‘zgarmas va sovuq bo‘lganini", "Quyoshning temperaturasi 2.7 K ekanini", "Koinotda hech qachon yulduz bo‘lmaganini"], ans: 0, exp: "Adiabatik kengayishda nurlanish to‘lqin uzunligi uzayadi va temperaturasi pasayadi." },
+    { sec: "Tayanch mantiq: Vaqtga nazar", q: "15. Agar olimlar 13 milliard yorug‘lik yili uzoqlikdagi ilk galaktikalarni kuzatsalar, ular Koinotning qaysi davrini o‘rganayotgan bo‘ladilar?", opts: ["Koinotning juda yosh (ilk shakllanish) davrini", "Koinotning kelajakdagi davrini", "Quyosh tizimining kechagi kunini", "Faqat Yer tarixining bugungi kunini"], ans: 0, exp: "13 mlrd yorug‘lik yili uzoqlikdan kelgan yorug‘lik Koinot ilk yoshligida chiqarilgan." },
+    { sec: "Amaliy hisob", q: "16. Agar A galaktikaning uzoqlashish tezligi 2 100 km/s, B galaktikaniki esa 10 500 km/s bo‘lsa, B galaktika A galaktikadan necha marta uzoqda?", opts: ["5 marta uzoqda", "2 marta uzoqda", "10 marta uzoqda", "8 400 marta uzoqda"], ans: 0, exp: "10 500 / 2 100 = 5 marta." },
+    { sec: "Amaliy hisob", q: "17. Spektr chizig‘ining laboratoriya to‘lqin uzunligi λ₀ = 400 nm, kuzatilgan to‘lqin uzunligi esa λ = 408 nm. Nisbiy qizilga siljish z = Δλ / λ₀ nechaga teng?", opts: ["0.02 (2%)", "0.2 (20%)", "8", "0.002"], ans: 0, exp: "z = (408 − 400) / 400 = 8 / 400 = 0.02." },
+    { sec: "Amaliy hisob", q: "18. Oldingi masaladagi z = 0.02 siljish uchun galaktikaning uzoqlashish tezligi (v = c · z, bu yerda c = 300 000 km/s) qancha?", opts: ["6 000 km/s", "60 000 km/s", "600 km/s", "15 000 km/s"], ans: 0, exp: "v = 300 000 × 0.02 = 6 000 km/s." },
+    { sec: "Amaliy vaziyat", q: "19. Nima sababdan Galaktikamiz markazini ko‘rinadigan yorug‘lik teleskoplarida ko‘rish qiyin, lekin infraqizil va radioteleskoplarda aniq kuzatish mumkin?", opts: ["Galaktika tekisligidagi qalin chang bulutlari ko‘rinadigan yorug‘likni to‘sadi, infraqizil va radioto‘lqinlar esa changdan o‘ta oladi", "Infraqizil nurlar changdan sekin yuradi", "Galaktika markazida yulduzlar yo‘q", "Ko‘rinadigan yorug‘lik kosmosda mavjud emas"], ans: 0, exp: "Uzunroq to‘lqinli nurlanish chang zarralari orasidan kam sochilib o‘tadi." },
+    { sec: "Tayanch mantiq", q: "20. Kosmologiyada «Koinotning kengayishi» deganda nimani tushunish to‘g‘riroq?", opts: ["Galaktikalar to‘dalari orasidagi fazoning o‘zi kengayib, ular orasidagi masofaning ortib borishini", "Yer va Quyosh orasidagi masofaning har kuni ikki baravar ortishini", "Atomlarning kattalashib ketishini", "Barcha yulduzlarning portlab ketishini"], ans: 0, exp: "Gravitatsion bog‘langan tizimlar (atomlar, sayyoralar, galaktikalar ichi) emas, balki galaktikalararo fazo kengayadi." }
+  ];
+
+  let currentMode = 'A';
+  let userAnswersA = new Array(variantA.length).fill(null);
+  let userAnswersB = new Array(variantB.length).fill(null);
+  let gradedA = false;
+  let gradedB = false;
+
+  function getActiveQuestions() { return currentMode === 'B' ? variantB : variantA; }
+  function getActiveAnswers() { return currentMode === 'B' ? userAnswersB : userAnswersA; }
+  function isActiveGraded() { return currentMode === 'B' ? gradedB : gradedA; }
+  function setActiveGraded(val) {
+    if (currentMode === 'B') gradedB = val;
+    else gradedA = val;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tabA').classList.toggle('active', mode === 'A');
+    document.getElementById('tabB').classList.toggle('active', mode === 'B');
+    document.getElementById('resultBox').style.display = 'none';
+
+    renderQuestions();
+    updateAnsweredPill();
+    if (isActiveGraded()) gradeExam();
+  }
+
+  function renderQuestions() {
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    const list = document.getElementById('questionsList');
+    list.innerHTML = '';
+
+    qs.forEach((item, qIndex) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const top = document.createElement('div');
+      top.className = 'q-top';
+      top.innerHTML = `<span>${currentMode} Variant — ${item.sec}</span><span>Savol #${qIndex + 1}</span>`;
+
+      const qText = document.createElement('div');
+      qText.className = 'q-text';
+      qText.textContent = item.q;
+
+      const opts = document.createElement('div');
+      opts.className = 'opts';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      item.opts.forEach((opt, oIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = `${letters[oIndex]}) ${opt}`;
+        if (ansArr[qIndex] === oIndex) btn.classList.add('selected');
+        btn.onclick = () => {
+          if (isActiveGraded()) return;
+          ansArr[qIndex] = oIndex;
+          updateAnsweredPill();
+          Array.from(opts.children).forEach((c, idx) => {
+            c.classList.toggle('selected', idx === oIndex);
+          });
+        };
+        opts.appendChild(btn);
+      });
+
+      const exp = document.createElement('div');
+      exp.className = 'explain';
+      exp.id = `exp-${currentMode}-${qIndex}`;
+      exp.textContent = `Izoh: ${item.exp}`;
+
+      card.appendChild(top);
+      card.appendChild(qText);
+      card.appendChild(opts);
+      card.appendChild(exp);
+      list.appendChild(card);
+    });
+  }
+
+  function updateAnsweredPill() {
+    const ansArr = getActiveAnswers();
+    const count = ansArr.filter(x => x !== null).length;
+    document.getElementById('answeredPill').textContent = `Javoblar: ${count} / ${ansArr.length}`;
+  }
+
+  function gradeExam() {
+    setActiveGraded(true);
+    const qs = getActiveQuestions();
+    const ansArr = getActiveAnswers();
+    let correct = 0;
+    const cards = document.getElementById('questionsList').children;
+
+    qs.forEach((item, qIndex) => {
+      const opts = cards[qIndex].querySelectorAll('.opt-btn');
+      opts.forEach((btn, oIndex) => {
+        btn.classList.remove('selected', 'correct', 'wrong');
+        if (oIndex === item.ans) {
+          btn.classList.add('correct');
+        } else if (ansArr[qIndex] === oIndex) {
+          btn.classList.add('wrong');
+        }
+      });
+      if (ansArr[qIndex] === item.ans) correct++;
+      document.getElementById(`exp-${currentMode}-${qIndex}`).style.display = 'block';
+    });
+
+    const pct = Math.round((correct / qs.length) * 100);
+    let level = "Boshlang‘ich (Tayanch mavzularni takrorlash zarur)";
+    let advice = "Tavsiya: Masofa birliklari (pk, kpk, Mpk, y.y.), Doppler effekti (z = Δλ/λ₀), to‘g‘ri proporsional bog‘lanish (v = H·r) va gravitatsion aylanish asoslarini takrorlang.";
+    if (pct >= 86) {
+      level = "Yuqori (5 — A'lo)";
+      advice = "Ajoyib tayyorgarlik! 6-bob (Koinotning tuzilishi va evolyutsiyasi) mavzularini o‘zlashtirishga to‘liq tayyorsiz.";
+    } else if (pct >= 71) {
+      level = "Yaxshi (4 — Yaxshi)";
+      advice = "Yaxshi natija! Xato tushgan savollarning izohini ko‘rib, galaktikalar va Xabbl qonuni mavzulariga bemalol o‘ting.";
+    } else if (pct >= 55) {
+      level = "O‘rta (3 — Qoniqarli)";
+      advice = "O‘rta daraja. Nisbiy siljish hisoblari va yorug‘lik tezligi orqali masofa-vaqt bog‘liqliklarini mustahkamlab oling.";
+    }
+
+    const name = document.getElementById('stName').value.trim() || "O‘quvchi";
+    const cls = document.getElementById('stClass').value.trim();
+    const dt = document.getElementById('stDate').value.trim();
+
+    document.getElementById('resTitle').textContent = `6-Bob Kiruvchi Test Natijasi (${currentMode} Variant)`;
+    document.getElementById('resStudent').textContent = `O‘quvchi: ${name}${cls ? ' — ' + cls : ''}${dt ? ' | Sana: ' + dt : ''}`;
+    document.getElementById('resCorrect').textContent = `${correct} / ${qs.length}`;
+    document.getElementById('resPercent').textContent = `${pct}%`;
+    document.getElementById('resGrade').textContent = level;
+    document.getElementById('resAdvice').textContent = advice;
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetExam() {
+    setActiveGraded(false);
+    getActiveAnswers().fill(null);
+    updateAnsweredPill();
+    document.getElementById('resultBox').style.display = 'none';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderQuestions();
+  updateAnsweredPill();
+</script>
+</body>
+</html>
